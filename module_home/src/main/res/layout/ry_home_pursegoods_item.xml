@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_margin="2dp"
+    app:cardElevation="@dimen/dp_0"
+    android:layout_height="wrap_content">
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical" android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/ivCover"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dp_5"
+            android:text="格子冬季百褶裙"
+            android:id="@+id/tvGoodsName"
+            android:maxLines="2"
+            android:ellipsize="end"
+            android:textColor="#000"
+            android:textSize="15sp"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:textSize="17sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:textColor="#ff0000"
+                android:text="￥ 0.00"
+                android:id="@+id/tvPrice"
+                android:padding="@dimen/dp_5"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/tvPrice"
+                android:layout_marginStart="10dp"
+                android:layout_toEndOf="@+id/tvPrice"
+                android:id="@+id/tvTotal"
+                android:text="1452人付款"
+                android:textSize="10sp" />
+            <ImageView
+                android:layout_margin="@dimen/dp_5"
+                android:layout_alignParentRight="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/icon_more"/>
+        </RelativeLayout>
+    </LinearLayout>
+</android.support.v7.widget.CardView>

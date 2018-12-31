@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <com.scwang.smartrefresh.layout.SmartRefreshLayout
+            android:id="@+id/srHome"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.example.commonlib.view.CustomRefreshHeader
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_50" />
+
+            <com.example.commonlib.view.ObservableScrollView
+                android:id="@+id/slHome"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp_230"
+                        android:background="@drawable/call_agents_head_bg" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                        <com.youth.banner.Banner
+                            android:id="@+id/banner"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/dp_158"
+                            android:layout_marginLeft="@dimen/dp_15"
+                            android:layout_marginTop="@dimen/dp_75"
+                            android:layout_marginRight="@dimen/dp_15"
+                            android:layout_marginBottom="@dimen/dp_15"
+                            app:banner_layout="@layout/banner_item"
+                            app:image_scale_type="fit_xy" />
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="#fff"
+                            android:orientation="horizontal"
+                            android:padding="@dimen/dp_5"
+                            android:weightSum="5">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:drawableTop="@mipmap/btn_post_menu_article"
+                                android:drawablePadding="@dimen/dp_6"
+                                android:gravity="center"
+                                android:text="新上架"
+                                android:textColor="#000"
+                                android:textSize="12sp" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:drawableTop="@mipmap/btn_post_menu_vote"
+                                android:drawablePadding="@dimen/dp_6"
+                                android:gravity="center"
+                                android:text="淘好货"
+                                android:textColor="#000"
+                                android:textSize="12sp" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:drawableTop="@mipmap/btn_post_menu_text"
+                                android:drawablePadding="@dimen/dp_6"
+                                android:gravity="center"
+                                android:text="校园VIP"
+                                android:textColor="#000"
+                                android:textSize="12sp" />
+
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:drawableTop="@mipmap/btn_post_menu_evaluating"
+                                android:drawablePadding="@dimen/dp_6"
+                                android:gravity="center"
+                                android:text="心选精品"
+                                android:textColor="#000"
+                                android:textSize="12sp" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:drawableTop="@mipmap/btn_post_menu_picture"
+                                android:drawablePadding="@dimen/dp_6"
+                                android:gravity="center"
+                                android:text="晒单 社区"
+                                android:textColor="#000"
+                                android:textSize="12sp" />
+                            <!--<TextView-->
+                            <!--android:layout_width="match_parent"-->
+                            <!--android:layout_height="wrap_content"-->
+                            <!--android:layout_weight="1"-->
+                            <!--android:drawableTop="@mipmap/home_other"-->
+                            <!--android:drawablePadding="@dimen/dp_6"-->
+                            <!--android:gravity="center"-->
+                            <!--android:text="更多"-->
+                            <!--android:textColor="#000"-->
+                            <!--android:textSize="12sp" />-->
+
+
+                        </LinearLayout>
+
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/dp_3"
+                            android:background="#fafafa" />
+
+
+                        <android.support.v7.widget.RecyclerView
+                            android:id="@+id/ryPurse"
+                            android:visibility="gone"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent" />
+                    </LinearLayout>
+                </FrameLayout>
+
+            </com.example.commonlib.view.ObservableScrollView>
+
+        </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+        <LinearLayout
+            android:id="@+id/llTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/dp_8"
+            android:paddingTop="@dimen/dp_25"
+            android:paddingRight="@dimen/dp_5"
+            android:paddingBottom="@dimen/dp_5">
+
+
+            <ImageView
+                android:id="@+id/ivKind"
+                android:layout_width="@dimen/dp_24"
+                android:layout_height="@dimen/dp_24"
+                android:src="@mipmap/home_kind" />
+
+
+            <TextView
+                android:id="@+id/tvSearch"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_32"
+                android:layout_marginLeft="@dimen/dp_8"
+                android:layout_marginRight="@dimen/dp_8"
+                android:layout_weight="0.45"
+                android:background="@drawable/home_search_bg"
+                android:drawableLeft="@mipmap/home_search"
+                android:drawablePadding="@dimen/dp_8"
+                android:gravity="center|left"
+                android:paddingLeft="@dimen/dp_6"
+                android:text="搜索你想要的商品"
+                android:textSize="12sp" />
+
+
+            <ImageView
+                android:id="@+id/ivShopCar"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_24"
+                android:layout_weight="2.25"
+                android:visibility="gone"
+                android:src="@mipmap/home_shopcar" />
+
+        </LinearLayout>
+    </RelativeLayout>
+</layout>

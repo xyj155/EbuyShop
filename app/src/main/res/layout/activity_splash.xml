@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#fcd82e"
+    tools:context=".SplashActivity">
+<LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_alignParentBottom="true"
+    android:layout_centerInParent="true"
+    android:layout_marginBottom="@dimen/dp_8"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+    <ImageView
+        android:src="@mipmap/app_icon_alpha"
+        android:layout_width="@dimen/dp_45"
+        android:layout_height="@dimen/dp_45" />
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:gravity="center|left"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#fff"
+            android:text="#F  商城"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="你身边的校园商城"
+            android:textColor="#fff"
+            android:textSize="@dimen/dp_10"/>
+    </LinearLayout>
+</LinearLayout>
+
+
+</RelativeLayout>

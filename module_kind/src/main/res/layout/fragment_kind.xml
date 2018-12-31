@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/llTitle"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_88"
+        android:gravity="left"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/dp_5"
+        android:paddingTop="@dimen/dp_25"
+        android:paddingRight="@dimen/dp_5"
+        android:paddingBottom="@dimen/dp_5"
+        android:weightSum="5">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center|bottom"
+            android:padding="@dimen/dp_8"
+            android:text="分类"
+            android:textColor="#000"
+            android:textSize="17sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="@dimen/dp_180"
+            android:layout_height="@dimen/dp_35"
+            android:paddingRight="@dimen/dp_5"
+            android:layout_alignParentBottom="true"
+            android:drawableRight="@mipmap/search_kind"
+            android:layout_marginBottom="@dimen/dp_8"
+            android:hint="搜索你想要的商品"
+            android:background="@drawable/kind_search_bg_r_25"
+            android:layout_marginRight="@dimen/dp_8"
+            android:layout_alignParentRight="true"
+            android:gravity="center"/>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:weightSum="5">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/ry_item"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="3.8" />
+
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1.2" />
+    </LinearLayout>
+</LinearLayout>

@@ -1,0 +1,1 @@
+include ':app', ':module_home', ':module_kind', ':module_user', ':commonlib', ':module_goodscar'
