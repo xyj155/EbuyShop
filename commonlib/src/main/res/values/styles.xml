@@ -1,11 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
+
+    <style name="Translate" parent="@android:style/Theme.Translucent.NoTitleBar">
+        <item name="android:windowIsTranslucent">false</item>
+        <item name="android:windowDisablePreview">true</item>
+    </style>
+
     <declare-styleable name="CircleImageView">
         <attr name="civ_border_width" format="dimension" />
         <attr name="civ_border_color" format="color" />
@@ -14,4 +21,15 @@
         <attr name="civ_fill_color" format="color" />
         <attr name="civ_circle_background_color" format="color" />
     </declare-styleable>
+    <attr name="arcHeight" format="dimension" />
+
+    <declare-styleable name="ArcView">
+        <attr name="arcHeight" />
+        <attr name="bgColor" format="color" />
+    </declare-styleable>
+
+    <declare-styleable name="ArcImageView">
+        <attr name="arcHeight" />
+    </declare-styleable>
+
 </resources>

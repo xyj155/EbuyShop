@@ -1,5 +1,6 @@
 package com.example.home.fragment;
 
+import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.graphics.Color;
@@ -10,10 +11,12 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
@@ -24,6 +27,12 @@ import com.example.commonlib.loader.GlideImageLoader;
 import com.example.commonlib.presenter.HomePresent;
 import com.example.commonlib.util.RouterUtil;
 import com.example.commonlib.view.ObservableScrollView;
+import com.example.home.fragment.entity.ComplexItemEntity;
+import com.example.home.fragment.util.ComplexViewMF;
+import com.gongwen.marqueen.MarqueeFactory;
+import com.gongwen.marqueen.MarqueeView;
+import com.gongwen.marqueen.SimpleMF;
+import com.gongwen.marqueen.SimpleMarqueeView;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshFooter;
 import com.scwang.smartrefresh.layout.api.RefreshHeader;
@@ -37,6 +46,7 @@ import com.youth.banner.BannerConfig;
 import com.youth.banner.Transformer;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static com.chad.library.adapter.base.listener.SimpleClickListener.TAG;
@@ -53,7 +63,7 @@ public class HomeFragment extends BaseFragment<HomePresent> {
     private int mHeight;
     private LinearLayout llTitle;
     private TextView tvSearch;
-    private ViewDataBinding viewDataBinding;
+
     private ImageView ivKind, ivShopCar;
     private SmartRefreshLayout srHome;
 
@@ -66,16 +76,14 @@ public class HomeFragment extends BaseFragment<HomePresent> {
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public void initView(View view) {
-        viewDataBinding = DataBindingUtil.bind(view);
-        srHome = viewDataBinding.getRoot().findViewById(R.id.srHome);
-        banner = viewDataBinding.getRoot().findViewById(R.id.banner);
-        ryPurse = viewDataBinding.getRoot().findViewById(R.id.ryPurse);
-        slHome = viewDataBinding.getRoot().findViewById(R.id.slHome);
-        llTitle = viewDataBinding.getRoot().findViewById(R.id.llTitle);
-        tvSearch = viewDataBinding.getRoot().findViewById(R.id.tvSearch);
-        ivKind = viewDataBinding.getRoot().findViewById(R.id.ivKind);
-        ivShopCar = viewDataBinding.getRoot().findViewById(R.id.ivShopCar);
-
+        srHome = view.findViewById(R.id.srHome);
+        banner = view.findViewById(R.id.banner);
+        ryPurse = view.findViewById(R.id.ryPurse);
+        slHome = view.findViewById(R.id.slHome);
+        llTitle = view.findViewById(R.id.llTitle);
+        tvSearch = view.findViewById(R.id.tvSearch);
+        ivKind = view.findViewById(R.id.ivKind);
+        ivShopCar = view.findViewById(R.id.ivShopCar);
 
 
         StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
@@ -83,7 +91,6 @@ public class HomeFragment extends BaseFragment<HomePresent> {
         initData();//初始化数据
         ryPurse.setItemAnimator(new DefaultItemAnimator());
         banner.setBannerStyle(BannerConfig.CENTER);
-        banner.setIndicatorGravity(BannerConfig.CENTER);
         banner.setImageLoader(new GlideImageLoader());
         List<String> images = new ArrayList<>();
         images.add("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1545032090&di=659174bccea53c9461eed981cecfc15e&imgtype=jpg&er=1&src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F01274c5841176fa801219c77c4ecd6.png%402o.png");
@@ -100,7 +107,6 @@ public class HomeFragment extends BaseFragment<HomePresent> {
         banner.setDelayTime(5000);
         //设置指示器位置（当banner模式中有指示器时）
         banner.setIndicatorGravity(BannerConfig.CENTER);
-        //banner设置方法全部调用完毕时最后调用
         banner.start();
 
         GoodsGson goodsGson = new GoodsGson();
@@ -191,31 +197,27 @@ public class HomeFragment extends BaseFragment<HomePresent> {
             @Override
             public void onHeaderPulling(RefreshHeader header, float percent, int offset, int headerHeight, int extendHeight) {
                 Log.i(TAG, "onHeaderPulling: " + headerHeight + "----------" + extendHeight);
-//                if (state.dragging) {
-//                    llTitle.setVisibility(View.GONE);
-//                } else {
-//                    llTitle.setVisibility(View.VISIBLE);
-//                }
+                llTitle.setVisibility(View.GONE);
             }
 
             @Override
             public void onHeaderReleased(RefreshHeader header, int headerHeight, int extendHeight) {
-
+                llTitle.setVisibility(View.GONE);
             }
 
             @Override
             public void onHeaderReleasing(RefreshHeader header, float percent, int offset, int headerHeight, int extendHeight) {
-
+                llTitle.setVisibility(View.GONE);
             }
 
             @Override
             public void onHeaderStartAnimator(RefreshHeader header, int headerHeight, int extendHeight) {
-
+                llTitle.setVisibility(View.GONE);
             }
 
             @Override
             public void onHeaderFinish(RefreshHeader header, boolean success) {
-
+                llTitle.setVisibility(View.GONE);
             }
 
             @Override
@@ -255,12 +257,9 @@ public class HomeFragment extends BaseFragment<HomePresent> {
 
             @Override
             public void onStateChanged(RefreshLayout refreshLayout, RefreshState oldState, RefreshState newState) {
-                Log.i(TAG, "onStateChanged:dragging "+newState.dragging);
-                Log.i(TAG, "onStateChanged:finishing "+newState.finishing);
-                Log.i(TAG, "onStateChanged: opening"+newState.opening);
-              if (!newState.dragging||newState.finishing) {
+                if (!newState.opening || newState.dragging || oldState.dragging || oldState.opening) {
                     llTitle.setVisibility(View.VISIBLE);
-                }else {
+                } else {
                     llTitle.setVisibility(View.GONE);
                 }
             }
@@ -268,20 +267,39 @@ public class HomeFragment extends BaseFragment<HomePresent> {
         srHome.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshLayout) {
-                RefreshState state = srHome.getState();
-                Log.i(TAG, "initView: " + state.dragging);
-
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
                         srHome.finishRefresh();
-
                     }
                 }, 500);
-                //https://blog.csdn.net/sunwukong_hadoop/article/details/74489202
             }
         });
+        final List<ComplexItemEntity> datas = new ArrayList<>();
+        datas.add(new ComplexItemEntity("我的的的武大大爱的啊大大",""));
+        datas.add(new ComplexItemEntity("我发达爱的撒旦啊的的武大大爱的啊大大",""));
+        datas.add(new ComplexItemEntity("阿大声道阿达大爱的",""));
+        datas.add(new ComplexItemEntity("阿达达到阿达的阿达阿达阿打算",""));
+        datas.add(new ComplexItemEntity("打撒旦打发顺丰阿达阿达阿达啊",""));
+        marqueeView = view.findViewById(R.id.marqueeView);
+        MarqueeFactory<LinearLayout, ComplexItemEntity> marqueeFactory = new ComplexViewMF(getContext());
+        marqueeFactory.setData(datas);
+        marqueeView.setMarqueeFactory(marqueeFactory);
+        marqueeView.startFlipping();
+    }
 
+    private MarqueeView<LinearLayout, ComplexItemEntity> marqueeView;
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        marqueeView.startFlipping();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        marqueeView.stopFlipping();
     }
 
     @Override

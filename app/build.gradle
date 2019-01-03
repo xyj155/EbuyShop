@@ -5,6 +5,7 @@ android {
     defaultConfig {
         minSdkVersion 19
         targetSdkVersion 28
+        flavorDimensions "versionCode"
         versionCode 1
         versionName "1.0"
         applicationId "com.xuyijie.ebuyshop"
@@ -21,30 +22,52 @@ android {
             exclude 'META-INF/rxjava.properties'
             exclude 'META-INF/NOTICE.txt'
         }
-        ndk {
-            //选择要添加的对应 cpu 类型的 .so 库。
-            abiFilters 'armeabi', 'armeabi-v7a', 'arm64-v8a'
-            // 还可以添加 'x86', 'x86_64', 'mips', 'mips64'
-        }
-
-        manifestPlaceholders = [
-                JPUSH_PKGNAME : applicationId,
-                JPUSH_APPKEY : "f115c053cc96ea4845858f79", //JPush 上注册的包名对应的 Appkey.
-                JPUSH_CHANNEL : "developer-default", //暂时填写默认值即可.
-        ]
+        manifestPlaceholders = [qqappid: "1108087612"]
     }
+    signingConfigs {
+        debug {
+            storeFile file("shop.jks") //签名文件路径
+            storePassword "123456"
+            keyAlias "key0"
+            keyPassword "123456" //签名密码
+        }
+        release {
+            storeFile file("shop.jks") //签名文件路径
+            storePassword "123456"
+            keyAlias "key0"
+            keyPassword "123456" //签名密码
+        }
+    }
+
     buildTypes {
         release {
             minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-project.txt'
+            signingConfig signingConfigs.release
+        }
+        debug {
+            signingConfig signingConfigs.debug
         }
     }
     lintOptions {
         checkReleaseBuilds false
         abortOnError false
     }
-    dataBinding{
+    dataBinding {
         enabled = true
+    }
+
+    productFlavors {
+
+        abc {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "abc"]
+        }
+        baiduyun {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "baiduyun"]
+        }
+        wandoujia {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "wandoujia"]
+        }
     }
 }
 
@@ -53,16 +76,19 @@ dependencies {
     annotationProcessor 'com.alibaba:arouter-compiler:1.2.2'
     implementation project(':commonlib')
 //    if (!isNeedShopCarModule.toBoolean()) {
-        implementation project(':module_goodscar')
+    implementation project(':module_goodscar')
 //    }
 //    if (!isNeedKindModule.toBoolean()) {
-        implementation project(':module_kind')
+    implementation project(':module_kind')
 //    }
 //    if (!isNeedHomeModule.toBoolean()) {
-        implementation project(':module_home')
+    implementation project(':module_home')
 //    }
 //    if (!isNeedUserModule.toBoolean()) {
-        implementation project(':module_user')
+    implementation project(':module_user')
+
+    implementation project(':module_login')
 //    }
-    implementation 'com.jakewharton:butterknife:8.6.0'
+    api 'com.jakewharton:butterknife:8.8.1'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
 }

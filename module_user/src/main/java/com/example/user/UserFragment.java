@@ -10,6 +10,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.bumptech.glide.Glide;
 import com.example.commonlib.base.BaseFragment;
 import com.example.commonlib.presenter.HomePresent;
 import com.example.commonlib.util.RouterUtil;
@@ -19,7 +20,6 @@ import com.xuyijie.user.R;
 @Route(path = RouterUtil.Me_Fragment_Main)
 public class UserFragment extends BaseFragment<HomePresent> {
     private WaveView waveView;
-    private ViewDataBinding viewDataBinding;
     private ImageView ivHead;
 
     @Override
@@ -30,11 +30,9 @@ public class UserFragment extends BaseFragment<HomePresent> {
 
     @Override
     public void initView(View view) {
-//        viewDataBinding = DataBindingUtil.bind(view);
         LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context
                 .LAYOUT_INFLATER_SERVICE);
         DataBindingUtil.inflate(inflater, R.layout.fragment_user, null, false);
-
         waveView =view.findViewById(R.id.wave_view);
         ivHead = view.findViewById(R.id.ivHead);
         final FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(-2, -2);
@@ -46,7 +44,7 @@ public class UserFragment extends BaseFragment<HomePresent> {
                 ivHead.setLayoutParams(lp);
             }
         });
-
+        Glide.with(getContext()).asBitmap().load(R.mipmap.app_icon).into(ivHead);
     }
 
     @Override

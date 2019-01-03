@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#fafafa"
+    android:background="#ffffff"
     android:orientation="vertical">
 
     <FrameLayout
@@ -19,10 +19,9 @@
 
         <com.example.commonlib.view.CircleImageView
             android:id="@+id/ivHead"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/dp_90"
+            android:layout_height="@dimen/dp_90"
             android:layout_gravity="bottom|center"
-            android:src="@mipmap/app_icon"
             app:civ_border_color="#fff"
             app:civ_border_width="@dimen/dp_2" />
 
@@ -85,7 +84,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:drawableTop="@mipmap/btn_my_handing"
+                android:drawableTop="@mipmap/ic_mine_order"
                 android:drawablePadding="@dimen/dp_8"
                 android:gravity="center"
                 android:text="待付款"
@@ -95,27 +94,27 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:drawableTop="@mipmap/btn_my_pay"
+                android:drawableTop="@mipmap/ic_mine_gift"
                 android:drawablePadding="@dimen/dp_8"
                 android:gravity="center"
-                android:text="待付款"
+                android:text="待发货"
                 android:textColor="#000" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:drawableTop="@mipmap/btn_my_takeover"
+                android:drawableTop="@mipmap/ic_mine_envelopes"
                 android:drawablePadding="@dimen/dp_8"
                 android:gravity="center"
-                android:text="待付款"
+                android:text="待收货"
                 android:textColor="#000" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:drawableTop="@mipmap/btn_my_evaluation"
+                android:drawableTop="@mipmap/ic_mine_shopping"
                 android:drawablePadding="@dimen/dp_8"
                 android:gravity="center"
                 android:text="待评价"
@@ -139,9 +138,9 @@
                 android:gravity="center|left"
                 android:padding="@dimen/dp_6.5"
                 android:text="注册加入会员，享优惠!"
+                android:textColor="#fff"
                 android:textSize="17sp"
-                android:textStyle="bold"
-                android:textColor="#fff" />
+                android:textStyle="bold" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -152,119 +151,87 @@
                 android:textColor="#fff" />
         </LinearLayout>
 
-        <LinearLayout
+        <View
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/dp_8"
-            android:layout_marginTop="@dimen/dp_10"
-            android:layout_marginRight="@dimen/dp_8"
-            android:background="@drawable/user_menu_bg"
-            android:orientation="vertical"
-            android:padding="@dimen/dp_5">
+            android:layout_height="@dimen/dp_2"
+            android:background="#fafafa" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_48"
+            android:drawableLeft="@mipmap/ic_mine_fun_brokers"
+            android:drawableRight="@mipmap/ic_category_arraw_right_n"
+            android:drawablePadding="@dimen/dp_8"
+            android:gravity="center|left"
+            android:paddingLeft="@dimen/dp_6"
+            android:paddingRight="@dimen/dp_8"
+            android:text="加入我们"
+            android:textColor="#000" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_8"
+            android:background="#fafafa" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/dp_8"
-                android:orientation="horizontal"
-                android:weightSum="4">
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:drawableTop="@mipmap/xiaoshou"
-                    android:drawablePadding="@dimen/dp_3"
-                    android:gravity="center"
-                    android:text="优惠券"
-                    android:textColor="#000"
-                    android:textSize="12sp" />
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:drawableTop="@mipmap/shengyaceshi"
-                    android:drawablePadding="@dimen/dp_3"
-                    android:gravity="center"
-                    android:text="到货通知"
-                    android:textColor="#000"
-                    android:textSize="12sp" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_48"
+            android:drawableLeft="@mipmap/ic_mine_collection"
+            android:drawableRight="@mipmap/ic_category_arraw_right_n"
+            android:drawablePadding="@dimen/dp_8"
+            android:gravity="center|left"
+            android:paddingLeft="@dimen/dp_6" android:paddingRight="@dimen/dp_8"
+            android:text="我的收藏"
+            android:textColor="#000" />
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:drawableTop="@mipmap/fuwurenyuan"
-                    android:drawablePadding="@dimen/dp_3"
-                    android:gravity="center"
-                    android:text="客服"
-                    android:textColor="#000"
-                    android:textSize="12sp" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_1"
+            android:background="#fafafa" />
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:drawableTop="@mipmap/shangwurenyuan"
-                    android:drawablePadding="@dimen/dp_3"
-                    android:gravity="center"
-                    android:text="地址管理"
-                    android:textColor="#000"
-                    android:textSize="12sp" />
-            </LinearLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_48" android:paddingRight="@dimen/dp_8"
+            android:drawableLeft="@mipmap/ic_mine_medal"
+            android:drawableRight="@mipmap/ic_category_arraw_right_n"
+            android:drawablePadding="@dimen/dp_8"
+            android:gravity="center|left"
+            android:paddingLeft="@dimen/dp_6"
+            android:text="我的会员"
+            android:textColor="#000" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:weightSum="4">
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_8"
+            android:background="#fafafa" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_48"
+            android:drawableLeft="@mipmap/ic_mine_service"
+            android:drawableRight="@mipmap/ic_category_arraw_right_n"
+            android:drawablePadding="@dimen/dp_8"
+            android:gravity="center|left"
+            android:paddingLeft="@dimen/dp_6" android:paddingRight="@dimen/dp_8"
+            android:text="客服"
+            android:textColor="#000" />
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:drawableTop="@mipmap/luqujihua"
-                    android:drawablePadding="@dimen/dp_3"
-                    android:gravity="center"
-                    android:text="反馈"
-                    android:textColor="#000"
-                    android:textSize="12sp" />
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:drawableTop="@mipmap/guanlirenyuan"
-                    android:drawablePadding="@dimen/dp_3"
-                    android:gravity="center"
-                    android:text="收藏"
-                    android:textColor="#000"
-                    android:textSize="12sp" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_8"
+            android:background="#fafafa" />
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:drawableTop="@mipmap/wenyigongzuozhe"
-                    android:drawablePadding="@dimen/dp_3"
-                    android:gravity="center"
-                    android:text="主题切换"
-                    android:textColor="#000"
-                    android:textSize="12sp" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_48"
+            android:drawableLeft="@mipmap/ic_mine_speak"
+            android:drawableRight="@mipmap/ic_category_arraw_right_n"
+            android:drawablePadding="@dimen/dp_8" android:paddingRight="@dimen/dp_8"
+            android:gravity="center|left"
+            android:paddingLeft="@dimen/dp_6"
+            android:text="反馈"
+            android:textColor="#000" />
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:drawableTop="@mipmap/zijianxin"
-                    android:drawablePadding="@dimen/dp_3"
-                    android:gravity="center"
-                    android:text="加入我们"
-                    android:textColor="#000"
-                    android:textSize="12sp" />
-            </LinearLayout>
-        </LinearLayout>
     </LinearLayout>
 
 </LinearLayout>

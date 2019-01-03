@@ -13,6 +13,7 @@
             <option value="$PROJECT_DIR$/module_goodscar" />
             <option value="$PROJECT_DIR$/module_home" />
             <option value="$PROJECT_DIR$/module_kind" />
+            <option value="$PROJECT_DIR$/module_login" />
             <option value="$PROJECT_DIR$/module_user" />
           </set>
         </option>

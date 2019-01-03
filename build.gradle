@@ -9,7 +9,7 @@ buildscript {
     dependencies {
         classpath 'com.android.tools.build:gradle:3.2.1'
         classpath "com.alibaba:arouter-register:1.0.2"
-        classpath 'com.jakewharton:butterknife-gradle-plugin:8.5.1'
+        classpath 'com.jakewharton:butterknife-gradle-plugin:8.4.0'
         classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
 //        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
         // NOTE: Do not place your application dependencies here; they belong
@@ -22,6 +22,11 @@ allprojects {
         google()
         jcenter()
         maven { url 'https://jitpack.io' }
+        maven { url 'https://dl.bintray.com/umsdk/release' }
+        flatDir {
+            // 声明所有工程都将'lib_framework'库下的'libs'目录做为依赖库
+            dirs project(':commonlib').file('libs')
+        }
     }
 }
 

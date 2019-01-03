@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#fcd82e"
+    android:background="#fff"
     tools:context=".SplashActivity">
 <LinearLayout
     android:layout_width="wrap_content"
@@ -14,24 +14,24 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal">
     <ImageView
-        android:src="@mipmap/app_icon_alpha"
+        android:src="@mipmap/app_icon"
         android:layout_width="@dimen/dp_45"
         android:layout_height="@dimen/dp_45" />
     <LinearLayout
         android:layout_width="wrap_content"
         android:gravity="center|left"
+        android:padding="@dimen/dp_6.5"
         android:layout_height="match_parent"
         android:orientation="vertical">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="#fff"
-            android:text="#F  商城"/>
+            android:textColor="#000"
+            android:text="商学院"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="你身边的校园商城"
-            android:textColor="#fff"
             android:textSize="@dimen/dp_10"/>
     </LinearLayout>
 </LinearLayout>

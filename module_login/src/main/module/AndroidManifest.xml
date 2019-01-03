@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.xuyijie.module_login">
+    <application android:name="com.example.commonlib.MyApp">
+        <activity android:name="com.example.module_login.LoginActivity"></activity>
+    </application>
+
+
+</manifest>

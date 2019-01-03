@@ -7,8 +7,7 @@
 
 
     <application>
-        <activity android:name="com.xuyijie.ebuyshop.MainActivity">
-        </activity>
+
     </application>
 
 </manifest>
