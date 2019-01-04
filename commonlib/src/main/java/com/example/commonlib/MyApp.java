@@ -25,7 +25,7 @@ public class MyApp extends Application {
         UMConfigure.setLogEnabled(false);
 //        UMConfigure.init(this,"5c2cd62cb465f580200003c5"
 //                ,"umeng",UMConfigure.DEVICE_TYPE_PHONE,"");
-        PlatformConfig.setWeixin("wxdc1e388c3822c80b", "3baf1193c85774b3fd9d18447d76cab0");
+        PlatformConfig.setWeixin("wxc329f4902defc332", "0a862006e67e9abd75d07140afac12b7");
         //豆瓣RENREN平台目前只能在服务器端配置
         PlatformConfig.setSinaWeibo("3921700954", "04b48b094faeb16683c32669824ebdad","http://sns.whalecloud.com");
         PlatformConfig.setQQZone("100424468", "c7394704798a158208a74ab60104f0ba");

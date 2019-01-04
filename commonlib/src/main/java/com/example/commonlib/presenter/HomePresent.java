@@ -14,11 +14,17 @@ public class HomePresent extends BasePresenter<HomeContract.View> implements Hom
     private HomeModel model = new HomeModel();
     private HomeContract.View view;
 
-    public HomePresent(HomeContract.View view) {
-        this.view = view;
-    }
+//    public HomePresent(HomeContract.View view) {
+//        this.view = view;
+//    }
 
     private static final String TAG = "HomePresent";
+
+
+    public HomePresent(HomeContract.View mMvpView) {
+        super(mMvpView);
+    }
+
     @Override
     public void userLogin() {
         model.userLogin(new BaseObserver<UserGson>() {

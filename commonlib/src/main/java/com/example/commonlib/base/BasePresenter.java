@@ -2,7 +2,11 @@ package com.example.commonlib.base;
 
 public class BasePresenter<T extends BaseView> implements Presenter<T> {
 
-    private T mMvpView;
+    protected T mMvpView;
+
+    public BasePresenter(T mMvpView) {
+        this.mMvpView = mMvpView;
+    }
 
     @Override
     public void attachView(T mvpView) {

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    tools:ignore="MissingDefaultResource">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:id="@+id/iv_goods"
+        android:src="@mipmap/app_icon"
+        android:padding="@dimen/dp_15"
+        android:layout_height="@dimen/dp_80" />
+<TextView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="跑步鞋"
+    android:id="@+id/tv_goodsName"
+    android:gravity="center"
+    android:padding="@dimen/dp_7"
+    android:textColor="#000"/>
+</LinearLayout>

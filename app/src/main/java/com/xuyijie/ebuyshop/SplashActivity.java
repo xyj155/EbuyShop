@@ -1,7 +1,6 @@
 package com.xuyijie.ebuyshop;
 
 import android.app.Activity;
-import android.app.Notification;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.Window;
@@ -26,7 +25,7 @@ public class SplashActivity extends Activity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                ARouter.getInstance().build(RouterUtil.LOGIN).navigation();
+                ARouter.getInstance().build(RouterUtil.HomePage).navigation();
                 finish();
             }
         }, 2500);

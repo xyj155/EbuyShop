@@ -21,7 +21,7 @@ import com.example.home.fragment.HomeFragment;
 import java.util.List;
 
 
-@Route(path = RouterUtil.Splash)
+@Route(path = RouterUtil.HomePage)
 public class MainActivity extends BaseActivity<HomeContract.View, HomePresent> implements HomeContract.View {
 
 

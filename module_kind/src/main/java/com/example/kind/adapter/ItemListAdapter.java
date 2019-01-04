@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.RadioButton;
 
+import com.example.commonlib.gson.KindItemGson;
 import com.xuyijie.kind.R;
 
 import java.util.List;
@@ -15,13 +16,12 @@ import java.util.List;
 public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ViewHolder> {
 
     private int index = 0;//标记当前选择的选项
-    private List<String> data;
+    private List<KindItemGson> data;
 
-    public ItemListAdapter(@Nullable List<String> data) {
+    public ItemListAdapter(@Nullable List<KindItemGson> data) {
 
         this.data = data;
     }
-
 
 
     @Override
@@ -31,12 +31,13 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
-        holder.rbTitle.setText(data.get(position));
+        holder.rbTitle.setText(data.get(position).getKind_name());
         holder.rbTitle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     index = position;
+                    onItemClickListener.onClickListener(data.get(position).getId());
                 }
                 notifyDataSetChanged();
             }
@@ -66,5 +67,15 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ViewHo
             rbTitle = itemView.findViewById(R.id.rb_kind_name);
             indicate = itemView.findViewById(R.id.view_indicate);
         }
+    }
+
+    private onItemClickListener onItemClickListener;
+
+    public void setOnItemClickListener(onItemClickListener onItemClickListener) {
+        this.onItemClickListener = onItemClickListener;
+    }
+
+    public interface onItemClickListener {
+        void onClickListener(int pid);
     }
 }
