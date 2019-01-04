@@ -3,8 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="#fff"
     android:layout_height="match_parent"
+    android:background="#fff"
     tools:context=".LoginActivity">
 
     <LinearLayout
@@ -28,51 +28,47 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_50"
-            android:inputType="phone|number"
-            android:textSize="15sp"
             android:layout_marginTop="@dimen/dp_8"
             android:layout_marginBottom="@dimen/dp_10"
             android:background="@drawable/login_border_1_bg"
             android:hint="请输入手机号"
-            android:paddingLeft="@dimen/dp_30" />
+            android:inputType="phone|number"
+            android:paddingLeft="@dimen/dp_30"
+            android:textSize="15sp" />
 
         <EditText
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_50"
-            android:textSize="15sp"
             android:background="@drawable/login_border_1_bg"
             android:hint="请输入密码"
             android:inputType="textPassword"
-            android:paddingLeft="@dimen/dp_30" />
+            android:paddingLeft="@dimen/dp_30"
+            android:textSize="15sp" />
+
         <TextView
-            android:layout_width="match_parent"
-            android:layout_marginTop="@dimen/dp_30"
-            android:textColor="#fff"
             android:id="@+id/tv_login"
-            android:text="登录"
-            android:gravity="center"
-            android:textSize="17sp"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_50"
+            android:layout_marginTop="@dimen/dp_30"
             android:background="@drawable/login_tv_1_bg"
-            android:layout_height="@dimen/dp_50"/>
+            android:gravity="center"
+            android:text="登录"
+            android:textColor="#fff"
+            android:textSize="17sp" />
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-            <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="验证码登陆"
-            android:textSize="13sp"
-            android:padding="@dimen/dp_8"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
                 android:padding="@dimen/dp_8"
                 android:text="忘记密码"
-                android:textSize="13sp"
-                android:layout_alignParentRight="true" />
+                android:textSize="13sp" />
         </RelativeLayout>
 
     </LinearLayout>
@@ -114,24 +110,24 @@
         android:weightSum="3">
 
         <ImageView
+            android:id="@+id/iv_qq"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:id="@+id/iv_qq"
             android:src="@mipmap/ic_qq" />
 
         <ImageView
+            android:id="@+id/iv_wechat"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:src="@mipmap/ic_wechat"
-            android:id="@+id/iv_wechat"/>
+            android:src="@mipmap/ic_phone" />
 
         <ImageView
+            android:id="@+id/iv_sina"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:id="@+id/iv_sina"
             android:src="@mipmap/ic_weibo" />
     </LinearLayout>
 </RelativeLayout>
