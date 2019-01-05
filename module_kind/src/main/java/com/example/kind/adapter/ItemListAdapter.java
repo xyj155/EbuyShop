@@ -37,7 +37,7 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ViewHo
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     index = position;
-                    onItemClickListener.onClickListener(data.get(position).getId());
+                    onItemClickListener.onClickListener(data.get(position).getId(),data.get(position).getKind_name());
                 }
                 notifyDataSetChanged();
             }
@@ -76,6 +76,6 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ViewHo
     }
 
     public interface onItemClickListener {
-        void onClickListener(int pid);
+        void onClickListener(int pid,String name);
     }
 }

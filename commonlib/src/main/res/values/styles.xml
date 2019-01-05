@@ -31,5 +31,12 @@
     <declare-styleable name="ArcImageView">
         <attr name="arcHeight" />
     </declare-styleable>
+    <!--可回弹RecyclerView的自定义属性-->
+    <declare-styleable name="BounceRecyclerView">
+        <attr name="oritation">
+            <enum name="vertical" value="0"/>
+            <enum name="horizontal" value="1"/>
+        </attr>
+    </declare-styleable>
 
 </resources>

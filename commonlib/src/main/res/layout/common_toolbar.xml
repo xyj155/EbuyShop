@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/tb_common"
+    android:background="#fff"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dp_55">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="@dimen/dp_80">
+    <TextView
+        android:layout_width="wrap_content"
+        android:textColor="#000"
+        android:text=""
+        android:id="@+id/tv_title"
+        android:gravity="left|center"
+        android:maxLength="11"
+        android:ellipsize="end"
+        android:layout_height="match_parent" />
+
+    </RelativeLayout>
+</android.support.v7.widget.Toolbar>

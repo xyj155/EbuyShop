@@ -1,2 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.commonlib" />
+    package="com.example.commonlib">
+
+    <application android:name=".MyApp">
+        <activity android:name=".commonactivity.BrowserActivity"
+            android:windowSoftInputMode="stateHidden|adjustResize"/>
+    </application>
+
+</manifest>

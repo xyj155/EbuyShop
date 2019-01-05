@@ -127,7 +127,7 @@
             android:layout_marginLeft="@dimen/dp_8"
             android:layout_marginTop="@dimen/dp_4"
             android:layout_marginRight="@dimen/dp_8"
-            android:background="@drawable/bg_my_picture"
+            android:background="@drawable/live_badge_list_bg"
             android:gravity="center"
             android:orientation="vertical">
 

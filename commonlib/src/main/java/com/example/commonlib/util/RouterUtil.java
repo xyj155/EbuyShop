@@ -9,4 +9,5 @@ public class RouterUtil {
     public static final String Kind_Fragment_Main = "/kind/index";
     public static final String Me_Fragment_Main = "/user/index";
     public static final String LOGIN = "/login/index";
+    public static final String BROWSER = "/web/browser";
 }

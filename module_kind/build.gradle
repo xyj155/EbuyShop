@@ -1,6 +1,6 @@
-if(isNeedKindModule.toBoolean()){
+if (isNeedKindModule.toBoolean()) {
     apply plugin: 'com.android.application'
-}else{
+} else {
     apply plugin: 'com.android.library'
 }
 apply plugin: 'com.jakewharton.butterknife'
@@ -14,7 +14,7 @@ android {
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
-
+        multiDexEnabled true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         javaCompileOptions {
             annotationProcessorOptions {
@@ -35,7 +35,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-    dataBinding{
+    dataBinding {
         enabled = true
     }
     sourceSets {
@@ -58,6 +58,7 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'com.alibaba:arouter-api:1.4.1'
+    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
     annotationProcessor 'com.alibaba:arouter-compiler:1.2.2'
     implementation project(':commonlib')
     api 'com.jakewharton:butterknife:8.8.1'

@@ -1,13 +1,13 @@
 package com.example.home.fragment;
 
 import android.content.Context;
-import android.databinding.DataBindingUtil;
-import android.databinding.ViewDataBinding;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Handler;
 import android.support.annotation.RequiresApi;
 import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
@@ -16,23 +16,23 @@ import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.bumptech.glide.Glide;
 import com.example.commonlib.base.BaseFragment;
 import com.example.commonlib.gson.GoodsGson;
-import com.example.commonlib.loader.GlideImageLoader;
+import com.example.commonlib.loader.BannerViewHolder;
 import com.example.commonlib.presenter.HomePresent;
 import com.example.commonlib.util.RouterUtil;
 import com.example.commonlib.view.ObservableScrollView;
+import com.example.home.fragment.adapter.HomeGoodsTimerPurseAdapter;
+import com.example.home.fragment.adapter.HomeHotGoodsItemAdapter;
 import com.example.home.fragment.entity.ComplexItemEntity;
+import com.example.home.fragment.entity.HotGoodsEntity;
 import com.example.home.fragment.util.ComplexViewMF;
 import com.gongwen.marqueen.MarqueeFactory;
 import com.gongwen.marqueen.MarqueeView;
-import com.gongwen.marqueen.SimpleMF;
-import com.gongwen.marqueen.SimpleMarqueeView;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshFooter;
 import com.scwang.smartrefresh.layout.api.RefreshHeader;
@@ -41,12 +41,12 @@ import com.scwang.smartrefresh.layout.constant.RefreshState;
 import com.scwang.smartrefresh.layout.listener.OnMultiPurposeListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.xuyijie.home.R;
-import com.youth.banner.Banner;
-import com.youth.banner.BannerConfig;
-import com.youth.banner.Transformer;
+
+import com.zhouwei.mzbanner.MZBannerView;
+import com.zhouwei.mzbanner.holder.MZHolderCreator;
+import com.zhouwei.mzbanner.holder.MZViewHolder;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import static com.chad.library.adapter.base.listener.SimpleClickListener.TAG;
@@ -55,17 +55,19 @@ import static com.chad.library.adapter.base.listener.SimpleClickListener.TAG;
 public class HomeFragment extends BaseFragment<HomePresent> {
 
 
-    private Banner banner;
+    private MZBannerView<String> banner;
     private PurseGoodsAdapter purseGoodsAdapter;
-    private RecyclerView ryPurse;
+    private RecyclerView ryPurse, ryTimerPurse, ryHot;
     private List<GoodsGson> goodsGsons = new ArrayList<>();
     private ObservableScrollView slHome;
     private int mHeight;
     private LinearLayout llTitle;
     private TextView tvSearch;
 
-    private ImageView ivKind, ivShopCar;
+    private ImageView ivKind, ivShopCar, ivBanner;
     private SmartRefreshLayout srHome;
+    private HomeGoodsTimerPurseAdapter homeGoodsTimerPurseAdapter;
+    private HomeHotGoodsItemAdapter homeHotGoodsItemAdapter;
 
     @Override
     public void initData() {
@@ -77,6 +79,16 @@ public class HomeFragment extends BaseFragment<HomePresent> {
     @Override
     public void initView(View view) {
         srHome = view.findViewById(R.id.srHome);
+        ryHot = view.findViewById(R.id.ryHot);
+        ivBanner = view.findViewById(R.id.ivBanner);
+        Glide.with(getActivity()).asBitmap().load("https://img.zcool.cn/community/01f2f95a0c2334a801204a0eac24d2.png@1280w_1l_2o_100sh.png").into(ivBanner);
+        ryHot.setLayoutManager(new GridLayoutManager(getContext(), 4));
+
+        ryTimerPurse = view.findViewById(R.id.ry_timerPurse);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+        linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        ryTimerPurse.setLayoutManager(linearLayoutManager);
+
         banner = view.findViewById(R.id.banner);
         ryPurse = view.findViewById(R.id.ryPurse);
         slHome = view.findViewById(R.id.slHome);
@@ -84,29 +96,38 @@ public class HomeFragment extends BaseFragment<HomePresent> {
         tvSearch = view.findViewById(R.id.tvSearch);
         ivKind = view.findViewById(R.id.ivKind);
         ivShopCar = view.findViewById(R.id.ivShopCar);
-
+        List<HotGoodsEntity> hotGoodsEntityList = new ArrayList<>();
+        hotGoodsEntityList.add(new HotGoodsEntity("https://img.alicdn.com/imgextra/i4/124629234/O1CN01cgUEoG2I5DlIlxmUi_!!0-saturn_solar.jpg_220x220.jpg_.webp",
+                "Top热卖", "2018推荐"));
+        hotGoodsEntityList.add(new HotGoodsEntity("https://img.alicdn.com/imgextra/i2/2585780740/O1CN011HKxYBjGug0VPwX_!!2585780740-0-beehive-scenes.jpg_180x180xzq90.jpg_.webp",
+                "每日上新", "ARRIVAL"));
+        hotGoodsEntityList.add(new HotGoodsEntity("https://img.alicdn.com/bao/uploaded/TB2MhuHeiGO.eBjSZFEXXcy9VXa_!!0-dgshop.jpg_180x180xzq90.jpg_.webp",
+                "节日爆款", "热卖中..."));
+        hotGoodsEntityList.add(new HotGoodsEntity("https://img.alicdn.com/bao/uploaded/TB2GWj4vgxlpuFjy0FoXXa.lXXa_!!417920244.jpg_180x180xzq90.jpg_.webp",
+                "私人订制", "专属的角色"));
+        homeHotGoodsItemAdapter = new HomeHotGoodsItemAdapter(hotGoodsEntityList, getContext());
+        ryHot.setAdapter(homeHotGoodsItemAdapter);
 
         StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
         ryPurse.setLayoutManager(staggeredGridLayoutManager);
         initData();//初始化数据
         ryPurse.setItemAnimator(new DefaultItemAnimator());
-        banner.setBannerStyle(BannerConfig.CENTER);
-        banner.setImageLoader(new GlideImageLoader());
         List<String> images = new ArrayList<>();
         images.add("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1545032090&di=659174bccea53c9461eed981cecfc15e&imgtype=jpg&er=1&src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F01274c5841176fa801219c77c4ecd6.png%402o.png");
         images.add("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1544437369676&di=12100c24b51fa3ee49f97394d4739de9&imgtype=0&src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F016ad958eddb0ba8012049ef9f8413.jpg%401280w_1l_2o_100sh.jpg");
         images.add("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1544437369676&di=dc08ba14ee8a3fed755f36bde08647ea&imgtype=0&src=http%3A%2F%2Fpic101.nipic.com%2Ffile%2F20160621%2F23040058_143914199524_2.jpg");
         images.add("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1544437369673&di=d529c1a0f188d5e097977c8678d7ccbb&imgtype=0&src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F01c9db56c5706832f875520f596bba.png%401280w_1l_2o_100sh.png");
         images.add("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1544437369673&di=2d3458515c5badccdb40accde18f5b77&imgtype=0&src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F01538558abd2a0a801219c773a1c5d.jpg%401280w_1l_2o_100sh.jpg");
-        banner.setImages(images);
-        //设置banner动画效果
-        banner.setBannerAnimation(Transformer.DepthPage);
-        //设置自动轮播，默认为true
-        banner.isAutoPlay(true);
-        //设置轮播时间
-        banner.setDelayTime(5000);
-        //设置指示器位置（当banner模式中有指示器时）
-        banner.setIndicatorGravity(BannerConfig.CENTER);
+        // 设置 Indicator资源BannerViewHolder
+//        banner.setIndicatorRes( int unSelectRes, int selectRes)
+        banner.setPages(images, new MZHolderCreator() {
+            @Override
+            public MZViewHolder createViewHolder() {
+                return new BannerViewHolder();
+            }
+        });
+        banner.setDuration(200);
+        banner.setIndicatorVisible(true);
         banner.start();
 
         GoodsGson goodsGson = new GoodsGson();
@@ -152,7 +173,8 @@ public class HomeFragment extends BaseFragment<HomePresent> {
         ryPurse.setFocusable(false);
         purseGoodsAdapter = new PurseGoodsAdapter(goodsGsons, getContext());
         ryPurse.setAdapter(purseGoodsAdapter);
-
+        homeGoodsTimerPurseAdapter = new HomeGoodsTimerPurseAdapter(goodsGsons, getContext());
+        ryTimerPurse.setAdapter(homeGoodsTimerPurseAdapter);
         ViewTreeObserver viewTreeObserver = banner.getViewTreeObserver();
         viewTreeObserver.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
@@ -202,7 +224,7 @@ public class HomeFragment extends BaseFragment<HomePresent> {
 
             @Override
             public void onHeaderReleased(RefreshHeader header, int headerHeight, int extendHeight) {
-                llTitle.setVisibility(View.GONE);
+                llTitle.setVisibility(View.VISIBLE);
             }
 
             @Override
@@ -217,7 +239,7 @@ public class HomeFragment extends BaseFragment<HomePresent> {
 
             @Override
             public void onHeaderFinish(RefreshHeader header, boolean success) {
-                llTitle.setVisibility(View.GONE);
+                llTitle.setVisibility(View.VISIBLE);
             }
 
             @Override
@@ -276,17 +298,33 @@ public class HomeFragment extends BaseFragment<HomePresent> {
             }
         });
         final List<ComplexItemEntity> datas = new ArrayList<>();
-        datas.add(new ComplexItemEntity("我的的的武大大爱的啊大大",""));
-        datas.add(new ComplexItemEntity("我发达爱的撒旦啊的的武大大爱的啊大大",""));
-        datas.add(new ComplexItemEntity("阿大声道阿达大爱的",""));
-        datas.add(new ComplexItemEntity("阿达达到阿达的阿达阿达阿打算",""));
-        datas.add(new ComplexItemEntity("打撒旦打发顺丰阿达阿达阿达啊",""));
+        datas.add(new ComplexItemEntity("我的的的武大大爱的啊大大", ""));
+        datas.add(new ComplexItemEntity("我发达爱的撒旦啊的的武大大爱的啊大大", ""));
+        datas.add(new ComplexItemEntity("阿大声道阿达大爱的", ""));
+        datas.add(new ComplexItemEntity("阿达达到阿达的阿达阿达阿打算", ""));
+        datas.add(new ComplexItemEntity("打撒旦打发顺丰阿达阿达阿达啊", ""));
         marqueeView = view.findViewById(R.id.marqueeView);
         MarqueeFactory<LinearLayout, ComplexItemEntity> marqueeFactory = new ComplexViewMF(getContext());
         marqueeFactory.setData(datas);
         marqueeView.setMarqueeFactory(marqueeFactory);
         marqueeView.startFlipping();
+        ryHot.setNestedScrollingEnabled(false);
+        ryTimerPurse.setNestedScrollingEnabled(false);
+        ryPurse.setNestedScrollingEnabled(false);
     }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        banner.pause();//暂停轮播
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        banner.start();//开始轮播
+    }
+
 
     private MarqueeView<LinearLayout, ComplexItemEntity> marqueeView;
 

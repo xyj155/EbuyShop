@@ -44,7 +44,7 @@ public class UserFragment extends BaseFragment<HomePresent> {
                 ivHead.setLayoutParams(lp);
             }
         });
-        Glide.with(getContext()).asBitmap().load(R.mipmap.app_icon).into(ivHead);
+        Glide.with(getContext()).asBitmap().load(R.mipmap.ic_user_avatar_bg).into(ivHead);
     }
 
     @Override

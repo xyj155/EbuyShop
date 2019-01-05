@@ -5,6 +5,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.example.commonlib.base.BaseFragment;
@@ -27,6 +28,7 @@ public class KindFragment extends BaseFragment<KindPresenter> implements KindCon
     private GoodsKindItemAdapter goodsKindItem;
     List<KindItemGson> kindItemGsonList = new ArrayList<>();
     List<KindItemGson> goodsList = new ArrayList<>();
+    private TextView tvName;
 
     @Override
     public void initData() {
@@ -38,6 +40,7 @@ public class KindFragment extends BaseFragment<KindPresenter> implements KindCon
 
     @Override
     public void initView(View view) {
+        tvName = view.findViewById(R.id.tv_name);
         ryItem = view.findViewById(R.id.ry_item);
         ryItemList = view.findViewById(R.id.ry_item_list);
         ryItemList.setLayoutManager(new GridLayoutManager(getContext(), 3));
@@ -64,9 +67,10 @@ public class KindFragment extends BaseFragment<KindPresenter> implements KindCon
         ryItem.setAdapter(itemListAdapter);
         itemListAdapter.setOnItemClickListener(new ItemListAdapter.onItemClickListener() {
             @Override
-            public void onClickListener(int pid) {
+            public void onClickListener(int pid, String name) {
                 Log.i(TAG, "onClickListener: " + pid);
                 mPresenter.getGoodsItemList(pid);
+                tvName.setText(name);
             }
         });
     }

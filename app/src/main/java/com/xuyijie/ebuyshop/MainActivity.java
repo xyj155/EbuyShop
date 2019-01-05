@@ -1,12 +1,18 @@
 package com.xuyijie.ebuyshop;
 
 
+import android.app.Notification;
+import android.content.Context;
+import android.content.Intent;
+import android.os.Handler;
 import android.support.annotation.IdRes;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.widget.RadioGroup;
+import android.widget.RemoteViews;
+import android.widget.Toast;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
@@ -16,6 +22,13 @@ import com.example.commonlib.gson.UserGson;
 import com.example.commonlib.presenter.HomePresent;
 import com.example.commonlib.util.RouterUtil;
 import com.example.home.fragment.HomeFragment;
+import com.umeng.message.IUmengRegisterCallback;
+import com.umeng.message.MsgConstant;
+import com.umeng.message.PushAgent;
+import com.umeng.message.UTrack;
+import com.umeng.message.UmengMessageHandler;
+import com.umeng.message.UmengNotificationClickHandler;
+import com.umeng.message.entity.UMessage;
 
 
 import java.util.List;
@@ -33,7 +46,7 @@ public class MainActivity extends BaseActivity<HomeContract.View, HomePresent> i
     Fragment kindFragment;
     Fragment goodsCarFragment;
     Fragment userFragment;
-
+    public static final String UPDATE_STATUS_ACTION = "com.xuyijie.ebuyshop.action.UPDATE_STATUS";
     @Override
     public HomePresent getPresenter() {
         return new HomePresent(this);
@@ -55,7 +68,6 @@ public class MainActivity extends BaseActivity<HomeContract.View, HomePresent> i
                 hideAllFragment(transaction);
                 switch (checkedId) {
                     case R.id.rb_home:
-//                        Fragment homeFragment=(Fragment)ARouter.getInstance().build(RouterUtil.Home_Fragment_Main).navigation();
                         if (homeFragment == null) {
                             homeFragment = (Fragment)ARouter.getInstance().build(RouterUtil.Home_Fragment_Main).navigation();
                             transaction.add(R.id.flContainer, homeFragment);
@@ -93,6 +105,10 @@ public class MainActivity extends BaseActivity<HomeContract.View, HomePresent> i
             }
         });
         showFirstPosition();
+//        onUmengPush();
+
+
+
     }
 
     private void showFirstPosition() {
@@ -102,7 +118,6 @@ public class MainActivity extends BaseActivity<HomeContract.View, HomePresent> i
         transaction.add(R.id.flContainer, homeFragment);
         transaction.commit();
     }
-
 
     public void hideAllFragment(FragmentTransaction transaction) {
         if (homeFragment != null) {
