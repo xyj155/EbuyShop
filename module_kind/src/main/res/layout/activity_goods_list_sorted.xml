@@ -4,9 +4,81 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#fff"
     android:orientation="vertical"
     tools:context="com.example.kind.view.GoodsListSortedActivity"
     tools:ignore="MissingDefaultResource">
-<include layout="@layout/common_toolbar"/>
+
+    <include layout="@layout/common_toolbar" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dp_7">
+
+        <RadioGroup
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dp_8"
+            android:id="@+id/rg_sorted"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:button="@null"
+                android:paddingLeft="@dimen/dp_13"
+                android:id="@+id/rb_hot"
+                android:paddingRight="@dimen/dp_13"
+                android:text="人气"
+                android:textColor="@color/color_goods_sorted_tv_themes"
+                android:textStyle="bold" />
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/rb_news"
+                android:button="@null"
+                android:paddingLeft="@dimen/dp_13"
+                android:paddingRight="@dimen/dp_13"
+                android:text="新品"
+                android:textColor="@color/color_goods_sorted_tv_themes"
+                android:textStyle="bold" />
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:id="@+id/rb_price"
+                android:layout_height="wrap_content"
+                android:button="@null"
+                android:paddingLeft="@dimen/dp_13"
+                android:paddingRight="@dimen/dp_3"
+                android:text="价格"
+                android:textColor="@color/color_goods_sorted_tv_themes"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/iv_price_sorted"
+                android:layout_gravity="center"
+                android:src="@mipmap/mall_category_goods_price_unselected" />
+        </RadioGroup>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/dp_8"
+            android:background="@drawable/goods_sorted_tv_bg"
+            android:drawableRight="@mipmap/mall_category_goods_condition_g3"
+            android:drawablePadding="@dimen/dp_4"
+            android:paddingLeft="@dimen/dp_8"
+            android:paddingTop="@dimen/dp_4"
+            android:paddingRight="@dimen/dp_8"
+            android:paddingBottom="@dimen/dp_4"
+            android:text="筛选" />
+    </RelativeLayout>
 
 </LinearLayout>

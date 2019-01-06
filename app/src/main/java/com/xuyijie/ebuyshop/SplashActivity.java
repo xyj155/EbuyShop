@@ -35,10 +35,10 @@ public class SplashActivity extends Activity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                ARouter.getInstance().build(RouterUtil.HomePage).navigation();
+                ARouter.getInstance().build(RouterUtil.GOODSSORTED).navigation();
                 finish();
             }
-        }, 2500);
+        }, 1);
 
     }
 

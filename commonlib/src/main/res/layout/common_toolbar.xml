@@ -1,23 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/tb_common"
-    android:background="#fff"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/dp_55">
+    android:layout_height="@dimen/dp_55"
+    android:background="#fff">
 
-    <RelativeLayout
+
+    <ImageView
+        android:id="@+id/iv_close"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_margin="@dimen/dp_8"
+        android:src="@mipmap/ic_back" />
+
+    <TextView
+        android:id="@+id/tv_title"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginLeft="@dimen/dp_80">
-    <TextView
-        android:layout_width="wrap_content"
-        android:textColor="#000"
-        android:text=""
-        android:id="@+id/tv_title"
-        android:gravity="left|center"
-        android:maxLength="11"
+        android:layout_toEndOf="@+id/iv_close"
         android:ellipsize="end"
-        android:layout_height="match_parent" />
+        android:gravity="center|left"
+        android:maxLength="11"
+        android:text=""
+        android:textColor="#000" />
 
-    </RelativeLayout>
-</android.support.v7.widget.Toolbar>
+</RelativeLayout>

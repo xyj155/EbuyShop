@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.commonlib.R;
@@ -70,14 +71,13 @@ public abstract class BaseActivity<V extends BaseView, T extends BasePresenter<V
         }
     }
 
-    private Toolbar toolbar;
+    private ImageView ivClose;
     private TextView tvTitle;
 
     public BaseActivity initToolBar() {
-        toolbar = findViewById(R.id.tb_common);
+        ivClose = findViewById(R.id.iv_close);
         tvTitle = findViewById(R.id.tv_title);
-        toolbar.setNavigationIcon(R.mipmap.ic_back);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+        ivClose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
