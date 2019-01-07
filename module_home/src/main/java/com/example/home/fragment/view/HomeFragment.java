@@ -1,6 +1,5 @@
-package com.example.home.fragment;
+package com.example.home.fragment.view;
 
-import android.content.Context;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Handler;
@@ -11,7 +10,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.ImageView;
@@ -21,15 +19,19 @@ import android.widget.TextView;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.bumptech.glide.Glide;
 import com.example.commonlib.base.BaseFragment;
+
 import com.example.commonlib.gson.GoodsGson;
+import com.example.commonlib.gson.HotPurseActivityGson;
 import com.example.commonlib.loader.BannerViewHolder;
-import com.example.commonlib.presenter.HomePresent;
+
 import com.example.commonlib.util.RouterUtil;
 import com.example.commonlib.view.ObservableScrollView;
+import com.example.home.fragment.PurseGoodsAdapter;
 import com.example.home.fragment.adapter.HomeGoodsTimerPurseAdapter;
-import com.example.home.fragment.adapter.HomeHotGoodsItemAdapter;
+import com.example.home.fragment.adapter.HomeHotGoodsActivityAdapter;
+import com.example.home.fragment.contract.HomePageContract;
 import com.example.home.fragment.entity.ComplexItemEntity;
-import com.example.home.fragment.entity.HotGoodsEntity;
+import com.example.home.fragment.presenter.HomePagePresenter;
 import com.example.home.fragment.util.ComplexViewMF;
 import com.gongwen.marqueen.MarqueeFactory;
 import com.gongwen.marqueen.MarqueeView;
@@ -52,13 +54,13 @@ import java.util.List;
 import static com.chad.library.adapter.base.listener.SimpleClickListener.TAG;
 
 @Route(path = RouterUtil.Home_Fragment_Main)
-public class HomeFragment extends BaseFragment<HomePresent> {
+public class HomeFragment extends BaseFragment<HomePagePresenter> implements HomePageContract.View {
 
 
     private MZBannerView<String> banner;
     private PurseGoodsAdapter purseGoodsAdapter;
     private RecyclerView ryPurse, ryTimerPurse, ryHot;
-    private List<GoodsGson> goodsGsons = new ArrayList<>();
+
     private ObservableScrollView slHome;
     private int mHeight;
     private LinearLayout llTitle;
@@ -67,7 +69,7 @@ public class HomeFragment extends BaseFragment<HomePresent> {
     private ImageView ivKind, ivShopCar, ivBanner;
     private SmartRefreshLayout srHome;
     private HomeGoodsTimerPurseAdapter homeGoodsTimerPurseAdapter;
-    private HomeHotGoodsItemAdapter homeHotGoodsItemAdapter;
+    private HomeHotGoodsActivityAdapter homeHotGoodsItemAdapter;
 
     @Override
     public void initData() {
@@ -96,16 +98,7 @@ public class HomeFragment extends BaseFragment<HomePresent> {
         tvSearch = view.findViewById(R.id.tvSearch);
         ivKind = view.findViewById(R.id.ivKind);
         ivShopCar = view.findViewById(R.id.ivShopCar);
-        List<HotGoodsEntity> hotGoodsEntityList = new ArrayList<>();
-        hotGoodsEntityList.add(new HotGoodsEntity("https://img.alicdn.com/imgextra/i4/124629234/O1CN01cgUEoG2I5DlIlxmUi_!!0-saturn_solar.jpg_220x220.jpg_.webp",
-                "Top热卖", "2018推荐"));
-        hotGoodsEntityList.add(new HotGoodsEntity("https://img.alicdn.com/imgextra/i2/2585780740/O1CN011HKxYBjGug0VPwX_!!2585780740-0-beehive-scenes.jpg_180x180xzq90.jpg_.webp",
-                "每日上新", "ARRIVAL"));
-        hotGoodsEntityList.add(new HotGoodsEntity("https://img.alicdn.com/bao/uploaded/TB2MhuHeiGO.eBjSZFEXXcy9VXa_!!0-dgshop.jpg_180x180xzq90.jpg_.webp",
-                "节日爆款", "热卖中..."));
-        hotGoodsEntityList.add(new HotGoodsEntity("https://img.alicdn.com/bao/uploaded/TB2GWj4vgxlpuFjy0FoXXa.lXXa_!!417920244.jpg_180x180xzq90.jpg_.webp",
-                "私人订制", "专属的角色"));
-        homeHotGoodsItemAdapter = new HomeHotGoodsItemAdapter(hotGoodsEntityList, getContext());
+        homeHotGoodsItemAdapter = new HomeHotGoodsActivityAdapter(null, getContext());
         ryHot.setAdapter(homeHotGoodsItemAdapter);
 
         StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
@@ -118,8 +111,6 @@ public class HomeFragment extends BaseFragment<HomePresent> {
         images.add("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1544437369676&di=dc08ba14ee8a3fed755f36bde08647ea&imgtype=0&src=http%3A%2F%2Fpic101.nipic.com%2Ffile%2F20160621%2F23040058_143914199524_2.jpg");
         images.add("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1544437369673&di=d529c1a0f188d5e097977c8678d7ccbb&imgtype=0&src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F01c9db56c5706832f875520f596bba.png%401280w_1l_2o_100sh.png");
         images.add("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1544437369673&di=2d3458515c5badccdb40accde18f5b77&imgtype=0&src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F01538558abd2a0a801219c773a1c5d.jpg%401280w_1l_2o_100sh.jpg");
-        // 设置 Indicator资源BannerViewHolder
-//        banner.setIndicatorRes( int unSelectRes, int selectRes)
         banner.setPages(images, new MZHolderCreator() {
             @Override
             public MZViewHolder createViewHolder() {
@@ -129,51 +120,11 @@ public class HomeFragment extends BaseFragment<HomePresent> {
         banner.setDuration(200);
         banner.setIndicatorVisible(true);
         banner.start();
-
-        GoodsGson goodsGson = new GoodsGson();
-        goodsGson.setImgUrl("https://gd4.alicdn.com/imgextra/i3/3133163697/O1CN01vIKMhK1dBGjaWkcdp_!!3133163697.jpg_400x400.jpg");
-        goodsGson.setPrice("¥99.00");
-        goodsGson.setGoodsName("欧洲站2018冬纯棉厚女毛衣圣诞节搭配红色套头气质可爱减龄黑色");
-        goodsGsons.add(goodsGson);
-
-        GoodsGson goodsGson1 = new GoodsGson();
-        goodsGson1.setImgUrl("https://gd1.alicdn.com/imgextra/i4/3573721295/O1CN01BClOdS1LR9Nuc7o1c_!!3573721295.jpg_400x400.jpg");
-        goodsGson1.setPrice("¥99.00");
-        goodsGson1.setGoodsName("欧洲站2018冬纯棉厚女毛衣圣诞节搭配红色套头气质可爱减龄黑色");
-        goodsGsons.add(goodsGson1);
-
-        GoodsGson goodsGson2 = new GoodsGson();
-        goodsGson2.setImgUrl("https://gd4.alicdn.com/imgextra/i4/3573721295/O1CN019k1xGy1LR9NvunXbw_!!3573721295.jpg");
-        goodsGson2.setPrice("¥99.00");
-        goodsGson2.setGoodsName("欧洲站2018冬纯棉厚女毛衣圣诞节搭配红色套头气质可爱减龄黑色");
-        goodsGsons.add(goodsGson2);
-
-        GoodsGson goodsGson3 = new GoodsGson();
-        goodsGson3.setImgUrl("https://gd1.alicdn.com/imgextra/i1/3573721295/O1CN01vbPoUm1LR9Nuc6Ofy_!!0-item_pic.jpg");
-        goodsGson3.setPrice("¥99.00");
-        goodsGson3.setGoodsName("欧洲站2018冬纯棉厚女毛衣圣诞节搭配红色套头气质可爱减龄黑色");
-        goodsGsons.add(goodsGson3);
-
-        GoodsGson goodsGson4 = new GoodsGson();
-        goodsGson4.setImgUrl("https://gd1.alicdn.com/imgextra/i3/2452623060/O1CN011yVtcD1YTWR9UyVpX_!!2452623060.jpg_400x400.jpg");
-        goodsGson4.setPrice("¥99.00");
-        goodsGson4.setGoodsName("欧洲站2018冬纯棉厚女毛衣圣诞节搭配红色套头气质可爱减龄黑色");
-        goodsGsons.add(goodsGson4);
-        GoodsGson goodsGson5 = new GoodsGson();
-        goodsGson5.setImgUrl("https://img.alicdn.com/imgextra/i4/253650070/O1CN01pLOz1g1CO6Clo12b5_!!0-saturn_solar.jpg_220x220.jpg_.webp");
-        goodsGson5.setPrice("¥99.00");
-        goodsGson5.setGoodsName("欧洲站2018冬纯棉厚女毛衣圣诞节搭配红色套头气质可爱减龄黑色");
-        goodsGsons.add(goodsGson5);
-        GoodsGson goodsGson6 = new GoodsGson();
-        goodsGson6.setImgUrl("https://img.alicdn.com/imgextra/i3/253650070/O1CN01sucKD11CO6Ct31Hki_!!0-saturn_solar.jpg_220x220.jpg_.webp");
-        goodsGson6.setPrice("¥99.00");
-        goodsGson6.setGoodsName("欧洲站2018冬纯棉厚女毛衣圣诞节搭配红色套头气质可爱减龄黑色");
-        goodsGsons.add(goodsGson6);
         ryPurse.setNestedScrollingEnabled(false);
         ryPurse.setFocusable(false);
-        purseGoodsAdapter = new PurseGoodsAdapter(goodsGsons, getContext());
+        purseGoodsAdapter = new PurseGoodsAdapter(null, getContext());
         ryPurse.setAdapter(purseGoodsAdapter);
-        homeGoodsTimerPurseAdapter = new HomeGoodsTimerPurseAdapter(goodsGsons, getContext());
+        homeGoodsTimerPurseAdapter = new HomeGoodsTimerPurseAdapter(null, getContext());
         ryTimerPurse.setAdapter(homeGoodsTimerPurseAdapter);
         ViewTreeObserver viewTreeObserver = banner.getViewTreeObserver();
         viewTreeObserver.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -215,11 +166,14 @@ public class HomeFragment extends BaseFragment<HomePresent> {
             }
         });
         srHome.autoRefresh();
+        mPresenter.setPurseGoodsList("1","0");
+//        mPresenter.setTimerGoodsList("0");
         srHome.setOnMultiPurposeListener(new OnMultiPurposeListener() {
             @Override
             public void onHeaderPulling(RefreshHeader header, float percent, int offset, int headerHeight, int extendHeight) {
-                Log.i(TAG, "onHeaderPulling: " + headerHeight + "----------" + extendHeight);
+                Log.i(TAG, "onHeaderPulling: " + headerHeight + "----------" + extendHeight+"---------"+percent);
                 llTitle.setVisibility(View.GONE);
+
             }
 
             @Override
@@ -229,7 +183,7 @@ public class HomeFragment extends BaseFragment<HomePresent> {
 
             @Override
             public void onHeaderReleasing(RefreshHeader header, float percent, int offset, int headerHeight, int extendHeight) {
-                llTitle.setVisibility(View.GONE);
+                llTitle.setVisibility(View.VISIBLE);
             }
 
             @Override
@@ -279,11 +233,11 @@ public class HomeFragment extends BaseFragment<HomePresent> {
 
             @Override
             public void onStateChanged(RefreshLayout refreshLayout, RefreshState oldState, RefreshState newState) {
-                if (!newState.opening || newState.dragging || oldState.dragging || oldState.opening) {
-                    llTitle.setVisibility(View.VISIBLE);
-                } else {
-                    llTitle.setVisibility(View.GONE);
-                }
+//                if (oldState.opening) {
+//                    llTitle.setVisibility(View.VISIBLE);
+//                } else {
+//                    llTitle.setVisibility(View.GONE);
+//                }
             }
         });
         srHome.setOnRefreshListener(new OnRefreshListener() {
@@ -308,9 +262,11 @@ public class HomeFragment extends BaseFragment<HomePresent> {
         marqueeFactory.setData(datas);
         marqueeView.setMarqueeFactory(marqueeFactory);
         marqueeView.startFlipping();
+
         ryHot.setNestedScrollingEnabled(false);
         ryTimerPurse.setNestedScrollingEnabled(false);
         ryPurse.setNestedScrollingEnabled(false);
+
     }
 
     @Override
@@ -346,8 +302,45 @@ public class HomeFragment extends BaseFragment<HomePresent> {
     }
 
     @Override
-    public HomePresent initPresenter() {
-        return null;
+    public HomePagePresenter initPresenter() {
+        return new HomePagePresenter(this);
     }
 
+
+    @Override
+    public void showError(String msg) {
+
+    }
+
+    @Override
+    public void showDialog(String msg) {
+        createDialog(msg);
+    }
+
+
+    @Override
+    public void hideDialog() {
+        dialogCancel();
+        Log.i(TAG, "hideDialog: ");
+    }
+
+
+    @Override
+    public void loadTimeGoodsList(List<GoodsGson> userGson) {
+
+
+        purseGoodsAdapter.replaceData(userGson);
+        Log.i(TAG, "loadTimeGoodsList: "+userGson.size());
+    }
+
+    @Override
+    public void loadPurseGoodsList(List<GoodsGson> userGson) {
+        homeGoodsTimerPurseAdapter.replaceData(userGson);
+        Log.i(TAG, "loadTimeGoodsList: "+userGson.size());
+    }
+
+    @Override
+    public void loadHomeActivity(List<HotPurseActivityGson> userGson) {
+        homeHotGoodsItemAdapter.replaceData(userGson);
+    }
 }

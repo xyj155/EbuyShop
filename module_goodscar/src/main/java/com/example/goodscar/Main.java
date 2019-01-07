@@ -6,13 +6,13 @@ import android.util.Log;
 import com.example.commonlib.base.BaseActivity;
 import com.example.commonlib.contract.HomeContract;
 import com.example.commonlib.gson.UserGson;
-import com.example.commonlib.presenter.HomePresent;
+import com.example.commonlib.presenter.LoginPresent;
 
 import java.util.List;
 
 
-public class Main extends BaseActivity<HomeContract.View, HomePresent> implements HomeContract.View {
-    //    private HomePresent homePresent = new HomePresent(this);
+public class Main extends BaseActivity<HomeContract.View, LoginPresent> implements HomeContract.View {
+    //    private LoginPresent homePresent = new LoginPresent(this);
     private static final String TAG = "Main";
 
     @Override
@@ -30,8 +30,8 @@ public class Main extends BaseActivity<HomeContract.View, HomePresent> implement
 
 
     @Override
-    public HomePresent getPresenter() {
-        return new HomePresent(this);
+    public LoginPresent getPresenter() {
+        return new LoginPresent(this);
     }
 
     @Override
@@ -60,10 +60,7 @@ public class Main extends BaseActivity<HomeContract.View, HomePresent> implement
 
     }
 
-    @Override
-    public void showDialog() {
 
-    }
 
     @Override
     public void hideDialog() {

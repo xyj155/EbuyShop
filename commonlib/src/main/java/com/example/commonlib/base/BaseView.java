@@ -6,7 +6,6 @@ public interface BaseView {
 
     void showDialog(String msg);
 
-    void showDialog();
 
     void hideDialog();
 

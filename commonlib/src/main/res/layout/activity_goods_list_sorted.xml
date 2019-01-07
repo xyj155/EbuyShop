@@ -4,9 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#fff"
+    android:background="#fafafa"
     android:orientation="vertical"
-    tools:context="com.example.kind.view.GoodsListSortedActivity"
+    tools:context="com.example.commonlib.commonactivity.GoodsListSortedActivity"
     tools:ignore="MissingDefaultResource">
 
     <include layout="@layout/common_toolbar" />
@@ -14,31 +14,32 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="#fff"
         android:padding="@dimen/dp_7">
 
         <RadioGroup
+            android:id="@+id/rg_sorted"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/dp_8"
-            android:id="@+id/rg_sorted"
             android:orientation="horizontal">
 
             <RadioButton
+                android:id="@+id/rb_hot"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:button="@null"
                 android:paddingLeft="@dimen/dp_13"
-                android:id="@+id/rb_hot"
                 android:paddingRight="@dimen/dp_13"
                 android:text="人气"
                 android:textColor="@color/color_goods_sorted_tv_themes"
                 android:textStyle="bold" />
 
             <RadioButton
+                android:id="@+id/rb_news"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/rb_news"
                 android:button="@null"
                 android:paddingLeft="@dimen/dp_13"
                 android:paddingRight="@dimen/dp_13"
@@ -47,8 +48,8 @@
                 android:textStyle="bold" />
 
             <RadioButton
-                android:layout_width="wrap_content"
                 android:id="@+id/rb_price"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:button="@null"
                 android:paddingLeft="@dimen/dp_13"
@@ -58,9 +59,9 @@
                 android:textStyle="bold" />
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:id="@+id/iv_price_sorted"
+                android:layout_width="@dimen/dp_15"
+                android:layout_height="@dimen/dp_15"
                 android:layout_gravity="center"
                 android:src="@mipmap/mall_category_goods_price_unselected" />
         </RadioGroup>
@@ -81,4 +82,19 @@
             android:text="筛选" />
     </RelativeLayout>
 
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/sl_sorted"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.scwang.smartrefresh.layout.header.ClassicsHeader
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:srlEnableLastTime="false" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/ry_sorted"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 </LinearLayout>

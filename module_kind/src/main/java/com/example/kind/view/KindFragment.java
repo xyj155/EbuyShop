@@ -46,7 +46,7 @@ public class KindFragment extends BaseFragment<KindPresenter> implements KindCon
         ryItemList.setLayoutManager(new GridLayoutManager(getContext(), 3));
         ryItem.setLayoutManager(new LinearLayoutManager(getContext()));
         itemListAdapter = new ItemListAdapter(kindItemGsonList);
-        goodsKindItem = new GoodsKindItemAdapter(goodsList, getContext());
+        goodsKindItem = new GoodsKindItemAdapter(goodsList, getActivity());
         mPresenter.getGoodsItemList(1);
     }
 
@@ -94,52 +94,10 @@ public class KindFragment extends BaseFragment<KindPresenter> implements KindCon
 
     }
 
-    @Override
-    public void showDialog() {
-
-    }
 
     @Override
     public void hideDialog() {
 
     }
 
-
-//    @Override
-//    public void setGoodsList(List<KindItemGson> userGson) {
-//        Log.i(TAG, "setGoodsList: " + userGson.get(0));
-//
-//
-//
-//
-//
-//
-//
-//
-//    }
-//
-//    @Override
-//    public void setGoodsItemList(List<KindItemGson> userGson) {
-//        Log.i(TAG, "setGoodsItemList: " + userGson);
-//    }
-//
-//    @Override
-//    public void showError(String msg) {
-//        Log.i(TAG, "showError: " + msg);
-//    }
-//
-//    @Override
-//    public void showDialog(String msg) {
-//
-//    }
-//
-//    @Override
-//    public void showDialog() {
-//
-//    }
-//
-//    @Override
-//    public void hideDialog() {
-//
-//    }
 }

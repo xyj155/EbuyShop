@@ -1,41 +1,28 @@
 package com.xuyijie.ebuyshop;
 
 
-import android.app.Notification;
-import android.content.Context;
-import android.content.Intent;
-import android.os.Handler;
 import android.support.annotation.IdRes;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.widget.RadioGroup;
-import android.widget.RemoteViews;
-import android.widget.Toast;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.example.commonlib.base.BaseActivity;
 import com.example.commonlib.contract.HomeContract;
 import com.example.commonlib.gson.UserGson;
-import com.example.commonlib.presenter.HomePresent;
+import com.example.commonlib.presenter.LoginPresent;
 import com.example.commonlib.util.RouterUtil;
-import com.example.home.fragment.HomeFragment;
-import com.umeng.message.IUmengRegisterCallback;
-import com.umeng.message.MsgConstant;
-import com.umeng.message.PushAgent;
-import com.umeng.message.UTrack;
-import com.umeng.message.UmengMessageHandler;
-import com.umeng.message.UmengNotificationClickHandler;
-import com.umeng.message.entity.UMessage;
+import com.example.home.fragment.view.HomeFragment;
 
 
 import java.util.List;
 
 
 @Route(path = RouterUtil.HomePage)
-public class MainActivity extends BaseActivity<HomeContract.View, HomePresent> implements HomeContract.View {
+public class MainActivity extends BaseActivity<HomeContract.View, LoginPresent> implements HomeContract.View {
 
 
     private RadioGroup bottomBar;
@@ -48,8 +35,8 @@ public class MainActivity extends BaseActivity<HomeContract.View, HomePresent> i
     Fragment userFragment;
     public static final String UPDATE_STATUS_ACTION = "com.xuyijie.ebuyshop.action.UPDATE_STATUS";
     @Override
-    public HomePresent getPresenter() {
-        return new HomePresent(this);
+    public LoginPresent getPresenter() {
+        return new LoginPresent(this);
     }
 
     @Override
@@ -150,10 +137,7 @@ public class MainActivity extends BaseActivity<HomeContract.View, HomePresent> i
 
     }
 
-    @Override
-    public void showDialog() {
 
-    }
 
     @Override
     public void hideDialog() {

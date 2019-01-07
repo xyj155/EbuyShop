@@ -8,15 +8,14 @@ import android.util.Log;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.example.commonlib.R;
 import com.example.commonlib.base.BaseActivity;
-import com.example.commonlib.base.BasePresenter;
 import com.example.commonlib.contract.HomeContract;
-import com.example.commonlib.presenter.HomePresent;
+import com.example.commonlib.presenter.LoginPresent;
 import com.example.commonlib.util.RouterUtil;
 import com.tencent.smtt.sdk.WebView;
 import com.tencent.smtt.sdk.WebViewClient;
 
 @Route(path = RouterUtil.BROWSER)
-public class BrowserActivity extends BaseActivity<HomeContract.View, HomePresent> {
+public class BrowserActivity extends BaseActivity<HomeContract.View, LoginPresent> {
     private WebView mWebView;
 
 
@@ -26,7 +25,7 @@ public class BrowserActivity extends BaseActivity<HomeContract.View, HomePresent
     }
 
     @Override
-    public HomePresent getPresenter() {
+    public LoginPresent getPresenter() {
         return null;
     }
 

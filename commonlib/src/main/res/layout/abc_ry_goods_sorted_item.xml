@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#fff"
+    app:cardCornerRadius="@dimen/dp_5"
+    android:layout_marginRight="@dimen/dp_8"
+    android:layout_marginLeft="@dimen/dp_5"
+    android:padding="@dimen/dp_5"
+    android:layout_marginTop="@dimen/dp_5"
+    android:layout_marginBottom="@dimen/dp_5"
+    app:cardElevation="@dimen/dp_0">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/iv_cover"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:padding="@dimen/dp_8"
+            android:id="@+id/tv_goods_name"
+            android:text="，AAS大阿达阿达阿达阿达啊ad阿达阿达阿达阿达阿达啊大大啊啊啊"
+            android:textColor="#000" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.example.commonlib.view.MoneyView
+                android:id="@+id/tv_money"
+                android:layout_marginTop="@dimen/dp_3"
+                android:layout_marginLeft="@dimen/dp_5"
+                android:layout_marginRight="@dimen/dp_5"
+                android:layout_marginBottom="@dimen/dp_8"
+                app:money_text="2000"
+                app:money_color="#ff0000"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:layout_toRightOf="@+id/tv_money"
+                android:layout_width="wrap_content"
+                android:id="@+id/tv_payed"
+                android:layout_centerVertical="true"
+                android:textSize="12sp"
+                android:layout_height="wrap_content"
+                android:text="20人付款"/>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_margin="@dimen/dp_5"
+                android:layout_centerVertical="true"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:src="@mipmap/ic_ordering_more"/>
+        </RelativeLayout>
+    </LinearLayout>
+</android.support.v7.widget.CardView>

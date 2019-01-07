@@ -2,46 +2,50 @@ package com.example.commonlib.http;
 
 import android.util.Log;
 
-import com.example.commonlib.base.BaseGson;
 
-import java.util.List;
+import java.io.IOException;
+import java.net.ConnectException;
+import java.net.SocketTimeoutException;
+
 
 import rx.Observer;
 
-public abstract class BaseObserver<T> implements Observer<BaseGson<T>> {
+public abstract class BaseObserver<T> implements Observer<T> {
 
     private static final String TAG = "BaseObserver";
 
 
 
 
+    /**
+     * 拦截错误信息,转化为用户可以看懂的文字
+     *
+     * @param e
+     */
     @Override
-    public void onNext(BaseGson<T> value) {
-        if (value.isStatus()) {
-            List<T> t = value.getData();
-            onHandleSuccess(t);
+    public void onError(Throwable e) {
+        e.printStackTrace();
+        Log.d(TAG, "onError() called with: e = [" + e + "]");
+        if (e instanceof ConnectException) {
+            onError("网络无法连接,请检查网络");
+        } else if (e instanceof SocketTimeoutException) {
+            onError("网络连接超时,请重试");
+        } else if (e instanceof IOException) {
+            onError(e.getMessage());
         } else {
-            onHandleError(value.getMsg());
+            onError("未知的错误," + e.getMessage());
         }
     }
 
-    @Override
-    public void onError(Throwable e) {
-        Log.e(TAG, "error:" + e.toString());
-    }
+    //    @Override
+    //    public abstract void onComplete();
 
-//    @Override
-//    public void onComplete() {
-//        Log.d(TAG, "onComplete");
-//    }
+    /**
+     * 错误的详细信息
+     *
+     * @param error
+     */
+    public abstract void onError(String error);
 
-    @Override
-    public void onCompleted() {
-
-    }
-
-    protected abstract void onHandleSuccess(List<T> t);
-
-    protected abstract void onHandleError(String msg);
 
 }

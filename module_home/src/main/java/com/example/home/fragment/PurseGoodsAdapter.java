@@ -21,8 +21,8 @@ private Context context;
 
     @Override
     protected void convert(BaseViewHolder helper, GoodsGson item) {
-        helper.setText(R.id.tvPrice, item.getPrice())
+        helper.setText(R.id.tvPrice, item.getGoodsPrice())
                 .setText(R.id.tvGoodsName, item.getGoodsName());
-        Glide.with(context).asBitmap().load(item.getImgUrl()).into((ImageView) helper.getView(R.id.ivCover));
+        Glide.with(context).asBitmap().load(item.getGoodsPic()).into((ImageView) helper.getView(R.id.ivCover));
     }
 }

@@ -1,5 +1,6 @@
 package com.example.commonlib.base;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -7,6 +8,9 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+
+import com.example.commonlib.R;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -15,7 +19,7 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment {
     protected T mPresenter;
     protected Context mContext;//activity的上下文对象
     protected Bundle mBundle;
-
+    private Dialog progressDialog;
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
@@ -23,7 +27,19 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment {
             outState.putBundle("bundle", mBundle);
         }
     }
+    public void createDialog(String msgStr) {
+        progressDialog = new Dialog(getContext(), R.style.progress_dialog);
+        progressDialog.setContentView(R.layout.base_dialog);
+        progressDialog.setCancelable(false);
+        progressDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        TextView msg = (TextView) progressDialog.findViewById(R.id.id_tv_loadingmsg);
+        msg.setText(msgStr);
+        progressDialog.show();
+    }
 
+    public void dialogCancel() {
+        progressDialog.cancel();
+    }
     /**
      * 绑定activity
      *

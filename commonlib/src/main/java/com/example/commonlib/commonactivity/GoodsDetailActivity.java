@@ -1,9 +1,10 @@
-package com.example.kind.view;
+package com.example.commonlib.commonactivity;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-import com.xuyijie.kind.R;
+import com.example.commonlib.R;
+
 
 public class GoodsDetailActivity extends AppCompatActivity {
 

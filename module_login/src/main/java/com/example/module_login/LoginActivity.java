@@ -5,13 +5,12 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.example.commonlib.base.BaseActivity;
 import com.example.commonlib.contract.HomeContract;
-import com.example.commonlib.presenter.HomePresent;
+import com.example.commonlib.presenter.LoginPresent;
 import com.example.commonlib.util.RouterUtil;
 import com.example.commonlib.util.ThirdLoginUtil;
 import com.umeng.socialize.bean.SHARE_MEDIA;
@@ -22,7 +21,7 @@ import butterknife.OnClick;
 
 
 @Route(path = RouterUtil.LOGIN)
-public class LoginActivity extends BaseActivity<HomeContract.View, HomePresent> {
+public class LoginActivity extends BaseActivity<HomeContract.View, LoginPresent> {
 
 
     @BindView(R2.id.tv_login)
@@ -42,7 +41,7 @@ public class LoginActivity extends BaseActivity<HomeContract.View, HomePresent> 
     }
 
     @Override
-    public HomePresent getPresenter() {
+    public LoginPresent getPresenter() {
         return null;
     }
 

@@ -3,6 +3,7 @@ package com.example.home.fragment.adapter;
 import android.content.Context;
 import android.graphics.Paint;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -26,12 +27,13 @@ public class HomeGoodsTimerPurseAdapter extends BaseQuickAdapter<GoodsGson, Base
 
     @Override
     protected void convert(BaseViewHolder helper, GoodsGson item) {
-        helper.setText(R.id.tv_price, item.getPrice());
+        helper.setText(R.id.tv_price, item.getGoodsPrice());
         TextView view = helper.getView(R.id.tv_price_orign);
         view.getPaint().setFlags(Paint. STRIKE_THRU_TEXT_FLAG);
         view.getPaint().setAntiAlias(true);
         RoundedCorners roundedCorners = new RoundedCorners(6);
         RequestOptions options = RequestOptions.bitmapTransform(roundedCorners).override(300, 300);
-        Glide.with(context).asBitmap().load(item.getImgUrl()).apply(options).into((ImageView) helper.getView(R.id.iv_goodsPic));
+        Log.i(TAG, "convert: "+item.getGoodsPic());
+        Glide.with(context).asBitmap().load(item.getGoodsPic()).apply(options).into((ImageView) helper.getView(R.id.iv_goodsPic));
     }
 }

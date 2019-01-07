@@ -35,14 +35,11 @@ public class SplashActivity extends Activity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                ARouter.getInstance().build(RouterUtil.GOODSSORTED).navigation();
+                ARouter.getInstance().build(RouterUtil.HomePage).navigation();
                 finish();
             }
         }, 1);
 
     }
-
-
-
     private static final String TAG = "SplashActivity";
 }

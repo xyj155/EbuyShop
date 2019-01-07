@@ -1,5 +1,6 @@
 package com.example.commonlib.base;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
@@ -16,10 +17,10 @@ import com.umeng.message.IUmengCallback;
 import com.umeng.message.PushAgent;
 
 public abstract class BaseActivity<V extends BaseView, T extends BasePresenter<V>> extends FragmentActivity {
-    ;
     /***获取TAG的activity名称**/
     protected final String TAG = this.getClass().getSimpleName();
     public T mPresenter;
+    private Dialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +62,20 @@ public abstract class BaseActivity<V extends BaseView, T extends BasePresenter<V
         if (mPresenter != null) {
             mPresenter.attachView((V) this);
         }
+    }
+
+    public void createDialog(String msgStr) {
+        progressDialog = new Dialog(BaseActivity.this, R.style.progress_dialog);
+        progressDialog.setContentView(R.layout.base_dialog);
+        progressDialog.setCancelable(false);
+        progressDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        TextView msg = (TextView) progressDialog.findViewById(R.id.id_tv_loadingmsg);
+        msg.setText(msgStr);
+        progressDialog.show();
+    }
+
+    public void hideDlalog() {
+        progressDialog.cancel();
     }
 
     @Override

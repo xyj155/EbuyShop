@@ -6,10 +6,14 @@ import com.example.commonlib.base.BaseGson;
 import com.example.commonlib.base.BasePresenter;
 import com.example.commonlib.gson.KindItemGson;
 import com.example.commonlib.http.BaseObserver;
+
 import com.example.kind.contract.KindContract;
 import com.example.kind.model.KindModel;
 
 import java.util.List;
+
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 public class KindPresenter extends BasePresenter<KindContract.View> implements KindContract.Presenter {
     private KindModel kindModel = new KindModel();
@@ -27,48 +31,51 @@ public class KindPresenter extends BasePresenter<KindContract.View> implements K
     @Override
     public void getGoodsList() {
         Log.i(TAG, "getGoodsList: ");
-        kindModel.getGoodsList(new BaseObserver<KindItemGson>() {
-            @Override
-            protected void onHandleSuccess(List<KindItemGson> t) {
-                if (t.size() > 0) {
-                    Log.i(TAG, "onHandleSuccess: " + t.size());
-                    mMvpView.setGoodsList(t);
-                }
+        mMvpView.showDialog("别着急...");
+        kindModel.getGoodsList()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseObserver<BaseGson<KindItemGson>>() {
+                    @Override
+                    public void onCompleted() {
 
-            }
+                    }
 
-            @Override
-            protected void onHandleError(String msg) {
+                    @Override
+                    public void onNext(BaseGson<KindItemGson> kindItemGsonBaseGson) {
+                        mMvpView.setGoodsList(kindItemGsonBaseGson.getData());
+                        mMvpView.hideDialog();
+                    }
 
-            }
+                    @Override
+                    public void onError(String error) {
+                        mMvpView.hideDialog();
+                    }
+                });
 
-            @Override
-            public void onNext(BaseGson<KindItemGson> value) {
-                super.onNext(value);
-            }
-        });
     }
 
     @Override
     public void getGoodsItemList(int pid) {
-        kindModel.getGoodsListItem(new BaseObserver<KindItemGson>() {
-            @Override
-            protected void onHandleSuccess(List<KindItemGson> t) {
+        mMvpView.showDialog("加载中");
+        kindModel.getGoodsListItem(pid)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseObserver<BaseGson<KindItemGson>>() {
+                    @Override
+                    public void onCompleted() {
+                        mMvpView.hideDialog();
+                    }
 
-                    mMvpView.setGoodsItemList(t);
+                    @Override
+                    public void onNext(BaseGson<KindItemGson> kindItemGsonBaseGson) {
+                        mMvpView.setGoodsItemList(kindItemGsonBaseGson.getData());
+                    }
 
-
-            }
-
-            @Override
-            protected void onHandleError(String msg) {
-
-            }
-
-            @Override
-            public void onNext(BaseGson<KindItemGson> value) {
-                super.onNext(value);
-            }
-        }, pid);
+                    @Override
+                    public void onError(String error) {
+                        mMvpView.hideDialog();
+                    }
+                });
     }
 }
