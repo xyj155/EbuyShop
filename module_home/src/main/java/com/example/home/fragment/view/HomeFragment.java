@@ -1,7 +1,9 @@
 package com.example.home.fragment.view;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
+import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.RequiresApi;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -10,7 +12,9 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -18,13 +22,15 @@ import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.bumptech.glide.Glide;
+import com.example.commonlib.annotation.ContentView;
+import com.example.commonlib.annotation.UserAnnotation;
+import com.example.commonlib.annotation.UserType;
 import com.example.commonlib.base.BaseFragment;
-
 import com.example.commonlib.gson.GoodsGson;
 import com.example.commonlib.gson.HotPurseActivityGson;
 import com.example.commonlib.loader.BannerViewHolder;
-
 import com.example.commonlib.util.RouterUtil;
+import com.example.commonlib.util.UserBindFactory;
 import com.example.commonlib.view.ObservableScrollView;
 import com.example.home.fragment.PurseGoodsAdapter;
 import com.example.home.fragment.adapter.HomeGoodsTimerPurseAdapter;
@@ -43,7 +49,7 @@ import com.scwang.smartrefresh.layout.constant.RefreshState;
 import com.scwang.smartrefresh.layout.listener.OnMultiPurposeListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.xuyijie.home.R;
-
+import com.xuyijie.home.R2;
 import com.zhouwei.mzbanner.MZBannerView;
 import com.zhouwei.mzbanner.holder.MZHolderCreator;
 import com.zhouwei.mzbanner.holder.MZViewHolder;
@@ -51,12 +57,28 @@ import com.zhouwei.mzbanner.holder.MZViewHolder;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import butterknife.Unbinder;
+
 import static com.chad.library.adapter.base.listener.SimpleClickListener.TAG;
 
 @Route(path = RouterUtil.Home_Fragment_Main)
 public class HomeFragment extends BaseFragment<HomePagePresenter> implements HomePageContract.View {
 
 
+    @BindView(R2.id.iv_news)
+    TextView ivNews;
+    @BindView(R2.id.tv_goods_news)
+    TextView tvGoodsNews;
+    @BindView(R2.id.iv_school_vip)
+    TextView ivSchoolVip;
+    @BindView(R2.id.iv_best)
+    TextView ivBest;
+    @BindView(R2.id.iv_share)
+    TextView ivShare;
+    Unbinder unbinder;
     private MZBannerView<String> banner;
     private PurseGoodsAdapter purseGoodsAdapter;
     private RecyclerView ryPurse, ryTimerPurse, ryHot;
@@ -98,6 +120,7 @@ public class HomeFragment extends BaseFragment<HomePagePresenter> implements Hom
         tvSearch = view.findViewById(R.id.tvSearch);
         ivKind = view.findViewById(R.id.ivKind);
         ivShopCar = view.findViewById(R.id.ivShopCar);
+        marqueeView = view.findViewById(R.id.marqueeView);
         homeHotGoodsItemAdapter = new HomeHotGoodsActivityAdapter(null, getContext());
         ryHot.setAdapter(homeHotGoodsItemAdapter);
 
@@ -166,12 +189,12 @@ public class HomeFragment extends BaseFragment<HomePagePresenter> implements Hom
             }
         });
         srHome.autoRefresh();
-        mPresenter.setPurseGoodsList("1","0");
+        mPresenter.setPurseGoodsList("1", "0");
 //        mPresenter.setTimerGoodsList("0");
         srHome.setOnMultiPurposeListener(new OnMultiPurposeListener() {
             @Override
             public void onHeaderPulling(RefreshHeader header, float percent, int offset, int headerHeight, int extendHeight) {
-                Log.i(TAG, "onHeaderPulling: " + headerHeight + "----------" + extendHeight+"---------"+percent);
+                Log.i(TAG, "onHeaderPulling: " + headerHeight + "----------" + extendHeight + "---------" + percent);
                 llTitle.setVisibility(View.GONE);
 
             }
@@ -257,7 +280,7 @@ public class HomeFragment extends BaseFragment<HomePagePresenter> implements Hom
         datas.add(new ComplexItemEntity("阿大声道阿达大爱的", ""));
         datas.add(new ComplexItemEntity("阿达达到阿达的阿达阿达阿打算", ""));
         datas.add(new ComplexItemEntity("打撒旦打发顺丰阿达阿达阿达啊", ""));
-        marqueeView = view.findViewById(R.id.marqueeView);
+
         MarqueeFactory<LinearLayout, ComplexItemEntity> marqueeFactory = new ComplexViewMF(getContext());
         marqueeFactory.setData(datas);
         marqueeView.setMarqueeFactory(marqueeFactory);
@@ -327,20 +350,50 @@ public class HomeFragment extends BaseFragment<HomePagePresenter> implements Hom
 
     @Override
     public void loadTimeGoodsList(List<GoodsGson> userGson) {
-
-
         purseGoodsAdapter.replaceData(userGson);
-        Log.i(TAG, "loadTimeGoodsList: "+userGson.size());
+        Log.i(TAG, "loadTimeGoodsList: " + userGson.size());
     }
 
     @Override
     public void loadPurseGoodsList(List<GoodsGson> userGson) {
         homeGoodsTimerPurseAdapter.replaceData(userGson);
-        Log.i(TAG, "loadTimeGoodsList: "+userGson.size());
+        Log.i(TAG, "loadTimeGoodsList: " + userGson.size());
     }
 
     @Override
     public void loadHomeActivity(List<HotPurseActivityGson> userGson) {
         homeHotGoodsItemAdapter.replaceData(userGson);
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        // TODO: inflate a fragment view
+        View rootView = super.onCreateView(inflater, container, savedInstanceState);
+        unbinder = ButterKnife.bind(this, rootView);
+        return rootView;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
+    }
+
+    @OnClick({R2.id.iv_news, R2.id.tv_goods_news, R2.id.iv_school_vip, R2.id.iv_best, R2.id.iv_share})
+    public void onViewClicked(View view) {
+        int id = view.getId();
+        Log.i(TAG, "onViewClicked: ");
+        if (id == R.id.iv_news) {
+            Log.i(TAG, "onViewClicked: ");
+
+        } else if (id == R.id.tv_goods_news) {
+
+        } else if (id == R.id.iv_school_vip) {
+
+        } else if (id == R.id.iv_best) {
+
+        } else if (id == R.id.iv_share) {
+            loginWraper(UserType.ISPERMITED, GoodsOrderShareActivity.class);
+        }
     }
 }

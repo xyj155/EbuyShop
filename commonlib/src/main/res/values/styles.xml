@@ -7,6 +7,28 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
+    <declare-styleable name="SlideDetailsLayout">
+        <!-- float value for indicate the moment of switch panel-->
+        <attr name="percent" format="float"/>
+        <!-- how long the animation keep-->
+        <attr name="duration" format="integer"/>
+        <!-- default panel to show after init-->
+        <attr name="default_panel" format="enum">
+            <enum name="front" value="0"/>
+            <enum name="behind" value="1"/>
+        </attr>
+    </declare-styleable>
+    <style name="AppDialog" parent="android:Theme.Dialog">
+        <item name="android:windowFrame">@null</item> <!--边框-->
+        <item name="android:windowIsFloating">true</item> <!--是否浮现在activity之上-->
+        <item name="android:windowIsTranslucent">true</item> <!--半透明-->
+        <item name="android:windowNoTitle">true</item> <!--无标题-->
+        <item name="android:background">@android:color/transparent</item> <!--背景透明-->
+        <item name="android:windowBackground">@android:color/transparent</item> <!--背景透明-->
+        <item name="android:backgroundDimEnabled">true</item> <!--模糊-->
+        <item name="android:backgroundDimAmount">0.6</item>  <!--背景透明度-->
+    </style>
+
     <declare-styleable name="MoneyView">
         <!--金额-->
         <attr name="money_text" format="string"/>

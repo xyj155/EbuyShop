@@ -2,6 +2,7 @@ package com.example.commonlib.api;
 
 import com.example.commonlib.base.BaseGson;
 import com.example.commonlib.gson.GoodsGson;
+import com.example.commonlib.gson.GoodsShareGson;
 import com.example.commonlib.gson.HotPurseActivityGson;
 import com.example.commonlib.gson.KindItemGson;
 import com.example.commonlib.gson.UserGson;
@@ -31,6 +32,9 @@ public interface Api {
     @GET("/StuShop/public/index.php/index/Goods/getHomeActivity")
     Observable<BaseGson<HotPurseActivityGson>> getHomeActivity();
 
+
+    @GET("/StuShop/public/index.php/index/Dryinglist/getGoodsShareList")
+    Observable<BaseGson<GoodsShareGson>> getGoodsShareList(@Query("type")String type,@Query("page")String page);
 
     @GET("/StuShop/public/index.php/index/Goods/getGoodsListByKind")
     Observable<BaseGson<GoodsGson>> getGoodsListByKind(@Query("kind")String kind,@Query("type")String type,@Query("isasc")String isasc);

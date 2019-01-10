@@ -2,6 +2,7 @@ package com.example.commonlib.base;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -9,8 +10,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.commonlib.R;
+import com.example.commonlib.annotation.UserType;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -25,6 +28,16 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment {
         super.onSaveInstanceState(outState);
         if (mBundle != null) {
             outState.putBundle("bundle", mBundle);
+        }
+    }
+    public  void loginWraper(UserType type, Class context) {
+        switch (type) {
+            case ISPERMITED:
+                startActivity(new Intent(getContext(),context));
+                break;
+            case NOTPERMITED:
+                Toast.makeText(getContext(), "你还没有登录哦！", Toast.LENGTH_SHORT).show();
+                break;
         }
     }
     public void createDialog(String msgStr) {

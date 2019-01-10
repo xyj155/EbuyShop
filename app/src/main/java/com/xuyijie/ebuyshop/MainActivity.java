@@ -6,7 +6,10 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
+import android.view.KeyEvent;
+import android.view.View;
 import android.widget.RadioGroup;
+import android.widget.Toast;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
@@ -15,6 +18,7 @@ import com.example.commonlib.contract.HomeContract;
 import com.example.commonlib.gson.UserGson;
 import com.example.commonlib.presenter.LoginPresent;
 import com.example.commonlib.util.RouterUtil;
+import com.example.commonlib.view.MyDialog;
 import com.example.home.fragment.view.HomeFragment;
 
 
@@ -27,13 +31,14 @@ public class MainActivity extends BaseActivity<HomeContract.View, LoginPresent> 
 
     private RadioGroup bottomBar;
 
-
+    private MyDialog myDialog1;
     private FragmentManager supportFragmentManager;
     Fragment homeFragment;
     Fragment kindFragment;
     Fragment goodsCarFragment;
     Fragment userFragment;
     public static final String UPDATE_STATUS_ACTION = "com.xuyijie.ebuyshop.action.UPDATE_STATUS";
+
     @Override
     public LoginPresent getPresenter() {
         return new LoginPresent(this);
@@ -44,8 +49,51 @@ public class MainActivity extends BaseActivity<HomeContract.View, LoginPresent> 
         return R.layout.activity_main;
     }
 
+    //    @Override
+//    public void onBackPressed() {
+//        super.onBackPressed();
+//        myDialog1 = new MyDialog(this,R.layout.common_dialog,new int[]{R.id.dialog_btn_close,R.id.dialog_btn_cancel});
+//        myDialog1.setOnCenterItemClickListener(new MyDialog.OnCenterItemClickListener() {
+//            @Override
+//            public void onCenterItemClick(MyDialog dialog, View view) {
+//
+//            }
+//        });
+//        myDialog1.show();
+//    }
+    //退出时的时间
+    private long mExitTime;
+
+    //对返回键进行监听
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+            myDialog1 = new MyDialog(this, R.layout.common_dialog, new int[]{R.id.dialog_btn_close, R.id.dialog_btn_cancel});
+            myDialog1.setOnCenterItemClickListener(new MyDialog.OnCenterItemClickListener() {
+                @Override
+                public void onCenterItemClick(MyDialog dialog, View view) {
+                    switch (view.getId()) {
+                        case R.id.dialog_btn_close:
+                            dialog.dismiss();
+                            break;
+                        case R.id.dialog_btn_cancel:
+                            finish();
+                            System.exit(0);
+                            break;
+                    }
+                }
+            });
+            myDialog1.show();
+            mExitTime = System.currentTimeMillis();
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
+
     @Override
     public void initView() {
+
         bottomBar = findViewById(R.id.bottomBar);
         bottomBar.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -56,7 +104,7 @@ public class MainActivity extends BaseActivity<HomeContract.View, LoginPresent> 
                 switch (checkedId) {
                     case R.id.rb_home:
                         if (homeFragment == null) {
-                            homeFragment = (Fragment)ARouter.getInstance().build(RouterUtil.Home_Fragment_Main).navigation();
+                            homeFragment = (Fragment) ARouter.getInstance().build(RouterUtil.Home_Fragment_Main).navigation();
                             transaction.add(R.id.flContainer, homeFragment);
                         } else {
                             transaction.show(homeFragment);
@@ -64,7 +112,7 @@ public class MainActivity extends BaseActivity<HomeContract.View, LoginPresent> 
                         break;
                     case R.id.rb_resource:
                         if (kindFragment == null) {
-                            kindFragment = (Fragment)ARouter.getInstance().build(RouterUtil.Kind_Fragment_Main).navigation();
+                            kindFragment = (Fragment) ARouter.getInstance().build(RouterUtil.Kind_Fragment_Main).navigation();
                             transaction.add(R.id.flContainer, kindFragment);
                         } else {
                             transaction.show(kindFragment);
@@ -72,7 +120,7 @@ public class MainActivity extends BaseActivity<HomeContract.View, LoginPresent> 
                         break;
                     case R.id.rb_chat:
                         if (goodsCarFragment == null) {
-                            goodsCarFragment = (Fragment)ARouter.getInstance().build(RouterUtil.ShopCar_Fragment_Main).navigation();
+                            goodsCarFragment = (Fragment) ARouter.getInstance().build(RouterUtil.ShopCar_Fragment_Main).navigation();
                             transaction.add(R.id.flContainer, goodsCarFragment);
                         } else {
                             transaction.show(goodsCarFragment);
@@ -81,7 +129,7 @@ public class MainActivity extends BaseActivity<HomeContract.View, LoginPresent> 
                         break;
                     case R.id.rb_user:
                         if (userFragment == null) {
-                            userFragment = (Fragment)ARouter.getInstance().build(RouterUtil.Me_Fragment_Main).navigation();
+                            userFragment = (Fragment) ARouter.getInstance().build(RouterUtil.Me_Fragment_Main).navigation();
                             transaction.add(R.id.flContainer, userFragment);
                         } else {
                             transaction.show(userFragment);
@@ -93,7 +141,6 @@ public class MainActivity extends BaseActivity<HomeContract.View, LoginPresent> 
         });
         showFirstPosition();
 //        onUmengPush();
-
 
 
     }
@@ -136,7 +183,6 @@ public class MainActivity extends BaseActivity<HomeContract.View, LoginPresent> 
     public void showDialog(String msg) {
 
     }
-
 
 
     @Override

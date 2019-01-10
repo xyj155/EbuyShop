@@ -6,9 +6,11 @@ import android.os.Bundle;
 import com.example.commonlib.base.BaseActivity;
 import com.example.commonlib.base.BasePresenter;
 import com.example.commonlib.base.BaseView;
+import com.example.home.fragment.contract.HomePageContract;
+import com.example.home.fragment.presenter.HomePagePresenter;
 import com.xuyijie.home.R;
 
-public class SchoolVipActivity extends BaseActivity<BasePresenter,BaseView> {
+public class SchoolVipActivity extends BaseActivity<HomePageContract.View,HomePagePresenter> {
 
 
     @Override
@@ -17,9 +19,10 @@ public class SchoolVipActivity extends BaseActivity<BasePresenter,BaseView> {
     }
 
     @Override
-    public BaseView getPresenter() {
+    public HomePagePresenter getPresenter() {
         return null;
     }
+
 
     @Override
     public int intiLayout() {

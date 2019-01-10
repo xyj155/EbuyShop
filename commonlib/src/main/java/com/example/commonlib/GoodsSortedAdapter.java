@@ -1,6 +1,7 @@
 package com.example.commonlib;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.ImageView;
@@ -8,6 +9,7 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
+import com.example.commonlib.commonactivity.GoodsDetailActivity;
 import com.example.commonlib.gson.GoodsGson;
 import com.example.commonlib.view.MoneyView;
 
@@ -22,12 +24,20 @@ public class GoodsSortedAdapter extends BaseQuickAdapter<GoodsGson, BaseViewHold
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, GoodsGson item) {
+    protected void convert(BaseViewHolder helper, final GoodsGson item) {
         MoneyView moneyView = helper.getView(R.id.tv_money);
         ImageView ivCover = helper.getView(R.id.iv_cover);
         moneyView.setMoneyText(item.getGoodsPrice());
         helper.setText(R.id.tv_goods_name, item.getGoodsName())
-                .setText(R.id.tv_payed, item.getOrderNum()+"人付款");
+                .setText(R.id.tv_payed, item.getOrderNum() + "人付款")
+                .setOnClickListener(R.id.cv_item, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(context, GoodsDetailActivity.class);
+                        intent.putExtra("gid", item.getId());
+                        context.startActivity(intent);
+                    }
+                });
         Glide.with(context).asBitmap().load(item.getGoodsPic()).into(ivCover);
     }
 }

@@ -107,6 +107,7 @@ public class LoginActivity extends BaseActivity<HomeContract.View, LoginPresent>
             ThirdLoginUtil.thirdLogin(LoginActivity.this, SHARE_MEDIA.QQ);
         }else if (id==R.id.tv_login){
             ARouter.getInstance().build(RouterUtil.HomePage).navigation();
+            finish();
         }else if (id==R.id.iv_wechat){
             ThirdLoginUtil.thirdLogin(LoginActivity.this, SHARE_MEDIA.QZONE);
         }else if (id==R.id.iv_sina){

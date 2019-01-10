@@ -1,4 +1,3 @@
-
 if (isNeedLibModule.toBoolean()) {
     apply plugin: 'com.android.application'
 } else {
@@ -71,6 +70,7 @@ dependencies {
     annotationProcessor 'com.alibaba:arouter-compiler:1.2.2'
     testImplementation 'junit:junit:4.12'
     api 'com.google.code.gson:gson:2.8.2'
+    api 'com.getui:gisdk:3.1.6.0'
     api 'io.reactivex:rxjava:1.3.0'
     api 'io.reactivex:rxandroid:1.1.0'
     api 'com.jakewharton.rxrelay2:rxrelay:2.0.0'
@@ -82,13 +82,14 @@ dependencies {
     api(name: 'epay-sdk-3.3.0', ext: 'aar')
     api 'com.squareup.okhttp3:logging-interceptor:3.4.1'
     api 'com.jakewharton:butterknife:8.6.0'
-    //    api 'com.youth.banner:banner:1.4.10'
     api 'com.github.pinguo-zhouwei:MZBannerView:v2.0.2'
     api 'com.gongwen:marqueelibrary:1.1.3'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.6.0'
     api 'com.android.support:recyclerview-v7:25.2.0'
     api 'com.android.support:cardview-v7:25.2.0'
+    api 'com.android.support:design:25.2.0'
     api 'com.android.support:multidex:1.0.3'
+    api 'com.gxz.pagerslidingtabstrip:library:1.3'
     api 'com.umeng.umsdk:huawei-basetb:2.6.0.301'
     api 'com.umeng.umsdk:huawei-pushtb:2.6.0.301'
     api 'com.umeng.umsdk:huawei-umengaccs:1.1.3'
@@ -97,5 +98,14 @@ dependencies {
     api 'com.umeng.umsdk:xiaomi-push:3.6.9'
     api 'com.umeng.umsdk:xiaomi-umengaccs:1.0.9'
     api 'com.umeng.umsdk:common:1.5.4'
+//    api 'cn.jiguang.sdk:jmessage:2.8.0'
+//    api 'cn.jiguang.sdk:jcore:1.2.6'
     api 'com.umeng.umsdk:push:5.0.2'
+    api 'com.netease.nimlib:basesdk:5.7.0'
+    api 'com.netease.nimlib:nrtc:5.7.0'
+    api 'com.netease.nimlib:avchat:5.7.0'
+    api 'com.netease.nimlib:chatroom:5.7.0'
+    api 'com.netease.nimlib:rts:5.7.0'
+    api 'com.netease.nimlib:lucene:5.7.0'
+    api 'com.netease.nimlib:push:5.7.0'
 }

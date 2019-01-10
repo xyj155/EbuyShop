@@ -10,5 +10,6 @@ public class RouterUtil {
     public static final String Me_Fragment_Main = "/user/index";
     public static final String LOGIN = "/login/index";
     public static final String BROWSER = "/web/browser";
+    public static final String SHOPSERVICE = "/chat/service";
     public static final String GOODSSORTED = "/goods/sorted";
 }

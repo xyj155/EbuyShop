@@ -1,6 +1,7 @@
 package com.example.commonlib.base;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
@@ -10,8 +11,10 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.commonlib.R;
+import com.example.commonlib.annotation.UserType;
 import com.example.commonlib.util.StatusBarUtil;
 import com.umeng.message.IUmengCallback;
 import com.umeng.message.PushAgent;
@@ -21,6 +24,17 @@ public abstract class BaseActivity<V extends BaseView, T extends BasePresenter<V
     protected final String TAG = this.getClass().getSimpleName();
     public T mPresenter;
     private Dialog progressDialog;
+
+    public  void loginWraper(UserType type, Class context) {
+        switch (type) {
+            case ISPERMITED:
+                startActivity(new Intent(this,context));
+                break;
+            case NOTPERMITED:
+                Toast.makeText(this, "你还没有登录哦！", Toast.LENGTH_SHORT).show();
+                break;
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

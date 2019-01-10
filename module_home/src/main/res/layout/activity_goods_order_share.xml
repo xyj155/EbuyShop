@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.home.fragment.view.GoodsOrderShareActivity">
+
+    <include layout="@layout/common_toolbar" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <com.scwang.smartrefresh.layout.SmartRefreshLayout
+            android:id="@+id/rsl_share"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.scwang.smartrefresh.layout.header.ClassicsHeader
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:srlEnableLastTime="false" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/ry_share"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <com.scwang.smartrefresh.layout.footer.ClassicsFooter
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+
+        <RadioGroup
+            android:id="@+id/ll_sorted"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_55"
+            android:background="#fff"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:weightSum="5">
+
+            <RadioButton
+                android:id="@+id/rb_sorted_all"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/dp_4"
+                android:layout_weight="1"
+                android:background="@drawable/abc_goods_share_rb_bg"
+                android:button="@null"
+                android:gravity="center"
+                android:text="全部"
+                android:textColor="@color/abc_goods_share_tag_color_select" />
+
+            <RadioButton
+                android:id="@+id/rb_sorted_picture"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/dp_4"
+                android:layout_weight="1"
+                android:background="@drawable/abc_goods_share_rb_bg"
+                android:button="@null"
+                android:gravity="center"
+                android:text="有图"
+                android:textColor="@color/abc_goods_share_tag_color_select" />
+
+            <RadioButton
+                android:id="@+id/rb_sorted_video"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/dp_4"
+                android:layout_weight="1"
+                android:background="@drawable/abc_goods_share_rb_bg"
+                android:button="@null"
+                android:gravity="center"
+                android:text="视频"
+                android:textColor="@color/abc_goods_share_tag_color_select" />
+
+            <RadioButton
+                android:id="@+id/rb_sorted_goods"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/dp_4"
+                android:layout_weight="1"
+                android:background="@drawable/abc_goods_share_rb_bg"
+                android:button="@null"
+                android:gravity="center"
+                android:text="好评"
+                android:textColor="@color/abc_goods_share_tag_color_select" />
+
+            <RadioButton
+                android:id="@+id/rb_sorted_bad"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/dp_4"
+                android:layout_weight="1"
+                android:background="@drawable/abc_goods_share_rb_bg"
+                android:button="@null"
+                android:gravity="center"
+                android:text="差评"
+                android:textColor="@color/abc_goods_share_tag_color_select" />
+        </RadioGroup>
+    </FrameLayout>
+
+</LinearLayout>
