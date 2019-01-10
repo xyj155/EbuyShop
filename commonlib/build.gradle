@@ -98,8 +98,6 @@ dependencies {
     api 'com.umeng.umsdk:xiaomi-push:3.6.9'
     api 'com.umeng.umsdk:xiaomi-umengaccs:1.0.9'
     api 'com.umeng.umsdk:common:1.5.4'
-//    api 'cn.jiguang.sdk:jmessage:2.8.0'
-//    api 'cn.jiguang.sdk:jcore:1.2.6'
     api 'com.umeng.umsdk:push:5.0.2'
     api 'com.netease.nimlib:basesdk:5.7.0'
     api 'com.netease.nimlib:nrtc:5.7.0'
