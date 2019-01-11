@@ -47,7 +47,7 @@ public class ShopServiceConversationActivity extends BaseActivity<GoodsDetailCon
     @Override
     public void initView() {
         doLogin();
-        IMMessage customMessage = MessageBuilder.createTextMessage("456789", SessionTypeEnum.P2P, "123");
+        IMMessage customMessage = MessageBuilder.createTextMessage("123456", SessionTypeEnum.P2P, "123");
         NIMClient.getService(MsgService.class).sendMessage(customMessage, false);
     }
 
@@ -58,7 +58,7 @@ public class ShopServiceConversationActivity extends BaseActivity<GoodsDetailCon
                     @Override
                     public void onEvent(List<IMMessage> messages) {
                         // 处理新收到的消息，为了上传处理方便，SDK 保证参数 messages 全部来自同一个聊天对象。
-                        Log.i(TAG, "onEvent: "+messages);
+                        Log.i(TAG, "onEvent: "+messages.get(0).getContent());
                     }
                 };
         NIMClient.getService(MsgServiceObserve.class)
@@ -66,7 +66,7 @@ public class ShopServiceConversationActivity extends BaseActivity<GoodsDetailCon
     }
 
     public void doLogin() {
-        LoginInfo info = new LoginInfo("123456", "d384036420417797c440a282cef6ff77"); // config...
+        LoginInfo info = new LoginInfo("456789", "3ec117139fb74686bae3a0bbd211b481"); // config...
         RequestCallback<LoginInfo> callback =
                 new RequestCallback<LoginInfo>() {
                     @Override

@@ -26,6 +26,7 @@ import com.example.commonlib.annotation.ContentView;
 import com.example.commonlib.annotation.UserAnnotation;
 import com.example.commonlib.annotation.UserType;
 import com.example.commonlib.base.BaseFragment;
+import com.example.commonlib.gson.BannerGson;
 import com.example.commonlib.gson.GoodsGson;
 import com.example.commonlib.gson.HotPurseActivityGson;
 import com.example.commonlib.loader.BannerViewHolder;
@@ -79,7 +80,7 @@ public class HomeFragment extends BaseFragment<HomePagePresenter> implements Hom
     @BindView(R2.id.iv_share)
     TextView ivShare;
     Unbinder unbinder;
-    private MZBannerView<String> banner;
+    private MZBannerView<BannerGson> banner;
     private PurseGoodsAdapter purseGoodsAdapter;
     private RecyclerView ryPurse, ryTimerPurse, ryHot;
 
@@ -128,21 +129,7 @@ public class HomeFragment extends BaseFragment<HomePagePresenter> implements Hom
         ryPurse.setLayoutManager(staggeredGridLayoutManager);
         initData();//初始化数据
         ryPurse.setItemAnimator(new DefaultItemAnimator());
-        List<String> images = new ArrayList<>();
-        images.add("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1545032090&di=659174bccea53c9461eed981cecfc15e&imgtype=jpg&er=1&src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F01274c5841176fa801219c77c4ecd6.png%402o.png");
-        images.add("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1544437369676&di=12100c24b51fa3ee49f97394d4739de9&imgtype=0&src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F016ad958eddb0ba8012049ef9f8413.jpg%401280w_1l_2o_100sh.jpg");
-        images.add("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1544437369676&di=dc08ba14ee8a3fed755f36bde08647ea&imgtype=0&src=http%3A%2F%2Fpic101.nipic.com%2Ffile%2F20160621%2F23040058_143914199524_2.jpg");
-        images.add("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1544437369673&di=d529c1a0f188d5e097977c8678d7ccbb&imgtype=0&src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F01c9db56c5706832f875520f596bba.png%401280w_1l_2o_100sh.png");
-        images.add("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1544437369673&di=2d3458515c5badccdb40accde18f5b77&imgtype=0&src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F01538558abd2a0a801219c773a1c5d.jpg%401280w_1l_2o_100sh.jpg");
-        banner.setPages(images, new MZHolderCreator() {
-            @Override
-            public MZViewHolder createViewHolder() {
-                return new BannerViewHolder();
-            }
-        });
-        banner.setDuration(200);
-        banner.setIndicatorVisible(true);
-        banner.start();
+
         ryPurse.setNestedScrollingEnabled(false);
         ryPurse.setFocusable(false);
         purseGoodsAdapter = new PurseGoodsAdapter(null, getContext());
@@ -363,6 +350,19 @@ public class HomeFragment extends BaseFragment<HomePagePresenter> implements Hom
     @Override
     public void loadHomeActivity(List<HotPurseActivityGson> userGson) {
         homeHotGoodsItemAdapter.replaceData(userGson);
+    }
+
+    @Override
+    public void loadHomeBanner(List<BannerGson> userGson) {
+        banner.setPages(userGson, new MZHolderCreator() {
+            @Override
+            public MZViewHolder createViewHolder() {
+                return new BannerViewHolder();
+            }
+        });
+        banner.setDuration(200);
+        banner.setIndicatorVisible(true);
+        banner.start();
     }
 
     @Override

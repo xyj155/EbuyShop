@@ -1,6 +1,7 @@
 package com.example.commonlib.api;
 
 import com.example.commonlib.base.BaseGson;
+import com.example.commonlib.gson.BannerGson;
 import com.example.commonlib.gson.GoodsGson;
 import com.example.commonlib.gson.GoodsShareGson;
 import com.example.commonlib.gson.HotPurseActivityGson;
@@ -31,6 +32,10 @@ public interface Api {
 
     @GET("/StuShop/public/index.php/index/Goods/getHomeActivity")
     Observable<BaseGson<HotPurseActivityGson>> getHomeActivity();
+
+    //获取主页轮播图
+    @GET("/StuShop/public/index.php/index/Banner/getHomeBanner")
+    Observable<BaseGson<BannerGson>> getHomeBanner();
 
 
     @GET("/StuShop/public/index.php/index/Dryinglist/getGoodsShareList")

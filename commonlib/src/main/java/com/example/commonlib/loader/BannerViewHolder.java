@@ -7,9 +7,10 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.example.commonlib.R;
+import com.example.commonlib.gson.BannerGson;
 import com.zhouwei.mzbanner.holder.MZViewHolder;
 
-public  class BannerViewHolder implements MZViewHolder<String> {
+public  class BannerViewHolder implements MZViewHolder<BannerGson> {
         private ImageView mImageView;
 
         @Override
@@ -21,9 +22,9 @@ public  class BannerViewHolder implements MZViewHolder<String> {
         }
 
         @Override
-        public void onBind(Context context, int position, String data) {
+        public void onBind(Context context, int position, BannerGson data) {
             // 数据绑定
 //            mImageView.setImageResource(data);
-            Glide.with(context).asBitmap().load(data).into(mImageView);
+            Glide.with(context).asBitmap().load(data.getImg_url()).into(mImageView);
         }
     }

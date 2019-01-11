@@ -3,6 +3,7 @@ package com.xuyijie.ebuyshop;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.media.projection.MediaProjection;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -29,13 +30,10 @@ public class SplashActivity extends Activity {
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_splash);
-
-
-
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                ARouter.getInstance().build(RouterUtil.SHOPSERVICE).navigation();
+                ARouter.getInstance().build(RouterUtil.HomePage).navigation();
                 finish();
             }
         }, 1);

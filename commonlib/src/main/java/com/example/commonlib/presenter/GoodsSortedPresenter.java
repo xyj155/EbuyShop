@@ -28,7 +28,6 @@ public class GoodsSortedPresenter extends BasePresenter<GoodsSortedContract.View
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<BaseGson<GoodsGson>>() {
 
-
                     @Override
                     public void onCompleted() {
                         mMvpView.hideDialog();

@@ -32,16 +32,18 @@
                 <EditText
                     android:id="@+id/input_text"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:hint="Type someThing Here"
+                    android:background="#fff"
                     android:maxLines="2" />
 
-                <Button
-                    android:id="@+id/send"
+                <ImageView
+                    android:id="@+id/iv_send"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="send" />
+                    android:layout_gravity="center"
+                    android:layout_margin="@dimen/dp_10"
+                    android:src="@mipmap/btn_keyboard_forum_create_n" />
 
             </LinearLayout>
 
@@ -87,8 +89,8 @@
                 android:layout_marginRight="@dimen/dp_8"
                 android:background="@drawable/abc_tv_send_goods_bg"
                 android:text="发送宝贝"
-                android:textSize="14sp"
-                android:textColor="#000" />
+                android:textColor="#000"
+                android:textSize="14sp" />
         </RelativeLayout>
     </FrameLayout>
 

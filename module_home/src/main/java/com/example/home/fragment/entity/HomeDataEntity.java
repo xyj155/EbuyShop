@@ -1,5 +1,6 @@
 package com.example.home.fragment.entity;
 
+import com.example.commonlib.gson.BannerGson;
 import com.example.commonlib.gson.GoodsGson;
 import com.example.commonlib.gson.HotPurseActivityGson;
 
@@ -9,11 +10,21 @@ public class HomeDataEntity {
     private List<GoodsGson> timePurseGoodsList;
     private List<GoodsGson> purseGoodsList;
     private List<HotPurseActivityGson> hotPurseActivityGsons;
+    private List<BannerGson> bannerGsons;
 
-    public HomeDataEntity(List<GoodsGson> timePurseGoodsList, List<GoodsGson> purseGoodsList, List<HotPurseActivityGson> hotPurseActivityGsons) {
+    public HomeDataEntity(List<GoodsGson> timePurseGoodsList, List<GoodsGson> purseGoodsList, List<HotPurseActivityGson> hotPurseActivityGsons, List<BannerGson> bannerGsons) {
         this.timePurseGoodsList = timePurseGoodsList;
         this.purseGoodsList = purseGoodsList;
         this.hotPurseActivityGsons = hotPurseActivityGsons;
+        this.bannerGsons = bannerGsons;
+    }
+
+    public List<BannerGson> getBannerGsons() {
+        return bannerGsons;
+    }
+
+    public void setBannerGsons(List<BannerGson> bannerGsons) {
+        this.bannerGsons = bannerGsons;
     }
 
     public List<HotPurseActivityGson> getHotPurseActivityGsons() {
