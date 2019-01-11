@@ -11,9 +11,18 @@ import com.example.commonlib.contract.GoodsDetailContract;
 import com.example.commonlib.presenter.GoodsDetailPresenter;
 import com.example.commonlib.util.RouterUtil;
 import com.netease.nimlib.sdk.NIMClient;
+import com.netease.nimlib.sdk.Observer;
 import com.netease.nimlib.sdk.RequestCallback;
 import com.netease.nimlib.sdk.auth.AuthService;
 import com.netease.nimlib.sdk.auth.LoginInfo;
+import com.netease.nimlib.sdk.msg.MessageBuilder;
+import com.netease.nimlib.sdk.msg.MsgService;
+import com.netease.nimlib.sdk.msg.MsgServiceObserve;
+import com.netease.nimlib.sdk.msg.attachment.MsgAttachment;
+import com.netease.nimlib.sdk.msg.constant.SessionTypeEnum;
+import com.netease.nimlib.sdk.msg.model.IMMessage;
+
+import java.util.List;
 
 
 @Route(path = RouterUtil.SHOPSERVICE)
@@ -38,11 +47,22 @@ public class ShopServiceConversationActivity extends BaseActivity<GoodsDetailCon
     @Override
     public void initView() {
         doLogin();
+        IMMessage customMessage = MessageBuilder.createTextMessage("456789", SessionTypeEnum.P2P, "123");
+        NIMClient.getService(MsgService.class).sendMessage(customMessage, false);
     }
 
     @Override
     public void initData() {
-
+        Observer<List<IMMessage>> incomingMessageObserver =
+                new Observer<List<IMMessage>>() {
+                    @Override
+                    public void onEvent(List<IMMessage> messages) {
+                        // 处理新收到的消息，为了上传处理方便，SDK 保证参数 messages 全部来自同一个聊天对象。
+                        Log.i(TAG, "onEvent: "+messages);
+                    }
+                };
+        NIMClient.getService(MsgServiceObserve.class)
+                .observeReceiveMessage(incomingMessageObserver, true);
     }
 
     public void doLogin() {
@@ -61,7 +81,7 @@ public class ShopServiceConversationActivity extends BaseActivity<GoodsDetailCon
 
                     @Override
                     public void onException(Throwable exception) {
-                        Log.i(TAG, "onException: "+exception.getMessage());
+                        Log.i(TAG, "onException: " + exception.getMessage());
                     }
 
                 };
