@@ -63,7 +63,8 @@
 ### 个人联系方式：
 
 #### 微信：
-[image](http://bmob-cdn-20920.b0.upaiyun.com/2018/08/06/3248a1cc4075a1d7807afabf9210dca7.png)
+
+![image](http://bmob-cdn-20920.b0.upaiyun.com/2018/08/06/3248a1cc4075a1d7807afabf9210dca7.png)
 
 
 #### QQ： 1789780841
