@@ -22,28 +22,36 @@
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/msg_recycle_view"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
+                android:layout_height="match_parent"
                 android:layout_weight="1" />
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:background="#fafafa">
 
                 <EditText
-                    android:id="@+id/input_text"
+                    android:id="@+id/et_input"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
+                    android:layout_margin="@dimen/dp_4"
                     android:layout_weight="1"
                     android:background="#fff"
-                    android:maxLines="2" />
+                    android:focusable="true"
+                    android:maxLines="2"
+                    android:textCursorDrawable="@drawable/et_cursor" />
 
-                <ImageView
-                    android:id="@+id/iv_send"
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_margin="@dimen/dp_10"
-                    android:src="@mipmap/btn_keyboard_forum_create_n" />
+                    android:paddingRight="@dimen/dp_15"
+                    android:paddingLeft="@dimen/dp_15"
+                    android:paddingTop="@dimen/dp_8"
+                    android:id="@+id/tv_send"
+                    android:layout_margin="@dimen/dp_8"
+                    android:paddingBottom="@dimen/dp_8"
+                    android:background="@drawable/abc_tv_conversation_send_normal_bg"
+                    android:text="发送" />
 
             </LinearLayout>
 
@@ -51,7 +59,7 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/dp_86"
             android:background="#fff">
 
             <ImageView

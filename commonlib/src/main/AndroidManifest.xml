@@ -6,7 +6,9 @@
         <activity
             android:name=".commonactivity.BrowserActivity"
             android:windowSoftInputMode="stateHidden|adjustResize" />
-        <activity android:name=".commonactivity.ShopServiceConversationActivity"></activity>
+        <activity
+            android:name=".commonactivity.ShopServiceConversationActivity"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
     </application>
 
 </manifest>

@@ -6,6 +6,8 @@ buildscript {
         google()
         jcenter()
         maven { url 'https://dl.bintray.com/umsdk/release' }
+        maven { url "https://maven.google.com"}//需要添加的仓库地址
+        maven { url "https://dl.google.com/dl/android/maven2/"}//需要添加的仓库地址
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.2.1'
@@ -26,6 +28,8 @@ allprojects {
         maven { url 'https://dl.bintray.com/umsdk/release' }
         maven { url 'http://mvn.gt.igexin.com/nexus/content/repositories/releases' }
         flatDir { dirs project(':commonlib').file('libs') }
+        maven { url "https://maven.google.com"}//需要添加的仓库地址
+        maven { url "https://dl.google.com/dl/android/maven2/"}//需要添加的仓库地址
     }
 }
 

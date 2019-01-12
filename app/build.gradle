@@ -64,9 +64,6 @@ android {
         checkReleaseBuilds false
         abortOnError false
     }
-    dataBinding {
-        enabled = true
-    }
 
     productFlavors {
 //        yingyongbao {}
