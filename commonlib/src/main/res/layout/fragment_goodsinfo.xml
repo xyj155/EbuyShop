@@ -3,9 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#fff"
     android:orientation="vertical">
 
-    <android.support.design.widget.CoordinatorLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1">
@@ -28,20 +29,32 @@
 
                     <FrameLayout
                         android:layout_width="match_parent"
-                        android:layout_height="203dp"
+                        android:layout_height="@dimen/dp_350"
                         android:background="#fff">
 
                         <!-- 自动轮播的第三方控件 -->
                         <com.zhouwei.mzbanner.MZBannerView
-                            android:id="@+id/vp_item_goods_img"
+                            android:id="@+id/banner_goods"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:background="#ffffff" />
+                            android:background="#ffffff"
+                            app:canLoop="false"
+                            app:open_mz_mode="false" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="right|bottom"
+                            android:layout_margin="@dimen/dp_15"
+                            android:background="@drawable/abc_tv_banner_goodsdetail_bg"
+                            android:text="0/0"
+                            android:id="@+id/tv_banner_size"
+                            android:textColor="#fff" />
                     </FrameLayout>
 
                     <View
                         android:layout_width="match_parent"
-                        android:layout_height="1px"
+                        android:layout_height="10dp"
                         android:alpha="0.4"
                         android:background="#dddddd" />
 
@@ -59,16 +72,17 @@
                             android:layout_height="wrap_content"
                             android:layout_marginRight="22dp"
                             android:ellipsize="end"
+                            android:lineSpacingExtra="@dimen/dp_3"
                             android:maxLines="2"
-                            android:text="Letv/乐视LETV体感-超级枪王 乐视TV超级电视产品玩具体感游戏枪 电玩道具黑色"
                             android:textColor="#222222"
-                            android:textSize="15sp" />
+                            android:textSize="15sp"
+                            android:textStyle="bold" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginBottom="14dp"
                             android:layout_marginTop="15dp"
+                            android:layout_marginBottom="14dp"
                             android:gravity="bottom"
                             android:minHeight="25dp"
                             android:orientation="horizontal"
@@ -104,28 +118,12 @@
 
                         </LinearLayout>
 
-                        <LinearLayout
-                            android:id="@+id/ll_activity"
+                        <View
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:clickable="true"
-                            android:descendantFocusability="afterDescendants"
-                            android:orientation="vertical">
-
-                            <View
-                                android:layout_width="match_parent"
-                                android:layout_height="1px"
-                                android:alpha="0.4"
-                                android:background="#dddddd" />
-                        </LinearLayout>
+                            android:layout_height="@dimen/dp_10"
+                            android:background="#fafafa" />
                     </LinearLayout>
 
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1px"
-                        android:layout_marginTop="10dp"
-                        android:alpha="0.4"
-                        android:background="#dddddd" />
 
                     <!-- 当前已选的商品 -->
                     <LinearLayout
@@ -133,10 +131,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="#fff"
-                        android:paddingBottom="15dp"
                         android:paddingLeft="12dp"
+                        android:paddingTop="15dp"
                         android:paddingRight="12dp"
-                        android:paddingTop="15dp">
+                        android:paddingBottom="15dp">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -159,32 +157,44 @@
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_gravity="center"
                             android:src="@mipmap/right_img" />
                     </LinearLayout>
 
                     <View
                         android:layout_width="match_parent"
-                        android:layout_height="1px"
-                        android:alpha="0.4"
-                        android:background="#dddddd" />
+                        android:layout_height="@dimen/dp_10"
+                        android:background="#fafafa" />
 
-                    <!-- 商品保障图 -->
-                    <ImageView
-                        android:id="@+id/iv_ensure"
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="44dp"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_marginBottom="10dp"
-                        android:layout_marginTop="10dp"
-                        android:background="#ffffff"
-                        android:src="@mipmap/item_goods_ensure" />
+                        android:layout_height="wrap_content"
+                        android:background="#fff">
 
-                    <!-- 用户点评 -->
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:padding="@dimen/dp_13"
+                            android:text="服务" />
+                        <!-- 商品保障图 -->
+                        <android.support.v7.widget.RecyclerView
+                            android:id="@+id/ry_ensure"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginBottom="10dp"
+                            android:background="#ffffff"
+                            android:src="@mipmap/item_goods_ensure"
+                            app:fastScrollEnabled="false" />
+                    </LinearLayout>
+
+
                     <View
                         android:layout_width="match_parent"
-                        android:layout_height="1px"
-                        android:alpha="0.4"
-                        android:background="#dddddd" />
+                        android:layout_height="@dimen/dp_10"
+                        android:background="#fafafa" />
 
                     <LinearLayout
                         android:id="@+id/ll_comment"
@@ -250,28 +260,79 @@
                         </LinearLayout>
                     </LinearLayout>
 
+
+
+                    <android.support.v7.widget.RecyclerView
+                        android:layout_width="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/ry_comment"/>
                     <View
                         android:layout_width="match_parent"
-                        android:layout_height="1px"
-                        android:alpha="0.4"
-                        android:background="#dddddd" />
-
+                        android:layout_height="@dimen/dp_10"
+                        android:background="#fafafa" />
                     <LinearLayout
-                        android:id="@+id/ll_empty_comment"
+                        android:id="@+id/ll_comment_pic"
                         android:layout_width="match_parent"
-                        android:layout_height="123dp"
-                        android:background="#ffffff"
-                        android:gravity="center"
-                        android:visibility="visible">
+                        android:layout_height="44dp"
+                        android:background="#fff"
+                        android:clickable="true"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="12dp"
+                        android:paddingRight="12dp">
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="暂无精华评论"
-                            android:textColor="#888888"
-                            android:textSize="13dp" />
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center_vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="用户图册"
+                                android:textColor="#222222"
+                                android:textSize="13dp" />
+
+                            <TextView
+                                android:id="@+id/tv_commentpic_count"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="10dp"
+                                android:text="(0)"
+                                android:textColor="#222222"
+                                android:textSize="13dp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center_vertical|right">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="好评度"
+                                android:textColor="#222222"
+                                android:textSize="13dp" />
+
+
+                            <ImageView
+                                android:id="@+id/iv_commentpic_right"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="6dp"
+                                android:src="@mipmap/right_img" />
+                        </LinearLayout>
                     </LinearLayout>
 
+
+                    <android.support.v7.widget.RecyclerView
+                        android:layout_width="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/ry_comment_pic"/>
                     <!-- 小二推荐 -->
                     <LinearLayout
                         android:id="@+id/ll_recommend"
@@ -286,23 +347,26 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginBottom="14dp"
                             android:layout_marginTop="14dp"
+                            android:layout_marginBottom="14dp"
                             android:text="小二推荐"
                             android:textColor="#222222"
-                            android:textSize="13dp" />
+                            android:textSize="16dp"
+                            android:textStyle="bold" />
 
-                        <com.zhouwei.mzbanner.MZBannerView
-                            xmlns:app="http://schemas.android.com/apk/res-auto"
-                            android:id="@+id/vp_recommend"
+                        <android.support.v7.widget.RecyclerView xmlns:app="http://schemas.android.com/apk/res-auto"
+                            android:id="@+id/ry_recommend"
                             android:layout_width="match_parent"
-                            android:layout_height="264dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
                             android:background="#ffffff"
-                            app:canLoop="true" />
+                            app:canLoop="true"
+                            app:fastScrollEnabled="false" />
                     </LinearLayout>
 
                     <!-- 上拉查看图文详情 -->
                     <LinearLayout
+                        android:visibility="gone"
                         android:id="@+id/ll_pull_up"
                         android:layout_width="match_parent"
                         android:layout_height="44dp"
@@ -328,19 +392,11 @@
                 </LinearLayout>
             </android.support.v4.widget.NestedScrollView>
 
-            <include layout="@layout/include_item_tab" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_0"/>
         </com.example.commonlib.view.SlideDetailsLayout>
 
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/fab_up_slide"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|end"
-            android:layout_margin="30dp"
-            android:src="@mipmap/go_top"
-            app:backgroundTint="#ffffff"
-            app:borderWidth="0dp"
-            app:fabSize="mini"
-            app:rippleColor="#ffffff" />
-    </android.support.design.widget.CoordinatorLayout>
+
+    </RelativeLayout>
 </LinearLayout>

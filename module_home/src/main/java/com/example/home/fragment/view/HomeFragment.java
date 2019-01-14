@@ -26,9 +26,11 @@ import com.example.commonlib.annotation.ContentView;
 import com.example.commonlib.annotation.UserAnnotation;
 import com.example.commonlib.annotation.UserType;
 import com.example.commonlib.base.BaseFragment;
+import com.example.commonlib.commonactivity.BrowserActivity;
 import com.example.commonlib.gson.BannerGson;
 import com.example.commonlib.gson.GoodsGson;
 import com.example.commonlib.gson.HotPurseActivityGson;
+import com.example.commonlib.http.RetrofitUtils;
 import com.example.commonlib.loader.BannerViewHolder;
 import com.example.commonlib.util.RouterUtil;
 import com.example.commonlib.util.UserBindFactory;
@@ -88,8 +90,9 @@ public class HomeFragment extends BaseFragment<HomePagePresenter> implements Hom
     private int mHeight;
     private LinearLayout llTitle;
     private TextView tvSearch;
-
-    private ImageView ivKind, ivShopCar, ivBanner;
+    @BindView(R2.id.ivKind)
+    ImageView ivKind;
+    private ImageView ivShopCar, ivBanner;
     private SmartRefreshLayout srHome;
     private HomeGoodsTimerPurseAdapter homeGoodsTimerPurseAdapter;
     private HomeHotGoodsActivityAdapter homeHotGoodsItemAdapter;
@@ -176,8 +179,7 @@ public class HomeFragment extends BaseFragment<HomePagePresenter> implements Hom
             }
         });
         srHome.autoRefresh();
-        mPresenter.setPurseGoodsList("1", "0");
-//        mPresenter.setTimerGoodsList("0");
+
         srHome.setOnMultiPurposeListener(new OnMultiPurposeListener() {
             @Override
             public void onHeaderPulling(RefreshHeader header, float percent, int offset, int headerHeight, int extendHeight) {
@@ -189,6 +191,7 @@ public class HomeFragment extends BaseFragment<HomePagePresenter> implements Hom
             @Override
             public void onHeaderReleased(RefreshHeader header, int headerHeight, int extendHeight) {
                 llTitle.setVisibility(View.VISIBLE);
+                mPresenter.setPurseGoodsList("1", "0");
             }
 
             @Override
@@ -248,17 +251,6 @@ public class HomeFragment extends BaseFragment<HomePagePresenter> implements Hom
 //                } else {
 //                    llTitle.setVisibility(View.GONE);
 //                }
-            }
-        });
-        srHome.setOnRefreshListener(new OnRefreshListener() {
-            @Override
-            public void onRefresh(RefreshLayout refreshLayout) {
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        srHome.finishRefresh();
-                    }
-                }, 500);
             }
         });
         final List<ComplexItemEntity> datas = new ArrayList<>();
@@ -350,6 +342,7 @@ public class HomeFragment extends BaseFragment<HomePagePresenter> implements Hom
     @Override
     public void loadHomeActivity(List<HotPurseActivityGson> userGson) {
         homeHotGoodsItemAdapter.replaceData(userGson);
+        srHome.finishRefresh();
     }
 
     @Override
@@ -379,7 +372,7 @@ public class HomeFragment extends BaseFragment<HomePagePresenter> implements Hom
         unbinder.unbind();
     }
 
-    @OnClick({R2.id.iv_news, R2.id.tv_goods_news, R2.id.iv_school_vip, R2.id.iv_best, R2.id.iv_share})
+    @OnClick({R2.id.iv_news, R2.id.tv_goods_news, R2.id.iv_school_vip, R2.id.iv_best, R2.id.iv_share, R2.id.ivKind})
     public void onViewClicked(View view) {
         int id = view.getId();
         Log.i(TAG, "onViewClicked: ");
@@ -389,11 +382,15 @@ public class HomeFragment extends BaseFragment<HomePagePresenter> implements Hom
         } else if (id == R.id.tv_goods_news) {
 
         } else if (id == R.id.iv_school_vip) {
-
+            Intent intent = new Intent(getContext(), BrowserActivity.class);
+            intent.putExtra("url", RetrofitUtils.BASE_URL + "/StuShop/public/index.php/index/Index/vipRecharge");
+            startActivity(intent);
         } else if (id == R.id.iv_best) {
 
         } else if (id == R.id.iv_share) {
             loginWraper(UserType.ISPERMITED, GoodsOrderShareActivity.class);
+        } else if (id == R.id.ivKind) {
+            startActivity(new Intent(getContext(), GoodsKindSortedActivity.class));
         }
     }
 }

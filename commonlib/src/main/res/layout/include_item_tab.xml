@@ -60,7 +60,7 @@
 
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="2dp">
+            android:layout_height="4dp">
 
             <View
                 android:layout_width="match_parent"
@@ -73,12 +73,12 @@
                 android:layout_width="185dp"
                 android:layout_height="match_parent"
                 android:layout_gravity="left"
-                android:background="#ec0f38" />
+                android:background="#f0d25b" />
         </FrameLayout>
     </LinearLayout>
 
     <FrameLayout
         android:id="@+id/fl_content"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="match_parent" />
 </LinearLayout>

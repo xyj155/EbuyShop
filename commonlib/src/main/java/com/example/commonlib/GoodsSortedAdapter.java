@@ -34,7 +34,7 @@ public class GoodsSortedAdapter extends BaseQuickAdapter<GoodsGson, BaseViewHold
                     @Override
                     public void onClick(View v) {
                         Intent intent = new Intent(context, GoodsDetailActivity.class);
-                        intent.putExtra("gid", item.getId());
+                        intent.putExtra("goodId", String.valueOf(item.getId()));
                         context.startActivity(intent);
                     }
                 });

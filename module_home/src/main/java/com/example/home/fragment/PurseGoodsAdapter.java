@@ -1,12 +1,15 @@
 package com.example.home.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.Nullable;
+import android.view.View;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
+import com.example.commonlib.commonactivity.GoodsDetailActivity;
 import com.example.commonlib.gson.GoodsGson;
 import com.xuyijie.home.R;
 
@@ -20,9 +23,17 @@ private Context context;
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, GoodsGson item) {
+    protected void convert(BaseViewHolder helper, final GoodsGson item) {
         helper.setText(R.id.tvPrice, item.getGoodsPrice())
-                .setText(R.id.tvGoodsName, item.getGoodsName());
+                .setText(R.id.tvGoodsName, item.getGoodsName())
+                .setOnClickListener(R.id.ll_goods, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent view = new Intent(context, GoodsDetailActivity.class);
+                        view.putExtra("goodId", String.valueOf(item.getId()));
+                        context.startActivity(view);
+                    }
+                });;
         Glide.with(context).asBitmap().load(item.getGoodsPic()).into((ImageView) helper.getView(R.id.ivCover));
     }
 }

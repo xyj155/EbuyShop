@@ -5,11 +5,12 @@
     <color name="colorAccent">#ffffff</color>
     <color name="black">#000000</color>
     <color name="dark">#9E9E9E</color>
-    <!-- Background color for light LeBubbleView. -->
+    <color name="text_yellow">#f0d25b</color>
 
 
     <color name="bubbleView_light_background">#CCFFFFFF</color>
-
+    <color name="colorText">#666666</color>
+    <color name="background_tab_pressed">#6633B5E5</color>
     <!-- Background color for dark LeBubbleView. -->
 
 

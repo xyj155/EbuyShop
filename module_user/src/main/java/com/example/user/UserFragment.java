@@ -29,9 +29,6 @@ public class UserFragment extends BaseFragment<LoginPresent> {
 
     @Override
     public void initView(View view) {
-        LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context
-                .LAYOUT_INFLATER_SERVICE);
-        DataBindingUtil.inflate(inflater, R.layout.fragment_user, null, false);
         waveView =view.findViewById(R.id.wave_view);
         ivHead = view.findViewById(R.id.ivHead);
         final FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(-2, -2);

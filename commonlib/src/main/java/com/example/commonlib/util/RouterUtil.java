@@ -12,4 +12,5 @@ public class RouterUtil {
     public static final String BROWSER = "/web/browser";
     public static final String SHOPSERVICE = "/chat/service";
     public static final String GOODSSORTED = "/goods/sorted";
+    public static final String GOODSDETAIL = "/detail/goods";
 }

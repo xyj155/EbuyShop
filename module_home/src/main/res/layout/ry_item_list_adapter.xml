@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#fff"
+    android:orientation="vertical">
+<FrameLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <RadioButton
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:button="@null"
+        android:padding="@dimen/dp_12"
+        android:text="品种"
+        android:id="@+id/rb_kind_name"
+        android:textStyle="bold" />
+    <View
+        android:id="@+id/view_indicate"
+        android:layout_width="@dimen/dp_40"
+        android:layout_gravity="center|bottom"
+        android:layout_height="@dimen/dp_5"
+        android:background="#fcd82e"/>
+</FrameLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_1"
+        android:background="#fafafa"/>
+</LinearLayout>

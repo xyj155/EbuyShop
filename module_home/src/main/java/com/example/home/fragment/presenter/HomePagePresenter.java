@@ -52,6 +52,7 @@ public class HomePagePresenter extends BasePresenter<HomePageContract.View> impl
                     @Override
                     public void onError(Throwable e) {
                         mMvpView.hideDialog();
+                        Log.i(TAG, "onError: "+e.getMessage());
                     }
 
                     @Override

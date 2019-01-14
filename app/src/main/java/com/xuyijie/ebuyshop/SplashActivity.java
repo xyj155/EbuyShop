@@ -23,7 +23,7 @@ public class SplashActivity extends Activity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                ARouter.getInstance().build(RouterUtil.SHOPSERVICE).navigation();
+                ARouter.getInstance().build(RouterUtil.HomePage).navigation();
                 finish();
             }
         }, 1);

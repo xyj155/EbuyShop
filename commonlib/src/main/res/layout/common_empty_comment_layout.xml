@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/dp_8"
+    android:background="#fff"
+    android:orientation="vertical">
+<ImageView
+    android:src="@drawable/ic_empty_myallgift"
+    android:layout_gravity="center"
+    android:layout_width="@dimen/dp_80"
+    android:layout_height="@dimen/dp_80" />
+    <TextView
+        android:layout_width="match_parent"
+        android:padding="@dimen/dp_8"
+        android:layout_height="wrap_content"
+        android:text="没有更多评论哦！"
+        android:layout_gravity="center"
+        android:gravity="center"/>
+</LinearLayout>

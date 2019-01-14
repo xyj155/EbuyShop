@@ -4,9 +4,12 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.Toolbar;
+import android.transition.Explode;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -36,6 +39,7 @@ public abstract class BaseActivity<V extends BaseView, T extends BasePresenter<V
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,6 +51,8 @@ public abstract class BaseActivity<V extends BaseView, T extends BasePresenter<V
         mPresenter = getPresenter();
         //设置布局
         setContentView(intiLayout());
+        getWindow().setEnterTransition(new Explode().setDuration(400));
+        getWindow().setExitTransition(new Explode().setDuration(400));
         //初始化控件
         initView();
         //设置数据
@@ -92,12 +98,14 @@ public abstract class BaseActivity<V extends BaseView, T extends BasePresenter<V
         progressDialog.cancel();
     }
 
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
         if (mPresenter != null) {
             mPresenter.detachView();
         }
+
     }
 
     private ImageView ivClose;
@@ -107,6 +115,7 @@ public abstract class BaseActivity<V extends BaseView, T extends BasePresenter<V
         ivClose = findViewById(R.id.iv_close);
         tvTitle = findViewById(R.id.tv_title);
         ivClose.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
             public void onClick(View v) {
                 finish();

@@ -7,8 +7,8 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application>
-        <activity android:name="com.example.home.fragment.view.SchoolVipActivity" />
-        <activity android:name="com.example.home.fragment.view.GoodsOrderShareActivity"></activity>
+        <activity android:name="com.example.home.fragment.view.GoodsOrderShareActivity" />
+        <activity android:name="com.example.home.fragment.view.GoodsKindSortedActivity"></activity>
     </application>
 
 </manifest>
