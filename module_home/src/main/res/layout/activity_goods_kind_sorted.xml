@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/llTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="left"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/dp_5"
+        android:paddingTop="@dimen/dp_25"
+        android:paddingRight="@dimen/dp_5"
+        android:paddingBottom="@dimen/dp_5"
+        android:weightSum="5">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/iv_back"
+            android:layout_marginLeft="@dimen/dp_8"
+            android:src="@mipmap/ic_back" />
+
+
+        <TextView
+            android:layout_width="@dimen/dp_180"
+            android:layout_height="@dimen/dp_35"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/dp_8"
+            android:layout_marginBottom="@dimen/dp_8"
+            android:background="@drawable/kind_search_bg_r_25"
+            android:drawableRight="@mipmap/search_kind"
+            android:gravity="center"
+            android:hint="搜索你想要的商品"
+            android:paddingRight="@dimen/dp_5" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:weightSum="5">
+
+        <com.example.commonlib.view.BounceRecyclerView
+            android:id="@+id/ry_item"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="3.8" />
+
+
+        <android.support.v4.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1.2">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <View
+                        android:layout_width="@dimen/dp_50"
+                        android:layout_height="@dimen/dp_1"
+                        android:background="#d8d8d8" />
+
+                    <TextView
+                        android:id="@+id/tv_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dp_3"
+                        android:layout_marginRight="@dimen/dp_3"
+                        android:padding="@dimen/dp_8"
+                        android:text="推荐商品" />
+
+                    <View
+                        android:layout_width="@dimen/dp_50"
+                        android:layout_height="@dimen/dp_1"
+                        android:background="#d8d8d8" />
+
+                </LinearLayout>
+
+                <com.example.commonlib.view.BounceRecyclerView
+                    android:id="@+id/ry_item_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+            </LinearLayout>
+
+
+        </android.support.v4.widget.NestedScrollView>
+    </LinearLayout>
+</LinearLayout>
