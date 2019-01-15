@@ -4,6 +4,8 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
@@ -12,6 +14,7 @@ import android.support.v7.widget.Toolbar;
 import android.transition.Explode;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,10 +31,10 @@ public abstract class BaseActivity<V extends BaseView, T extends BasePresenter<V
     public T mPresenter;
     private Dialog progressDialog;
 
-    public  void loginWraper(UserType type, Class context) {
+    public void loginWraper(UserType type, Class context) {
         switch (type) {
             case ISPERMITED:
-                startActivity(new Intent(this,context));
+                startActivity(new Intent(this, context));
                 break;
             case NOTPERMITED:
                 Toast.makeText(this, "你还没有登录哦！", Toast.LENGTH_SHORT).show();
@@ -88,7 +91,7 @@ public abstract class BaseActivity<V extends BaseView, T extends BasePresenter<V
         progressDialog = new Dialog(BaseActivity.this, R.style.progress_dialog);
         progressDialog.setContentView(R.layout.base_dialog);
         progressDialog.setCancelable(false);
-        progressDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        progressDialog.getWindow().setBackgroundDrawableResource(android.R.color.white);
         TextView msg = (TextView) progressDialog.findViewById(R.id.id_tv_loadingmsg);
         msg.setText(msgStr);
         progressDialog.show();

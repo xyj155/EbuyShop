@@ -3,10 +3,13 @@ package com.example.commonlib.view;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 
@@ -33,7 +36,10 @@ public class MyDialog extends Dialog implements View.OnClickListener{
         Window dialogWindow = getWindow();
         dialogWindow.setGravity(Gravity.CENTER);
         setContentView(layoutResID);
+
         WindowManager windowManager = ((Activity)context).getWindowManager();
+
+
         Display display = windowManager.getDefaultDisplay();
         WindowManager.LayoutParams lp = getWindow().getAttributes();
         lp.width = display.getWidth()*4/5;
