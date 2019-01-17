@@ -100,65 +100,65 @@ public class MoneyView extends View {
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         int width;
         int height;
+            int pointPosition = mMoneyText.indexOf(POINT);
+            if (!mMoneyText.contains(POINT)) {
+                pointPosition = mMoneyText.length();
+            }
+            //获取元的文本
+            mYuan = mMoneyText.substring(0, pointPosition);
+            //如果使用千分符
+            if (mIsGroupingUsed) {
+                mYuan = NumberFormat.getInstance().format(Long.valueOf(mYuan));
+            }
+            //获取分的文本
+            mCent = mMoneyText.substring(pointPosition + 1, mMoneyText.length());
+            //获取元小数点、的占据宽高
+            mPaint.setTextSize(mYuanSize);
+            mPaint.getTextBounds(mYuan, 0, mYuan.length(), mYuanBound);
+            mPaint.getTextBounds(POINT, 0, POINT.length(), mPointBound);
+            //获取分占据宽高
+            mPaint.setTextSize(mCentSize);
+            mPaint.getTextBounds(mCent, 0, mCent.length(), mCentBound);
+            //获取前缀占据宽高
+            mPaint.setTextSize(mPrefixSize);
+            mPaint.getTextBounds(mPrefix, 0, mPrefix.length(), mPrefixBound);
+            //文本占据的宽度
+            mTextWidth = mYuanBound.width() + mCentBound.width() + mPrefixBound.width() + mPointBound.width()
+                    + mPointPaddingLeft + mPointPaddingRight + mPrefixPadding;
+            /**
+             * 设置宽度
+             */
+            int specMode = MeasureSpec.getMode(widthMeasureSpec);
+            int specSize = MeasureSpec.getSize(widthMeasureSpec);
 
-        int pointPosition = mMoneyText.indexOf(POINT);
-        if (!mMoneyText.contains(POINT)) {
-            pointPosition = mMoneyText.length();
-        }
-        //获取元的文本
-        mYuan = mMoneyText.substring(0, pointPosition);
-        //如果使用千分符
-        if (mIsGroupingUsed) {
-            mYuan = NumberFormat.getInstance().format(Long.valueOf(mYuan));
-        }
-        //获取分的文本
-        mCent = mMoneyText.substring(pointPosition + 1, mMoneyText.length());
-        //获取元小数点、的占据宽高
-        mPaint.setTextSize(mYuanSize);
-        mPaint.getTextBounds(mYuan, 0, mYuan.length(), mYuanBound);
-        mPaint.getTextBounds(POINT, 0, POINT.length(), mPointBound);
-        //获取分占据宽高
-        mPaint.setTextSize(mCentSize);
-        mPaint.getTextBounds(mCent, 0, mCent.length(), mCentBound);
-        //获取前缀占据宽高
-        mPaint.setTextSize(mPrefixSize);
-        mPaint.getTextBounds(mPrefix, 0, mPrefix.length(), mPrefixBound);
-        //文本占据的宽度
-        mTextWidth = mYuanBound.width() + mCentBound.width() + mPrefixBound.width() + mPointBound.width()
-            + mPointPaddingLeft + mPointPaddingRight + mPrefixPadding;
-        /**
-         * 设置宽度
-         */
-        int specMode = MeasureSpec.getMode(widthMeasureSpec);
-        int specSize = MeasureSpec.getSize(widthMeasureSpec);
+            if (specMode == MeasureSpec.EXACTLY) {
+                width = specSize + getPaddingLeft() + getPaddingRight();
+            } else {
+                width = mTextWidth + getPaddingLeft() + getPaddingRight();
+            }
+            /**
+             * 设置高度
+             */
+            //获取最大字号
+            long maxSize = Math.max(mYuanSize, mCentSize);
+            maxSize = Math.max(maxSize, mPrefixSize);
+            mPaint.setTextSize(maxSize);
+            //获取基线距离底部
+            maxDescent = mPaint.getFontMetrics().descent;
+            int maxHeight = Math.max(mYuanBound.height(), mCentBound.height());
+            maxHeight = Math.max(maxHeight, mPrefixBound.height());
+            //文本占据的高度
+            mTextHeight = maxHeight + (int) (maxDescent + 0.5f);
 
-        if (specMode == MeasureSpec.EXACTLY) {
-            width = specSize + getPaddingLeft() + getPaddingRight();
-        } else {
-            width = mTextWidth + getPaddingLeft() + getPaddingRight();
-        }
-        /**
-         * 设置高度
-         */
-        //获取最大字号
-        long maxSize = Math.max(mYuanSize, mCentSize);
-        maxSize = Math.max(maxSize, mPrefixSize);
-        mPaint.setTextSize(maxSize);
-        //获取基线距离底部
-        maxDescent = mPaint.getFontMetrics().descent;
-        int maxHeight = Math.max(mYuanBound.height(), mCentBound.height());
-        maxHeight = Math.max(maxHeight, mPrefixBound.height());
-        //文本占据的高度
-        mTextHeight = maxHeight + (int) (maxDescent + 0.5f);
+            specMode = MeasureSpec.getMode(heightMeasureSpec);
+            specSize = MeasureSpec.getSize(heightMeasureSpec);
+            if (specMode == MeasureSpec.EXACTLY) {
+                height = specSize;
+            } else {
+                height = mTextHeight;
+            }
+            setMeasuredDimension(width, height);
 
-        specMode = MeasureSpec.getMode(heightMeasureSpec);
-        specSize = MeasureSpec.getSize(heightMeasureSpec);
-        if (specMode == MeasureSpec.EXACTLY) {
-            height = specSize;
-        } else {
-            height = mTextHeight;
-        }
-        setMeasuredDimension(width, height);
     }
 
     @Override
@@ -192,12 +192,17 @@ public class MoneyView extends View {
     }
 
     public void setMoneyText(String string) {
-        if (string == null) {
+        if (string == null || !isNumber(string)) {
             string = "";
         }
         mMoneyText = string;
         requestLayout();
         postInvalidate();
+    }
+
+    public static boolean isNumber(String str) {
+        String reg = "^[0-9]+(.[0-9]+)?$";
+        return str.matches(reg);
     }
 
     /**
@@ -215,7 +220,7 @@ public class MoneyView extends View {
 
     private int sp2px(int sp) {
         return (int) TypedValue.applyDimension(
-            TypedValue.COMPLEX_UNIT_SP, sp, getResources().getDisplayMetrics());
+                TypedValue.COMPLEX_UNIT_SP, sp, getResources().getDisplayMetrics());
     }
 
     private int dp2px(float dipValue) {

@@ -22,7 +22,7 @@
         android:background="#ffffff"
         android:gravity="center"
         android:orientation="horizontal"
-        android:weightSum="4">
+        android:weightSum="5">
 
         <RadioButton
             android:id="@+id/rb_home"
@@ -48,6 +48,16 @@
             android:text="分类" />
 
 
+        <RadioButton
+            android:id="@+id/rb_message"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:button="@null"
+            android:drawableTop="@drawable/bottom_home_message"
+            android:gravity="center"
+            android:padding="@dimen/dp_5"
+            android:text="消息" />
 
         <RadioButton
             android:id="@+id/rb_chat"

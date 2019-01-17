@@ -38,7 +38,7 @@ import butterknife.BindView;
 public class ShopChooseDialog extends Dialog implements GoodsStyleContract.View {
     ImageView ivAvatar;
     ImageView ivClose;
-    TextView tvPrice;
+    MoneyView tvPrice;
     TextView tvChoose;
     RecyclerView ryStyleList;
     //在构造方法里提前加载了样式
@@ -62,6 +62,7 @@ public class ShopChooseDialog extends Dialog implements GoodsStyleContract.View 
         setContentView(R.layout.abc_goods_detail_choose_list_layout);
         ivAvatar = findViewById(R.id.iv_avatar);
         tvPrice = findViewById(R.id.tv_price);
+        tvPrice.setMoneyText("0.00");
         ivClose = findViewById(R.id.iv_close);
         tvChoose = findViewById(R.id.tv_choose);
         ryStyleList = findViewById(R.id.ry_style_list);
@@ -74,7 +75,7 @@ public class ShopChooseDialog extends Dialog implements GoodsStyleContract.View 
         getWindow().setAttributes(lp);
         setCanceledOnTouchOutside(false);
         //遍历控件id添加点击注册
-        goodsStylePresenter.queryGoodsStyle("1");
+        goodsStylePresenter.queryGoodsStyle(goodsId);
         ryStyleList = findViewById(R.id.ry_style_list);
         ryStyleList.setLayoutManager(new LinearLayoutManager(context));
         ryStyleList.setAdapter(goodsStyleAdapter);
@@ -89,7 +90,7 @@ public class ShopChooseDialog extends Dialog implements GoodsStyleContract.View 
                 RoundedCorners roundedCorners = new RoundedCorners(10);
                 RequestOptions options = RequestOptions.bitmapTransform(roundedCorners).override(300, 300);
                 Glide.with(context).asBitmap().load(imageUrl).apply(options).into(ivAvatar);
-                tvPrice.setText("￥" + price);
+                tvPrice.setMoneyText(price);
                 tvChoose.setText("已选择：" + styleName);
                 new Handler().postDelayed(new Runnable() {
                     @Override
@@ -116,12 +117,13 @@ public class ShopChooseDialog extends Dialog implements GoodsStyleContract.View 
         Log.i(TAG, "loadGoodsStyle: " + goodsGson.size());
         goodsStyleAdapter.replaceData(goodsGson);
         if (!(goodsGson.size() > 0)) {
-            tvChoose.setText("该商品贸易存货了！");
-            tvPrice.setText("该商品贸易存货了！");
+            tvChoose.setText("该商品没有存货了！");
+            tvPrice.setMoneyText("0.00");
             Glide.with(context).asBitmap().load(R.mipmap.ic_empty_style).into(ivAvatar);
         } else {
             tvChoose.setText("已选择：" + goodsGson.get(0).getGoodsName());
-            tvPrice.setText("￥" + goodsGson.get(0).getGoodsPrice());
+            tvPrice.setMoneyText(goodsGson.get(0).getGoodsPrice());
+            Log.i(TAG, "loadGoodsStyle: "+goodsGson.get(0).getGoodsPrice());
             RoundedCorners roundedCorners = new RoundedCorners(10);
             RequestOptions options = RequestOptions.bitmapTransform(roundedCorners).override(300, 300);
             Glide.with(context).asBitmap().load(goodsGson.get(0).getGoodsPicUrl()).apply(options).into(ivAvatar);

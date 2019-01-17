@@ -37,6 +37,7 @@ public class MainActivity extends BaseActivity<HomeContract.View, LoginPresent> 
     private MyDialog myDialog1;
     private FragmentManager supportFragmentManager;
     Fragment homeFragment;
+    Fragment messageFragment;
     Fragment kindFragment;
     Fragment goodsCarFragment;
     Fragment userFragment;
@@ -52,19 +53,7 @@ public class MainActivity extends BaseActivity<HomeContract.View, LoginPresent> 
         return R.layout.activity_main;
     }
 
-    //    @Override
-//    public void onBackPressed() {
-//        super.onBackPressed();
-//        myDialog1 = new MyDialog(this,R.layout.common_dialog,new int[]{R.id.dialog_btn_close,R.id.dialog_btn_cancel});
-//        myDialog1.setOnCenterItemClickListener(new MyDialog.OnCenterItemClickListener() {
-//            @Override
-//            public void onCenterItemClick(MyDialog dialog, View view) {
-//
-//            }
-//        });
-//        myDialog1.show();
-//    }
-    //退出时的时间
+
     private long mExitTime;
 
     //对返回键进行监听
@@ -122,6 +111,14 @@ public class MainActivity extends BaseActivity<HomeContract.View, LoginPresent> 
                             transaction.show(kindFragment);
                         }
                         break;
+                    case R.id.rb_message:
+                        if (messageFragment == null) {
+                            messageFragment = (Fragment) ARouter.getInstance().build(RouterUtil.MESSAGE_Fragment_Main).navigation();
+                            transaction.add(R.id.flContainer, messageFragment);
+                        } else {
+                            transaction.show(messageFragment);
+                        }
+                        break;
                     case R.id.rb_chat:
                         if (goodsCarFragment == null) {
                             goodsCarFragment = (Fragment) ARouter.getInstance().build(RouterUtil.ShopCar_Fragment_Main).navigation();
@@ -163,6 +160,9 @@ public class MainActivity extends BaseActivity<HomeContract.View, LoginPresent> 
         }
         if (kindFragment != null) {
             transaction.hide(kindFragment);
+        }
+        if (messageFragment != null) {
+            transaction.hide(messageFragment);
         }
         if (goodsCarFragment != null) {
             transaction.hide(goodsCarFragment);

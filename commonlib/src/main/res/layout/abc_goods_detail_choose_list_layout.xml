@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:money="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_gravity="bottom"
     android:background="@drawable/bottom_dialog_goods_choose_bg"
     android:orientation="vertical">
@@ -19,18 +20,25 @@
             android:layout_margin="@dimen/dp_8"
             android:src="@mipmap/app_icon" />
 
-        <TextView
+        <com.example.commonlib.view.MoneyView
             android:id="@+id/tv_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginStart="104dp"
-            android:layout_marginTop="16dp"
-            android:text="￥19.55"
-            android:textColor="#ff4456"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+            money:yuan_size="30sp"
+            money:cent_size="18sp"
+            money:grouping="true"
+            app:money_color="#ff0000"
+            money:money_color="@android:color/white"
+            money:money_text="789456.123"
+            money:point_padding_left="5dp"
+            money:point_padding_right="8dp"
+            money:prefix_text="￥"
+            android:layout_marginLeft="8dp"
+            app:money_text="0.00"
+            money:prefix_size="36sp"
+            android:layout_toRightOf="@+id/iv_avatar"
+            android:layout_centerVertical="true"
+            money:prefix_padding="15dp"/>
 
         <TextView
             android:id="@+id/tv_choose"
@@ -41,7 +49,7 @@
             android:layout_toRightOf="@+id/iv_avatar"
             android:ellipsize="end"
             android:maxLines="2"
-            android:text="测试测试测试测试测试测试测试测试测试测试测试测试" />
+            android:text="" />
 
         <ImageView
             android:layout_width="wrap_content"
