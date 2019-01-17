@@ -13,4 +13,5 @@ public class RouterUtil {
     public static final String SHOPSERVICE = "/chat/service";
     public static final String GOODSSORTED = "/goods/sorted";
     public static final String GOODSDETAIL = "/detail/goods";
+    public static final String MSGCODE = "/login/msgcode";
 }

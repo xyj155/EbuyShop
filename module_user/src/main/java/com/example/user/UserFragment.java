@@ -13,6 +13,7 @@ import com.bumptech.glide.Glide;
 import com.example.commonlib.base.BaseFragment;
 import com.example.commonlib.presenter.LoginPresent;
 import com.example.commonlib.util.RouterUtil;
+import com.example.commonlib.util.SharePreferenceUtil;
 import com.example.commonlib.view.WaveView;
 import com.xuyijie.user.R;
 
@@ -40,7 +41,7 @@ public class UserFragment extends BaseFragment<LoginPresent> {
                 ivHead.setLayoutParams(lp);
             }
         });
-        Glide.with(getContext()).asBitmap().load(R.mipmap.ic_user_avatar_bg).into(ivHead);
+        Glide.with(getContext()).asBitmap().load(SharePreferenceUtil.getUser("avatar","String")).into(ivHead);
     }
 
     @Override

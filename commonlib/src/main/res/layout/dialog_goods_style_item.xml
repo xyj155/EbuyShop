@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RadioButton xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/tv_style_name"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/dp_7"
+    android:background="@drawable/bottom_dialog_goods_choose_item_select"
+    android:button="@null"
+    android:gravity="left"
+    android:padding="@dimen/dp_8"
+    android:maxLines="1"
+    android:ellipsize="end"
+    android:text="测试"
+    android:textColor="@color/goods_style_color">
+
+</RadioButton>

@@ -79,7 +79,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".MainActivity" />
-        <activity android:name="com.example.module_login.Test" />
         <receiver
             android:name="com.example.commonlib.receiver.GInsightEventReceiver" android:exported="false">
             <intent-filter>
@@ -98,7 +97,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
-                <data android:scheme="tencent100424468" />
+                <data android:scheme="tencent1108087612" />
             </intent-filter>
         </activity>
         <!-- APP key, 可以在这里设置，也可以在 SDKOptions 中提供。

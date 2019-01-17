@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#fff"
+    android:orientation="vertical"
+    tools:context=".view.TelPhoneRegisterVerifyActivity">
+
+    <include layout="@layout/common_toolbar" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_55"
+        android:background="#fafafa"
+        android:gravity="center|left"
+        android:paddingLeft="@dimen/dp_10"
+        android:text="我们已经发送验证码短信到这个号码"
+        android:textColor="#000" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dp_50"
+            android:id="@+id/et_code"
+            android:paddingLeft="@dimen/dp_20"
+            android:paddingRight="@dimen/dp_9"
+            android:paddingBottom="@dimen/dp_6"
+            android:paddingTop="@dimen/dp_6"
+            android:background="#fff"
+            android:hint="请输入验证码"
+            android:textSize="15sp"
+            android:maxLength="6" />
+        <TextView
+            android:textColor="#000"
+            android:layout_marginRight="@dimen/dp_10"
+            android:id="@+id/tv_send_msg"
+            android:textSize="13sp"
+            android:background="@drawable/abc_tv_send_msg_code_bg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerInParent="true"
+            android:text="获取验证码"/>
+    </RelativeLayout>
+    <TextView
+        android:id="@+id/tv_register"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_50"
+        android:layout_margin="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_10"
+        android:background="@drawable/login_tv_1_bg"
+        android:gravity="center"
+        android:text="提交"
+        android:textColor="#000"
+        android:textSize="17sp" />
+</LinearLayout>

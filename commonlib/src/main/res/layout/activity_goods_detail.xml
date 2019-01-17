@@ -150,10 +150,12 @@
                 android:background="@drawable/ic_goods_detail_add_shopcar"
                 android:gravity="center"
                 android:text="加入购物车"
+                android:id="@+id/tv_add"
                 android:textColor="#ffd321" />
 
             <TextView
                 android:layout_width="match_parent"
+                android:id="@+id/tv_buy"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="@drawable/ic_goods_detail_buy"

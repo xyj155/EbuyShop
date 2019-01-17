@@ -3,8 +3,10 @@
     package="com.example.module_login">
 
     <application android:name="com.example.commonlib.MyApp">
-        <activity android:name=".LoginActivity"></activity>
-        <activity android:name=".Test"  />
+        <activity android:name=".view.LoginActivity" />
+        <activity android:name=".view.RegisterActivity" />
+        <activity android:name=".view.TelPhoneRegisterActivity" />
+        <activity android:name=".view.TelPhoneRegisterVerifyActivity"></activity>
     </application>
 
 </manifest>

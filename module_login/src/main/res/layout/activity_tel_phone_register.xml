@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#fff"
+    android:orientation="vertical"
+    tools:context=".view.TelPhoneRegisterActivity">
+
+    <include layout="@layout/common_toolbar" />
+
+    <EditText
+        android:id="@+id/et_tel"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_50"
+        android:layout_margin="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_20"
+        android:background="@drawable/login_border_1_bg"
+        android:gravity="center"
+        android:hint="请输入您的手机号码"
+        android:inputType="number"
+        android:paddingLeft="@dimen/dp_30"
+        android:textCursorDrawable="@drawable/login_border_1_bg"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/tv_register"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_50"
+        android:layout_margin="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_10"
+        android:background="@drawable/login_tv_1_bg"
+        android:gravity="center"
+        android:text="注册"
+        android:textColor="#000"
+        android:textSize="17sp" />
+</LinearLayout>

@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.example.commonlib.commonactivity.ShopServiceConversationActivity;
 import com.getui.gis.sdk.GInsightManager;
+import com.mob.MobSDK;
 import com.netease.nimlib.sdk.NIMClient;
 import com.netease.nimlib.sdk.SDKOptions;
 import com.netease.nimlib.sdk.StatusBarNotificationConfig;
@@ -42,7 +43,6 @@ import java.io.IOException;
 
 
 
-
 public class MyApp extends MultiDexApplication {
     /**
      * 上下文
@@ -62,7 +62,7 @@ public class MyApp extends MultiDexApplication {
         UMConfigure.init(this, UMConfigure.DEVICE_TYPE_PHONE, "84ce8f7be275b278fd190c3ebb2ae6bc");
         PlatformConfig.setWeixin("wxc329f4902defc332", "0a862006e67e9abd75d07140afac12b7");
         PlatformConfig.setSinaWeibo("3921700954", "04b48b094faeb16683c32669824ebdad", "http://sns.whalecloud.com");
-        PlatformConfig.setQQZone("100424468", "c7394704798a158208a74ab60104f0ba");
+//        PlatformConfig.setQQZone("1108087612", "c7394704798a158208a74ab60104f0ba");
         PushAgent mPushAgent = PushAgent.getInstance(this);
         //注册推送服务，每次调用register方法都会回调该接口
         mPushAgent.register(new IUmengRegisterCallback() {
@@ -130,6 +130,9 @@ public class MyApp extends MultiDexApplication {
             // 1、UI相关初始化操作
             // 2、相关Service调用
         }
+        MobSDK.init(this,"29cbff9d24b0b","83fe8985b2647f0041f9cfb3487492d6");
+
+
     }
     // 如果返回值为 null，则全部使用默认参数。
     private SDKOptions options() {

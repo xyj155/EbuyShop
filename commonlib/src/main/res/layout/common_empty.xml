@@ -8,6 +8,7 @@
     android:text="还没有数据哦，看看其他的吧！"
     android:layout_centerVertical="true"
     android:textColor="#000"
+    android:id="@+id/tv_empty"
     android:textStyle="bold"
     android:layout_centerInParent="true"
     android:gravity="center"

@@ -2,6 +2,7 @@ package com.example.commonlib.commonactivity;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -18,6 +19,7 @@ import com.example.commonlib.fragment.GoodsInfoFragment;
 import com.example.commonlib.presenter.GoodsDetailPresenter;
 import com.example.commonlib.util.RouterUtil;
 import com.example.commonlib.view.NoScrollViewPager;
+import com.example.commonlib.view.ShopChooseDialog;
 import com.gxz.PagerSlidingTabStrip;
 
 import java.util.ArrayList;
@@ -34,7 +36,11 @@ public class GoodsDetailActivity extends BaseActivity<GoodsDetailContract.View, 
     public TextView tv_title;
     @BindView(R2.id.iv_back)
     ImageView ivBack;
-
+    @BindView(R2.id.tv_add)
+    TextView tvAdd;
+    @BindView(R2.id.tv_buy)
+    TextView tvBuy;
+private ShopChooseDialog shopChooseDialog;
     private List<Fragment> fragmentList = new ArrayList<>();
 
 
@@ -56,6 +62,9 @@ public class GoodsDetailActivity extends BaseActivity<GoodsDetailContract.View, 
 
     @Override
     public void initView() {
+        ButterKnife.bind(this);
+        Log.i(TAG, "initView: "+getIntent().getStringExtra("goodId"));
+        shopChooseDialog=new ShopChooseDialog(this,getIntent().getStringExtra("goodId"));
         psts_tabs = (PagerSlidingTabStrip) findViewById(R.id.psts_tabs);
         vp_content = (NoScrollViewPager) findViewById(R.id.vp_content);
         tv_title = (TextView) findViewById(R.id.tv_title);
@@ -66,6 +75,7 @@ public class GoodsDetailActivity extends BaseActivity<GoodsDetailContract.View, 
                 fragmentList, new String[]{"商品", "详情", "评价"}));
         vp_content.setOffscreenPageLimit(3);
         psts_tabs.setViewPager(vp_content);
+
     }
 
     @Override
@@ -77,14 +87,18 @@ public class GoodsDetailActivity extends BaseActivity<GoodsDetailContract.View, 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
+
     }
 
-    @OnClick(R2.id.iv_back)
+    @OnClick({R2.id.iv_back, R2.id.tv_add, R2.id.tv_buy})
     public void onViewClicked(View view) {
         int id = view.getId();
-        if (id == R.id.iv_back) {
+        if (id == R.id.tv_add) {
+            shopChooseDialog.show();
+        }else if (id==R.id.iv_back){
             finish();
         }
     }
+
+
 }
