@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.scwang.smartrefresh.layout.SmartRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.scwang.smartrefresh.layout.header.ClassicsHeader
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:srlEnableLastTime="false" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_150"
+            android:background="@drawable/live_badge_list_bg" />
+
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/llTitle"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_88"
+                android:gravity="left"
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/dp_5"
+                android:paddingTop="@dimen/dp_25"
+                android:paddingRight="@dimen/dp_5"
+                android:paddingBottom="@dimen/dp_5"
+                android:weightSum="5">
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center|bottom"
+                    android:padding="@dimen/dp_8"
+                    android:text="消息中心"
+                    android:textColor="#fff"
+                    android:textSize="17sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+
+                android:elevation="@dimen/dp_1"
+                android:layout_height="wrap_content"
+                android:background="@drawable/home_message__item_bg"
+                android:layout_marginLeft="@dimen/dp_20"
+                android:layout_marginRight="@dimen/dp_20"
+                android:paddingBottom="@dimen/dp_15"
+                android:paddingTop="@dimen/dp_25"
+                android:orientation="horizontal"
+                android:weightSum="3">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:drawableTop="@mipmap/ic_message_deliver"
+                    android:text="交易物流"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:drawableTop="@mipmap/ic_message_notification"
+                    android:text="通知消息"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:drawableTop="@mipmap/ic_message_other"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="其他"
+                    android:textSize="14sp" />
+            </LinearLayout>
+            <android.support.v7.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_marginTop="@dimen/dp_15"
+                android:layout_height="match_parent"/>
+        </LinearLayout>
+    </FrameLayout>
+
+</com.scwang.smartrefresh.layout.SmartRefreshLayout>
