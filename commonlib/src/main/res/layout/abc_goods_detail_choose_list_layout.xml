@@ -28,6 +28,7 @@
             money:cent_size="18sp"
             money:grouping="true"
             app:money_color="#ff0000"
+
             money:money_color="@android:color/white"
             money:money_text="789456.123"
             money:point_padding_left="5dp"
@@ -36,6 +37,8 @@
             android:layout_marginLeft="8dp"
             app:money_text="0.00"
             money:prefix_size="36sp"
+            android:layout_above="@+id/tv_choose"
+            android:layout_marginBottom="@dimen/dp_4"
             android:layout_toRightOf="@+id/iv_avatar"
             android:layout_centerVertical="true"
             money:prefix_padding="15dp"/>
@@ -102,6 +105,7 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:scaleType="fitEnd"
                 android:src="@mipmap/mall_num_control_minus" />
 
             <TextView
@@ -115,6 +119,7 @@
 
 
             <ImageView
+                android:scaleType="fitStart"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@mipmap/mall_num_control_plus_big" />
@@ -127,6 +132,7 @@
         android:layout_marginRight="@dimen/dp_10"
         android:layout_marginBottom="@dimen/dp_5"
         android:layout_height="wrap_content"
+        android:id="@+id/tv_submit"
         android:layout_marginTop="@dimen/dp_10"
         android:background="@drawable/product_goods_btn_confirm_bg"
         android:gravity="center"

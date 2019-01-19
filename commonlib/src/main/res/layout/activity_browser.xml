@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".commonactivity.BrowserActivity">
+    tools:context=".comonactivity.BrowserActivity">
 <include layout="@layout/common_toolbar"/>
     <com.tencent.smtt.sdk.WebView
         android:id="@+id/forum_context"

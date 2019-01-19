@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#fff"
+    android:orientation="vertical">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        tools:ignore="MissingDefaultResource">
+
+        <CheckBox
+            android:layout_width="@dimen/dp_30"
+            android:layout_height="@dimen/dp_30"
+            android:id="@+id/cb_goods"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/dp_6"
+            android:background="@drawable/cb_goods_car_bg_check"
+            android:button="@null" />
+
+        <ImageView
+            android:id="@+id/iv_goods_pic"
+            android:layout_width="@dimen/dp_100"
+            android:layout_height="@dimen/dp_100"
+            android:layout_margin="@dimen/dp_9" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_goods_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:lineSpacingExtra="@dimen/dp_3"
+                android:maxLines="2"
+                android:padding="5dp"
+                android:text="杜蕾斯杜蕾斯杜蕾斯杜蕾斯杜蕾斯杜蕾斯杜蕾斯杜蕾斯"
+                android:textColor="#000"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv_goods_style"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_goods_name"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:padding="@dimen/dp_5"
+                android:text="超薄"
+                android:textSize="13sp" />
+
+            <TextView
+                android:id="@+id/mv_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_margin="@dimen/dp_6"
+                android:text="￥20.00"
+                android:textColor="#ff0000"
+                android:textSize="@dimen/dp_15"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/dp_24"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:layout_centerInParent="true"
+                android:layout_margin="@dimen/dp_6"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/iv_minum"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/dp_0"
+                    android:scaleType="fitEnd"
+                    android:src="@mipmap/mall_num_control_minus" />
+
+                <TextView
+                    android:id="@+id/tv_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_margin="@dimen/dp_0"
+                    android:background="@drawable/product_goods_minus_plus"
+                    android:gravity="center"
+                    android:paddingLeft="@dimen/dp_12"
+                    android:paddingRight="@dimen/dp_12"
+                    android:text="1" />
+
+
+                <ImageView
+                    android:id="@+id/iv_add"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:scaleType="fitStart"
+                    android:src="@mipmap/mall_num_control_plus_big" />
+            </LinearLayout>
+        </RelativeLayout>
+    </LinearLayout>
+
+    <View
+        android:layout_marginTop="@dimen/dp_6"
+        android:layout_width="match_parent"
+        android:layout_height="0.9dp"
+        android:background="#fafafa" />
+</LinearLayout>

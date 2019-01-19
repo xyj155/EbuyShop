@@ -6,6 +6,8 @@
     <color name="black">#000000</color>
     <color name="dark">#9E9E9E</color>
     <color name="text_yellow">#f0d25b</color>
+    <color name="yellow">#ffd321</color>
+    <color name="transent">#00000000</color>
 
 
     <color name="bubbleView_light_background">#CCFFFFFF</color>

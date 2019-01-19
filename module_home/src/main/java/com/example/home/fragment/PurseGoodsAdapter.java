@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.example.commonlib.commonactivity.GoodsDetailActivity;
+import com.example.commonlib.comonactivity.GoodsDetailActivity;
 import com.example.commonlib.gson.GoodsGson;
 import com.xuyijie.home.R;
 
@@ -30,7 +30,7 @@ private Context context;
                     @Override
                     public void onClick(View v) {
                         Intent view = new Intent(context, GoodsDetailActivity.class);
-                        view.putExtra("goodId", String.valueOf(item.getId()));
+                        view.putExtra("goodsId", String.valueOf(item.getId()));
                         context.startActivity(view);
                     }
                 });;

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--<bitmap xmlns:android="http://schemas.android.com/apk/res/android"-->
+    <!--    android:src="@drawable/takeout_purchase_address_color_line"-->
+    <!--    android:tileMode="repeat"/>-->
+<bitmap android:src="@drawable/takeout_purchase_address_color_line"
+    android:tileMode="mirror"
+    xmlns:android="http://schemas.android.com/apk/res/android" />
+

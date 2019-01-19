@@ -2,10 +2,6 @@ package com.example.commonlib.fragment;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,13 +10,10 @@ import android.webkit.WebSettings;
 import com.example.commonlib.R;
 import com.example.commonlib.R2;
 import com.example.commonlib.base.BaseFragment;
-import com.example.commonlib.commonactivity.GoodsDetailActivity;
+import com.example.commonlib.comonactivity.GoodsDetailActivity;
 import com.example.commonlib.contract.GoodsDetailContract;
-import com.example.commonlib.fragment.goodsfragment.GoodsDetailPicFragment;
-import com.example.commonlib.fragment.goodsfragment.GoodsParameterFragment;
 import com.example.commonlib.gson.GoodsDetailGson;
 import com.example.commonlib.presenter.GoodsDetailPresenter;
-import com.gxz.PagerSlidingTabStrip;
 import com.tencent.smtt.sdk.WebView;
 
 import butterknife.BindView;
@@ -42,7 +35,7 @@ public class GoodsDetailFragment extends BaseFragment<GoodsDetailPresenter> impl
     public void initView(View view) {
         unbinder = ButterKnife.bind(this, view);
         if (mPresenter != null) {
-            mPresenter.setGoodsDetailById("1");
+            mPresenter.setGoodsDetailById(activity.getIntent().getStringExtra("goodsId"));
         }
 
     }

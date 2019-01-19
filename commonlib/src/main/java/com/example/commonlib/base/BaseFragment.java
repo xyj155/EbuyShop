@@ -51,7 +51,7 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment {
     }
 
     public void dialogCancel() {
-        progressDialog.cancel();
+        progressDialog.dismiss();
     }
     /**
      * 绑定activity

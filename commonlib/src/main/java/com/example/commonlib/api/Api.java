@@ -2,13 +2,17 @@ package com.example.commonlib.api;
 
 import com.example.commonlib.base.BaseGson;
 import com.example.commonlib.gson.BannerGson;
+import com.example.commonlib.gson.EmptyGson;
 import com.example.commonlib.gson.GoodsDetailGson;
 import com.example.commonlib.gson.GoodsGson;
 import com.example.commonlib.gson.GoodsShareGson;
 import com.example.commonlib.gson.GoodsStyleGson;
 import com.example.commonlib.gson.HotPurseActivityGson;
 import com.example.commonlib.gson.KindItemGson;
+import com.example.commonlib.gson.MarQueenGson;
+import com.example.commonlib.gson.ShopCarGson;
 import com.example.commonlib.gson.UserGson;
+import com.example.commonlib.gson.UserReceiveAddressGson;
 
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -57,7 +61,31 @@ public interface Api {
     Observable<BaseGson<GoodsGson>> getGoodsListByKind(@Query("kind") String kind, @Query("type") String type, @Query("isasc") String isasc);
 
 
+    @GET("/StuShop/public/index.php/index/Banner/getMarqueenList")
+    Observable<BaseGson<MarQueenGson>> getMarqueenList();
 
     @GET("/StuShop/public/index.php/index/Goods/queryGoodsStyle")
     Observable<BaseGson<GoodsStyleGson>> queryGoodsStyle(@Query("goodsId") String goodId);
+
+    @FormUrlEncoded
+    @POST("/StuShop/public/index.php/index/Goods/addGoodsInShopCarById")
+    Observable<BaseGson<EmptyGson>> addGoodsInShopCarById(@Field("userId") String userId, @Field("goodsId") String goodsId, @Field("type") String type);
+
+
+    @GET("/StuShop/public/index.php/index/Goods/queryUserShopCarByUid")
+    Observable<BaseGson<ShopCarGson>> queryUserShopCarByUid(@Query("userId") String goodId);
+
+    @GET("/StuShop/public/index.php/index/User/queryUserReceiveAddress")
+    Observable<BaseGson<UserReceiveAddressGson>> queryUserUserAddress(@Query("userId") String goodId);
+
+   @FormUrlEncoded
+    @POST("/StuShop/public/index.php/index/User/saveNewAddressByUserId")
+    Observable<BaseGson<EmptyGson>> saveNewAddressByUserId(@Field("username") String username,
+                                                           @Field("tel") String tel,
+                                                           @Field("local") String local,
+                                                           @Field("detail") String detail,
+                                                           @Field("default") String defaults,
+                                                           @Field("userId") String userId
+   );
+
 }

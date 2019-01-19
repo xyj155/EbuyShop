@@ -1,7 +1,5 @@
 package com.example.home.fragment.view;
 
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -11,11 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.commonlib.base.BaseActivity;
-import com.example.commonlib.commonactivity.GoodsListSortedActivity;
-import com.example.commonlib.contract.GoodsSortedContract;
-import com.example.commonlib.gson.GoodsGson;
 import com.example.commonlib.gson.KindItemGson;
-import com.example.commonlib.presenter.GoodsSortedPresenter;
 import com.example.home.fragment.adapter.GoodsKindItemAdapter;
 import com.example.home.fragment.adapter.ItemListAdapter;
 import com.example.home.fragment.contract.KindContract;

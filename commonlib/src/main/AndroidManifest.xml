@@ -4,11 +4,14 @@
 
     <application android:name=".MyApp">
         <activity
-            android:name=".commonactivity.BrowserActivity"
+            android:name=".comonactivity.BrowserActivity"
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity
-            android:name=".commonactivity.ShopServiceConversationActivity"
+            android:name=".comonactivity.ShopServiceConversationActivity"
             android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity android:name=".comonactivity.GoodsPaymentActivity" />
+        <activity android:name=".comonactivity.UserReceivingAddressActivity" />
+        <activity android:name=".comonactivity.AddressOfNewReceiptActivity"></activity>
     </application>
 
 </manifest>

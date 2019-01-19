@@ -24,6 +24,16 @@ public class BaseGson <T>{
         this.code = code;
     }
 
+    @Override
+    public String toString() {
+        return "BaseGson{" +
+                "code='" + code + '\'' +
+                ", msg='" + msg + '\'' +
+                ", data=" + data +
+                ", status=" + status +
+                '}';
+    }
+
     public String getMsg() {
         return msg;
     }

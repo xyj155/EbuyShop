@@ -1,20 +1,15 @@
 package com.example.commonlib.base;
 
 import android.app.Dialog;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.FragmentActivity;
-import android.support.v7.widget.Toolbar;
 import android.transition.Explode;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -90,7 +85,7 @@ public abstract class BaseActivity<V extends BaseView, T extends BasePresenter<V
         progressDialog = new Dialog(BaseActivity.this, R.style.progress_dialog);
         progressDialog.setContentView(R.layout.base_dialog);
         progressDialog.setCancelable(false);
-        progressDialog.getWindow().setBackgroundDrawableResource(android.R.color.white);
+        progressDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         TextView msg = (TextView) progressDialog.findViewById(R.id.id_tv_loadingmsg);
         msg.setText(msgStr);
         progressDialog.show();
@@ -112,10 +107,12 @@ public abstract class BaseActivity<V extends BaseView, T extends BasePresenter<V
 
     private ImageView ivClose;
     private TextView tvTitle;
+    private TextView tvMenu;
 
     public BaseActivity initToolBar() {
         ivClose = findViewById(R.id.iv_close);
         tvTitle = findViewById(R.id.tv_title);
+        tvMenu = findViewById(R.id.tv_menu);
         ivClose.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
@@ -129,6 +126,31 @@ public abstract class BaseActivity<V extends BaseView, T extends BasePresenter<V
     public BaseActivity setToolBarTitle(String title) {
         tvTitle.setText(title);
         return this;
+    }
+
+    public BaseActivity setToolBarMenu(String menu) {
+        tvMenu.setText(menu);
+        return this;
+    }
+
+    public BaseActivity setToolBarMenuClickListener(final onMenuClickListener onMenuClickListener) {
+        tvMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onMenuClickListener.onMenuClickListener();
+            }
+        });
+        return this;
+    }
+
+    private onMenuClickListener onMenuClickListener;
+
+    public void setOnMenuClickListener(BaseActivity.onMenuClickListener onMenuClickListener) {
+        this.onMenuClickListener = onMenuClickListener;
+    }
+
+    public interface onMenuClickListener {
+        void onMenuClickListener();
     }
 
     public abstract T getPresenter();

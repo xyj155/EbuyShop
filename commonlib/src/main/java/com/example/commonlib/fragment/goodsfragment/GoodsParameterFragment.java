@@ -13,12 +13,10 @@ import android.webkit.WebViewClient;
 import com.example.commonlib.R;
 import com.example.commonlib.R2;
 import com.example.commonlib.base.BaseFragment;
-import com.example.commonlib.commonactivity.GoodsDetailActivity;
+import com.example.commonlib.comonactivity.GoodsDetailActivity;
 import com.example.commonlib.contract.GoodsDetailContract;
-import com.example.commonlib.fragment.GoodsDetailFragment;
 import com.example.commonlib.gson.GoodsDetailGson;
 import com.example.commonlib.presenter.GoodsDetailPresenter;
-
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -45,7 +43,7 @@ public class GoodsParameterFragment extends BaseFragment<GoodsDetailPresenter> i
     @Override
     public void initView(View view) {
         unbinder = ButterKnife.bind(this, view);
-        Log.i(TAG, "initView: " + getActivity().getIntent().getStringExtra("goodId"));
+        Log.i(TAG, "initView: " + getActivity().getIntent().getStringExtra("goodsId"));
 
             mPresenter.setGoodsDetailById("1");
     }

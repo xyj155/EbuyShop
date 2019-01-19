@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="#fafafa"
     android:orientation="vertical"
-    tools:context="com.example.commonlib.commonactivity.GoodsListSortedActivity"
+    tools:context="com.example.commonlib.comonactivity.GoodsListSortedActivity"
     tools:ignore="MissingDefaultResource">
 
     <include layout="@layout/common_toolbar" />

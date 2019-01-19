@@ -3,16 +3,10 @@ package com.xuyijie.ebuyshop;
 import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
-import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.FrameLayout;
-import android.widget.RelativeLayout;
 
 import com.alibaba.android.arouter.launcher.ARouter;
-import com.example.commonlib.MyApp;
 import com.example.commonlib.util.RouterUtil;
 import com.example.commonlib.util.SharePreferenceUtil;
 
@@ -32,7 +26,7 @@ public class SplashActivity extends Activity {
             public void run() {
                 Boolean user = (Boolean) SharePreferenceUtil.getUser("islogin", "boolean");
                 if (user) {
-                    ARouter.getInstance().build(RouterUtil.HomePage).navigation();
+                    ARouter.getInstance().build(RouterUtil.USERSAVEADDRESS).navigation();
                 } else {
                     ARouter.getInstance().build(RouterUtil.LOGIN).navigation();
 

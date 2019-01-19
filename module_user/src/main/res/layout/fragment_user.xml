@@ -9,7 +9,7 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:background="#fcd82e">
+        android:background="@drawable/live_badge_list_bg">
 
         <com.example.commonlib.view.WaveView
             android:id="@+id/wave_view"

@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.RequiresApi;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
@@ -22,24 +21,21 @@ import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.bumptech.glide.Glide;
-import com.example.commonlib.annotation.ContentView;
-import com.example.commonlib.annotation.UserAnnotation;
 import com.example.commonlib.annotation.UserType;
 import com.example.commonlib.base.BaseFragment;
-import com.example.commonlib.commonactivity.BrowserActivity;
+import com.example.commonlib.comonactivity.BrowserActivity;
 import com.example.commonlib.gson.BannerGson;
 import com.example.commonlib.gson.GoodsGson;
 import com.example.commonlib.gson.HotPurseActivityGson;
+import com.example.commonlib.gson.MarQueenGson;
 import com.example.commonlib.http.RetrofitUtils;
 import com.example.commonlib.loader.BannerViewHolder;
 import com.example.commonlib.util.RouterUtil;
-import com.example.commonlib.util.UserBindFactory;
 import com.example.commonlib.view.ObservableScrollView;
 import com.example.home.fragment.PurseGoodsAdapter;
 import com.example.home.fragment.adapter.HomeGoodsTimerPurseAdapter;
 import com.example.home.fragment.adapter.HomeHotGoodsActivityAdapter;
 import com.example.home.fragment.contract.HomePageContract;
-import com.example.home.fragment.entity.ComplexItemEntity;
 import com.example.home.fragment.presenter.HomePagePresenter;
 import com.example.home.fragment.util.ComplexViewMF;
 import com.gongwen.marqueen.MarqueeFactory;
@@ -50,14 +46,12 @@ import com.scwang.smartrefresh.layout.api.RefreshHeader;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.constant.RefreshState;
 import com.scwang.smartrefresh.layout.listener.OnMultiPurposeListener;
-import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.xuyijie.home.R;
 import com.xuyijie.home.R2;
 import com.zhouwei.mzbanner.MZBannerView;
 import com.zhouwei.mzbanner.holder.MZHolderCreator;
 import com.zhouwei.mzbanner.holder.MZViewHolder;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -246,24 +240,9 @@ public class HomeFragment extends BaseFragment<HomePagePresenter> implements Hom
 
             @Override
             public void onStateChanged(RefreshLayout refreshLayout, RefreshState oldState, RefreshState newState) {
-//                if (oldState.opening) {
-//                    llTitle.setVisibility(View.VISIBLE);
-//                } else {
-//                    llTitle.setVisibility(View.GONE);
-//                }
+
             }
         });
-        final List<ComplexItemEntity> datas = new ArrayList<>();
-        datas.add(new ComplexItemEntity("我的的的武大大爱的啊大大", ""));
-        datas.add(new ComplexItemEntity("我发达爱的撒旦啊的的武大大爱的啊大大", ""));
-        datas.add(new ComplexItemEntity("阿大声道阿达大爱的", ""));
-        datas.add(new ComplexItemEntity("阿达达到阿达的阿达阿达阿打算", ""));
-        datas.add(new ComplexItemEntity("打撒旦打发顺丰阿达阿达阿达啊", ""));
-
-        MarqueeFactory<LinearLayout, ComplexItemEntity> marqueeFactory = new ComplexViewMF(getContext());
-        marqueeFactory.setData(datas);
-        marqueeView.setMarqueeFactory(marqueeFactory);
-        marqueeView.startFlipping();
 
         ryHot.setNestedScrollingEnabled(false);
         ryTimerPurse.setNestedScrollingEnabled(false);
@@ -284,7 +263,7 @@ public class HomeFragment extends BaseFragment<HomePagePresenter> implements Hom
     }
 
 
-    private MarqueeView<LinearLayout, ComplexItemEntity> marqueeView;
+    private MarqueeView<LinearLayout, MarQueenGson> marqueeView;
 
     @Override
     public void onStart() {
@@ -356,6 +335,14 @@ public class HomeFragment extends BaseFragment<HomePagePresenter> implements Hom
         banner.setDuration(200);
         banner.setIndicatorVisible(true);
         banner.start();
+    }
+
+    @Override
+    public void loadMarqueenList(List<MarQueenGson> list) {
+        MarqueeFactory<LinearLayout, MarQueenGson> marqueeFactory = new ComplexViewMF(getContext());
+        marqueeFactory.setData(list);
+        marqueeView.setMarqueeFactory(marqueeFactory);
+        marqueeView.startFlipping();
     }
 
     @Override

@@ -1,22 +1,18 @@
 package com.example.commonlib;
 
-import android.app.Application;
 import android.app.Notification;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Environment;
-import android.os.Handler;
 import android.support.multidex.MultiDexApplication;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.WindowManager;
 import android.widget.RemoteViews;
-import android.widget.Toast;
 
 import com.alibaba.android.arouter.launcher.ARouter;
-import com.example.commonlib.commonactivity.ShopServiceConversationActivity;
+import com.example.commonlib.comonactivity.ShopServiceConversationActivity;
 import com.getui.gis.sdk.GInsightManager;
 import com.mob.MobSDK;
 import com.netease.nimlib.sdk.NIMClient;
@@ -31,9 +27,7 @@ import com.tencent.smtt.sdk.QbSdk;
 import com.umeng.commonsdk.UMConfigure;
 
 import com.umeng.message.IUmengRegisterCallback;
-import com.umeng.message.MsgConstant;
 import com.umeng.message.PushAgent;
-import com.umeng.message.UTrack;
 import com.umeng.message.UmengMessageHandler;
 import com.umeng.message.UmengNotificationClickHandler;
 import com.umeng.message.entity.UMessage;

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="wrap_content">
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dp_8"
+        android:background="#fff"
+        android:orientation="horizontal">
+
+        <CheckBox
+            android:layout_width="@dimen/dp_30"
+            android:id="@+id/cb_select"
+            android:layout_height="@dimen/dp_30"
+            android:layout_gravity="center"
+            android:background="@drawable/cb_goods_car_bg_check"
+            android:button="@null" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_marginBottom="@dimen/dp_5"
+                android:layout_marginTop="@dimen/dp_5"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/tv_tel"
+                android:id="@+id/tv_savename"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="10dp"
+                android:gravity="center"
+                android:text="收货人：徐易杰"
+                android:textColor="#000"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_marginBottom="@dimen/dp_5"
+                android:layout_marginTop="@dimen/dp_5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_margin="@dimen/dp_9"
+                android:id="@+id/tv_tel"
+                android:text="17373232233"
+                android:textColor="#000"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+            <TextView
+                android:layout_below="@+id/tv_tel"
+                android:layout_width="match_parent"
+                android:id="@+id/tv_address"
+                android:layout_marginTop="@dimen/dp_8"
+                android:layout_marginBottom="@dimen/dp_8"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:layout_height="wrap_content"
+                android:lineSpacingExtra="@dimen/dp_4"
+                android:text=" [默认] 湖南省株洲市有限城关镇系统组士大夫力困筋乏会计法啊两节课了三分看见了开发链接拉风了啦看见了开发 奥拉建安费链接来安抚据了解方式"/>
+        </RelativeLayout>
+
+
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_1"
+        android:background="#fafafa"/>
+</LinearLayout>

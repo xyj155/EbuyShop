@@ -16,7 +16,7 @@
 
     <TextView
         android:id="@+id/tv_title"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_toEndOf="@+id/iv_close"
         android:ellipsize="end"
@@ -24,5 +24,15 @@
         android:maxLength="11"
         android:text=""
         android:textColor="#000" />
-
+<TextView
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:text=""
+    android:gravity="center"
+    android:id="@+id/tv_menu"
+    android:padding="@dimen/dp_6"
+    android:textColor="#000"
+    android:textStyle="bold"
+    android:layout_alignParentRight="true"
+    android:layout_centerVertical="true"/>
 </RelativeLayout>

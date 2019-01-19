@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.example.commonlib.commonactivity.GoodsDetailActivity;
+import com.example.commonlib.comonactivity.GoodsDetailActivity;
 import com.example.commonlib.gson.GoodsGson;
 import com.example.commonlib.view.MoneyView;
 
@@ -34,7 +34,7 @@ public class GoodsSortedAdapter extends BaseQuickAdapter<GoodsGson, BaseViewHold
                     @Override
                     public void onClick(View v) {
                         Intent intent = new Intent(context, GoodsDetailActivity.class);
-                        intent.putExtra("goodId", String.valueOf(item.getId()));
+                        intent.putExtra("goodsId", String.valueOf(item.getId()));
                         context.startActivity(intent);
                     }
                 });

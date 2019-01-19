@@ -119,6 +119,7 @@ public class LoginActivity extends BaseActivity<UserContract.View, UserPresenter
         map.put("username", userGson.getUsername());
         map.put("avatar", userGson.getAvatar());
         map.put("telphone", userGson.getTelphone());
+        map.put("uid", String.valueOf(userGson.getId()));
         map.put("islogin", true);
         SharePreferenceUtil.saveUser(map);
         finish();

@@ -9,11 +9,9 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.RadioGroup;
-import android.widget.Toast;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
-import com.example.commonlib.MyApp;
 import com.example.commonlib.base.BaseActivity;
 import com.example.commonlib.contract.HomeContract;
 import com.example.commonlib.gson.UserGson;
@@ -22,10 +20,7 @@ import com.example.commonlib.util.RouterUtil;
 import com.example.commonlib.view.MyDialog;
 import com.example.home.fragment.view.HomeFragment;
 
-
 import java.util.List;
-
-
 
 
 @Route(path = RouterUtil.HomePage)
@@ -71,7 +66,7 @@ public class MainActivity extends BaseActivity<HomeContract.View, LoginPresent> 
                         case R.id.dialog_btn_cancel:
                             finish();
                             System.exit(0);
-                  
+
                             break;
                     }
                 }
@@ -86,7 +81,6 @@ public class MainActivity extends BaseActivity<HomeContract.View, LoginPresent> 
 
     @Override
     public void initView() {
-
         bottomBar = findViewById(R.id.bottomBar);
         bottomBar.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -126,7 +120,6 @@ public class MainActivity extends BaseActivity<HomeContract.View, LoginPresent> 
                         } else {
                             transaction.show(goodsCarFragment);
                         }
-//                        Fragment chatFragment=(Fragment)ARouter.getInstance().build(RouterUtil.ShopCar_Fragment_Main).navigation();
                         break;
                     case R.id.rb_user:
                         if (userFragment == null) {
@@ -141,7 +134,6 @@ public class MainActivity extends BaseActivity<HomeContract.View, LoginPresent> 
             }
         });
         showFirstPosition();
-//        onUmengPush();
 
 
     }

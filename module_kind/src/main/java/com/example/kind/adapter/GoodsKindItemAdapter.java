@@ -2,22 +2,18 @@ package com.example.kind.adapter;
 
 import android.app.Activity;
 import android.app.ActivityOptions;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
-import android.transition.Explode;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.alibaba.android.arouter.launcher.ARouter;
 import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.example.commonlib.commonactivity.GoodsListSortedActivity;
+import com.example.commonlib.comonactivity.GoodsListSortedActivity;
 import com.example.commonlib.gson.KindItemGson;
-import com.example.commonlib.util.RouterUtil;
 import com.xuyijie.kind.R;
 
 import java.util.List;
