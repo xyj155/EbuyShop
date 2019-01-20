@@ -23,7 +23,7 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.bumptech.glide.Glide;
 import com.example.commonlib.annotation.UserType;
 import com.example.commonlib.base.BaseFragment;
-import com.example.commonlib.comonactivity.BrowserActivity;
+import com.example.commonlib.commonactivity.BrowserActivity;
 import com.example.commonlib.gson.BannerGson;
 import com.example.commonlib.gson.GoodsGson;
 import com.example.commonlib.gson.HotPurseActivityGson;

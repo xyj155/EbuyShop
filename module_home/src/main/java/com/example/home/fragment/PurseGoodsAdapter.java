@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.example.commonlib.comonactivity.GoodsDetailActivity;
+import com.example.commonlib.commonactivity.GoodsDetailActivity;
 import com.example.commonlib.gson.GoodsGson;
 import com.xuyijie.home.R;
 

@@ -1,4 +1,4 @@
-package com.example.commonlib.comonactivity;
+package com.example.commonlib.commonactivity;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -19,6 +19,7 @@ import com.example.commonlib.R2;
 import com.example.commonlib.base.BaseActivity;
 import com.example.commonlib.contract.AddressOfNewReceiptContract;
 import com.example.commonlib.presenter.AddressOfNewReceiptPresenter;
+import com.example.commonlib.util.SharePreferenceUtil;
 import com.example.commonlib.view.CityPickerPopWindow;
 import com.example.commonlib.view.SwitchButton;
 
@@ -139,7 +140,7 @@ public class AddressOfNewReceiptActivity extends BaseActivity<AddressOfNewReceip
             if (etUsername.getText().toString().isEmpty()||etDetail.getText().toString().isEmpty()||etTel.getText().toString().isEmpty()||tvLocal.getText().toString().isEmpty()){
                 Toast.makeText(this, "不可为空哦！", Toast.LENGTH_SHORT).show();
             }else {
-                mPresenter.saveNewAddress(etUsername.getText().toString(), etTel.getText().toString(), tvLocal.getText().toString(), etDetail.getText().toString(), isDefault, "1");
+                mPresenter.saveNewAddress(etUsername.getText().toString(), etTel.getText().toString(), tvLocal.getText().toString(), etDetail.getText().toString(), isDefault, (String) SharePreferenceUtil.getUser("uid","1"));
             }
 
         }

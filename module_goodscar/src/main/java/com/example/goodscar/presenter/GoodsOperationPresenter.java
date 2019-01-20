@@ -6,8 +6,8 @@ import com.example.commonlib.base.BaseGson;
 import com.example.commonlib.base.BasePresenter;
 import com.example.commonlib.gson.EmptyGson;
 import com.example.commonlib.http.BaseObserver;
-import com.example.commonlib.model.GoodsStyleModel;
 import com.example.goodscar.contract.GoodsOperationContract;
+import com.example.goodscar.model.GoodsCarOperationModel;
 
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -18,7 +18,7 @@ public class GoodsOperationPresenter extends BasePresenter<GoodsOperationContrac
         super(mMvpView);
     }
 
-    private GoodsStyleModel styleModel = new GoodsStyleModel();
+    private GoodsCarOperationModel styleModel = new GoodsCarOperationModel();
 
 
     @Override

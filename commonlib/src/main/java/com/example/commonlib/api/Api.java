@@ -2,7 +2,9 @@ package com.example.commonlib.api;
 
 import com.example.commonlib.base.BaseGson;
 import com.example.commonlib.gson.BannerGson;
+import com.example.commonlib.gson.CouponGson;
 import com.example.commonlib.gson.EmptyGson;
+import com.example.commonlib.gson.ExpressGson;
 import com.example.commonlib.gson.GoodsDetailGson;
 import com.example.commonlib.gson.GoodsGson;
 import com.example.commonlib.gson.GoodsShareGson;
@@ -10,6 +12,7 @@ import com.example.commonlib.gson.GoodsStyleGson;
 import com.example.commonlib.gson.HotPurseActivityGson;
 import com.example.commonlib.gson.KindItemGson;
 import com.example.commonlib.gson.MarQueenGson;
+import com.example.commonlib.gson.OrderDetailGson;
 import com.example.commonlib.gson.ShopCarGson;
 import com.example.commonlib.gson.UserGson;
 import com.example.commonlib.gson.UserReceiveAddressGson;
@@ -87,5 +90,14 @@ public interface Api {
                                                            @Field("default") String defaults,
                                                            @Field("userId") String userId
    );
+
+    @GET("/StuShop/public/index.php/index/User/queryUserCouponList")
+    Observable<BaseGson<CouponGson>> queryUserCouponList(@Query("userId") String goodId);
+
+    @GET("/StuShop/public/index.php/index/Express/queryAllExpress")
+    Observable<BaseGson<ExpressGson>> queryAllExpress();
+
+    @GET("/StuShop/public/index.php/index/User/confirmationOrderByUserId")
+    Observable<BaseGson<OrderDetailGson>> confirmationOrderByUserId(@Query("userId") String userId, @Query("goodsId") String goodsId);
 
 }

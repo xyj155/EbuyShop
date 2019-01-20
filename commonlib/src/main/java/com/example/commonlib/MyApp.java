@@ -12,7 +12,7 @@ import android.view.WindowManager;
 import android.widget.RemoteViews;
 
 import com.alibaba.android.arouter.launcher.ARouter;
-import com.example.commonlib.comonactivity.ShopServiceConversationActivity;
+import com.example.commonlib.commonactivity.ShopServiceConversationActivity;
 import com.getui.gis.sdk.GInsightManager;
 import com.mob.MobSDK;
 import com.netease.nimlib.sdk.NIMClient;

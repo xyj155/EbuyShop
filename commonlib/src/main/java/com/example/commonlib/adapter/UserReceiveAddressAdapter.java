@@ -13,7 +13,7 @@ import android.widget.TextView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.example.commonlib.R;
-import com.example.commonlib.comonactivity.GoodsPaymentActivity;
+import com.example.commonlib.commonactivity.GoodsPaymentActivity;
 import com.example.commonlib.gson.UserReceiveAddressGson;
 
 import java.util.List;
@@ -27,7 +27,7 @@ public class UserReceiveAddressAdapter extends BaseQuickAdapter<UserReceiveAddre
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, UserReceiveAddressGson item) {
+    protected void convert(BaseViewHolder helper, final UserReceiveAddressGson item) {
         TextView view = helper.getView(R.id.tv_address);
         helper.setText(R.id.tv_tel, item.getSaveTel())
                 .setText(R.id.tv_savename, item.getSaveName())
@@ -35,6 +35,10 @@ public class UserReceiveAddressAdapter extends BaseQuickAdapter<UserReceiveAddre
                     @Override
                     public void onClick(View v) {
                         Intent intent = new Intent(context, GoodsPaymentActivity.class);
+                        intent.putExtra("username",item.getSaveName());
+                        intent.putExtra("tel",item.getSaveTel());
+                        intent.putExtra("local",item.getSaveLocal());
+                        intent.putExtra("detail",item.getSaveAddressDetail());
                         context.setResult(0x1, intent);
                         context.finish();
                     }

@@ -1,4 +1,4 @@
-package com.example.commonlib.comonactivity;
+package com.example.commonlib.commonactivity;
 
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;

@@ -1,12 +1,11 @@
-package com.example.user;
+package com.example.user.view;
 
-import android.content.Context;
-import android.databinding.DataBindingUtil;
+import android.content.Intent;
 import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.bumptech.glide.Glide;
@@ -16,11 +15,20 @@ import com.example.commonlib.util.RouterUtil;
 import com.example.commonlib.util.SharePreferenceUtil;
 import com.example.commonlib.view.WaveView;
 import com.xuyijie.user.R;
+import com.xuyijie.user.R2;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import butterknife.Unbinder;
 
 @Route(path = RouterUtil.Me_Fragment_Main)
 public class UserFragment extends BaseFragment<LoginPresent> {
     private WaveView waveView;
     private ImageView ivHead;
+    @BindView(R2.id.tv_my_vip)
+     TextView tvCoupon;
+     Unbinder unbinder;
 
     @Override
     public void initData() {
@@ -30,7 +38,8 @@ public class UserFragment extends BaseFragment<LoginPresent> {
 
     @Override
     public void initView(View view) {
-        waveView =view.findViewById(R.id.wave_view);
+        unbinder = ButterKnife.bind(this, view);
+        waveView = view.findViewById(R.id.wave_view);
         ivHead = view.findViewById(R.id.ivHead);
         final FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(-2, -2);
         lp.gravity = Gravity.BOTTOM | Gravity.CENTER;
@@ -41,7 +50,14 @@ public class UserFragment extends BaseFragment<LoginPresent> {
                 ivHead.setLayoutParams(lp);
             }
         });
-        Glide.with(getContext()).asBitmap().load(SharePreferenceUtil.getUser("avatar","String")).into(ivHead);
+        Glide.with(getContext()).asBitmap().load(SharePreferenceUtil.getUser("avatar", "String")).into(ivHead);
+
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
     }
 
     @Override
@@ -52,5 +68,14 @@ public class UserFragment extends BaseFragment<LoginPresent> {
     @Override
     public LoginPresent initPresenter() {
         return null;
+    }
+
+
+    @OnClick({R2.id.tv_my_vip})
+    public void onViewClicked(View view) {
+        int id = view.getId();
+        if (id == R.id.tv_my_vip) {
+            startActivity(new Intent(getContext(), UserCouponActivity.class));
+        }
     }
 }

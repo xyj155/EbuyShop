@@ -205,8 +205,8 @@
             android:drawablePadding="@dimen/dp_8"
             android:gravity="center|left"
             android:paddingLeft="@dimen/dp_6"
-            android:id="@+id/tv_my__vip"
-            android:text="我的会员"
+            android:id="@+id/tv_my_vip"
+            android:text="我的优惠券"
             android:textColor="#000" />
 
         <View

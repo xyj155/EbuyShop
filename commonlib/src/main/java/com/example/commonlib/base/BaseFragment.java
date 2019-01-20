@@ -23,6 +23,7 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment {
     protected Context mContext;//activity的上下文对象
     protected Bundle mBundle;
     private Dialog progressDialog;
+
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
@@ -30,29 +31,38 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment {
             outState.putBundle("bundle", mBundle);
         }
     }
-    public  void loginWraper(UserType type, Class context) {
+
+    public void loginWraper(UserType type, Class context) {
         switch (type) {
             case ISPERMITED:
-                startActivity(new Intent(getContext(),context));
+                startActivity(new Intent(getContext(), context));
                 break;
             case NOTPERMITED:
                 Toast.makeText(getContext(), "你还没有登录哦！", Toast.LENGTH_SHORT).show();
                 break;
         }
     }
-    public void createDialog(String msgStr) {
-        progressDialog = new Dialog(getContext(), R.style.progress_dialog);
+
+    public BaseFragment createDialog(String msgStr) {
+        progressDialog = new Dialog(getActivity(), R.style.progress_dialog);
         progressDialog.setContentView(R.layout.base_dialog);
-        progressDialog.setCancelable(false);
+
         progressDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         TextView msg = (TextView) progressDialog.findViewById(R.id.id_tv_loadingmsg);
         msg.setText(msgStr);
         progressDialog.show();
+        return this;
+    }
+
+    public BaseFragment setDialogCancelable(boolean cancelable) {
+        progressDialog.setCancelable(cancelable);
+        return this;
     }
 
     public void dialogCancel() {
         progressDialog.dismiss();
     }
+
     /**
      * 绑定activity
      *
@@ -92,6 +102,7 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment {
      * 生成view视图
      */
     Unbinder unbinder;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -99,7 +110,7 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment {
         unbinder = ButterKnife.bind(this, inflate);
         initView(inflate);
         initData();
-       return inflate;
+        return inflate;
     }
 
     @Override
@@ -107,6 +118,7 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment {
         super.onDestroyView();
         unbinder.unbind();
     }
+
     public abstract int initLayout();
 
     /**

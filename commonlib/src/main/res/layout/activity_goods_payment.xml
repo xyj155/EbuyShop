@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".comonactivity.GoodsPaymentActivity">
+    tools:context=".commonactivity.GoodsPaymentActivity">
 
     <include layout="@layout/common_toolbar" />
 
@@ -28,10 +28,12 @@
                 android:orientation="vertical">
 
                 <FrameLayout
+                    android:id="@+id/fl_address"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginBottom="@dimen/dp_9"
-                    android:background="#fff">
+                    android:background="#fff"
+                    android:visibility="gone">
 
                     <View
                         android:layout_width="5dp"
@@ -66,6 +68,7 @@
                                 android:drawablePadding="@dimen/dp_7"
                                 android:gravity="bottom"
                                 android:text="收件人：徐易杰"
+                                android:id="@+id/tv_username"
                                 android:textColor="#000"
                                 android:textSize="@dimen/dp_17"
                                 android:textStyle="bold" />
@@ -73,6 +76,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:id="@+id/tv_user_tel"
                                 android:layout_alignParentEnd="true"
                                 android:layout_centerVertical="true"
                                 android:layout_gravity="right|center"
@@ -87,6 +91,7 @@
                             android:layout_marginLeft="@dimen/dp_41"
                             android:layout_marginTop="@dimen/dp_17"
                             android:layout_marginRight="@dimen/dp_41"
+                            android:id="@+id/tv_address"
                             android:text="收货地址：浙江省嘉兴市南湖区嘉兴学院梁林校区公寓2A 518寝室"
                             android:textColor="#000" />
 
@@ -105,6 +110,31 @@
 
                 </FrameLayout>
 
+                <RelativeLayout
+                    android:id="@+id/rl_empty_address"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_130"
+                    android:background="#fafafa">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="26dp"
+                        android:drawableLeft="@mipmap/ic_address"
+                        android:drawablePadding="@dimen/dp_8"
+                        android:text="请填写你的收获地址"
+                        android:textColor="#000" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_margin="@dimen/dp_10"
+                        android:src="@mipmap/forum_home_follow_title_forward_ic" />
+                </RelativeLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -142,6 +172,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dp_55"
+                    android:id="@+id/tv_deliver_way"
                     android:background="#fff"
                     android:drawableRight="@mipmap/btn_reward_more"
                     android:padding="@dimen/dp_15"
@@ -154,6 +185,7 @@
                     android:background="#fafafa" />
 
                 <TextView
+                    android:id="@+id/tv_post"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dp_55"
                     android:background="#fff"
@@ -182,6 +214,7 @@
                         android:textColor="#000" />
 
                     <EditText
+                        android:id="@+id/et_message"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_marginLeft="@dimen/dp_10"
@@ -206,6 +239,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:gravity="center"
+                        android:id="@+id/tv_count"
                         android:text="共2件商品   小计："
                         android:textColor="#000" />
 
@@ -213,6 +247,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:gravity="center"
+                        android:id="@+id/tv_money"
                         android:padding="@dimen/dp_8"
                         android:text="￥ 33.33"
                         android:textColor="#ff6969"
@@ -229,6 +264,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dp_55"
                     android:background="#fff"
+                    android:id="@+id/tv_pay_type"
                     android:drawableRight="@mipmap/btn_reward_more"
                     android:padding="@dimen/dp_15"
                     android:text="优惠方式"

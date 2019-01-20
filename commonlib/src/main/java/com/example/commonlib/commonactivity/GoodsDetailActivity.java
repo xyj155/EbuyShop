@@ -1,4 +1,4 @@
-package com.example.commonlib.comonactivity;
+package com.example.commonlib.commonactivity;
 
 import android.annotation.SuppressLint;
 import android.graphics.Color;
@@ -213,7 +213,7 @@ public class GoodsDetailActivity extends BaseActivity<GoodsDetailContract.View, 
     public void onStatucChanged(SlideDetailsLayout.Status status) {
         if (status == SlideDetailsLayout.Status.OPEN) {
             svGoodsInfo.setSmoothScrollingEnabled(false);
-        }else {
+        } else {
             svGoodsInfo.setSmoothScrollingEnabled(true);
         }
     }
@@ -280,7 +280,7 @@ public class GoodsDetailActivity extends BaseActivity<GoodsDetailContract.View, 
         tvCommentCount.setText(goodsGson.getComment().size() + "");
         webView.loadUrl(goodsGson.getGoodsDetailWeb());
         webView.setFocusable(false);
-       WebSettings webSettings = webView.getSettings();
+        WebSettings webSettings = webView.getSettings();
         webSettings.setLoadWithOverviewMode(true);
         webSettings.setBuiltInZoomControls(true);
         webSettings.setLoadsImagesAutomatically(true);

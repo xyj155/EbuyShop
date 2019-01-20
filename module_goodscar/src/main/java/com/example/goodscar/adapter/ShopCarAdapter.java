@@ -2,7 +2,6 @@ package com.example.goodscar.adapter;
 
 import android.support.annotation.Nullable;
 import android.view.View;
-import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 
@@ -42,6 +41,17 @@ public class ShopCarAdapter extends BaseQuickAdapter<ShopCarGson, BaseViewHolder
         void checkGroup(int position, boolean isChecked);
     }
 
+    private onGoodsItemCheckChangeListener onGoodsItemCheckChangeListener;
+
+    public void setOnGoodsItemCheckChangeListener(ShopCarAdapter.onGoodsItemCheckChangeListener onGoodsItemCheckChangeListener) {
+        this.onGoodsItemCheckChangeListener = onGoodsItemCheckChangeListener;
+    }
+
+    public interface onGoodsItemCheckChangeListener {
+        void onGoodsItemCheckChangeListener(String goodsName,int goodsId, boolean isCheck);
+    }
+
+    @Override
     protected void convert(final BaseViewHolder helper, final ShopCarGson item) {
         helper.setText(R.id.mv_price, "￥" + item.getGoodsPrice())
                 .setText(R.id.tv_goods_name, item.getGoodsShopName())
@@ -51,9 +61,15 @@ public class ShopCarAdapter extends BaseQuickAdapter<ShopCarGson, BaseViewHolder
                 .setOnCheckedChangeListener(R.id.cb_goods, new CompoundButton.OnCheckedChangeListener() {
                     @Override
                     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                        item.setCheck(((CheckBox) helper.getView(R.id.cb_goods)).isChecked());
-                        checkInterface.checkGroup(helper.getPosition(), ((CheckBox) helper.getView(R.id.cb_goods)).isChecked());//向外暴露接口
-
+                        if (isChecked) {
+                            item.setCheck(true);
+                            checkInterface.checkGroup(helper.getPosition(), true);
+                            onGoodsItemCheckChangeListener.onGoodsItemCheckChangeListener(item.getGoodsName(),item.getId(), true);
+                        } else {
+                            item.setCheck(false);
+                            checkInterface.checkGroup(helper.getPosition(), false);
+                            onGoodsItemCheckChangeListener.onGoodsItemCheckChangeListener(item.getGoodsName(),item.getId(), false);
+                        }
                     }
                 })
                 .setOnClickListener(R.id.iv_minum, new View.OnClickListener() {
@@ -61,7 +77,13 @@ public class ShopCarAdapter extends BaseQuickAdapter<ShopCarGson, BaseViewHolder
                     public void onClick(View v) {
                         goodsOperationPresenter.addGoodsInShopCarById("1", String.valueOf(item.getId()), "0");
                         ShopCarPresenter shopCarPresenter = goodsCarFragment.initPresenter();
-                        shopCarPresenter.queryUserShopCarByUid("1");
+                        shopCarPresenter.queryUserShopCarByUid("1",false);
+                        new android.os.Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                notifyDataSetChanged();
+                            }
+                        }, 100);
                     }
                 })
                 .setOnClickListener(R.id.iv_add, new View.OnClickListener() {
@@ -69,8 +91,13 @@ public class ShopCarAdapter extends BaseQuickAdapter<ShopCarGson, BaseViewHolder
                     public void onClick(View v) {
                         goodsOperationPresenter.addGoodsInShopCarById("1", String.valueOf(item.getId()), "1");
                         ShopCarPresenter shopCarPresenter = goodsCarFragment.initPresenter();
-                        shopCarPresenter.queryUserShopCarByUid("1");
-
+                        shopCarPresenter.queryUserShopCarByUid("1",false);
+                        new android.os.Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                notifyDataSetChanged();
+                            }
+                        }, 100);
                     }
                 });
         GlideUtil.loadRoundCornerAvatarImage(item.getGoodsPicUrl(), (ImageView) helper.getView(R.id.iv_goods_pic), 8);

@@ -18,6 +18,6 @@ public interface ShopCarContract {
     }
 
     interface Presenter {
-        void queryUserShopCarByUid(String userId);
+        void queryUserShopCarByUid(String userId,boolean isflash);
     }
 }

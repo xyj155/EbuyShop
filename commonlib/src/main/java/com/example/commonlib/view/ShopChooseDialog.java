@@ -26,7 +26,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.example.commonlib.R;
-import com.example.commonlib.comonactivity.GoodsPaymentActivity;
+import com.example.commonlib.commonactivity.GoodsPaymentActivity;
 import com.example.commonlib.contract.GoodsStyleContract;
 import com.example.commonlib.gson.GoodsStyleGson;
 import com.example.commonlib.presenter.GoodsStylePresenter;

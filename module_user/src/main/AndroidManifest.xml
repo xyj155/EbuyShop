@@ -2,17 +2,19 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.xuyijie.user">
 
-    <!--<application-->
-        <!--android:allowBackup="true"-->
-        <!--android:label="@string/app_name"-->
-        <!--android:supportsRtl="true">-->
-        <!--&lt;!&ndash;<activity android:name=".MainActivity">&ndash;&gt;-->
-        <!--&lt;!&ndash;<intent-filter>&ndash;&gt;-->
-        <!--&lt;!&ndash;<action android:name="android.intent.action.MAIN" />&ndash;&gt;-->
-
-        <!--&lt;!&ndash;<category android:name="android.intent.category.LAUNCHER" />&ndash;&gt;-->
-        <!--&lt;!&ndash;</intent-filter>&ndash;&gt;-->
-        <!--&lt;!&ndash;</activity>&ndash;&gt;-->
-    <!--</application>-->
+    <!-- <application -->
+    <!-- android:allowBackup="true" -->
+    <!-- android:label="@string/app_name" -->
+    <!-- android:supportsRtl="true"> -->
+    <!-- &lt;!&ndash;<activity android:name=".MainActivity">&ndash;&gt; -->
+    <!-- &lt;!&ndash;<intent-filter>&ndash;&gt; -->
+    <!-- &lt;!&ndash;<action android:name="android.intent.action.MAIN" />&ndash;&gt; -->
+    <!-- &lt;!&ndash;<category android:name="android.intent.category.LAUNCHER" />&ndash;&gt; -->
+    <!-- &lt;!&ndash;</intent-filter>&ndash;&gt; -->
+    <!-- &lt;!&ndash;</activity>&ndash;&gt; -->
+    <!-- </application> -->
+    <application>
+        <activity android:name="com.example.user.view.UserCouponActivity"></activity>
+    </application>
 
 </manifest>

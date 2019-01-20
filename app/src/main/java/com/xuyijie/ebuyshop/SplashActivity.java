@@ -21,12 +21,13 @@ public class SplashActivity extends Activity {
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_splash);
+
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
                 Boolean user = (Boolean) SharePreferenceUtil.getUser("islogin", "boolean");
                 if (user) {
-                    ARouter.getInstance().build(RouterUtil.USERSAVEADDRESS).navigation();
+                    ARouter.getInstance().build(RouterUtil.HomePage).navigation();
                 } else {
                     ARouter.getInstance().build(RouterUtil.LOGIN).navigation();
 
@@ -38,5 +39,6 @@ public class SplashActivity extends Activity {
     }
 
     private static final String TAG = "SplashActivity";
+
 
 }

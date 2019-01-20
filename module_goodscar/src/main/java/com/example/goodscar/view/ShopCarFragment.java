@@ -1,5 +1,6 @@
 package com.example.goodscar.view;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.widget.LinearLayoutManager;
@@ -8,18 +9,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.example.commonlib.base.BaseFragment;
+import com.example.commonlib.commonactivity.GoodsPaymentActivity;
 import com.example.commonlib.gson.ShopCarGson;
 import com.example.commonlib.util.RouterUtil;
 import com.example.goodscar.adapter.ShopCarAdapter;
 import com.example.goodscar.contract.ShopCarContract;
 import com.example.goodscar.presenter.ShopCarPresenter;
+import com.google.gson.Gson;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
@@ -27,10 +29,12 @@ import com.xuyijie.goodscar.R;
 import com.xuyijie.goodscar.R2;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 
 @Route(path = RouterUtil.ShopCar_Fragment_Main)
@@ -72,14 +76,14 @@ public class ShopCarFragment extends BaseFragment<ShopCarPresenter> implements S
         smlShopcar.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshLayout) {
-                mPresenter.queryUserShopCarByUid("1");
+                mPresenter.queryUserShopCarByUid("1",true);
                 rbAllCheck.setChecked(false);
             }
         });
         shopCarAdapter.setUpdateShopCar(new ShopCarAdapter.UpdateShopCarInterface() {
             @Override
             public void uploadShopCar() {
-                mPresenter.queryUserShopCarByUid("1");
+                mPresenter.queryUserShopCarByUid("1",false);
                 createDialog("");
             }
 
@@ -88,57 +92,77 @@ public class ShopCarFragment extends BaseFragment<ShopCarPresenter> implements S
                 dialogCancel();
             }
         });
-        rbAllCheck.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        rbAllCheck.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+            public void onClick(View v) {
                 if (shopCarAdapter.getData().size() != 0) {
-                    if (isChecked) {
+                    if (rbAllCheck.isChecked()) {
                         for (int i = 0; i < shopCarAdapter.getData().size(); i++) {
                             shopCarAdapter.getData().get(i).setCheck(true);
                         }
-                        new Handler().postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                shopCarAdapter.notifyDataSetChanged();
-                            }
-                        }, 100);
                     } else {
                         for (int i = 0; i < shopCarAdapter.getData().size(); i++) {
                             shopCarAdapter.getData().get(i).setCheck(false);
                         }
-                        new Handler().postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                shopCarAdapter.notifyDataSetChanged();
-                            }
-                        }, 100);
                     }
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            shopCarAdapter.notifyDataSetChanged();
+                        }
+                    }, 100);
                     statistics();
                 }
             }
+//        rbAllCheck.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+//            @Override
+//            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+//                if (shopCarAdapter.getData().size() != 0) {
+//                    if (isChecked) {
+//                        for (int i = 0; i < shopCarAdapter.getData().size(); i++) {
+//                            shopCarAdapter.getData().get(i).setCheck(true);
+//                        }
+//                    } else {
+//                        for (int i = 0; i < shopCarAdapter.getData().size(); i++) {
+//                            shopCarAdapter.getData().get(i).setCheck(false);
+//                        }
+//                    }
+//                    new Handler().postDelayed(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            shopCarAdapter.notifyDataSetChanged();
+//                        }
+//                    }, 100);
+//                    statistics();
+//                }
+//            }
         });
         shopCarAdapter.setCheckInterface(new ShopCarAdapter.CheckInterface() {
             @Override
             public void checkGroup(int position, boolean isChecked) {
-                shopCarAdapter.getData().get(position).setCheck(isChecked);
-                if (isAllCheck())
+                if (isAllCheck()) {
                     rbAllCheck.setChecked(true);
-                else
+                } else {
                     rbAllCheck.setChecked(false);
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        shopCarAdapter.notifyDataSetChanged();
-                    }
-                }, 100);
-
+                }
                 statistics();
+            }
+        });
+        shopCarAdapter.setOnGoodsItemCheckChangeListener(new ShopCarAdapter.onGoodsItemCheckChangeListener() {
+            @Override
+            public void onGoodsItemCheckChangeListener(String goodsName, int goodsId, boolean isCheck) {
+                if (isCheck) {
+                    goodsList.add(String.valueOf(goodsId));
+                } else {
+                    goodsList.remove(String.valueOf(goodsId));
+                }
             }
         });
     }
 
-    private boolean isAllCheck() {
+    private List<String> goodsList = new ArrayList<>();
 
+    private boolean isAllCheck() {
         for (ShopCarGson group : shopCarAdapter.getData()) {
             if (!group.isCheck())
                 return false;
@@ -176,7 +200,7 @@ public class ShopCarFragment extends BaseFragment<ShopCarPresenter> implements S
     @Override
     public void onResume() {
         super.onResume();
-        mPresenter.queryUserShopCarByUid("1");
+        mPresenter.queryUserShopCarByUid("1",false);
     }
 
     private static final String TAG = "ShopCarFragment";
@@ -226,5 +250,17 @@ public class ShopCarFragment extends BaseFragment<ShopCarPresenter> implements S
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+    }
+
+    @OnClick({R2.id.ll_shopcar})
+    public void onViewClicked(View view) {
+        int id = view.getId();
+        if (id == R.id.ll_shopcar) {
+            Intent intent = new Intent(getContext(), GoodsPaymentActivity.class);
+            Gson gson = new Gson();
+            String jsonStr = gson.toJson(goodsList);
+            intent.putExtra("goodsArray", jsonStr);
+            startActivity(intent);
+        }
     }
 }

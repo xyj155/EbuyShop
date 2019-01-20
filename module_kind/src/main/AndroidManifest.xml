@@ -14,8 +14,8 @@
     <!-- &lt;!&ndash;</activity>&ndash;&gt; -->
     <!-- </application> -->
     <application>
-        <activity android:name="com.example.commonlib.comonactivity.GoodsDetailActivity" />
-        <activity android:name="com.example.commonlib.comonactivity.GoodsListSortedActivity"></activity>
+        <activity android:name="com.example.commonlib.commonactivity.GoodsDetailActivity" />
+        <activity android:name="com.example.commonlib.commonactivity.GoodsListSortedActivity"></activity>
     </application>
 
 </manifest>

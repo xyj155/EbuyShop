@@ -13,7 +13,7 @@ import android.webkit.WebViewClient;
 import com.example.commonlib.R;
 import com.example.commonlib.R2;
 import com.example.commonlib.base.BaseFragment;
-import com.example.commonlib.comonactivity.GoodsDetailActivity;
+import com.example.commonlib.commonactivity.GoodsDetailActivity;
 import com.example.commonlib.contract.GoodsDetailContract;
 import com.example.commonlib.gson.GoodsDetailGson;
 import com.example.commonlib.presenter.GoodsDetailPresenter;

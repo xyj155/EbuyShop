@@ -18,26 +18,35 @@ public class ShopCarPresenter extends BasePresenter<ShopCarContract.View> implem
     private ShopCarModel shopCarModel = new ShopCarModel();
 
     @Override
-    public void queryUserShopCarByUid(String userId) {
-        mMvpView.showDialog("");
+    public void queryUserShopCarByUid(String userId, final boolean isflash) {
+        if (isflash){
+            mMvpView.showDialog("");
+        }
         shopCarModel.queryUserShopCarByUid(userId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseObserver<BaseGson<ShopCarGson>>() {
                     @Override
                     public void onCompleted() {
-                        mMvpView.hideDialog();
+                        if (isflash){
+                            mMvpView.hideDialog();
+                        }
+
                     }
 
                     @Override
                     public void onNext(BaseGson<ShopCarGson> shopCarGsonBaseGson) {
-                        mMvpView.hideDialog();
+                        if (isflash){
+                            mMvpView.hideDialog();
+                        }
                         mMvpView.loadUserShopCar(shopCarGsonBaseGson.getData());
                     }
 
                     @Override
                     public void onError(String error) {
-                        mMvpView.hideDialog();
+                        if (isflash){
+                            mMvpView.hideDialog();
+                        }
                     }
                 });
     }
