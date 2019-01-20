@@ -164,20 +164,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_1"
-                    android:background="#fafafa" />
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_55"
-                    android:id="@+id/tv_deliver_way"
-                    android:background="#fff"
-                    android:drawableRight="@mipmap/btn_reward_more"
-                    android:padding="@dimen/dp_15"
-                    android:text="不支持七天7天无理由"
-                    android:textColor="#000" />
 
                 <View
                     android:layout_width="match_parent"
@@ -296,6 +283,7 @@
                     android:paddingTop="@dimen/dp_8"
                     android:paddingRight="@dimen/dp_14"
                     android:paddingBottom="@dimen/dp_8"
+                    android:id="@+id/tv_cancel"
                     android:text="取消订单"
                     android:textColor="#000" />
 
@@ -304,6 +292,7 @@
                     android:layout_height="wrap_content"
                     android:background="@drawable/abc_payment_confirm_red_bg"
                     android:paddingLeft="@dimen/dp_14"
+                    android:id="@+id/tv_pay"
                     android:paddingTop="@dimen/dp_8"
                     android:paddingRight="@dimen/dp_14"
                     android:paddingBottom="@dimen/dp_8"

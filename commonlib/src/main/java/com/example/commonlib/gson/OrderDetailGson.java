@@ -13,6 +13,36 @@ public class OrderDetailGson {
     private UserAddressBean userAddress;
     private List<GoodsBean> goods;
     private List<UserCouponBean> userCoupon;
+    private PostFree postFree;
+
+    public PostFree getPostFree() {
+        return postFree;
+    }
+
+    public void setPostFree(PostFree postFree) {
+        this.postFree = postFree;
+    }
+
+    private class PostFree {
+        private String postName;
+        private String postPrice;
+
+        public String getPostName() {
+            return postName;
+        }
+
+        public void setPostName(String postName) {
+            this.postName = postName;
+        }
+
+        public String getPostPrice() {
+            return postPrice;
+        }
+
+        public void setPostPrice(String postPrice) {
+            this.postPrice = postPrice;
+        }
+    }
 
     public UserAddressBean getUserAddress() {
         return userAddress;
@@ -133,7 +163,7 @@ public class OrderDetailGson {
          * goodsPrice : 10.00
          * goodsPicUrl : https://img.alicdn.com/imgextra/i4/742634735/TB2u6rgbdXXWeJjSZFvXXa6lpXa_!!742634735.jpg_430x430q90.jpg
          */
-private String  goodsCommonName;
+        private String goodsCommonName;
 
         public String getGoodsCommonName() {
             return goodsCommonName;

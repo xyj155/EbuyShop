@@ -23,9 +23,9 @@ import com.netease.nimlib.sdk.msg.constant.SessionTypeEnum;
 import com.netease.nimlib.sdk.uinfo.UserInfoProvider;
 import com.netease.nimlib.sdk.uinfo.model.UserInfo;
 import com.netease.nimlib.sdk.util.NIMUtil;
+import com.payelves.sdk.EPay;
 import com.tencent.smtt.sdk.QbSdk;
 import com.umeng.commonsdk.UMConfigure;
-
 import com.umeng.message.IUmengRegisterCallback;
 import com.umeng.message.PushAgent;
 import com.umeng.message.UmengMessageHandler;
@@ -125,7 +125,8 @@ public class MyApp extends MultiDexApplication {
             // 2、相关Service调用
         }
         MobSDK.init(this,"29cbff9d24b0b","83fe8985b2647f0041f9cfb3487492d6");
-
+        EPay.getInstance(getApplicationContext()).init("wAwS4BHkB", "1b0ccf51458c4053ae2931772fbbfb97",
+                "7169149861036033", "baidu");
 
     }
     // 如果返回值为 null，则全部使用默认参数。

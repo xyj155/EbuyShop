@@ -8,6 +8,7 @@ import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.View;
@@ -127,10 +128,12 @@ public class ExpressChooseDialog extends Dialog implements ExpressContract.View 
                         public void onClick(View v) {
                             if (integerList.contains(helper.getPosition())) {
                                 helper.setChecked(R.id.cb_express, false);
+                                Log.i(TAG, "onClick: 1");
                             } else {
                                 integerList.clear();
                                 integerList.add(helper.getPosition());
                                 helper.setChecked(R.id.cb_express, true);
+                                Log.i(TAG, "onClick: 2");
                                 onItemClickListener.onClickListener(item.getExpressPrice(),item.getExpressName());
                             }
                             new Handler().postDelayed(new Runnable() {
@@ -155,6 +158,7 @@ public class ExpressChooseDialog extends Dialog implements ExpressContract.View 
     }
 
     private onItemClickListener onItemClickListenerByGId;
+
 
     public void setOnItemClickListener(onItemClickListener onItemClickListenerByGId) {
         this.onItemClickListenerByGId = onItemClickListenerByGId;

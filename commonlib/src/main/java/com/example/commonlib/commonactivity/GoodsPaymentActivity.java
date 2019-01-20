@@ -23,6 +23,8 @@ import com.example.commonlib.base.BaseActivity;
 import com.example.commonlib.contract.OrderDetailContract;
 import com.example.commonlib.gson.OrderDetailGson;
 import com.example.commonlib.presenter.OrderDetailPresenter;
+import com.example.commonlib.util.PaymentInterface;
+import com.example.commonlib.util.PaymentUtil;
 import com.example.commonlib.util.RouterUtil;
 import com.example.commonlib.view.ExpressChooseDialog;
 
@@ -48,8 +50,6 @@ public class GoodsPaymentActivity extends BaseActivity<OrderDetailContract.View,
     TextView tvAddress;
     @BindView(R2.id.fl_address)
     FrameLayout flAddress;
-    @BindView(R2.id.tv_deliver_way)
-    TextView tvDeliverWay;
     @BindView(R2.id.tv_post)
     TextView tvPost;
     @BindView(R2.id.tv_pay_type)
@@ -58,6 +58,11 @@ public class GoodsPaymentActivity extends BaseActivity<OrderDetailContract.View,
     TextView tvCount;
     @BindView(R2.id.tv_money)
     TextView tvMoney;
+    @BindView(R2.id.tv_cancel)
+    TextView tvCancel;
+    @BindView(R2.id.tv_pay)
+    TextView tvPay;
+
 
     private OrderDetailGoodsAdapter orderDetailGoodsAdapter = new OrderDetailGoodsAdapter(null);
 
@@ -79,12 +84,19 @@ public class GoodsPaymentActivity extends BaseActivity<OrderDetailContract.View,
     @Override
     public void initView() {
         ButterKnife.bind(this);
+        mPresenter.confirmationOrderByUserId("1", getIntent().getStringExtra("goodsArray"));
         initToolBar().setToolBarTitle("订单详情");
         ryGoods.setLayoutManager(new LinearLayoutManager(GoodsPaymentActivity.this));
-        mPresenter.confirmationOrderByUserId("1", getIntent().getStringExtra("goodsArray"));
+
         ryGoods.setAdapter(orderDetailGoodsAdapter);
         ryGoods.setNestedScrollingEnabled(false);
         expressChooseDialog = new ExpressChooseDialog(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
     }
 
     @Override
@@ -125,7 +137,6 @@ public class GoodsPaymentActivity extends BaseActivity<OrderDetailContract.View,
             spannableString.setSpan(new ForegroundColorSpan(Color.parseColor("#FF0000")), 12, s.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
             tvPayType.setText(spannableString);
         }
-
         for (OrderDetailGson.GoodsBean goodsBean : orderDetailGson.getGoods()) {
             money += Double.valueOf(goodsBean.getGoodsPrice()) * goodsBean.getGoodsCount();
             count += goodsBean.getGoodsCount();
@@ -133,11 +144,21 @@ public class GoodsPaymentActivity extends BaseActivity<OrderDetailContract.View,
         tvCount.setText("共 " + count + " 件商品  小计：");
         BigDecimal bigDecimal = new BigDecimal(money);
         tvMoney.setText("￥" + bigDecimal.setScale(2, BigDecimal.ROUND_HALF_DOWN));
+        Log.i(TAG, "loadOrderDetil: " + money);
+        if (money > 100) {
+            tvPost.setText("配送方式       满 100 包邮(配送方式可自主选择)");
+        } else {
+            tvPost.setText("配送方式       请选择配送方式");
+        }
         expressChooseDialog.setOnItemClickListener(new ExpressChooseDialog.onItemClickListener() {
             @Override
             public void onClickListener(String price, String expressName) {
-                Log.i(TAG, "onClickListener: ");
-                tvPost.setText("配送方式       " + expressName + "     ￥" + price);
+                if (price != null) {
+                    tvPost.setText("配送方式       " + expressName + "     ￥" + price);
+                    money += Double.valueOf(price);
+                    BigDecimal bigDecimal = new BigDecimal(money);
+                    tvMoney.setText("￥" + bigDecimal.setScale(2, BigDecimal.ROUND_HALF_DOWN));
+                }
                 expressChooseDialog.dismiss();
             }
         });
@@ -153,7 +174,7 @@ public class GoodsPaymentActivity extends BaseActivity<OrderDetailContract.View,
 
     }
 
-    @OnClick({R2.id.rl_empty_address, R2.id.fl_address, R2.id.tv_post, R2.id.tv_pay_type})
+    @OnClick({R2.id.rl_empty_address, R2.id.fl_address, R2.id.tv_post, R2.id.tv_pay_type, R2.id.tv_cancel, R2.id.tv_pay})
     public void onViewClicked(View view) {
         int id = view.getId();
         if (id == R.id.rl_empty_address) {
@@ -163,7 +184,21 @@ public class GoodsPaymentActivity extends BaseActivity<OrderDetailContract.View,
         } else if (id == R.id.tv_post) {
             expressChooseDialog.show();
         } else if (id == R.id.tv_pay_type) {
-            ARouter.getInstance().build(RouterUtil.USERCOUPON).withDouble("money",money).navigation(GoodsPaymentActivity.this, 0x11);
+            ARouter.getInstance().build(RouterUtil.USERCOUPON).withDouble("money", money).navigation(GoodsPaymentActivity.this, 0x11);
+        } else if (id == R.id.tv_pay) {
+            PaymentUtil.paymentByGoods(GoodsPaymentActivity.this, "商品", "商品", 1, new PaymentInterface() {
+                @Override
+                public void paySuccess() {
+                    Log.i(TAG, "paySuccess: ");
+                }
+
+                @Override
+                public void payFailed() {
+                    Log.i(TAG, "payFailed: ");
+                }
+            });
+        } else if (id == R.id.tv_cancel) {
+
         }
     }
 
@@ -184,8 +219,13 @@ public class GoodsPaymentActivity extends BaseActivity<OrderDetailContract.View,
                 String endIndex = data.getStringExtra("endIndex");
                 String startIndex = data.getStringExtra("startIndex");
                 tvPayType.setText("优惠方式        满 " + startIndex + " 元减 " + endIndex + " 元");
+                money -= Double.valueOf(endIndex);
+                BigDecimal bigDecimal = new BigDecimal(money);
+                tvMoney.setText("￥" + bigDecimal.setScale(2, BigDecimal.ROUND_HALF_DOWN));
             }
         }
 
     }
+
+
 }
