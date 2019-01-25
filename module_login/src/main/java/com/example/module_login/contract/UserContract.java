@@ -8,7 +8,7 @@ import rx.Observable;
 
 public interface UserContract {
     interface Model {
-        Observable<BaseGson<UserGson>> userLoginByUserName(String username,String password);
+        Observable<BaseGson<UserGson>> userLoginByUserName(String username, String password);
     }
 
     interface View extends BaseView {
@@ -18,6 +18,6 @@ public interface UserContract {
     }
 
     interface Presenter {
-        void userLogin(String username,String password);
+        void userLogin(String username, String password);
     }
 }

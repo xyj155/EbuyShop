@@ -1,8 +1,8 @@
 package com.example.commonlib.commonactivity;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.graphics.Color;
-import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.GridLayoutManager;
@@ -29,15 +29,20 @@ import com.example.commonlib.R2;
 import com.example.commonlib.base.BaseActivity;
 import com.example.commonlib.contract.GoodsDetailContract;
 import com.example.commonlib.gson.GoodsDetailGson;
+import com.example.commonlib.gson.SubmitOrderGson;
 import com.example.commonlib.loader.GoodsBannerViewHolder;
 import com.example.commonlib.presenter.GoodsDetailPresenter;
 import com.example.commonlib.util.RouterUtil;
+import com.example.commonlib.util.SharePreferenceUtil;
 import com.example.commonlib.view.ShopChooseDialog;
 import com.example.commonlib.view.SlideDetailsLayout;
+import com.google.gson.Gson;
 import com.zhouwei.mzbanner.MZBannerView;
 import com.zhouwei.mzbanner.holder.MZHolderCreator;
 import com.zhouwei.mzbanner.holder.MZViewHolder;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 import butterknife.BindView;
@@ -130,22 +135,17 @@ public class GoodsDetailActivity extends BaseActivity<GoodsDetailContract.View, 
     @Override
     public void initView() {
         ButterKnife.bind(this);
-        Log.i(TAG, "initView: " + getIntent().getStringExtra("goodsId"));
-        Log.i(TAG, "initView: " + bannerHeight);
         ViewTreeObserver viewTreeObserver = bannerGoods.getViewTreeObserver();
-// 获取控件宽度
         viewTreeObserver.addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
             @Override
             public boolean onPreDraw() {
                 if (!hasMeasured) {
                     bannerHeight = bannerGoods.getHeight();
-                    Log.i("info", "MAX_WIDTH=" + bannerHeight);
                     hasMeasured = true;
                 }
                 return true;
             }
         });
-
         svSwitch.setOnSlideDetailsListener(this);
         mPresenter.setGoodsDetailById(getIntent().getStringExtra("goodsId"));
         ryEnsure.setLayoutManager(new GridLayoutManager(GoodsDetailActivity.this, 3));
@@ -186,13 +186,6 @@ public class GoodsDetailActivity extends BaseActivity<GoodsDetailContract.View, 
 
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-
-    }
-
 
     @Override
     public void showError(String msg) {
@@ -210,13 +203,14 @@ public class GoodsDetailActivity extends BaseActivity<GoodsDetailContract.View, 
     }
 
     @Override
-    public void onStatucChanged(SlideDetailsLayout.Status status) {
+    public void onStatusChanged(SlideDetailsLayout.Status status) {
         if (status == SlideDetailsLayout.Status.OPEN) {
             svGoodsInfo.setSmoothScrollingEnabled(false);
         } else {
             svGoodsInfo.setSmoothScrollingEnabled(true);
         }
     }
+
 
     private class ServiceAdapter extends BaseQuickAdapter<String, BaseViewHolder> {
 
@@ -291,6 +285,19 @@ public class GoodsDetailActivity extends BaseActivity<GoodsDetailContract.View, 
         webSettings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
     }
 
+    @Override
+    public void insertUserOrder(SubmitOrderGson goodsGson) {
+        Gson gson = new Gson();
+        Intent intent = new Intent(GoodsDetailActivity.this, GoodsPaymentActivity.class);
+        intent.putExtra("orderNum", goodsGson.getOrderNum());
+        HashSet<String> h = new HashSet<>(goodsIdList);
+        goodsIdList.clear();
+        goodsIdList.addAll(h);//去重
+        intent.putExtra("goodsArray", gson.toJson(goodsIdList));
+        startActivity(intent);
+        goodsIdList.clear();
+    }
+
     private class GoodsCommentPicAdapter extends BaseQuickAdapter<String, BaseViewHolder> {
 
         public GoodsCommentPicAdapter(@Nullable List<String> data) {
@@ -321,20 +328,45 @@ public class GoodsDetailActivity extends BaseActivity<GoodsDetailContract.View, 
         }
     }
 
+    private GoodsDetailPresenter submitOrderPresenter = new GoodsDetailPresenter(this);
+
     @OnClick({R2.id.tv_add, R2.id.tv_buy, R2.id.iv_close})
     public void onViewClicked(View view) {
         int id = view.getId();
-        Log.i(TAG, "onViewClicked: " + getIntent().getStringExtra("goodsId"));
         if (id == R.id.tv_add) {
             shopChooseDialog = new ShopChooseDialog(this, getIntent().getStringExtra("goodsId"), false);
             shopChooseDialog.show();
         } else if (id == R.id.tv_buy) {
             shopChooseDialog = new ShopChooseDialog(this, getIntent().getStringExtra("goodsId"), true);
             shopChooseDialog.show();
+            shopChooseDialog.setOnSubmitOrderListener(new ShopChooseDialog.onSubmitOrderListener() {
+                @Override
+                public void onSubmitListener(String goodsId, String count) {
+                    goodsIdList.clear();
+                    Gson gson = new Gson();
+                    for (int i = 0; i < Integer.valueOf(count); i++) {
+                        goodsIdList.add(goodsId);
+                    }
+                    submitOrderPresenter.insertUserOrder((String) SharePreferenceUtil.getUser("uid", "String"), gson.toJson(goodsIdList));
+                }
+            });
         } else if (id == R.id.iv_close) {
             finish();
         }
     }
 
+//    @Override
+//    public void submitUserOrder(boolean submit, String goodsOrderNum) {
+//        if (submit) {
+//            Gson gson = new Gson();
+//            Intent intent = new Intent(GoodsDetailActivity.this, GoodsPaymentActivity.class);
+//            String jsonStr = gson.toJson(goodsIdList);
+//            intent.putExtra("goodsArray", jsonStr);
+//            intent.putExtra("orderNum", goodsOrderNum);
+//            startActivity(intent);
+//        }
+//    }
+
+    private List<String> goodsIdList = new ArrayList<>();
 
 }

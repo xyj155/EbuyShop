@@ -106,10 +106,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:scaleType="fitEnd"
+                android:id="@+id/iv_minum"
                 android:src="@mipmap/mall_num_control_minus" />
 
             <TextView
                 android:layout_width="wrap_content"
+                android:id="@+id/tv_count"
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:paddingLeft="@dimen/dp_12"
@@ -120,6 +122,7 @@
 
             <ImageView
                 android:scaleType="fitStart"
+                android:id="@+id/iv_add"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@mipmap/mall_num_control_plus_big" />

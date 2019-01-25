@@ -121,12 +121,10 @@ public class HomeFragment extends BaseFragment<HomePagePresenter> implements Hom
         marqueeView = view.findViewById(R.id.marqueeView);
         homeHotGoodsItemAdapter = new HomeHotGoodsActivityAdapter(null, getContext());
         ryHot.setAdapter(homeHotGoodsItemAdapter);
-
+        initData();//初始化数据
         StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
         ryPurse.setLayoutManager(staggeredGridLayoutManager);
-        initData();//初始化数据
         ryPurse.setItemAnimator(new DefaultItemAnimator());
-
         ryPurse.setNestedScrollingEnabled(false);
         ryPurse.setFocusable(false);
         purseGoodsAdapter = new PurseGoodsAdapter(null, getContext());

@@ -2,18 +2,15 @@ package com.example.commonlib.http;
 
 import android.util.Log;
 
-
 import java.io.IOException;
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
-
 
 import rx.Observer;
 
 public abstract class BaseObserver<T> implements Observer<T> {
 
     private static final String TAG = "BaseObserver";
-
 
 
 

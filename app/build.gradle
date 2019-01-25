@@ -66,21 +66,13 @@ android {
     }
 
     productFlavors {
-//        yingyongbao {}
-//        xiaomi {}
-//        huawei {}
-//        abc {
-//            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "abc"]
-//        }
         baiduyun {
-            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "yinyongbao",
-                                    JPUSH_PKGNAME      : "com.xuyijie.ebuyshop",
+            manifestPlaceholders = [JPUSH_PKGNAME      : "com.xuyijie.ebuyshop",
                                     GT_INSTALL_CHANNEL      : "yinyongbao"
             ]
         }
         wandoujia {
-            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "yinyongbao",
-                                    JPUSH_PKGNAME      : "com.xuyijie.ebuyshop",
+            manifestPlaceholders = [JPUSH_PKGNAME      : "com.xuyijie.ebuyshop",
                                     GT_INSTALL_CHANNEL      : "yinyongbao"]
         }
     }

@@ -9,14 +9,14 @@ import rx.Observable;
 
 public interface OrderDetailContract {
     interface Model {
-        Observable<BaseGson<OrderDetailGson>> confirmationOrderByUserId(String userId, String goodsId);
+        Observable<BaseGson<OrderDetailGson>> confirmationOrderByUserId(String userId, String goodsId,String orderNum);
     }
 
     interface View extends BaseView {
-        void loadOrderDetil(OrderDetailGson orderDetailGson);
+        void loadOrderDetail(OrderDetailGson orderDetailGson);
     }
 
     interface Presenter {
-        void confirmationOrderByUserId(String userId, String goodsId);
+        void confirmationOrderByUserId(String userId, String goodsId,String orderNum);
     }
 }

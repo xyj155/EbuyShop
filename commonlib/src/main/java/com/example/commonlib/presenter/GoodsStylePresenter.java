@@ -19,6 +19,11 @@ public class GoodsStylePresenter extends BasePresenter<GoodsStyleContract.View> 
 
     private GoodsStyleModel styleModel = new GoodsStyleModel();
 
+    /**
+     *
+     * 根据商品id查询商品样式
+     * @param goodsId
+     */
     @Override
     public void queryGoodsStyle(String goodsId) {
         mMvpView.showDialog("");
@@ -43,10 +48,17 @@ public class GoodsStylePresenter extends BasePresenter<GoodsStyleContract.View> 
                 });
     }
 
+    /**
+     * 添加商品
+     * @param userId
+     * @param count
+     * @param goodsId
+     * @param type
+     */
     @Override
-    public void addGoodsInShopCarById(String userId, final String goodsId, String type) {
+    public void addGoodsInShopCarById(String userId, String count,final String goodsId, String type) {
         mMvpView.showDialog("");
-        styleModel.addGoodsInShopCarById(userId, goodsId, type)
+        styleModel.addGoodsInShopCarById(userId, count,goodsId, type)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseObserver<BaseGson<EmptyGson>>() {

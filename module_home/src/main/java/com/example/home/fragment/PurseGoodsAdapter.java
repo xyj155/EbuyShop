@@ -16,16 +16,18 @@ import com.xuyijie.home.R;
 import java.util.List;
 
 public class PurseGoodsAdapter extends BaseQuickAdapter<GoodsGson, BaseViewHolder> {
-private Context context;
+    private Context context;
+
     public PurseGoodsAdapter(@Nullable List<GoodsGson> data, Context context) {
         super(R.layout.ry_home_pursegoods_item, data);
-        this.context=context;
+        this.context = context;
     }
 
     @Override
     protected void convert(BaseViewHolder helper, final GoodsGson item) {
         helper.setText(R.id.tvPrice, item.getGoodsPrice())
                 .setText(R.id.tvGoodsName, item.getGoodsName())
+                .setText(R.id.tvTotal, item.getGoodsLocation())
                 .setOnClickListener(R.id.ll_goods, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -33,7 +35,8 @@ private Context context;
                         view.putExtra("goodsId", String.valueOf(item.getId()));
                         context.startActivity(view);
                     }
-                });;
+                });
+        ;
         Glide.with(context).asBitmap().load(item.getGoodsPic()).into((ImageView) helper.getView(R.id.ivCover));
     }
 }

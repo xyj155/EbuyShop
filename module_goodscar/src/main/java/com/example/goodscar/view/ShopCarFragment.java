@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,9 +19,12 @@ import com.example.commonlib.base.BaseFragment;
 import com.example.commonlib.commonactivity.GoodsPaymentActivity;
 import com.example.commonlib.gson.ShopCarGson;
 import com.example.commonlib.util.RouterUtil;
+import com.example.commonlib.util.SharePreferenceUtil;
 import com.example.goodscar.adapter.ShopCarAdapter;
 import com.example.goodscar.contract.ShopCarContract;
+import com.example.goodscar.contract.SubmitOrderContract;
 import com.example.goodscar.presenter.ShopCarPresenter;
+import com.example.goodscar.presenter.SubmitOrderPresenter;
 import com.google.gson.Gson;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -34,11 +38,10 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import butterknife.Unbinder;
 
 @Route(path = RouterUtil.ShopCar_Fragment_Main)
-public class ShopCarFragment extends BaseFragment<ShopCarPresenter> implements ShopCarContract.View {
+public class ShopCarFragment extends BaseFragment<ShopCarPresenter> implements ShopCarContract.View, SubmitOrderContract.View {
 
     @BindView(R2.id.llTitle)
     LinearLayout llTitle;
@@ -58,8 +61,10 @@ public class ShopCarFragment extends BaseFragment<ShopCarPresenter> implements S
     @BindView(R2.id.iv_count)
     ImageView ivCount;
     Unbinder unbinder1;
-    private ShopCarAdapter shopCarAdapter = new ShopCarAdapter(null, this);
-
+    @BindView(R2.id.rlshopcar)
+    LinearLayout rlShopcar;
+    public ShopCarAdapter shopCarAdapter;
+    private SubmitOrderPresenter submitOrderPresenter = new SubmitOrderPresenter(this);
 
     @Override
     public void initData() {
@@ -69,6 +74,7 @@ public class ShopCarFragment extends BaseFragment<ShopCarPresenter> implements S
     @Override
     public void initView(View view) {
         unbinder = ButterKnife.bind(this, view);
+        shopCarAdapter = new ShopCarAdapter(null, this, getActivity());
         ryGoodscar.setLayoutManager(new LinearLayoutManager(getContext()));
         ryGoodscar.setAdapter(shopCarAdapter);
         shopCarAdapter.bindToRecyclerView(ryGoodscar);
@@ -76,14 +82,14 @@ public class ShopCarFragment extends BaseFragment<ShopCarPresenter> implements S
         smlShopcar.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshLayout) {
-                mPresenter.queryUserShopCarByUid("1",true);
+                mPresenter.queryUserShopCarByUid("1", true);
                 rbAllCheck.setChecked(false);
             }
         });
         shopCarAdapter.setUpdateShopCar(new ShopCarAdapter.UpdateShopCarInterface() {
             @Override
             public void uploadShopCar() {
-                mPresenter.queryUserShopCarByUid("1",false);
+                mPresenter.queryUserShopCarByUid("1", false);
                 createDialog("");
             }
 
@@ -200,7 +206,8 @@ public class ShopCarFragment extends BaseFragment<ShopCarPresenter> implements S
     @Override
     public void onResume() {
         super.onResume();
-        mPresenter.queryUserShopCarByUid("1",false);
+        mPresenter.queryUserShopCarByUid("1", false);
+
     }
 
     private static final String TAG = "ShopCarFragment";
@@ -215,11 +222,35 @@ public class ShopCarFragment extends BaseFragment<ShopCarPresenter> implements S
         return new ShopCarPresenter(this);
     }
 
+    private List<String> goodsIdList = new ArrayList<>();
+    private List<ShopCarGson> shopCarGso = new ArrayList<>();
+
     @Override
-    public void loadUserShopCar(List<ShopCarGson> shopCarGsons) {
-        shopCarAdapter.replaceData(shopCarGsons);
+    public void loadUserShopCar(final List<ShopCarGson> shopCarGsons) {
+        if (shopCarGsons.size() == 0) {
+            rlShopcar.setVisibility(View.VISIBLE);
+        } else {
+            rlShopcar.setVisibility(View.GONE);
+        }
+        shopCarGso.clear();
+        shopCarGso.addAll(shopCarGsons);
+        shopCarAdapter.replaceData(shopCarGso);
         smlShopcar.finishRefresh();
+
+        llShopcar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Gson gson = new Gson();
+                for (int i = 0; i < shopCarGsons.size(); i++) {
+                    if (shopCarGsons.get(i).isCheck())
+                        goodsIdList.add(String.valueOf(shopCarGsons.get(i).getId()));
+                }
+                submitOrderPresenter.submitUserOrder((String) SharePreferenceUtil.getUser("uid", "String"), gson.toJson(goodsIdList));
+            }
+        });
+        statistics();
     }
+
 
     @Override
     public void showError(String msg) {
@@ -252,15 +283,20 @@ public class ShopCarFragment extends BaseFragment<ShopCarPresenter> implements S
         unbinder.unbind();
     }
 
-    @OnClick({R2.id.ll_shopcar})
-    public void onViewClicked(View view) {
-        int id = view.getId();
-        if (id == R.id.ll_shopcar) {
-            Intent intent = new Intent(getContext(), GoodsPaymentActivity.class);
+
+    @Override
+    public void submitUserOrder(boolean submit,String orderNum) {
+        Log.i(TAG, "submitUserOrder: " + submit);
+        mPresenter.queryUserShopCarByUid("1", false);
+        if (submit){
             Gson gson = new Gson();
+            Intent intent = new Intent(getContext(), GoodsPaymentActivity.class);
             String jsonStr = gson.toJson(goodsList);
             intent.putExtra("goodsArray", jsonStr);
+            intent.putExtra("orderNum", orderNum);
             startActivity(intent);
+            goodsIdList.clear();
         }
+
     }
 }

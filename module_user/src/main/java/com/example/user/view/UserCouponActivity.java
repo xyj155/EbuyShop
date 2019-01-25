@@ -31,7 +31,7 @@ public class UserCouponActivity extends BaseActivity<UserCouponContract.View, Us
     RecyclerView ryCoupon;
     @BindView(R2.id.sml_coupon)
     SmartRefreshLayout smlCoupon;
-    private CouponAdapter couponAdapter ;
+    private CouponAdapter couponAdapter;
 
     @Override
     public boolean isSetStatusBarTranslucent() {
@@ -54,7 +54,7 @@ public class UserCouponActivity extends BaseActivity<UserCouponContract.View, Us
         initToolBar().setToolBarTitle("我的优惠券");
         ryCoupon.setLayoutManager(new LinearLayoutManager(UserCouponActivity.this));
         double money = getIntent().getDoubleExtra("money", 0);
-        couponAdapter = new CouponAdapter(null, UserCouponActivity.this,money);
+        couponAdapter = new CouponAdapter(null, UserCouponActivity.this, money);
         couponAdapter.bindToRecyclerView(ryCoupon);
         View inflate = View.inflate(UserCouponActivity.this, R.layout.coupon_empty, null);
         TextView viewById = inflate.findViewById(R.id.tv_empty);
@@ -68,6 +68,7 @@ public class UserCouponActivity extends BaseActivity<UserCouponContract.View, Us
                 mPresenter.queryUserCouponList("1");
             }
         });
+
     }
 
     @Override

@@ -14,6 +14,7 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.example.commonlib.base.BaseActivity;
 import com.example.commonlib.gson.UserGson;
+import com.example.commonlib.interfaces.UserLoginInterface;
 import com.example.commonlib.util.RouterUtil;
 import com.example.commonlib.util.SharePreferenceUtil;
 import com.example.commonlib.util.ThirdLoginUtil;
@@ -23,7 +24,6 @@ import com.example.module_login.contract.UserContract;
 import com.example.module_login.presenter.UserPresenter;
 import com.qq.e.comm.util.Md5Util;
 import com.qq.e.comm.util.StringUtil;
-import com.umeng.socialize.bean.SHARE_MEDIA;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -31,6 +31,9 @@ import java.util.Map;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.sharesdk.framework.PlatformDb;
+import cn.sharesdk.sina.weibo.SinaWeibo;
+import cn.sharesdk.tencent.qq.QQ;
 
 
 @Route(path = RouterUtil.LOGIN)
@@ -92,19 +95,72 @@ public class LoginActivity extends BaseActivity<UserContract.View, UserPresenter
     public void onViewClicked(View view) {
         int id = view.getId();
         if (id == R.id.iv_qq) {
-            ThirdLoginUtil.thirdLogin(LoginActivity.this, SHARE_MEDIA.QQ);
+            Log.i(TAG, "onViewClicked: ");
+            ThirdLoginUtil.ThirdLogin(QQ.NAME, new UserLoginInterface() {
+                @Override
+                public void successWithUser(final PlatformDb platform) {
+                    Log.i(TAG, "successWithUser: " + platform.getUserId());
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Map<String, Object> map = new HashMap<>();
+                            map.put("username", platform.getUserId());
+                            map.put("password", platform.getUserId());
+                            map.put("avatar", platform.getUserIcon());
+                            SharePreferenceUtil.saveUser(map);
+                            Log.i(TAG, "successWithUser: " + platform.getUserId());
+                            mPresenter.userLogin(platform.getUserId(), platform.getUserId());
+                        }
+                    });
+
+                }
+
+                @Override
+                public void failed() {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(LoginActivity.this, "QQ登陆失败！", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+
+                }
+            });
         } else if (id == R.id.tv_login) {
-            if (StringUtil.isEmpty(etUsername.getText().toString()) && StringUtil.isEmpty(etPassword.getText().toString())) {
-                Toast.makeText(this, "输入不可为空！", Toast.LENGTH_SHORT).show();
-            } else {
+            if (!StringUtil.isEmpty(etUsername.getText().toString()) && !StringUtil.isEmpty(etPassword.getText().toString())) {
                 String encode = Md5Util.encode(etPassword.getText().toString());
                 Log.i(TAG, "onViewClicked: " + encode);
                 mPresenter.userLogin(etUsername.getText().toString(), encode);
+            } else {
+                Toast.makeText(this, "输入不可为空！", Toast.LENGTH_SHORT).show();
             }
         } else if (id == R.id.iv_wechat) {
-            ThirdLoginUtil.thirdLogin(LoginActivity.this, SHARE_MEDIA.QZONE);
+
         } else if (id == R.id.iv_sina) {
-            ThirdLoginUtil.thirdLogin(LoginActivity.this, SHARE_MEDIA.SINA);
+            ThirdLoginUtil.ThirdLogin(SinaWeibo.NAME, new UserLoginInterface() {
+                @Override
+                public void successWithUser(PlatformDb platform) {
+                    Map<String, Object> map = new HashMap<>();
+                    map.put("username", platform.getUserId());
+                    map.put("password", platform.getUserId());
+                    map.put("avatar", platform.getUserIcon());
+                    SharePreferenceUtil.saveUser(map);
+                    Log.i(TAG, "successWithUser: " + platform.getUserId());
+                    Log.i(TAG, "successWithUser: " + platform.getTokenSecret());
+                    mPresenter.userLogin(platform.getUserId(), platform.getUserId());
+                }
+
+                @Override
+                public void failed() {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(LoginActivity.this, "微博登陆失败", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+
+                }
+            });
         } else if (id == R.id.tv_register) {
             startActivityForResult(new Intent(LoginActivity.this, TelPhoneRegisterActivity.class), LOGIN_CODE);
         }
@@ -124,6 +180,8 @@ public class LoginActivity extends BaseActivity<UserContract.View, UserPresenter
         SharePreferenceUtil.saveUser(map);
         finish();
     }
+
+
 
     @Override
     public void showError(String msg) {

@@ -37,6 +37,7 @@ public class UserReceiveAddressAdapter extends BaseQuickAdapter<UserReceiveAddre
                         Intent intent = new Intent(context, GoodsPaymentActivity.class);
                         intent.putExtra("username",item.getSaveName());
                         intent.putExtra("tel",item.getSaveTel());
+                        intent.putExtra("adId",String .valueOf(item.getId()));
                         intent.putExtra("local",item.getSaveLocal());
                         intent.putExtra("detail",item.getSaveAddressDetail());
                         context.setResult(0x1, intent);

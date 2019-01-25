@@ -181,7 +181,7 @@ public class GoodsListSortedActivity extends BaseActivity<GoodsSortedContract.Vi
 
     @Override
     public void showError(String msg) {
-
+        hideDlalog();
     }
 
     @Override

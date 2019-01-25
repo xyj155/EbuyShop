@@ -27,7 +27,7 @@ public class SplashActivity extends Activity {
             public void run() {
                 Boolean user = (Boolean) SharePreferenceUtil.getUser("islogin", "boolean");
                 if (user) {
-                    ARouter.getInstance().build(RouterUtil.HomePage).navigation();
+                    ARouter.getInstance().build(RouterUtil.LOGIN).navigation();
                 } else {
                     ARouter.getInstance().build(RouterUtil.LOGIN).navigation();
 

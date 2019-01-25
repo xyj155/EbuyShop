@@ -18,7 +18,7 @@
         android:padding="@dimen/dp_8"
         android:drawablePadding="@dimen/dp_8"
         android:text="注册"
-        android:drawableRight="@mipmap/forum_home_follow_title_forward_ic"
+        android:drawableRight="@mipmap/arr"
         android:textColor="#000"
         android:textSize="17sp"
         android:textStyle="bold" />
@@ -32,14 +32,16 @@
         android:paddingRight="@dimen/dp_18">
 
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="@dimen/dp_12"
-            android:text="欢迎登录商学院"
-            android:textColor="#000"
-            android:textSize="@dimen/dp_27"
-            android:textStyle="bold" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dp_12"
+        android:text="商学院"
+        android:textColor="#000"
+        android:textSize="@dimen/dp_30"
+        android:textStyle="bold" />
+
 
         <EditText
             android:id="@+id/et_username"
@@ -51,7 +53,7 @@
             android:hint="请输入手机号"
             android:inputType="phone|number"
             android:paddingLeft="@dimen/dp_30"
-            android:textSize="15sp" />
+            android:textSize="17sp" />
 
         <EditText
             android:id="@+id/et_password"
@@ -61,7 +63,7 @@
             android:hint="请输入密码"
             android:inputType="textPassword"
             android:paddingLeft="@dimen/dp_30"
-            android:textSize="15sp" />
+            android:textSize="17sp" />
 
         <TextView
             android:id="@+id/tv_login"
@@ -93,6 +95,7 @@
 
 
     <LinearLayout
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/ll_login"
@@ -118,6 +121,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:visibility="gone"
         android:id="@+id/ll_login"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

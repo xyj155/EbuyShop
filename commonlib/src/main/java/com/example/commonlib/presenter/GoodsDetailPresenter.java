@@ -4,7 +4,7 @@ import com.example.commonlib.base.BaseGson;
 import com.example.commonlib.base.BasePresenter;
 import com.example.commonlib.contract.GoodsDetailContract;
 import com.example.commonlib.gson.GoodsDetailGson;
-import com.example.commonlib.gson.GoodsGson;
+import com.example.commonlib.gson.SubmitOrderGson;
 import com.example.commonlib.http.BaseObserver;
 import com.example.commonlib.model.GoodsDetailModel;
 
@@ -34,6 +34,31 @@ public class GoodsDetailPresenter extends BasePresenter<GoodsDetailContract.View
                     @Override
                     public void onNext(BaseGson<GoodsDetailGson> goodsGsonBaseGson) {
                         mMvpView.loadGoodsDetail(goodsGsonBaseGson.getData().get(0));
+                    }
+
+                    @Override
+                    public void onError(String error) {
+                        mMvpView.hideDialog();
+                    }
+                });
+    }
+
+    @Override
+    public void insertUserOrder(String userId, String goodsId) {
+        mMvpView.showDialog("加载中");
+        detailModel.insertUserOrder(userId, goodsId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseObserver<BaseGson<SubmitOrderGson>>() {
+                    @Override
+                    public void onCompleted() {
+                        mMvpView.hideDialog();
+                    }
+
+                    @Override
+                    public void onNext(BaseGson<SubmitOrderGson> goodsGsonBaseGson) {
+                        if (goodsGsonBaseGson.isStatus())
+                            mMvpView.insertUserOrder(goodsGsonBaseGson.getData().get(0));
                     }
 
                     @Override

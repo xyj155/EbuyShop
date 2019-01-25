@@ -95,7 +95,13 @@ public class AddressOfNewReceiptActivity extends BaseActivity<AddressOfNewReceip
         if (success) {
             finish();
         } else {
-            Toast.makeText(this, "添加失败！", Toast.LENGTH_SHORT).show();
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    Toast.makeText(AddressOfNewReceiptActivity.this, "添加失败！", Toast.LENGTH_SHORT).show();
+                }
+            });
+
         }
     }
 
@@ -140,7 +146,7 @@ public class AddressOfNewReceiptActivity extends BaseActivity<AddressOfNewReceip
             if (etUsername.getText().toString().isEmpty()||etDetail.getText().toString().isEmpty()||etTel.getText().toString().isEmpty()||tvLocal.getText().toString().isEmpty()){
                 Toast.makeText(this, "不可为空哦！", Toast.LENGTH_SHORT).show();
             }else {
-                mPresenter.saveNewAddress(etUsername.getText().toString(), etTel.getText().toString(), tvLocal.getText().toString(), etDetail.getText().toString(), isDefault, (String) SharePreferenceUtil.getUser("uid","1"));
+                mPresenter.saveNewAddress(etUsername.getText().toString(), etTel.getText().toString(), tvLocal.getText().toString(), etDetail.getText().toString(), isDefault, (String) SharePreferenceUtil.getUser("uid","String"));
             }
 
         }

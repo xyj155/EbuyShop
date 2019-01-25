@@ -10,10 +10,9 @@ import rx.Observable;
 public class GoodsCarOperationModel implements GoodsOperationContract.Model {
 
 
-
     @Override
-    public Observable<BaseGson<EmptyGson>> addGoodsInShopCarById(String userId, String goodsId,String type) {
-        return RetrofitUtils.getInstance().create().addGoodsInShopCarById(userId, goodsId,type);
+    public Observable<BaseGson<EmptyGson>> addGoodsInShopCarById(String userId, String count, String goodsId, String type) {
+        return RetrofitUtils.getInstance().create().addGoodsInShopCarById(userId, count, goodsId, type);
     }
 
 

@@ -17,6 +17,7 @@ import com.example.commonlib.base.BaseFragment;
 import com.example.commonlib.commonactivity.GoodsDetailActivity;
 import com.example.commonlib.contract.GoodsDetailContract;
 import com.example.commonlib.gson.GoodsDetailGson;
+import com.example.commonlib.gson.SubmitOrderGson;
 import com.example.commonlib.presenter.GoodsDetailPresenter;
 
 
@@ -80,6 +81,11 @@ public class GoodsDetailPicFragment extends BaseFragment<GoodsDetailPresenter> i
         webSettings.setBuiltInZoomControls(false);
         webSettings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
         wbGoodsDetail.setWebViewClient(new GoodsDetailWebViewClient());
+    }
+
+    @Override
+    public void insertUserOrder(SubmitOrderGson goodsGson) {
+
     }
 
     private class GoodsDetailWebViewClient extends WebViewClient {

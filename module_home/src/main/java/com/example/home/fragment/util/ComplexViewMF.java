@@ -24,6 +24,7 @@ public class ComplexViewMF extends MarqueeFactory<LinearLayout, MarQueenGson> {
         Log.i(TAG, "generateMarqueeItemView: "+data);
         LinearLayout mView = (LinearLayout) inflater.inflate(R.layout.marqueen_item_layout, null);
         ((TextView) mView.findViewById(R.id.tv_title)).setText(data.getMar_text());
+        ((TextView) mView.findViewById(R.id.tv_tag)).setText(data.getTag());
         return mView;
     }
 }

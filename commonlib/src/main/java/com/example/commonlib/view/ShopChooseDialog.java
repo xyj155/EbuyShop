@@ -3,14 +3,11 @@ package com.example.commonlib.view;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.Display;
 import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
@@ -26,7 +23,6 @@ import com.bumptech.glide.request.RequestOptions;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.example.commonlib.R;
-import com.example.commonlib.commonactivity.GoodsPaymentActivity;
 import com.example.commonlib.contract.GoodsStyleContract;
 import com.example.commonlib.gson.GoodsStyleGson;
 import com.example.commonlib.presenter.GoodsStylePresenter;
@@ -34,7 +30,7 @@ import com.example.commonlib.util.SharePreferenceUtil;
 
 import java.util.List;
 
-public class ShopChooseDialog extends Dialog implements GoodsStyleContract.View {
+public class ShopChooseDialog extends Dialog implements GoodsStyleContract.View, View.OnClickListener{
     ImageView ivAvatar;
     ImageView ivClose;
     MoneyView tvPrice;
@@ -48,6 +44,8 @@ public class ShopChooseDialog extends Dialog implements GoodsStyleContract.View 
     private GoodsStyleAdapter goodsStyleAdapter = new GoodsStyleAdapter(null);
     private boolean isBuy;
     private Dialog progressDialog;
+    private TextView tvCount;
+    private ImageView ivMinum, tvAdd;
 
     public ShopChooseDialog(Context context, String goodsId, boolean isBuy) {
         super(context, R.style.BottomDialogStyle);//加载dialog的样式
@@ -62,31 +60,26 @@ public class ShopChooseDialog extends Dialog implements GoodsStyleContract.View 
         Window dialogWindow = getWindow();
         dialogWindow.setGravity(Gravity.BOTTOM);
         setContentView(R.layout.abc_goods_detail_choose_list_layout);
+        ivMinum = findViewById(R.id.iv_minum);
+        tvAdd = findViewById(R.id.iv_add);
         ivAvatar = findViewById(R.id.iv_avatar);
         tvPrice = findViewById(R.id.tv_price);
+        tvCount = findViewById(R.id.tv_count);
         tvPrice.setMoneyText("0.00");
         ivClose = findViewById(R.id.iv_close);
         tvSubmit = findViewById(R.id.tv_submit);
         tvChoose = findViewById(R.id.tv_choose);
         ryStyleList = findViewById(R.id.ry_style_list);
-        WindowManager windowManager = ((Activity) context).getWindowManager();
-        Display display = windowManager.getDefaultDisplay();
         dialogWindow.getDecorView().setPadding(0, 0, 0, 0);
         WindowManager.LayoutParams lp = dialogWindow.getAttributes();
         lp.width = WindowManager.LayoutParams.MATCH_PARENT;
         lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
         getWindow().setAttributes(lp);
         setCanceledOnTouchOutside(false);
-        //遍历控件id添加点击注册
         goodsStylePresenter.queryGoodsStyle(((Activity) context).getIntent().getStringExtra("goodsId"));
         ryStyleList = findViewById(R.id.ry_style_list);
         ryStyleList.setLayoutManager(new LinearLayoutManager(context));
         ryStyleList.setAdapter(goodsStyleAdapter);
-        View inflate = View.inflate(context, R.layout.common_empty, null);
-        TextView viewById = inflate.findViewById(R.id.tv_empty);
-        viewById.setText("这个商品还没有存货哦！");
-        goodsStyleAdapter.setEmptyView(inflate);
-        goodsStyleAdapter.openLoadAnimation();
         goodsStyleAdapter.setOnItemClickListener(new onItemClickListenerByGId() {
             @Override
             public void onClickListener(int position, String price, String imageUrl, String styleName) {
@@ -95,16 +88,8 @@ public class ShopChooseDialog extends Dialog implements GoodsStyleContract.View 
                 Glide.with(context).asBitmap().load(imageUrl).apply(options).into(ivAvatar);
                 tvPrice.setMoneyText(price);
                 tvChoose.setText("已选择：" + styleName);
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        goodsStyleAdapter.notifyDataSetChanged();
-                    }
-                }, 100);
-
             }
         });
-        goodsStyleAdapter.isFirstOnly(false);
         ivClose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -115,14 +100,31 @@ public class ShopChooseDialog extends Dialog implements GoodsStyleContract.View 
             @Override
             public void onClick(View v) {
                 if (!isBuy) {
-                    goodsStylePresenter.addGoodsInShopCarById((String) SharePreferenceUtil.getUser("uid", "String"), chooseGoodsId, "1");
+                    goodsStylePresenter.addGoodsInShopCarById(
+                            (String) SharePreferenceUtil.getUser("uid", "String"),
+                            Integer.toString(goodsCount), chooseGoodsId, "1");
                 } else {
-                    context.startActivity(new Intent(context, GoodsPaymentActivity.class));
+                    onSubmitOrderListener.onSubmitListener(chooseGoodsId,Integer.toString(goodsCount));
+                    dismiss();
                 }
 
             }
         });
+        ivMinum.setOnClickListener(this);
+        tvAdd.setOnClickListener(this);
     }
+    public interface onSubmitOrderListener {
+        void onSubmitListener(String goodsId,String count);
+    }
+
+    private onSubmitOrderListener onSubmitOrderListener;
+
+    public void setOnSubmitOrderListener(ShopChooseDialog.onSubmitOrderListener onSubmitOrderListener) {
+        this.onSubmitOrderListener = onSubmitOrderListener;
+    }
+
+
+
 
     private static final String TAG = "ShopChooseDialog";
     private String chooseGoodsId;
@@ -177,9 +179,30 @@ public class ShopChooseDialog extends Dialog implements GoodsStyleContract.View 
         }
     }
 
+    int goodsCount = 1;
+
+    @Override
+    public void onClick(View v) {
+        int id = v.getId();
+
+        if (id == R.id.iv_minum) {
+            if (goodsCount > 1) {
+                goodsCount -= 1;
+            }
+            tvCount.setText(Integer.toString(goodsCount));
+        } else if (id == R.id.iv_add) {
+            if (goodsCount < 999) {
+                goodsCount += 1;
+            }
+            tvCount.setText(Integer.toString(goodsCount));
+        }
+    }
+
+
     private class GoodsStyleAdapter extends BaseQuickAdapter<GoodsStyleGson, BaseViewHolder> {
         private int index = 0;//标记当前选择的选项
         private onItemClickListenerByGId onItemClickListener;
+        private boolean onBind;
 
         public GoodsStyleAdapter(@Nullable List<GoodsStyleGson> data) {
             super(R.layout.dialog_goods_style_item, data);
@@ -187,6 +210,8 @@ public class ShopChooseDialog extends Dialog implements GoodsStyleContract.View 
 
         @Override
         protected void convert(final BaseViewHolder helper, final GoodsStyleGson item) {
+            Log.i(TAG, "convert: " + item.getGoodsName());
+            chooseGoodsId = String.valueOf(item.getId());
             helper.setText(R.id.tv_style_name, item.getGoodsName())
                     .setOnCheckedChangeListener(R.id.tv_style_name, new CompoundButton.OnCheckedChangeListener() {
                         @Override
@@ -195,15 +220,19 @@ public class ShopChooseDialog extends Dialog implements GoodsStyleContract.View 
                                 index = helper.getPosition();
                                 chooseGoodsId = String.valueOf(item.getId());
                                 onItemClickListener.onClickListener(helper.getPosition(), item.getGoodsPrice(), item.getGoodsPicUrl(), item.getGoodsName());
+                                if (!onBind) {
+                                    notifyDataSetChanged();
+                                }
                             }
                         }
                     });
+            onBind = true;
             if (index == helper.getPosition()) {
                 helper.setChecked(R.id.tv_style_name, true);
             } else {
                 helper.setChecked(R.id.tv_style_name, false);
             }
-
+            onBind = false;
         }
 
         public void setOnItemClickListener(onItemClickListenerByGId onItemClickListener) {

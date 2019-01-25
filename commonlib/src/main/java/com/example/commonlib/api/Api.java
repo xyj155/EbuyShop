@@ -14,8 +14,13 @@ import com.example.commonlib.gson.KindItemGson;
 import com.example.commonlib.gson.MarQueenGson;
 import com.example.commonlib.gson.OrderDetailGson;
 import com.example.commonlib.gson.ShopCarGson;
+import com.example.commonlib.gson.SubmitOrderGson;
+import com.example.commonlib.gson.SubmitOrderItemGson;
 import com.example.commonlib.gson.UserGson;
+import com.example.commonlib.gson.UserOrderStatusGson;
 import com.example.commonlib.gson.UserReceiveAddressGson;
+
+import java.util.List;
 
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -72,7 +77,15 @@ public interface Api {
 
     @FormUrlEncoded
     @POST("/StuShop/public/index.php/index/Goods/addGoodsInShopCarById")
-    Observable<BaseGson<EmptyGson>> addGoodsInShopCarById(@Field("userId") String userId, @Field("goodsId") String goodsId, @Field("type") String type);
+    Observable<BaseGson<EmptyGson>> addGoodsInShopCarById(@Field("userId") String userId, @Field("count") String count, @Field("goodsId") String goodsId, @Field("type") String type);
+
+   @FormUrlEncoded
+    @POST("/StuShop/public/index.php/index/User/userRegister")
+    Observable<BaseGson<EmptyGson>> userRegister(@Field("username") String username,
+                                                 @Field("password") String password,
+                                                 @Field("telphone") String goodsId,
+                                                 @Field("age") String age,
+                                                 @Field("school") String school);
 
 
     @GET("/StuShop/public/index.php/index/Goods/queryUserShopCarByUid")
@@ -81,7 +94,7 @@ public interface Api {
     @GET("/StuShop/public/index.php/index/User/queryUserReceiveAddress")
     Observable<BaseGson<UserReceiveAddressGson>> queryUserUserAddress(@Query("userId") String goodId);
 
-   @FormUrlEncoded
+    @FormUrlEncoded
     @POST("/StuShop/public/index.php/index/User/saveNewAddressByUserId")
     Observable<BaseGson<EmptyGson>> saveNewAddressByUserId(@Field("username") String username,
                                                            @Field("tel") String tel,
@@ -89,7 +102,7 @@ public interface Api {
                                                            @Field("detail") String detail,
                                                            @Field("default") String defaults,
                                                            @Field("userId") String userId
-   );
+    );
 
     @GET("/StuShop/public/index.php/index/User/queryUserCouponList")
     Observable<BaseGson<CouponGson>> queryUserCouponList(@Query("userId") String goodId);
@@ -97,7 +110,26 @@ public interface Api {
     @GET("/StuShop/public/index.php/index/Express/queryAllExpress")
     Observable<BaseGson<ExpressGson>> queryAllExpress();
 
+    @GET("/StuShop/public/index.php/index/User/queryUserOrderByStatus")
+    Observable<BaseGson<List<UserOrderStatusGson>>> queryUserOrderByStatus(@Query("userId") String userId, @Query("status") String status);
+
+    @FormUrlEncoded
+    @POST("/StuShop/public/index.php/index/Goods/submitUserOrder")
+    Observable<BaseGson<SubmitOrderItemGson>> submitUserOrder(@Field("userId") String userId, @Field("goodsId") String goodsId);
+
     @GET("/StuShop/public/index.php/index/User/confirmationOrderByUserId")
-    Observable<BaseGson<OrderDetailGson>> confirmationOrderByUserId(@Query("userId") String userId, @Query("goodsId") String goodsId);
+    Observable<BaseGson<OrderDetailGson>> confirmationOrderByUserId(@Query("userId") String userId, @Query("goodsId") String goodsId, @Query("orderNum") String orderNum);
+
+    @GET("/StuShop/public/index.php/index/User/deleteOrderByOrderNum")
+    Observable<BaseGson<EmptyGson>> deleteOrderByOrderNum(@Query("orderNum") String orderNum,@Query("userId") String userId);
+
+    @FormUrlEncoded
+    @POST("/StuShop/public/index.php/index/Goods/insertUserOrder")
+    Observable<BaseGson<SubmitOrderGson>> insertUserOrder(@Field("userId") String userId, @Field("goodsId") String goodsId);
+
+
+    @FormUrlEncoded
+    @POST("/StuShop/public/index.php/index/User/submitOrderByUserId")
+    Observable<BaseGson<EmptyGson>> submitOrderByUserId(@Field("userId") String userId,@Field("address") String address, @Field("goodsId") String goodsId, @Field("couponId") String couponId, @Field("orderNum") String orderNum, @Field("userToken") String userToken, @Field("message") String message);
 
 }

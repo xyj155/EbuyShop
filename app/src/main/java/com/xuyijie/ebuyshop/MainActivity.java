@@ -55,7 +55,9 @@ public class MainActivity extends BaseActivity<HomeContract.View, LoginPresent> 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
-            myDialog1 = new MyDialog(this, R.layout.common_dialog, new int[]{R.id.dialog_btn_close, R.id.dialog_btn_cancel});
+            myDialog1 = new MyDialog(this, new int[]{R.id.dialog_btn_close, R.id.dialog_btn_cancel});
+            myDialog1.setContent("退出后你将无法获取最新优惠推送");
+            myDialog1.setTitle("是否退出应用");
             myDialog1.setOnCenterItemClickListener(new MyDialog.OnCenterItemClickListener() {
                 @Override
                 public void onCenterItemClick(MyDialog dialog, View view) {

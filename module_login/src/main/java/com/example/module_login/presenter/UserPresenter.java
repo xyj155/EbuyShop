@@ -36,7 +36,7 @@ public class UserPresenter extends BasePresenter<UserContract.View> implements U
                     public void onNext(BaseGson<UserGson> userGsonBaseGson) {
                         Log.i(TAG, "onNext: "+userGsonBaseGson.toString());
                         if (userGsonBaseGson.isStatus()) {
-                            mMvpView.userLogin(userGsonBaseGson.getData().get(0));
+                                mMvpView.userLogin(userGsonBaseGson.getData().get(0));
                         } else {
                             mMvpView.showError(userGsonBaseGson.getMsg());
                         }

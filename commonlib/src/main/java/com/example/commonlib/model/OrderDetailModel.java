@@ -9,7 +9,7 @@ import rx.Observable;
 
 public class OrderDetailModel implements OrderDetailContract.Model {
     @Override
-    public Observable<BaseGson<OrderDetailGson>> confirmationOrderByUserId(String userId, String goodsId) {
-        return RetrofitUtils.getInstance().create().confirmationOrderByUserId(userId,goodsId);
+    public Observable<BaseGson<OrderDetailGson>> confirmationOrderByUserId(String userId, String goodsId,String orderNum) {
+        return RetrofitUtils.getInstance().create().confirmationOrderByUserId(userId,goodsId,orderNum);
     }
 }

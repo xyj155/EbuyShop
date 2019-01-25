@@ -102,15 +102,21 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment {
      * 生成view视图
      */
     Unbinder unbinder;
+    private ViewGroup viewGroup;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View inflate = inflater.inflate(initLayout(), container, false);
         unbinder = ButterKnife.bind(this, inflate);
+        this.viewGroup = container;
         initView(inflate);
         initData();
         return inflate;
+    }
+
+    public ViewGroup getViewGroup() {
+        return viewGroup;
     }
 
     @Override

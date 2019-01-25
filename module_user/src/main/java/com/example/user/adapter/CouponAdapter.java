@@ -36,6 +36,7 @@ public class CouponAdapter extends BaseQuickAdapter<CouponGson, BaseViewHolder> 
                         Intent intent = new Intent(context, GoodsPaymentActivity.class);
                         intent.putExtra("startIndex", item.getCouponTotal());
                         intent.putExtra("endIndex", item.getCouponReduce());
+                        intent.putExtra("couponId", String.valueOf(item.getId()));
                         context.setResult(0x11, intent);
                         context.finish();
                     }

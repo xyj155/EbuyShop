@@ -12,7 +12,7 @@ import rx.Observable;
 public interface GoodsStyleContract {
     interface Model {
         Observable<BaseGson<GoodsStyleGson>> queryGoodsStyle(String goodsId);
-        Observable<BaseGson<EmptyGson>> addGoodsInShopCarById(String userId, String goodsId,String type);
+        Observable<BaseGson<EmptyGson>> addGoodsInShopCarById(String userId, String count, String goodsId,String type);
     }
 
     interface View  extends BaseView {
@@ -22,6 +22,6 @@ public interface GoodsStyleContract {
 
     interface Presenter {
         void queryGoodsStyle(String goodsId);
-        void addGoodsInShopCarById(String userId, String goodsId,String type);
+        void addGoodsInShopCarById(String userId, String count, String goodsId,String type);
     }
 }

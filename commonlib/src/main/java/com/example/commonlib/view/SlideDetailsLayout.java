@@ -34,7 +34,7 @@ public class SlideDetailsLayout extends ViewGroup {
          *
          * @param status {@link Status}
          */
-        void onStatucChanged(Status status);
+        void onStatusChanged(Status status);
     }
 
     public enum Status {
@@ -442,7 +442,7 @@ public class SlideDetailsLayout extends ViewGroup {
                     }
 
                     if (null != mOnSlideDetailsListener) {
-                        mOnSlideDetailsListener.onStatucChanged(mStatus);
+                        mOnSlideDetailsListener.onStatusChanged(mStatus);
                     }
                 }
             }

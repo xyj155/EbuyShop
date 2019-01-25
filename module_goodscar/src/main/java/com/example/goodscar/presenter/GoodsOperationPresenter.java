@@ -22,9 +22,9 @@ public class GoodsOperationPresenter extends BasePresenter<GoodsOperationContrac
 
 
     @Override
-    public void addGoodsInShopCarById(String userId, final String goodsId,String type) {
+    public void addGoodsInShopCarById(String userId,String count, final String goodsId,String type) {
         mMvpView.showDialog("");
-        styleModel.addGoodsInShopCarById(userId, goodsId,type)
+        styleModel.addGoodsInShopCarById(userId, count,goodsId,type)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseObserver<BaseGson<EmptyGson>>() {

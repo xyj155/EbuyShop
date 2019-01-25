@@ -1,48 +1,45 @@
 package com.example.commonlib.util;
 
 
-import android.app.Activity;
-import android.content.Context;
-import android.util.Log;
-import android.widget.Toast;
+import com.example.commonlib.interfaces.UserLoginInterface;
 
-import com.umeng.socialize.UMAuthListener;
-import com.umeng.socialize.UMShareAPI;
-import com.umeng.socialize.bean.SHARE_MEDIA;
+import java.util.HashMap;
 
-import java.util.Map;
+import cn.sharesdk.framework.Platform;
+import cn.sharesdk.framework.PlatformActionListener;
+import cn.sharesdk.framework.PlatformDb;
+import cn.sharesdk.framework.ShareSDK;
 
 public class ThirdLoginUtil {
 
     private static final String TAG = "ThirdLoginUtil";
-    public static void thirdLogin(Activity context, SHARE_MEDIA platform) {
-        UMShareAPI  mShareAPI = UMShareAPI.get(context);
-        boolean install = mShareAPI.isInstall(context, platform);
-        if (!install){
-            Toast.makeText(context, "你未安装客户端", Toast.LENGTH_SHORT).show();
-        }else {
-            mShareAPI.getPlatformInfo(context, platform, new UMAuthListener() {
-                @Override
-                public void onStart(SHARE_MEDIA share_media) {
-                    Log.i(TAG, "onStart: ");
-                }
 
-                @Override
-                public void onComplete(SHARE_MEDIA share_media, int i, Map<String, String> map) {
-                    Log.i(TAG, "onComplete: "+map);
-                }
-                @Override
-                public void onError(SHARE_MEDIA share_media, int i, Throwable throwable) {
-                    Log.i(TAG, "onError: "+throwable.getMessage());
+    public static void ThirdLogin(String plat, final UserLoginInterface userLoginInterface) {
+        Platform weibo = ShareSDK.getPlatform(plat);
+        weibo.setPlatformActionListener(new PlatformActionListener() {
 
-                }
+            @Override
+            public void onError(Platform arg0, int arg1, Throwable arg2) {
+                // TODO Auto-generated method stub
+                arg2.printStackTrace();
+                userLoginInterface.failed();
+            }
 
-                @Override
-                public void onCancel(SHARE_MEDIA share_media, int i) {
-                    Log.i(TAG, "onCancel: ");
-                }
-            });
-        }
+            @Override
+            public void onComplete(Platform arg0, int arg1, HashMap<String, Object> arg2) {
+                // TODO Auto-generated method stub
+                PlatformDb db = arg0.getDb();
+                userLoginInterface.successWithUser(db);
+            }
 
+            @Override
+            public void onCancel(Platform arg0, int arg1) {
+                // TODO Auto-generated method stub
+                userLoginInterface.failed();
+            }
+        });
+        weibo.showUser(null);//执行登录，登录后在回调里面获取用户资料
+        weibo.removeAccount(true);
     }
+
 }

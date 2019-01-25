@@ -13,6 +13,7 @@ import com.example.commonlib.base.BaseFragment;
 import com.example.commonlib.commonactivity.GoodsDetailActivity;
 import com.example.commonlib.contract.GoodsDetailContract;
 import com.example.commonlib.gson.GoodsDetailGson;
+import com.example.commonlib.gson.SubmitOrderGson;
 import com.example.commonlib.presenter.GoodsDetailPresenter;
 import com.tencent.smtt.sdk.WebView;
 
@@ -77,6 +78,11 @@ public class GoodsDetailFragment extends BaseFragment<GoodsDetailPresenter> impl
         webSettings.setUseWideViewPort(true);
         webSettings.setBuiltInZoomControls(false);
         webSettings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
+    }
+
+    @Override
+    public void insertUserOrder(SubmitOrderGson goodsGson) {
+
     }
 
     @Override

@@ -10,9 +10,11 @@ import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
@@ -21,14 +23,20 @@ import com.example.commonlib.R2;
 import com.example.commonlib.adapter.OrderDetailGoodsAdapter;
 import com.example.commonlib.base.BaseActivity;
 import com.example.commonlib.contract.OrderDetailContract;
+import com.example.commonlib.contract.UserSubmitOrderContract;
 import com.example.commonlib.gson.OrderDetailGson;
 import com.example.commonlib.presenter.OrderDetailPresenter;
+import com.example.commonlib.presenter.UserSubmitOrderPresenter;
 import com.example.commonlib.util.PaymentInterface;
 import com.example.commonlib.util.PaymentUtil;
 import com.example.commonlib.util.RouterUtil;
+import com.example.commonlib.view.CommonDialog;
 import com.example.commonlib.view.ExpressChooseDialog;
+import com.google.gson.Gson;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -36,7 +44,7 @@ import butterknife.OnClick;
 
 
 @Route(path = RouterUtil.PAYMENT_PAGE)
-public class GoodsPaymentActivity extends BaseActivity<OrderDetailContract.View, OrderDetailPresenter> implements OrderDetailContract.View {
+public class GoodsPaymentActivity extends BaseActivity<OrderDetailContract.View, OrderDetailPresenter> implements OrderDetailContract.View, UserSubmitOrderContract.View {
 
     @BindView(R2.id.ry_goods)
     RecyclerView ryGoods;
@@ -62,6 +70,8 @@ public class GoodsPaymentActivity extends BaseActivity<OrderDetailContract.View,
     TextView tvCancel;
     @BindView(R2.id.tv_pay)
     TextView tvPay;
+    @BindView(R2.id.et_message)
+    EditText etMessage;
 
 
     private OrderDetailGoodsAdapter orderDetailGoodsAdapter = new OrderDetailGoodsAdapter(null);
@@ -84,7 +94,7 @@ public class GoodsPaymentActivity extends BaseActivity<OrderDetailContract.View,
     @Override
     public void initView() {
         ButterKnife.bind(this);
-        mPresenter.confirmationOrderByUserId("1", getIntent().getStringExtra("goodsArray"));
+        mPresenter.confirmationOrderByUserId("1", getIntent().getStringExtra("goodsArray"), getIntent().getStringExtra("orderNum"));
         initToolBar().setToolBarTitle("订单详情");
         ryGoods.setLayoutManager(new LinearLayoutManager(GoodsPaymentActivity.this));
 
@@ -109,6 +119,8 @@ public class GoodsPaymentActivity extends BaseActivity<OrderDetailContract.View,
 
     }
 
+    private CommonDialog expressFreeDialog;
+
     @Override
     public void showDialog(String msg) {
         createDialog(msg);
@@ -119,14 +131,22 @@ public class GoodsPaymentActivity extends BaseActivity<OrderDetailContract.View,
         hideDlalog();
     }
 
+    private String orderNum;
+    private List<String> goodsIdList = new ArrayList<>();
+
     @Override
-    public void loadOrderDetil(OrderDetailGson orderDetailGson) {
+    public void loadOrderDetail(OrderDetailGson orderDetailGson) {
+        Log.i(TAG, "loadOrderDetail: " + orderDetailGson.getGoods().size());
         orderDetailGoodsAdapter.replaceData(orderDetailGson.getGoods());
+        addressId = String.valueOf(orderDetailGson.getUserAddress().getId());
         if (orderDetailGson.getUserAddress() == null) {
             rlEmptyAddress.setVisibility(View.VISIBLE);
             flAddress.setVisibility(View.GONE);
         } else {
             flAddress.setVisibility(View.VISIBLE);
+            tvUsername.setText("收件人：" + orderDetailGson.getUserAddress().getSaveName());
+            tvAddress.setText("收货地址：" + orderDetailGson.getUserAddress().getSaveLocal() + orderDetailGson.getUserAddress().getSaveAddressDetail());
+            tvUserTel.setText("联系方式：" + orderDetailGson.getUserAddress().getSaveTel());
             rlEmptyAddress.setVisibility(View.GONE);
         }
         if (orderDetailGson.getUserCoupon().size() == 0) {
@@ -140,39 +160,49 @@ public class GoodsPaymentActivity extends BaseActivity<OrderDetailContract.View,
         for (OrderDetailGson.GoodsBean goodsBean : orderDetailGson.getGoods()) {
             money += Double.valueOf(goodsBean.getGoodsPrice()) * goodsBean.getGoodsCount();
             count += goodsBean.getGoodsCount();
+            goodsIdList.add(String.valueOf(goodsBean.getGoodsId()));
         }
         tvCount.setText("共 " + count + " 件商品  小计：");
         BigDecimal bigDecimal = new BigDecimal(money);
         tvMoney.setText("￥" + bigDecimal.setScale(2, BigDecimal.ROUND_HALF_DOWN));
-        Log.i(TAG, "loadOrderDetil: " + money);
-        if (money > 100) {
-            tvPost.setText("配送方式       满 100 包邮(配送方式可自主选择)");
+        Log.i(TAG, "loadOrderDetail: " + money);
+        if (money > 188) {
+            tvPost.setText("配送方式       满 188 包邮");
         } else {
             tvPost.setText("配送方式       请选择配送方式");
         }
+        orderNum = orderDetailGson.getGoods().get(0).getOrderNum();
         expressChooseDialog.setOnItemClickListener(new ExpressChooseDialog.onItemClickListener() {
             @Override
-            public void onClickListener(String price, String expressName) {
+            public void onClickListener(String price, String expressName1) {
                 if (price != null) {
-                    tvPost.setText("配送方式       " + expressName + "     ￥" + price);
-                    money += Double.valueOf(price);
-                    BigDecimal bigDecimal = new BigDecimal(money);
+                    expressName = expressName1;
+                    tvPost.setText("配送方式       " + expressName1 + "     ￥" + price);
+                    BigDecimal bigDecimal = new BigDecimal(Double.valueOf(price) + money);
                     tvMoney.setText("￥" + bigDecimal.setScale(2, BigDecimal.ROUND_HALF_DOWN));
                 }
                 expressChooseDialog.dismiss();
             }
         });
+        expressFreeDialog = builder.cancelTouchout(false)
+                .view(R.layout.common_dialog_layout)
+                .setMsg("满 188 包邮")
+                .setContent("用户购满188即可享受包邮服务")
+                .addViewOnclick(R.id.tv_submit, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        expressFreeDialog.dismiss();
+                    }
+                }).build();
+
     }
 
+    private String expressName = "";
+
+    CommonDialog.Builder builder = new CommonDialog.Builder(this);
     private int count = 0;
     private double money = 0.00;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-
-    }
 
     @OnClick({R2.id.rl_empty_address, R2.id.fl_address, R2.id.tv_post, R2.id.tv_pay_type, R2.id.tv_cancel, R2.id.tv_pay})
     public void onViewClicked(View view) {
@@ -182,50 +212,91 @@ public class GoodsPaymentActivity extends BaseActivity<OrderDetailContract.View,
         } else if (id == R.id.fl_address) {
             startActivityForResult(new Intent(GoodsPaymentActivity.this, UserReceivingAddressActivity.class), 0x1);
         } else if (id == R.id.tv_post) {
-            expressChooseDialog.show();
+            if (money > 188) {
+                expressFreeDialog.show();
+            } else {
+                expressChooseDialog.show();
+            }
         } else if (id == R.id.tv_pay_type) {
             ARouter.getInstance().build(RouterUtil.USERCOUPON).withDouble("money", money).navigation(GoodsPaymentActivity.this, 0x11);
         } else if (id == R.id.tv_pay) {
-            PaymentUtil.paymentByGoods(GoodsPaymentActivity.this, "商品", "商品", 1, new PaymentInterface() {
-                @Override
-                public void paySuccess() {
-                    Log.i(TAG, "paySuccess: ");
-                }
+            boolean b = money > 188;
+            if (b) {
+                PaymentUtil.paymentByGoods(GoodsPaymentActivity.this, "商学院自营商品", "商品", 1, new PaymentInterface() {
+                    @Override
+                    public void paySuccess() {
+                        userSubmitOrderPresenter.submitOrderByUserId("1", addressId, new Gson().toJson(goodsIdList), couponId, orderNum, "2b7a3fff83ab50ec62b8296dd52b61e2", etMessage.getText().toString());
+                    }
 
-                @Override
-                public void payFailed() {
-                    Log.i(TAG, "payFailed: ");
+                    @Override
+                    public void payFailed() {
+                        Log.i(TAG, "payFailed: ");
+                    }
+                });
+            } else {
+                if (expressName.isEmpty()) {
+                    Toast.makeText(this, "你还没有选择配送方式！", Toast.LENGTH_SHORT).show();
+                } else {
+                    PaymentUtil.paymentByGoods(GoodsPaymentActivity.this, "商学院自营商品", "商品", 1, new PaymentInterface() {
+                        @Override
+                        public void paySuccess() {
+                            userSubmitOrderPresenter.submitOrderByUserId("1", addressId, new Gson().toJson(goodsIdList), couponId, orderNum, "2b7a3fff83ab50ec62b8296dd52b61e2", etMessage.getText().toString());
+                        }
+
+                        @Override
+                        public void payFailed() {
+                            Log.i(TAG, "payFailed: ");
+                        }
+                    });
                 }
-            });
+            }
+
         } else if (id == R.id.tv_cancel) {
-
+            finish();
         }
     }
 
+    private UserSubmitOrderPresenter userSubmitOrderPresenter = new UserSubmitOrderPresenter(this);
     private ExpressChooseDialog expressChooseDialog;
+    private String addressId, couponId;
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (data != null) {
             if (requestCode == 0x1) {
-                Log.i(TAG, "onActivityResult: " + data.getStringExtra("username"));
                 flAddress.setVisibility(View.VISIBLE);
                 rlEmptyAddress.setVisibility(View.GONE);
+                addressId = data.getStringExtra("adId");
                 tvUsername.setText("收件人：" + data.getStringExtra("username"));
-                tvUserTel.setText(data.getStringExtra("tel"));
+                tvUserTel.setText("联系方式：" + data.getStringExtra("tel"));
                 tvAddress.setText("收货地址：" + data.getStringExtra("local") + data.getStringExtra("detail"));
             } else if (requestCode == 0x11) {
                 String endIndex = data.getStringExtra("endIndex");
                 String startIndex = data.getStringExtra("startIndex");
+                couponId = data.getStringExtra("couponId");
                 tvPayType.setText("优惠方式        满 " + startIndex + " 元减 " + endIndex + " 元");
-                money -= Double.valueOf(endIndex);
-                BigDecimal bigDecimal = new BigDecimal(money);
+                double couponMoney = money - Double.valueOf(endIndex);
+                BigDecimal bigDecimal = new BigDecimal(couponMoney);
                 tvMoney.setText("￥" + bigDecimal.setScale(2, BigDecimal.ROUND_HALF_DOWN));
             }
         }
-
     }
 
+    @Override
+    public void submitStatus(boolean success) {
+        if (success) {
+            Toast.makeText(this, "支付成功", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, "支付失败", Toast.LENGTH_SHORT).show();
+        }
+        finish();
+    }
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
+    }
 }

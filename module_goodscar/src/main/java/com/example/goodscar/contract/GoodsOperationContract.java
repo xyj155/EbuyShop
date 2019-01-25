@@ -8,7 +8,7 @@ import rx.Observable;
 
 public interface GoodsOperationContract {
     interface Model {
-        Observable<BaseGson<EmptyGson>> addGoodsInShopCarById(String userId, String goodsId,String type);
+        Observable<BaseGson<EmptyGson>> addGoodsInShopCarById(String userId,String count, String goodsId,String type);
     }
 
     interface View  extends BaseView {
@@ -16,6 +16,6 @@ public interface GoodsOperationContract {
     }
 
     interface Presenter {
-        void addGoodsInShopCarById(String userId, String goodsId,String type);
+        void addGoodsInShopCarById(String userId,String count, String goodsId,String type);
     }
 }

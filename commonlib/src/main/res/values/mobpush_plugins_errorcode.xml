@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="success">success</string>
+    <string name="xm_service_unavailable">小米推送服务不可用</string>
+    <string name="xm_internal_error">小米推送内部错误</string>
+    <string name="xm_autherication_error">小米推送认证错误</string>
+    <string name="xm_invalid_payload">小米推送无效负载</string>
+
+    <string name="hw_service_missing">在设备上没有发现华为移动服务</string>
+    <string name="hw_service_version_update_required">现已安装的华为移动服务过时了</string>
+    <string name="hw_service_disabled">此设备上的华为移动服务已经不可用</string>
+    <string name="hw_sign_in_required">华为推送必须签名</string>
+    <string name="hw_invalid_account">华为推送非法账号</string>
+    <string name="hw_bindfail_resolution_required">需要用户操作解决</string>
+    <string name="hw_network_error">华为推送网络错误</string>
+    <string name="hw_internal_error">华为推送发生了内部错误，重试应该能解决问题</string>
+    <string name="hw_service_invalid">设备上安装的华为移动服务不是真实的</string>
+    <string name="hw_developer_error">华为推送应用配置错误</string>
+    <string name="hw_license_check_failed">华为推送出现错误，应用未授权给用户</string>
+    <string name="hw_canceled">华为推送连接被取消</string>
+    <string name="hw_timeout">华为推送连接超时</string>
+    <string name="hw_service_missing_permission">华为推送服务丢失权限</string>
+    <string name="hw_service_unsupported">设备因太老而不能被支持华为推送服务</string>
+    <string name="hw_api_unavailable">尝试去连接的华为推送API组件之一不可用</string>
+    <string name="fcm_topic_invalid">topic不合法，FCM只能接收topic为[a-zA-Z0-9-_.~%]的格式</string>
+    <!--Invalid topic name: topic does not match the allowed format [a-zA-Z0-9-_.~%]{1,900}
+    -->
+</resources>

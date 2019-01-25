@@ -1,15 +1,12 @@
 package com.example.commonlib;
 
-import android.app.Notification;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Environment;
 import android.support.multidex.MultiDexApplication;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.WindowManager;
-import android.widget.RemoteViews;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.example.commonlib.commonactivity.ShopServiceConversationActivity;
@@ -25,16 +22,8 @@ import com.netease.nimlib.sdk.uinfo.model.UserInfo;
 import com.netease.nimlib.sdk.util.NIMUtil;
 import com.payelves.sdk.EPay;
 import com.tencent.smtt.sdk.QbSdk;
-import com.umeng.commonsdk.UMConfigure;
-import com.umeng.message.IUmengRegisterCallback;
-import com.umeng.message.PushAgent;
-import com.umeng.message.UmengMessageHandler;
-import com.umeng.message.UmengNotificationClickHandler;
-import com.umeng.message.entity.UMessage;
-import com.umeng.socialize.PlatformConfig;
 
 import java.io.IOException;
-
 
 
 public class MyApp extends MultiDexApplication {
@@ -48,71 +37,11 @@ public class MyApp extends MultiDexApplication {
     @Override
     public void onCreate() {
         super.onCreate();
+//        MobSDK.init(this);
         instance = this;
         ARouter.openLog();
         ARouter.openDebug();
         ARouter.init(this);
-        UMConfigure.setLogEnabled(false);
-        UMConfigure.init(this, UMConfigure.DEVICE_TYPE_PHONE, "84ce8f7be275b278fd190c3ebb2ae6bc");
-        PlatformConfig.setWeixin("wxc329f4902defc332", "0a862006e67e9abd75d07140afac12b7");
-        PlatformConfig.setSinaWeibo("3921700954", "04b48b094faeb16683c32669824ebdad", "http://sns.whalecloud.com");
-//        PlatformConfig.setQQZone("1108087612", "c7394704798a158208a74ab60104f0ba");
-        PushAgent mPushAgent = PushAgent.getInstance(this);
-        //注册推送服务，每次调用register方法都会回调该接口
-        mPushAgent.register(new IUmengRegisterCallback() {
-            @Override
-            public void onSuccess(String deviceToken) {
-                //注册成功会返回device token
-                Log.d(TAG, "onSuccess: deviceToken-->" + deviceToken);
-            }
-
-            @Override
-            public void onFailure(String s, String s1) {
-                Log.d(TAG, "onFailure: s-->" + s);
-                Log.d(TAG, "onFailure: s1-->" + s1);
-            }
-        });
-        UmengMessageHandler messageHandler = new UmengMessageHandler() {
-
-            /**
-             * 自定义通知栏样式的回调方法
-             */
-            @Override
-            public Notification getNotification(Context context, UMessage msg) {
-                switch (msg.builder_id) {
-                    case 1:
-                        Notification.Builder builder = new Notification.Builder(context);
-                        RemoteViews myNotificationView = new RemoteViews(context.getPackageName(),
-                                R.layout.upush_notification);
-                        myNotificationView.setTextViewText(R.id.notification_title, msg.title);
-                        myNotificationView.setTextViewText(R.id.notification_text, msg.text);
-                        myNotificationView.setImageViewBitmap(R.id.notification_large_icon1, getLargeIcon(context, msg));
-                        myNotificationView.setImageViewResource(R.id.notification_large_icon2,
-                                getSmallIconId(context, msg));
-                        builder.setContent(myNotificationView)
-                                .setSmallIcon(getSmallIconId(context, msg))
-                                .setTicker(msg.ticker)
-                                .setAutoCancel(true);
-
-                        return builder.getNotification();
-                    default:
-                        //默认为0，若填写的builder_id并不存在，也使用默认。
-                        return super.getNotification(context, msg);
-                }
-            }
-        };
-        mPushAgent.setMessageHandler(messageHandler);
-
-        UmengNotificationClickHandler notificationClickHandler = new UmengNotificationClickHandler(){
-
-            @Override
-            public void dealWithCustomAction(Context context, UMessage msg){
-                Log.e(TAG,"click");
-            }
-
-        };
-
-        mPushAgent.setNotificationClickHandler(notificationClickHandler);
         initX5();
         GInsightManager.getInstance().init (getApplicationContext(), "DsM2BPaiLT89Vw5fRW34d");
         // SDK初始化（启动后台服务，若已经存在用户登录信息， SDK 将完成自动登录）
@@ -124,6 +53,7 @@ public class MyApp extends MultiDexApplication {
             // 1、UI相关初始化操作
             // 2、相关Service调用
         }
+
         MobSDK.init(this,"29cbff9d24b0b","83fe8985b2647f0041f9cfb3487492d6");
         EPay.getInstance(getApplicationContext()).init("wAwS4BHkB", "1b0ccf51458c4053ae2931772fbbfb97",
                 "7169149861036033", "baidu");

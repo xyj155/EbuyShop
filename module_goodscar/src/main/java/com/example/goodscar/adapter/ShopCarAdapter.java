@@ -1,5 +1,6 @@
 package com.example.goodscar.adapter;
 
+import android.content.Context;
 import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.CompoundButton;
@@ -22,9 +23,11 @@ public class ShopCarAdapter extends BaseQuickAdapter<ShopCarGson, BaseViewHolder
     private GoodsOperationPresenter goodsOperationPresenter = new GoodsOperationPresenter(this);
     private ShopCarFragment goodsCarFragment;
     private List<ShopCarGson> carGsonList;
+    private Context context;
 
-    public ShopCarAdapter(@Nullable List<ShopCarGson> data, ShopCarFragment goodsCarFragment) {
+    public ShopCarAdapter(@Nullable List<ShopCarGson> data, ShopCarFragment goodsCarFragment, Context context) {
         super(R.layout.abc_goods_shopcar_item_layout, data);
+        this.context = context;
         this.goodsCarFragment = goodsCarFragment;
         this.carGsonList = data;
     }
@@ -48,7 +51,7 @@ public class ShopCarAdapter extends BaseQuickAdapter<ShopCarGson, BaseViewHolder
     }
 
     public interface onGoodsItemCheckChangeListener {
-        void onGoodsItemCheckChangeListener(String goodsName,int goodsId, boolean isCheck);
+        void onGoodsItemCheckChangeListener(String goodsName, int goodsId, boolean isCheck);
     }
 
     @Override
@@ -64,24 +67,27 @@ public class ShopCarAdapter extends BaseQuickAdapter<ShopCarGson, BaseViewHolder
                         if (isChecked) {
                             item.setCheck(true);
                             checkInterface.checkGroup(helper.getPosition(), true);
-                            onGoodsItemCheckChangeListener.onGoodsItemCheckChangeListener(item.getGoodsName(),item.getId(), true);
+                            onGoodsItemCheckChangeListener.onGoodsItemCheckChangeListener(item.getGoodsName(), item.getId(), true);
                         } else {
                             item.setCheck(false);
                             checkInterface.checkGroup(helper.getPosition(), false);
-                            onGoodsItemCheckChangeListener.onGoodsItemCheckChangeListener(item.getGoodsName(),item.getId(), false);
+                            onGoodsItemCheckChangeListener.onGoodsItemCheckChangeListener(item.getGoodsName(), item.getId(), false);
                         }
                     }
                 })
                 .setOnClickListener(R.id.iv_minum, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        goodsOperationPresenter.addGoodsInShopCarById("1", String.valueOf(item.getId()), "0");
+                        goodsOperationPresenter.addGoodsInShopCarById("1", "1",String.valueOf(item.getId()), "0");
                         ShopCarPresenter shopCarPresenter = goodsCarFragment.initPresenter();
-                        shopCarPresenter.queryUserShopCarByUid("1",false);
+                        shopCarPresenter.queryUserShopCarByUid("1", false);
+
                         new android.os.Handler().postDelayed(new Runnable() {
                             @Override
                             public void run() {
                                 notifyDataSetChanged();
+                                if (goodsCarFragment.shopCarAdapter!=null)
+                                goodsCarFragment.shopCarAdapter.notifyDataSetChanged();
                             }
                         }, 100);
                     }
@@ -89,13 +95,15 @@ public class ShopCarAdapter extends BaseQuickAdapter<ShopCarGson, BaseViewHolder
                 .setOnClickListener(R.id.iv_add, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        goodsOperationPresenter.addGoodsInShopCarById("1", String.valueOf(item.getId()), "1");
+                        goodsOperationPresenter.addGoodsInShopCarById("1","1", String.valueOf(item.getId()), "1");
                         ShopCarPresenter shopCarPresenter = goodsCarFragment.initPresenter();
-                        shopCarPresenter.queryUserShopCarByUid("1",false);
+                        shopCarPresenter.queryUserShopCarByUid("1", false);
                         new android.os.Handler().postDelayed(new Runnable() {
                             @Override
                             public void run() {
                                 notifyDataSetChanged();
+                                if (goodsCarFragment.shopCarAdapter!=null)
+                                    goodsCarFragment.shopCarAdapter.notifyDataSetChanged();
                             }
                         }, 100);
                     }

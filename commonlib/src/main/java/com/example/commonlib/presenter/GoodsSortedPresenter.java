@@ -1,13 +1,12 @@
 package com.example.commonlib.presenter;
 
+import android.util.Log;
+
 import com.example.commonlib.base.BaseGson;
 import com.example.commonlib.base.BasePresenter;
 import com.example.commonlib.contract.GoodsSortedContract;
 import com.example.commonlib.gson.GoodsGson;
-import com.example.commonlib.http.BaseObserver;
 import com.example.commonlib.model.GoodsSortedModel;
-
-import java.util.List;
 
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
@@ -20,9 +19,11 @@ public class GoodsSortedPresenter extends BasePresenter<GoodsSortedContract.View
         super(mMvpView);
     }
 
+    private static final String TAG = "GoodsSortedPresenter";
     @Override
     public void getGoodsListByKind(String kind,String type,String isasc) {
         mMvpView.showDialog("加载中");
+        Log.i(TAG, "getGoodsListByKind: "+kind+type+isasc);
         sortedModel.getGoodsListByKind(kind,type,isasc)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

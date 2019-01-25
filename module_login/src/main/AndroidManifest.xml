@@ -6,7 +6,8 @@
         <activity android:name=".view.LoginActivity" />
         <activity android:name=".view.RegisterActivity" />
         <activity android:name=".view.TelPhoneRegisterActivity" />
-        <activity android:name=".view.TelPhoneRegisterVerifyActivity"></activity>
+        <activity android:name=".view.TelPhoneRegisterVerifyActivity" />
+        <activity android:name=".view.TelphoneLoginActivity"></activity>
     </application>
 
 </manifest>

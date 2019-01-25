@@ -12,10 +12,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.commonlib.base.BaseActivity;
+import com.example.commonlib.util.SharePreferenceUtil;
 import com.example.module_login.R;
 import com.example.module_login.R2;
 import com.example.module_login.contract.UserContract;
 import com.example.module_login.presenter.UserPresenter;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -128,9 +132,12 @@ public class TelPhoneRegisterActivity extends BaseActivity<UserContract.View, Us
         int id = view.getId();
         if (id == R.id.tv_register) {
             SMSSDK.getVerificationCode("86", etTel.getText().toString());
-            Intent intent =new Intent(TelPhoneRegisterActivity.this, TelPhoneRegisterVerifyActivity.class);
+            Intent intent = new Intent(TelPhoneRegisterActivity.this, TelPhoneRegisterVerifyActivity.class);
             intent.putExtra("telphone", etTel.getText().toString());
             startActivity(intent);
+            Map<String, Object> map = new HashMap<>();
+            map.put("username", etTel.getText().toString());
+            SharePreferenceUtil.saveUser(map);
         }
     }
 }

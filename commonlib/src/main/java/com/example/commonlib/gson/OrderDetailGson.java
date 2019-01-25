@@ -5,44 +5,16 @@ import java.util.List;
 public class OrderDetailGson {
 
     /**
-     * goods : [{"goodsName":"梅湾街秋冬新款百搭修身高领打底衫女长袖针织衫套头毛衣女羊毛衫-白色","goodsCount":1,"goodsId":1,"goodsUserId":1,"goodsPrice":"10.00","goodsPicUrl":"https://img.alicdn.com/imgextra/i4/742634735/TB2u6rgbdXXWeJjSZFvXXa6lpXa_!!742634735.jpg_430x430q90.jpg"}]
-     * userAddress : {"id":1,"userId":1,"saveName":"徐易杰","saveTel":"17374131274","saveLocal":"湖南省 株洲市 秀洲区 新城街道","saveAddressDetail":"浙江省嘉兴市嘉兴院梁林校区","isDefault":"0","updateTime":"2019-01-19 13:57:22"}
-     * userCoupon : [{"id":1,"couponName":"节假日优惠券","couponTotal":"100","couponReduce":"10","startTime":"2019-01-20 02:19:07","endTime":"2019-01-20 02:19:09"},{"id":2,"couponName":"国庆节优惠券","couponTotal":"150","couponReduce":"20","startTime":"2019-01-20 02:19:12","endTime":"2019-01-20 02:19:15"},{"id":3,"couponName":"会员优惠券","couponTotal":"200","couponReduce":"100","startTime":"2019-01-20 02:19:17","endTime":"2019-01-20 02:19:20"}]
+     * goods : [{"goodsName":"火影忍者 剧场版 宇智波佐助 手办 蓝色","goodsCommonName":"火影忍者 剧场版 宇智波佐助 手办","goodsCount":4,"goodsId":3,"goodsUserId":1,"goodsPrice":"20.00","goodsPicUrl":"https://gd3.alicdn.com/imgextra/i3/126330677/TB2EoREX._C11Bjy1zeXXXtGpXa_!!126330677.jpg"},{"goodsName":"游戏本8代i5/8G/1T+256GB/1060","goodsCommonName":"Xiaomi/小米 游戏本 八代增强版 I7 1060独显15.6吃鸡笔记本电脑","goodsCount":1,"goodsId":8,"goodsUserId":1,"goodsPrice":"6899.00","goodsPicUrl":"https://gd1.alicdn.com/imgextra/i1/3034056874/O1CN0120eL1xiztW8fEEQ_!!3034056874.jpg"}]
+     * userAddress : {"id":3,"userId":1,"saveName":"徐易杰","saveTel":"173711312","saveLocal":"湖北省 鄂州市 枞阳县","saveAddressDetail":"嘉兴学院梁林校区","isDefault":"1","updateTime":null}
+     * userCoupon : [{"id":2,"couponName":"满减优惠券","couponTotal":"100","couponReduce":"10","startTime":"2019-01-15 00:00:00","endTime":"2019-01-24 00:00:00"},{"id":3,"couponName":"节日优惠券","couponTotal":"200","couponReduce":"10","startTime":"2019-01-01 00:00:00","endTime":"2019-01-23 00:00:00"},{"id":2,"couponName":"满减优惠券","couponTotal":"100","couponReduce":"10","startTime":"2019-01-15 00:00:00","endTime":"2019-01-24 00:00:00"}]
+     * postFree : {"postName":"随机","postPrice":10}
      */
 
     private UserAddressBean userAddress;
+    private PostFreeBean postFree;
     private List<GoodsBean> goods;
     private List<UserCouponBean> userCoupon;
-    private PostFree postFree;
-
-    public PostFree getPostFree() {
-        return postFree;
-    }
-
-    public void setPostFree(PostFree postFree) {
-        this.postFree = postFree;
-    }
-
-    private class PostFree {
-        private String postName;
-        private String postPrice;
-
-        public String getPostName() {
-            return postName;
-        }
-
-        public void setPostName(String postName) {
-            this.postName = postName;
-        }
-
-        public String getPostPrice() {
-            return postPrice;
-        }
-
-        public void setPostPrice(String postPrice) {
-            this.postPrice = postPrice;
-        }
-    }
 
     public UserAddressBean getUserAddress() {
         return userAddress;
@@ -50,6 +22,14 @@ public class OrderDetailGson {
 
     public void setUserAddress(UserAddressBean userAddress) {
         this.userAddress = userAddress;
+    }
+
+    public PostFreeBean getPostFree() {
+        return postFree;
+    }
+
+    public void setPostFree(PostFreeBean postFree) {
+        this.postFree = postFree;
     }
 
     public List<GoodsBean> getGoods() {
@@ -70,14 +50,14 @@ public class OrderDetailGson {
 
     public static class UserAddressBean {
         /**
-         * id : 1
+         * id : 3
          * userId : 1
          * saveName : 徐易杰
-         * saveTel : 17374131274
-         * saveLocal : 湖南省 株洲市 秀洲区 新城街道
-         * saveAddressDetail : 浙江省嘉兴市嘉兴院梁林校区
-         * isDefault : 0
-         * updateTime : 2019-01-19 13:57:22
+         * saveTel : 173711312
+         * saveLocal : 湖北省 鄂州市 枞阳县
+         * saveAddressDetail : 嘉兴学院梁林校区
+         * isDefault : 1
+         * updateTime : null
          */
 
         private int id;
@@ -87,7 +67,7 @@ public class OrderDetailGson {
         private String saveLocal;
         private String saveAddressDetail;
         private String isDefault;
-        private String updateTime;
+        private Object updateTime;
 
         public int getId() {
             return id;
@@ -145,35 +125,63 @@ public class OrderDetailGson {
             this.isDefault = isDefault;
         }
 
-        public String getUpdateTime() {
+        public Object getUpdateTime() {
             return updateTime;
         }
 
-        public void setUpdateTime(String updateTime) {
+        public void setUpdateTime(Object updateTime) {
             this.updateTime = updateTime;
+        }
+    }
+
+    public static class PostFreeBean {
+        /**
+         * postName : 随机
+         * postPrice : 10
+         */
+
+        private String postName;
+        private int postPrice;
+
+        public String getPostName() {
+            return postName;
+        }
+
+        public void setPostName(String postName) {
+            this.postName = postName;
+        }
+
+        public int getPostPrice() {
+            return postPrice;
+        }
+
+        public void setPostPrice(int postPrice) {
+            this.postPrice = postPrice;
         }
     }
 
     public static class GoodsBean {
         /**
-         * goodsName : 梅湾街秋冬新款百搭修身高领打底衫女长袖针织衫套头毛衣女羊毛衫-白色
-         * goodsCount : 1
-         * goodsId : 1
+         * goodsName : 火影忍者 剧场版 宇智波佐助 手办 蓝色
+         * goodsCommonName : 火影忍者 剧场版 宇智波佐助 手办
+         * goodsCount : 4
+         * goodsId : 3
          * goodsUserId : 1
-         * goodsPrice : 10.00
-         * goodsPicUrl : https://img.alicdn.com/imgextra/i4/742634735/TB2u6rgbdXXWeJjSZFvXXa6lpXa_!!742634735.jpg_430x430q90.jpg
+         * goodsPrice : 20.00
+         * goodsPicUrl : https://gd3.alicdn.com/imgextra/i3/126330677/TB2EoREX._C11Bjy1zeXXXtGpXa_!!126330677.jpg
          */
-        private String goodsCommonName;
+        private String orderNum;
 
-        public String getGoodsCommonName() {
-            return goodsCommonName;
+        public String getOrderNum() {
+            return orderNum;
         }
 
-        public void setGoodsCommonName(String goodsCommonName) {
-            this.goodsCommonName = goodsCommonName;
+        public void setOrderNum(String orderNum) {
+            this.orderNum = orderNum;
         }
 
         private String goodsName;
+        private String goodsCommonName;
         private int goodsCount;
         private int goodsId;
         private int goodsUserId;
@@ -186,6 +194,14 @@ public class OrderDetailGson {
 
         public void setGoodsName(String goodsName) {
             this.goodsName = goodsName;
+        }
+
+        public String getGoodsCommonName() {
+            return goodsCommonName;
+        }
+
+        public void setGoodsCommonName(String goodsCommonName) {
+            this.goodsCommonName = goodsCommonName;
         }
 
         public int getGoodsCount() {
@@ -231,12 +247,12 @@ public class OrderDetailGson {
 
     public static class UserCouponBean {
         /**
-         * id : 1
-         * couponName : 节假日优惠券
+         * id : 2
+         * couponName : 满减优惠券
          * couponTotal : 100
          * couponReduce : 10
-         * startTime : 2019-01-20 02:19:07
-         * endTime : 2019-01-20 02:19:09
+         * startTime : 2019-01-15 00:00:00
+         * endTime : 2019-01-24 00:00:00
          */
 
         private int id;

@@ -43,7 +43,7 @@ public class GoodsGson {
     private String postFree;
     private int isTimePurse;
     private int orderNum;
-    private String goodsPostFree;
+
     private List<String> goodsPicUrl;
     private List<PurseGoodsListBean> purseGoodsList;
 
@@ -175,13 +175,7 @@ public class GoodsGson {
         this.orderNum = orderNum;
     }
 
-    public String getGoodsPostFree() {
-        return goodsPostFree;
-    }
 
-    public void setGoodsPostFree(String goodsPostFree) {
-        this.goodsPostFree = goodsPostFree;
-    }
 
 //    public List<String> getGoodsService() {
 //        return goodsService;

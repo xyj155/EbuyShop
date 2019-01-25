@@ -1,6 +1,5 @@
 package com.example.module_login.view;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -53,9 +52,11 @@ public class TelPhoneRegisterVerifyActivity extends BaseActivity<UserContract.Vi
 
     @Override
     public void initView() {
+        ButterKnife.bind(this);
         SMSSDK.registerEventHandler(eventHandler);
         initToolBar().setToolBarTitle("验证");
     }
+
     EventHandler eventHandler = new EventHandler() {
         public void afterEvent(int event, int result, Object data) {
             // afterEvent会在子线程被调用，因此如果后续有UI相关操作，需要将数据发送到UI线程
@@ -71,8 +72,7 @@ public class TelPhoneRegisterVerifyActivity extends BaseActivity<UserContract.Vi
                     Object data = msg.obj;
                     if (event == SMSSDK.EVENT_GET_VERIFICATION_CODE) {
                         if (result == SMSSDK.RESULT_COMPLETE) {
-                            // TODO 处理成功得到验证码的结果
-
+                            startActivity(RegisterActivity.class);
                         } else {
                             // TODO 处理错误的结果
                             ((Throwable) data).printStackTrace();
@@ -93,6 +93,7 @@ public class TelPhoneRegisterVerifyActivity extends BaseActivity<UserContract.Vi
             }).sendMessage(msg);
         }
     };
+
     @Override
     public void initData() {
 
@@ -102,15 +103,15 @@ public class TelPhoneRegisterVerifyActivity extends BaseActivity<UserContract.Vi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
+
     }
 
-    @OnClick({R2.id.tb_common, R2.id.tv_register,R2.id.tv_send_msg})
+    @OnClick({R2.id.tb_common, R2.id.tv_register, R2.id.tv_send_msg})
     public void onViewClicked(View view) {
         int id = view.getId();
         if (id == R.id.tv_register) {
             SMSSDK.submitVerificationCode("86", getIntent().getStringExtra("telphone"), etCode.getText().toString());
-        }else if (id==R.id.tv_send_msg){
+        } else if (id == R.id.tv_send_msg) {
             SMSSDK.getVerificationCode("86", getIntent().getStringExtra("telphone"));
         }
     }

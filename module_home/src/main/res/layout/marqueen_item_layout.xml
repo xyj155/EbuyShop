@@ -10,6 +10,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/home_mall_hot_sell_border_4_yellow_bg"
         android:gravity="center"
+        android:id="@+id/tv_tag"
         android:paddingLeft="@dimen/dp_4"
         android:paddingTop="@dimen/dp_1"
         android:paddingRight="@dimen/dp_4"

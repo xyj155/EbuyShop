@@ -26,6 +26,15 @@ public class MarQueenGson {
     private Object url;
     private Object packName;
     private Object goodId;
+    private String tag;
+
+    public String getTag() {
+        return tag;
+    }
+
+    public void setTag(String tag) {
+        this.tag = tag;
+    }
 
     public int getId() {
         return id;
