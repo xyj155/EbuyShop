@@ -2,28 +2,34 @@ package com.example.module_login.contract;
 
 import com.example.commonlib.base.BaseGson;
 import com.example.commonlib.base.BaseView;
-import com.example.commonlib.gson.EmptyGson;
+import com.example.commonlib.gson.UserGson;
 
+import okhttp3.MultipartBody;
 import rx.Observable;
 
 public interface UserRegisterContract {
     interface Model {
-        Observable<BaseGson<EmptyGson>> userRegister(String userId,
-                                                     String count,
-                                                     String goodsId,
+        Observable<BaseGson<UserGson>> userRegister(String username,
+                                                     String password,
+                                                     String telphone,
                                                      String age,
-                                                     String school);
+                                                     String sex,
+                                                     String school,
+                                                     MultipartBody.Part avatar);
     }
 
     interface View extends BaseView {
-        void registerSuccess(EmptyGson emptyGson);
+        void registerSuccess(UserGson emptyGson);
+        void registerFailed();
     }
 
     interface Presenter {
-        void userRegister(String userId,
-                          String count,
-                          String goodsId,
+        void userRegister(String username,
+                          String password,
+                          String telphone,
                           String age,
-                          String school);
+                          String sex,
+                          String school,
+                          MultipartBody.Part avatar);
     }
 }

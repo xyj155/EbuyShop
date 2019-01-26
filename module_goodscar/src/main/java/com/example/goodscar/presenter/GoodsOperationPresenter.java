@@ -35,11 +35,11 @@ public class GoodsOperationPresenter extends BasePresenter<GoodsOperationContrac
 
                     @Override
                     public void onNext(BaseGson<EmptyGson> goodsStyleGsonBaseGson) {
-//                        if (goodsStyleGsonBaseGson.isStatus()) {
-//                            mMvpView.addGoodsInShopCar(true);
-//                        } else {
-//                            mMvpView.addGoodsInShopCar(false);
-//                        }
+                        if (goodsStyleGsonBaseGson.isStatus()) {
+                            mMvpView.addGoodsInShopCar(true);
+                        } else {
+                            mMvpView.addGoodsInShopCar(false);
+                        }
                         Log.i(TAG, "onNext: "+goodsStyleGsonBaseGson.toString());
                     }
 

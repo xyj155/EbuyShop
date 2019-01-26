@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -8,20 +9,7 @@
     tools:context=".view.LoginActivity">
 
 
-    <TextView
-        android:id="@+id/tv_register"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="@dimen/dp_30"
-        android:layout_marginTop="@dimen/dp_30"
-        android:padding="@dimen/dp_8"
-        android:drawablePadding="@dimen/dp_8"
-        android:text="注册"
-        android:drawableRight="@mipmap/arr"
-        android:textColor="#000"
-        android:textSize="17sp"
-        android:textStyle="bold" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -31,16 +19,28 @@
         android:paddingLeft="@dimen/dp_18"
         android:paddingRight="@dimen/dp_18">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/dp_12"
-        android:text="商学院"
-        android:textColor="#000"
-        android:textSize="@dimen/dp_30"
-        android:textStyle="bold" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/dp_12"
+                android:text="商学院"
+                android:textColor="#000"
+                android:textSize="@dimen/dp_38"
+                android:textStyle="bold" />
+            <TextView
+                android:padding="@dimen/dp_12"
+                android:layout_width="wrap_content"
+                android:textColor="#000"
+                android:textStyle="bold"
+                android:layout_height="wrap_content"
+                android:text="校园优惠领导者"
+                android:gravity="center" />
+        </LinearLayout>
 
 
         <EditText
@@ -87,6 +87,7 @@
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
                 android:padding="@dimen/dp_8"
+                android:id="@+id/tv_forget"
                 android:text="忘记密码"
                 android:textSize="13sp" />
         </RelativeLayout>
@@ -95,13 +96,13 @@
 
 
     <LinearLayout
-        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/ll_login"
         android:layout_marginTop="-30dp"
         android:gravity="center"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:visibility="gone">
 
         <View
             android:layout_width="@dimen/dp_80"
@@ -121,7 +122,6 @@
     </LinearLayout>
 
     <LinearLayout
-        android:visibility="gone"
         android:id="@+id/ll_login"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -129,6 +129,7 @@
         android:orientation="horizontal"
         android:paddingTop="@dimen/dp_8"
         android:paddingBottom="@dimen/dp_15"
+        android:visibility="gone"
         android:weightSum="3">
 
         <ImageView
@@ -152,4 +153,27 @@
             android:layout_weight="1"
             android:src="@mipmap/ic_weibo" />
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_register"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="@dimen/dp_30"
+        android:layout_marginRight="@dimen/dp_30"
+        android:drawableRight="@mipmap/arr"
+        android:drawablePadding="@dimen/dp_8"
+        android:padding="@dimen/dp_8"
+        android:text="快速注册"
+        android:textColor="#000"
+        android:textSize="17sp"
+        android:textStyle="bold" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:gravity="center"
+        android:padding="@dimen/dp_15"
+        android:text="商学院所有最终解释权归嘉兴学院所有"
+        android:textSize="10sp" />
 </RelativeLayout>

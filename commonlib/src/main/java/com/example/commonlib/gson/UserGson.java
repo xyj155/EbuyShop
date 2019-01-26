@@ -2,24 +2,53 @@ package com.example.commonlib.gson;
 
 public class UserGson {
 
+
     /**
-     * id : 1
-     * username : 17374131273
-     * password : 202cb962ac59075b964b07152d234b70
-     * avatar : https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=1554278126,1318599153&fm=27&gp=0.jpg
-     * qqtoken : 24fjajfio24knakf24
-     * wbtoken : daqrqrf q q
-     * telphone : 17374131273
-     * location : 嘉兴
-     * lastLoginTIme : 2018-12-11 14:20:26
-     * trueName : 徐易杰
-     * createTime : 2018-12-06 15:51:12
-     * status : 1
-     * userLevel : 1
+     * id : 545
+     * username : 7897897
+     * password : 312
+     * avatar :
+     * qqtoken :
+     * wbtoken :
+     * telphone : 3213
+     * location :
+     * lastLoginTIme :
+     * trueName :
+     * createTime :
+     * status :
+     * userLevel :
+     * userToken : 9bd5ee6fe55aaeb673025dbcb8f939c1
+     * school : 3132
+     * age : 31231
+     * sex : 312
      */
 
     private int id;
     private String username;
+
+    @Override
+    public String toString() {
+        return "UserGson{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", avatar='" + avatar + '\'' +
+                ", qqtoken='" + qqtoken + '\'' +
+                ", wbtoken='" + wbtoken + '\'' +
+                ", telphone='" + telphone + '\'' +
+                ", location='" + location + '\'' +
+                ", lastLoginTIme='" + lastLoginTIme + '\'' +
+                ", trueName='" + trueName + '\'' +
+                ", createTime='" + createTime + '\'' +
+                ", status='" + status + '\'' +
+                ", userLevel='" + userLevel + '\'' +
+                ", userToken='" + userToken + '\'' +
+                ", school='" + school + '\'' +
+                ", age=" + age +
+                ", sex='" + sex + '\'' +
+                '}';
+    }
+
     private String password;
     private String avatar;
     private String qqtoken;
@@ -31,6 +60,10 @@ public class UserGson {
     private String createTime;
     private String status;
     private String userLevel;
+    private String userToken;
+    private String school;
+    private int age;
+    private String sex;
 
     public int getId() {
         return id;
@@ -134,5 +167,37 @@ public class UserGson {
 
     public void setUserLevel(String userLevel) {
         this.userLevel = userLevel;
+    }
+
+    public String getUserToken() {
+        return userToken;
+    }
+
+    public void setUserToken(String userToken) {
+        this.userToken = userToken;
+    }
+
+    public String getSchool() {
+        return school;
+    }
+
+    public void setSchool(String school) {
+        this.school = school;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public String getSex() {
+        return sex;
+    }
+
+    public void setSex(String sex) {
+        this.sex = sex;
     }
 }

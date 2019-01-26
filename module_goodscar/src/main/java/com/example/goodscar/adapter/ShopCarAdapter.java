@@ -5,11 +5,13 @@ import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.example.commonlib.gson.ShopCarGson;
 import com.example.commonlib.util.GlideUtil;
+import com.example.commonlib.util.SharePreferenceUtil;
 import com.example.goodscar.contract.GoodsOperationContract;
 import com.example.goodscar.presenter.GoodsOperationPresenter;
 import com.example.goodscar.presenter.ShopCarPresenter;
@@ -97,7 +99,7 @@ public class ShopCarAdapter extends BaseQuickAdapter<ShopCarGson, BaseViewHolder
                     public void onClick(View v) {
                         goodsOperationPresenter.addGoodsInShopCarById("1","1", String.valueOf(item.getId()), "1");
                         ShopCarPresenter shopCarPresenter = goodsCarFragment.initPresenter();
-                        shopCarPresenter.queryUserShopCarByUid("1", false);
+                        shopCarPresenter.queryUserShopCarByUid((String) SharePreferenceUtil.getUser("uid","String"), false);
                         new android.os.Handler().postDelayed(new Runnable() {
                             @Override
                             public void run() {
@@ -114,7 +116,11 @@ public class ShopCarAdapter extends BaseQuickAdapter<ShopCarGson, BaseViewHolder
 
     @Override
     public void addGoodsInShopCar(boolean isSuccess) {
-
+        if (isSuccess ) {
+            Toast.makeText(context, "添加成功", Toast.LENGTH_SHORT).show();
+        }else{
+            Toast.makeText(context, "添加失败", Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override

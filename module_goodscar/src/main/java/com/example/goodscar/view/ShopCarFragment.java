@@ -82,14 +82,14 @@ public class ShopCarFragment extends BaseFragment<ShopCarPresenter> implements S
         smlShopcar.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshLayout) {
-                mPresenter.queryUserShopCarByUid("1", true);
+                mPresenter.queryUserShopCarByUid((String) SharePreferenceUtil.getUser("uid","String"), true);
                 rbAllCheck.setChecked(false);
             }
         });
         shopCarAdapter.setUpdateShopCar(new ShopCarAdapter.UpdateShopCarInterface() {
             @Override
             public void uploadShopCar() {
-                mPresenter.queryUserShopCarByUid("1", false);
+                mPresenter.queryUserShopCarByUid((String) SharePreferenceUtil.getUser("uid","String"), false);
                 createDialog("");
             }
 
@@ -206,7 +206,7 @@ public class ShopCarFragment extends BaseFragment<ShopCarPresenter> implements S
     @Override
     public void onResume() {
         super.onResume();
-        mPresenter.queryUserShopCarByUid("1", false);
+        mPresenter.queryUserShopCarByUid((String) SharePreferenceUtil.getUser("uid","String"), false);
 
     }
 
@@ -287,7 +287,7 @@ public class ShopCarFragment extends BaseFragment<ShopCarPresenter> implements S
     @Override
     public void submitUserOrder(boolean submit,String orderNum) {
         Log.i(TAG, "submitUserOrder: " + submit);
-        mPresenter.queryUserShopCarByUid("1", false);
+        mPresenter.queryUserShopCarByUid((String) SharePreferenceUtil.getUser("uid","String"), false);
         if (submit){
             Gson gson = new Gson();
             Intent intent = new Intent(getContext(), GoodsPaymentActivity.class);

@@ -15,6 +15,7 @@ import com.example.commonlib.contract.UserReceivingAddressContract;
 import com.example.commonlib.gson.UserReceiveAddressGson;
 import com.example.commonlib.presenter.UserReceivingAddressPresenter;
 import com.example.commonlib.util.RouterUtil;
+import com.example.commonlib.util.SharePreferenceUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,7 +60,7 @@ public class UserReceivingAddressActivity extends BaseActivity<UserReceivingAddr
     @Override
     protected void onResume() {
         super.onResume();
-        mPresenter.queryUserReceiveAddress("1");
+        mPresenter.queryUserReceiveAddress((String) SharePreferenceUtil.getUser("uid","String"));
     }
 
     @Override

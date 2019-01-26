@@ -30,6 +30,7 @@ import com.example.commonlib.presenter.UserSubmitOrderPresenter;
 import com.example.commonlib.util.PaymentInterface;
 import com.example.commonlib.util.PaymentUtil;
 import com.example.commonlib.util.RouterUtil;
+import com.example.commonlib.util.SharePreferenceUtil;
 import com.example.commonlib.view.CommonDialog;
 import com.example.commonlib.view.ExpressChooseDialog;
 import com.google.gson.Gson;
@@ -94,7 +95,7 @@ public class GoodsPaymentActivity extends BaseActivity<OrderDetailContract.View,
     @Override
     public void initView() {
         ButterKnife.bind(this);
-        mPresenter.confirmationOrderByUserId("1", getIntent().getStringExtra("goodsArray"), getIntent().getStringExtra("orderNum"));
+        mPresenter.confirmationOrderByUserId((String) SharePreferenceUtil.getUser("uid","String"), getIntent().getStringExtra("goodsArray"), getIntent().getStringExtra("orderNum"));
         initToolBar().setToolBarTitle("订单详情");
         ryGoods.setLayoutManager(new LinearLayoutManager(GoodsPaymentActivity.this));
 
@@ -225,7 +226,7 @@ public class GoodsPaymentActivity extends BaseActivity<OrderDetailContract.View,
                 PaymentUtil.paymentByGoods(GoodsPaymentActivity.this, "商学院自营商品", "商品", 1, new PaymentInterface() {
                     @Override
                     public void paySuccess() {
-                        userSubmitOrderPresenter.submitOrderByUserId("1", addressId, new Gson().toJson(goodsIdList), couponId, orderNum, "2b7a3fff83ab50ec62b8296dd52b61e2", etMessage.getText().toString());
+                        userSubmitOrderPresenter.submitOrderByUserId((String) SharePreferenceUtil.getUser("uid","String"), addressId, new Gson().toJson(goodsIdList), couponId, orderNum, "2b7a3fff83ab50ec62b8296dd52b61e2", etMessage.getText().toString());
                     }
 
                     @Override
@@ -240,7 +241,7 @@ public class GoodsPaymentActivity extends BaseActivity<OrderDetailContract.View,
                     PaymentUtil.paymentByGoods(GoodsPaymentActivity.this, "商学院自营商品", "商品", 1, new PaymentInterface() {
                         @Override
                         public void paySuccess() {
-                            userSubmitOrderPresenter.submitOrderByUserId("1", addressId, new Gson().toJson(goodsIdList), couponId, orderNum, "2b7a3fff83ab50ec62b8296dd52b61e2", etMessage.getText().toString());
+                            userSubmitOrderPresenter.submitOrderByUserId((String) SharePreferenceUtil.getUser("uid","String"), addressId, new Gson().toJson(goodsIdList), couponId, orderNum, "2b7a3fff83ab50ec62b8296dd52b61e2", etMessage.getText().toString());
                         }
 
                         @Override

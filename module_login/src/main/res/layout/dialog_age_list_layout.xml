@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:money="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="bottom"
+    android:background="@drawable/bottom_dialog_goods_choose_bg"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="@dimen/dp_5">
+
+        <TextView
+            android:id="@+id/tv_choose"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/iv_avatar"
+            android:layout_gravity="center"
+            android:layout_marginLeft="8dp"
+            android:layout_toRightOf="@+id/iv_avatar"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:maxLines="2"
+            android:text="请选择你的年龄" />
+
+        <ImageView
+            android:id="@+id/iv_close"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_gravity="right"
+            android:layout_margin="@dimen/dp_5"
+            android:src="@mipmap/mall_product_close_g3" />
+    </FrameLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:id="@+id/ry_list"
+        android:layout_height="wrap_content" />
+</LinearLayout>

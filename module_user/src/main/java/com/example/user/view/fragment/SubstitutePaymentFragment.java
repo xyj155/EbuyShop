@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 
 import com.example.commonlib.base.BaseFragment;
 import com.example.commonlib.gson.UserOrderStatusGson;
+import com.example.commonlib.util.SharePreferenceUtil;
 import com.example.commonlib.view.MyDialog;
 import com.example.user.adapter.UserGoodsStatusAdapter;
 import com.example.user.contract.UserFormStatusContract;
@@ -41,11 +42,11 @@ public class SubstitutePaymentFragment extends BaseFragment<UserFormStatusPresen
     @Override
     public void initData() {
 
-        mPresenter.queryUserOrderByStatus("1", "1");
+        mPresenter.queryUserOrderByStatus((String) SharePreferenceUtil.getUser("uid","String"), "1");
         smlPayment.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshLayout) {
-                mPresenter.queryUserOrderByStatus("1", "1");
+                mPresenter.queryUserOrderByStatus((String) SharePreferenceUtil.getUser("uid","String"), "1");
             }
         });
 
@@ -133,7 +134,7 @@ public class SubstitutePaymentFragment extends BaseFragment<UserFormStatusPresen
 
     @Override
     public void deleteSuccess(boolean isDelete) {
-        mPresenter.queryUserOrderByStatus("1", "1");
+        mPresenter.queryUserOrderByStatus((String) SharePreferenceUtil.getUser("uid","String"), "1");
         userGoodsStatusAdapter.notifyDataSetChanged();
     }
 }

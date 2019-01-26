@@ -2,6 +2,7 @@ package com.example.user.view;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -62,9 +63,12 @@ public class UserFragment extends BaseFragment<LoginPresent> {
                 ivHead.setLayoutParams(lp);
             }
         });
+        Log.i(TAG, "initView: "+SharePreferenceUtil.getUser("avatar", "String"));
         Glide.with(getContext()).asBitmap().load(SharePreferenceUtil.getUser("avatar", "String")).into(ivHead);
 
     }
+
+    private static final String TAG = "UserFragment";
 
     @Override
     public void onDestroyView() {

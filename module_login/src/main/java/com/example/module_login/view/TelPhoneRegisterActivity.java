@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.commonlib.base.BaseActivity;
+import com.example.commonlib.gson.UserGson;
 import com.example.commonlib.util.SharePreferenceUtil;
 import com.example.module_login.R;
 import com.example.module_login.R2;
@@ -27,17 +28,25 @@ import butterknife.OnClick;
 import cn.smssdk.EventHandler;
 import cn.smssdk.SMSSDK;
 
-public class TelPhoneRegisterActivity extends BaseActivity<UserContract.View, UserPresenter> {
+public class TelPhoneRegisterActivity extends BaseActivity<UserContract.View, UserPresenter> implements UserContract.View {
 
+    @BindView(R2.id.tv_having)
+    TextView tvHaving;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        telPhoneRegisterActivity = this;
+    }
+//    }/
 
     EditText etTel;
     TextView tvRegister;
     @BindView(R2.id.iv_close)
     ImageView ivClose;
-
+    public static TelPhoneRegisterActivity telPhoneRegisterActivity;
     EventHandler eventHandler = new EventHandler() {
         public void afterEvent(int event, int result, Object data) {
-            // afterEvent会在子线程被调用，因此如果后续有UI相关操作，需要将数据发送到UI线程
             Message msg = new Message();
             msg.arg1 = event;
             msg.arg2 = result;
@@ -53,6 +62,13 @@ public class TelPhoneRegisterActivity extends BaseActivity<UserContract.View, Us
                             // TODO 处理成功得到验证码的结果
                             // 请注意，此时只是完成了发送验证码的请求，验证码短信还需要几秒钟之后才送达
                             Toast.makeText(TelPhoneRegisterActivity.this, "发送验证码成功！", Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(TelPhoneRegisterActivity.this, TelPhoneRegisterVerifyActivity.class);
+                            intent.putExtra("telphone", etTel.getText().toString());
+                            startActivity(intent);
+                            Map<String, Object> map = new HashMap<>();
+                            map.put("username", etTel.getText().toString());
+                            map.put("telphone", etTel.getText().toString());
+                            SharePreferenceUtil.saveUser(map);
                         } else {
                             // TODO 处理错误的结果
                             ((Throwable) data).printStackTrace();
@@ -66,7 +82,6 @@ public class TelPhoneRegisterActivity extends BaseActivity<UserContract.View, Us
                             ((Throwable) data).printStackTrace();
                         }
                     }
-                    // TODO 其他接口的返回结果也类似，根据event判断当前数据属于哪个接口
                     return false;
                 }
             }).sendMessage(msg);
@@ -90,7 +105,7 @@ public class TelPhoneRegisterActivity extends BaseActivity<UserContract.View, Us
 
     @Override
     public UserPresenter getPresenter() {
-        return null;
+        return new UserPresenter(this);
     }
 
     @Override
@@ -104,25 +119,12 @@ public class TelPhoneRegisterActivity extends BaseActivity<UserContract.View, Us
         initToolBar().setToolBarTitle("发送验证码");
         etTel = findViewById(R.id.et_tel);
         tvRegister = findViewById(R.id.tv_register);
-// 注册一个事件回调，用于处理SMSSDK接口请求的结果
         SMSSDK.registerEventHandler(eventHandler);
         SMSSDK.setAskPermisionOnReadContact(true);
-// 请求验证码，其中country表示国家代码，如“86”；phone表示手机号码，如“13800138000”
-
-
-// 提交验证码，其中的code表示验证码，如“1357”
-//        SMSSDK.submitVerificationCode(country, phone, code);
     }
 
     @Override
     public void initData() {
-
-    }
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
 
     }
 
@@ -131,13 +133,36 @@ public class TelPhoneRegisterActivity extends BaseActivity<UserContract.View, Us
     public void onViewClicked(View view) {
         int id = view.getId();
         if (id == R.id.tv_register) {
-            SMSSDK.getVerificationCode("86", etTel.getText().toString());
-            Intent intent = new Intent(TelPhoneRegisterActivity.this, TelPhoneRegisterVerifyActivity.class);
-            intent.putExtra("telphone", etTel.getText().toString());
-            startActivity(intent);
-            Map<String, Object> map = new HashMap<>();
-            map.put("username", etTel.getText().toString());
-            SharePreferenceUtil.saveUser(map);
+            mPresenter.queryUserAccount(etTel.getText().toString());
         }
+    }
+
+    @Override
+    public void userLogin(UserGson userGson) {
+
+    }
+
+    @Override
+    public void isHaving(boolean isHaving) {
+        if (isHaving) {
+            tvHaving.setText("此手机号码已注册！请直接登录");
+        } else {
+            SMSSDK.getVerificationCode("86", etTel.getText().toString());
+        }
+    }
+
+    @Override
+    public void showError(String msg) {
+
+    }
+
+    @Override
+    public void showDialog(String msg) {
+
+    }
+
+    @Override
+    public void hideDialog() {
+
     }
 }

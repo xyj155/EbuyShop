@@ -13,7 +13,9 @@ import android.widget.Toast;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.example.commonlib.base.BaseActivity;
+import com.example.commonlib.commonactivity.BrowserActivity;
 import com.example.commonlib.gson.UserGson;
+import com.example.commonlib.http.RetrofitUtils;
 import com.example.commonlib.interfaces.UserLoginInterface;
 import com.example.commonlib.util.RouterUtil;
 import com.example.commonlib.util.SharePreferenceUtil;
@@ -38,7 +40,7 @@ import cn.sharesdk.tencent.qq.QQ;
 
 @Route(path = RouterUtil.LOGIN)
 public class LoginActivity extends BaseActivity<UserContract.View, UserPresenter> implements UserContract.View {
-
+    public static LoginActivity loginActivity;
 
     @BindView(R2.id.tv_login)
     TextView tvLogin;
@@ -56,6 +58,8 @@ public class LoginActivity extends BaseActivity<UserContract.View, UserPresenter
     EditText etUsername;
     @BindView(R2.id.et_password)
     EditText etPassword;
+    @BindView(R2.id.tv_forget)
+    TextView tvForget;
 
 
     @Override
@@ -88,10 +92,10 @@ public class LoginActivity extends BaseActivity<UserContract.View, UserPresenter
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // TODO: add setContentView(...) invocation
-
+        loginActivity = this;
     }
 
-    @OnClick({R2.id.tv_register, R2.id.tv_login, R2.id.iv_qq, R2.id.iv_wechat, R2.id.iv_sina})
+    @OnClick({R2.id.tv_forget, R2.id.tv_register, R2.id.tv_login, R2.id.iv_qq, R2.id.iv_wechat, R2.id.iv_sina})
     public void onViewClicked(View view) {
         int id = view.getId();
         if (id == R.id.iv_qq) {
@@ -104,12 +108,12 @@ public class LoginActivity extends BaseActivity<UserContract.View, UserPresenter
                         @Override
                         public void run() {
                             Map<String, Object> map = new HashMap<>();
-                            map.put("username", platform.getUserId());
+                            map.put("username", platform.getUserName());
                             map.put("password", platform.getUserId());
                             map.put("avatar", platform.getUserIcon());
                             SharePreferenceUtil.saveUser(map);
                             Log.i(TAG, "successWithUser: " + platform.getUserId());
-                            mPresenter.userLogin(platform.getUserId(), platform.getUserId());
+                            mPresenter.userLogin(platform.getUserName(), platform.getUserId());
                         }
                     });
 
@@ -141,7 +145,7 @@ public class LoginActivity extends BaseActivity<UserContract.View, UserPresenter
                 @Override
                 public void successWithUser(PlatformDb platform) {
                     Map<String, Object> map = new HashMap<>();
-                    map.put("username", platform.getUserId());
+                    map.put("username", platform.getUserName());
                     map.put("password", platform.getUserId());
                     map.put("avatar", platform.getUserIcon());
                     SharePreferenceUtil.saveUser(map);
@@ -163,6 +167,10 @@ public class LoginActivity extends BaseActivity<UserContract.View, UserPresenter
             });
         } else if (id == R.id.tv_register) {
             startActivityForResult(new Intent(LoginActivity.this, TelPhoneRegisterActivity.class), LOGIN_CODE);
+        } else if (id == R.id.tv_forget) {
+            Intent intent = new Intent(LoginActivity.this, BrowserActivity.class);
+            intent.putExtra("url", RetrofitUtils.BASE_URL+"/StuShop/public/index.php/index/index/forgetPassword");
+            startActivity(intent);
         }
     }
 
@@ -181,6 +189,10 @@ public class LoginActivity extends BaseActivity<UserContract.View, UserPresenter
         finish();
     }
 
+    @Override
+    public void isHaving(boolean isHaving) {
+
+    }
 
 
     @Override
@@ -199,4 +211,5 @@ public class LoginActivity extends BaseActivity<UserContract.View, UserPresenter
     public void hideDialog() {
         hideDlalog();
     }
+
 }

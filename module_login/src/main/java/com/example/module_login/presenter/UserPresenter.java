@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.example.commonlib.base.BaseGson;
 import com.example.commonlib.base.BasePresenter;
+import com.example.commonlib.gson.EmptyGson;
 import com.example.commonlib.gson.UserGson;
 import com.example.commonlib.http.BaseObserver;
 import com.example.module_login.contract.UserContract;
@@ -34,9 +35,9 @@ public class UserPresenter extends BasePresenter<UserContract.View> implements U
 
                     @Override
                     public void onNext(BaseGson<UserGson> userGsonBaseGson) {
-                        Log.i(TAG, "onNext: "+userGsonBaseGson.toString());
+                        Log.i(TAG, "onNext: " + userGsonBaseGson.toString());
                         if (userGsonBaseGson.isStatus()) {
-                                mMvpView.userLogin(userGsonBaseGson.getData().get(0));
+                            mMvpView.userLogin(userGsonBaseGson.getData().get(0));
                         } else {
                             mMvpView.showError(userGsonBaseGson.getMsg());
                         }
@@ -45,8 +46,37 @@ public class UserPresenter extends BasePresenter<UserContract.View> implements U
                     @Override
                     public void onError(String error) {
                         mMvpView.hideDialog();
-                        Log.i(TAG, "onError: "+error);
+                        Log.i(TAG, "onError: " + error);
                         mMvpView.showError("服务器错误，请重试！");
+                    }
+                });
+    }
+
+    @Override
+    public void queryUserAccount(String username) {
+        mMvpView.showDialog("");
+        userModel.queryUserAccount(username)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseObserver<BaseGson<EmptyGson>>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onNext(BaseGson<EmptyGson> emptyGsonBaseGson) {
+                        mMvpView.hideDialog();
+                        if (emptyGsonBaseGson.isStatus()) {
+                            mMvpView.isHaving(true);
+                        } else {
+                            mMvpView.isHaving(false);
+                        }
+                    }
+
+                    @Override
+                    public void onError(String error) {
+                        mMvpView.hideDialog();
                     }
                 });
     }

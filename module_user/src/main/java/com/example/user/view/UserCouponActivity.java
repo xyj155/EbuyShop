@@ -10,6 +10,7 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.example.commonlib.base.BaseActivity;
 import com.example.commonlib.gson.CouponGson;
 import com.example.commonlib.util.RouterUtil;
+import com.example.commonlib.util.SharePreferenceUtil;
 import com.example.user.adapter.CouponAdapter;
 import com.example.user.contract.UserCouponContract;
 import com.example.user.presenter.UserCouponPresenter;
@@ -65,7 +66,7 @@ public class UserCouponActivity extends BaseActivity<UserCouponContract.View, Us
         smlCoupon.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshLayout) {
-                mPresenter.queryUserCouponList("1");
+                mPresenter.queryUserCouponList((String) SharePreferenceUtil.getUser("uid","String"));
             }
         });
 

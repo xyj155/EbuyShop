@@ -23,7 +23,15 @@
         android:paddingLeft="@dimen/dp_30"
         android:textCursorDrawable="@drawable/login_border_1_bg"
         android:textSize="15sp" />
-
+<TextView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text=""
+    android:id="@+id/tv_having"
+    android:gravity="right"
+    android:textColor="#ff0000"
+    android:textSize="14sp"
+    android:padding="@dimen/dp_5" />
     <TextView
         android:id="@+id/tv_register"
         android:layout_width="match_parent"

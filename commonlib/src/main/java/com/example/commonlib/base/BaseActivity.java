@@ -69,7 +69,7 @@ public abstract class BaseActivity<V extends BaseView, T extends BasePresenter<V
     public void createDialog(String msgStr) {
         progressDialog = new Dialog(BaseActivity.this, R.style.progress_dialog);
         progressDialog.setContentView(R.layout.base_dialog);
-        progressDialog.setCancelable(false);
+        progressDialog.setCancelable(true);
         progressDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         TextView msg = (TextView) progressDialog.findViewById(R.id.id_tv_loadingmsg);
         msg.setText(msgStr);

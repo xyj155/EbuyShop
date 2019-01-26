@@ -25,12 +25,13 @@ public class SplashActivity extends Activity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Boolean user = (Boolean) SharePreferenceUtil.getUser("islogin", "boolean");
+                boolean user = (boolean) SharePreferenceUtil.getUser("islogin", "boolean");
                 if (user) {
-                    ARouter.getInstance().build(RouterUtil.LOGIN).navigation();
+//                    startActivity(new Intent(SplashActivity.this,RegisterActivity.class));
+                    ARouter.getInstance().build(RouterUtil.HomePage).navigation();
                 } else {
+//                    startActivity(new Intent(SplashActivity.this,RegisterActivity.class));
                     ARouter.getInstance().build(RouterUtil.LOGIN).navigation();
-
                 }
                 finish();
             }
