@@ -351,9 +351,9 @@ public class RegisterActivity extends BaseActivity<UserRegisterContract.View, Us
         map.put("trueName", emptyGson.getTrueName());
         map.put("islogin", true);
         SharePreferenceUtil.saveUser(map);
-//        TelPhoneRegisterVerifyActivity.telPhoneRegisterVerifyActivity.finish();
-//        TelPhoneRegisterActivity.telPhoneRegisterActivity.finish();
-//        LoginActivity.loginActivity.finish();
+        TelPhoneRegisterVerifyActivity.telPhoneRegisterVerifyActivity.finish();
+        TelPhoneRegisterActivity.telPhoneRegisterActivity.finish();
+        LoginActivity.loginActivity.finish();
         finish();
         ARouter.getInstance().build(RouterUtil.HomePage).navigation();
     }

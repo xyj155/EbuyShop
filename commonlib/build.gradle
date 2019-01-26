@@ -105,4 +105,5 @@ dependencies {
     api 'com.netease.nimlib:push:5.7.0'
     //    api 'com.yuyh.imgsel:library:2.0.6'
     api project(':pictureSelector')
+    api files('libs/ShareSDK-Email-3.4.1.jar')
 }

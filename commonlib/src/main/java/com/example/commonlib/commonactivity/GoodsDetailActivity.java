@@ -48,6 +48,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.sharesdk.onekeyshare.OnekeyShare;
 
 @Route(path = RouterUtil.GOODSDETAIL)
 public class GoodsDetailActivity extends BaseActivity<GoodsDetailContract.View, GoodsDetailPresenter> implements GoodsDetailContract.View, SlideDetailsLayout.OnSlideDetailsListener {
@@ -73,6 +74,8 @@ public class GoodsDetailActivity extends BaseActivity<GoodsDetailContract.View, 
     TextView tvGoodComment;
     @BindView(R2.id.iv_comment_right)
     ImageView ivCommentRight;
+    @BindView(R2.id.iv_share)
+    ImageView ivShare;
     @BindView(R2.id.ll_comment)
     LinearLayout llComment;
     @BindView(R2.id.ry_comment)
@@ -283,6 +286,18 @@ public class GoodsDetailActivity extends BaseActivity<GoodsDetailContract.View, 
         webSettings.setUseWideViewPort(true);
         webSettings.setBuiltInZoomControls(false);
         webSettings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
+        ivShare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                OnekeyShare oks = new OnekeyShare();
+                oks.disableSSOWhenAuthorize();
+                oks.setTitle(goodsGson.getGoodsName());
+                oks.setText(goodsGson.getGoodsDescribe());
+                oks.setImageUrl(goodsGson.getGoodsPic());
+                oks.setSite(getString(R.string.app_name));
+                oks.show(GoodsDetailActivity.this);
+            }
+        });
     }
 
     @Override

@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.commonlib.base.BaseFragment;
 import com.example.commonlib.presenter.LoginPresent;
 import com.example.commonlib.util.RouterUtil;
@@ -64,7 +65,7 @@ public class UserFragment extends BaseFragment<LoginPresent> {
             }
         });
         Log.i(TAG, "initView: "+SharePreferenceUtil.getUser("avatar", "String"));
-        Glide.with(getContext()).asBitmap().load(SharePreferenceUtil.getUser("avatar", "String")).into(ivHead);
+        Glide.with(getContext()).asBitmap().apply(new RequestOptions().error(R.mipmap.app_icon)).load(SharePreferenceUtil.getUser("avatar", "String")).into(ivHead);
 
     }
 

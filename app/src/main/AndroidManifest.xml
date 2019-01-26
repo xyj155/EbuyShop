@@ -113,7 +113,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
-                <data android:scheme="tencent100371282" />
+                <data android:scheme="tencent1108087612" />
             </intent-filter>
         </activity>
         <activity
@@ -137,6 +137,12 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name="com.example.commonlib.wxapi.WXEntryActivity"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:exported="true"
+            android:screenOrientation="portrait" />
         <meta-data
             android:name="com.netease.nim.appKey"
             android:value="3c23a62b1c4ac728a2bc4f15f3ca2746" />
