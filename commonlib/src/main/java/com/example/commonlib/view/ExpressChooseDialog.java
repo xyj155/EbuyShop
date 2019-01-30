@@ -66,9 +66,10 @@ public class ExpressChooseDialog extends Dialog implements ExpressContract.View 
         ryExpress.setAdapter(goodsStyleAdapter);
         goodsStyleAdapter.setOnItemClickListener(new onItemClickListener() {
             @Override
-            public void onClickListener(String price, String expressname) {
+            public void onClickListener(String price, String expressNam, String expressI) {
                 expressPrice = price;
-                expressName = expressname;
+                expressName = expressNam;
+                expressId=expressI;
             }
         });
         ivClose.setOnClickListener(new View.OnClickListener() {
@@ -80,12 +81,13 @@ public class ExpressChooseDialog extends Dialog implements ExpressContract.View 
         tvSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onItemClickListenerByGId.onClickListener(expressPrice, expressName);
+                onItemClickListenerByGId.onClickListener(expressPrice, expressName,expressId);
             }
         });
     }
 
     private String expressName;
+    private String expressId;
     private String expressPrice;
     private static final String TAG = "ExpressChooseDialog";
 
@@ -134,7 +136,7 @@ public class ExpressChooseDialog extends Dialog implements ExpressContract.View 
                                 integerList.add(helper.getPosition());
                                 helper.setChecked(R.id.cb_express, true);
                                 Log.i(TAG, "onClick: 2");
-                                onItemClickListener.onClickListener(item.getExpressPrice(),item.getExpressName());
+                                onItemClickListener.onClickListener(item.getExpressPrice(),item.getExpressName(), String.valueOf(item.getId()));
                             }
                             new Handler().postDelayed(new Runnable() {
                                 @Override
@@ -165,7 +167,7 @@ public class ExpressChooseDialog extends Dialog implements ExpressContract.View 
     }
 
     public interface onItemClickListener {
-        void onClickListener(String price, String expressName);
+        void onClickListener(String price, String expressName,String  expressId);
     }
 
 }

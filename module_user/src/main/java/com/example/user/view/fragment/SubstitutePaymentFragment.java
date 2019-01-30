@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.commonlib.base.BaseFragment;
 import com.example.commonlib.gson.UserOrderStatusGson;
@@ -41,8 +42,6 @@ public class SubstitutePaymentFragment extends BaseFragment<UserFormStatusPresen
 
     @Override
     public void initData() {
-
-        mPresenter.queryUserOrderByStatus((String) SharePreferenceUtil.getUser("uid","String"), "1");
         smlPayment.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshLayout) {
@@ -52,11 +51,18 @@ public class SubstitutePaymentFragment extends BaseFragment<UserFormStatusPresen
 
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        mPresenter.queryUserOrderByStatus((String) SharePreferenceUtil.getUser("uid","String"), "1");
+    }
+
     private MyDialog myDialog1;
 
     @Override
     public void initView(View view) {
         userGoodsStatusAdapter = new UserGoodsStatusAdapter(null,getContext());
+        userGoodsStatusAdapter.setEmptyView(View.inflate(getContext(), R.layout.order_empty_layout, null));
         ryPayment.setLayoutManager(new LinearLayoutManager(getContext()));
         ryPayment.setAdapter(userGoodsStatusAdapter);
         userGoodsStatusAdapter.setEmptyView(View.inflate(getContext(), R.layout.order_empty_layout, null));
@@ -74,7 +80,7 @@ public class SubstitutePaymentFragment extends BaseFragment<UserFormStatusPresen
                             myDialog1.dismiss();
                         } else if (i == R.id.dialog_btn_cancel) {
                             myDialog1.dismiss();
-                            userOrderDeletePresenter.deleteOrderByOrderNum(orderNum, "1");
+                            userOrderDeletePresenter.deleteOrderByOrderNum(orderNum, (String) SharePreferenceUtil.getUser("uid","String"));
                         }
                     }
                 });
@@ -134,7 +140,12 @@ public class SubstitutePaymentFragment extends BaseFragment<UserFormStatusPresen
 
     @Override
     public void deleteSuccess(boolean isDelete) {
-        mPresenter.queryUserOrderByStatus((String) SharePreferenceUtil.getUser("uid","String"), "1");
-        userGoodsStatusAdapter.notifyDataSetChanged();
+        if (isDelete){
+            mPresenter.queryUserOrderByStatus((String) SharePreferenceUtil.getUser("uid","String"), "1");
+            userGoodsStatusAdapter.notifyDataSetChanged();
+        }else {
+            Toast.makeText(getContext(), "删除失败", Toast.LENGTH_SHORT).show();
+        }
+
     }
 }

@@ -102,6 +102,6 @@ public class UserCouponActivity extends BaseActivity<UserCouponContract.View, Us
 
     @Override
     public void hideDialog() {
-        hideDlalog();
+        mhideDialog();
     }
 }

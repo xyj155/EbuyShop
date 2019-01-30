@@ -95,7 +95,7 @@ public class GoodsPaymentActivity extends BaseActivity<OrderDetailContract.View,
     @Override
     public void initView() {
         ButterKnife.bind(this);
-        mPresenter.confirmationOrderByUserId((String) SharePreferenceUtil.getUser("uid","String"), getIntent().getStringExtra("goodsArray"), getIntent().getStringExtra("orderNum"));
+        mPresenter.confirmationOrderByUserId((String) SharePreferenceUtil.getUser("uid", "String"), getIntent().getStringExtra("goodsArray"), getIntent().getStringExtra("orderNum"));
         initToolBar().setToolBarTitle("订单详情");
         ryGoods.setLayoutManager(new LinearLayoutManager(GoodsPaymentActivity.this));
 
@@ -129,7 +129,7 @@ public class GoodsPaymentActivity extends BaseActivity<OrderDetailContract.View,
 
     @Override
     public void hideDialog() {
-        hideDlalog();
+        mhideDialog();
     }
 
     private String orderNum;
@@ -175,12 +175,13 @@ public class GoodsPaymentActivity extends BaseActivity<OrderDetailContract.View,
         orderNum = orderDetailGson.getGoods().get(0).getOrderNum();
         expressChooseDialog.setOnItemClickListener(new ExpressChooseDialog.onItemClickListener() {
             @Override
-            public void onClickListener(String price, String expressName1) {
+            public void onClickListener(String price, String expressName1, String expressI) {
                 if (price != null) {
                     expressName = expressName1;
                     tvPost.setText("配送方式       " + expressName1 + "     ￥" + price);
                     BigDecimal bigDecimal = new BigDecimal(Double.valueOf(price) + money);
                     tvMoney.setText("￥" + bigDecimal.setScale(2, BigDecimal.ROUND_HALF_DOWN));
+                    expressId = expressI;
                 }
                 expressChooseDialog.dismiss();
             }
@@ -203,7 +204,7 @@ public class GoodsPaymentActivity extends BaseActivity<OrderDetailContract.View,
     CommonDialog.Builder builder = new CommonDialog.Builder(this);
     private int count = 0;
     private double money = 0.00;
-
+    private String expressId;
 
     @OnClick({R2.id.rl_empty_address, R2.id.fl_address, R2.id.tv_post, R2.id.tv_pay_type, R2.id.tv_cancel, R2.id.tv_pay})
     public void onViewClicked(View view) {
@@ -226,12 +227,12 @@ public class GoodsPaymentActivity extends BaseActivity<OrderDetailContract.View,
                 PaymentUtil.paymentByGoods(GoodsPaymentActivity.this, "商学院自营商品", "商品", 1, new PaymentInterface() {
                     @Override
                     public void paySuccess() {
-                        userSubmitOrderPresenter.submitOrderByUserId((String) SharePreferenceUtil.getUser("uid","String"), addressId, new Gson().toJson(goodsIdList), couponId, orderNum, "2b7a3fff83ab50ec62b8296dd52b61e2", etMessage.getText().toString());
+                        userSubmitOrderPresenter.submitOrderByUserId((String) SharePreferenceUtil.getUser("uid", "String"), addressId, new Gson().toJson(goodsIdList), couponId, orderNum, (String) SharePreferenceUtil.getUser("userToken", "String"), etMessage.getText().toString(), "36");
                     }
 
                     @Override
                     public void payFailed() {
-                        Log.i(TAG, "payFailed: ");
+                        Toast.makeText(GoodsPaymentActivity.this, "支付失败", Toast.LENGTH_SHORT).show();
                     }
                 });
             } else {
@@ -241,12 +242,12 @@ public class GoodsPaymentActivity extends BaseActivity<OrderDetailContract.View,
                     PaymentUtil.paymentByGoods(GoodsPaymentActivity.this, "商学院自营商品", "商品", 1, new PaymentInterface() {
                         @Override
                         public void paySuccess() {
-                            userSubmitOrderPresenter.submitOrderByUserId((String) SharePreferenceUtil.getUser("uid","String"), addressId, new Gson().toJson(goodsIdList), couponId, orderNum, "2b7a3fff83ab50ec62b8296dd52b61e2", etMessage.getText().toString());
+                            userSubmitOrderPresenter.submitOrderByUserId((String) SharePreferenceUtil.getUser("uid", "String"), addressId, new Gson().toJson(goodsIdList), "5", orderNum, (String) SharePreferenceUtil.getUser("userToken", "String"), etMessage.getText().toString(), expressId);
                         }
 
                         @Override
                         public void payFailed() {
-                            Log.i(TAG, "payFailed: ");
+                            Toast.makeText(GoodsPaymentActivity.this, "支付失败", Toast.LENGTH_SHORT).show();
                         }
                     });
                 }

@@ -53,13 +53,49 @@ public class UserGoodsStatusAdapter extends BaseQuickAdapter<List<UserOrderStatu
         view.setAdapter(userGoodsStatusInnerAdapter);
         double money = 0.00;
         int count = 0;
-
+        String status = item.get(0).getStatus();
         for (int i = 0; i < item.size(); i++) {
             money += Double.valueOf(item.get(i).getStylePrice()) * item.get(i).getCount();
             count += item.get(i).getCount();
             goodsList.add(String.valueOf(item.get(i).getGid()));
         }
+        if (status.equals("2")) {
+            helper.setVisible(R.id.tv_pay, false)
+                    .setVisible(R.id.tv_cancel, false)
+                    .setVisible(R.id.tv_evaluate, false)
+                    .setVisible(R.id.tv_deliver, false);
+            if (item.get(0).getCouponReduce()!=null){
+                money = money - Double.valueOf(item.get(0).getCouponReduce());
+            }
+            money = money + Double.valueOf(item.get(0).getExpressPrice());
+        } else if (status.equals("3")) {
+            helper.setVisible(R.id.tv_receive, true)
+                    .setVisible(R.id.tv_pay, false)
+                    .setVisible(R.id.tv_evaluate, false)
+                    .setVisible(R.id.tv_deliver, true)
+                    .setVisible(R.id.tv_cancel, false);
+            if (item.get(0).getCouponReduce()!=null){
+                money = money - Double.valueOf(item.get(0).getCouponReduce());
+            }
+          money = money + Double.valueOf(item.get(0).getExpressPrice());
+        } else if (status.equals("4")) {
+            helper.setVisible(R.id.tv_pay, false)
+                    .setVisible(R.id.tv_deliver, false)
+                    .setVisible(R.id.tv_evaluate, true)
+                    .setVisible(R.id.tv_cancel, false);
+            if (item.get(0).getCouponReduce()!=null){
+                money = money - Double.valueOf(item.get(0).getCouponReduce());
+            }
+          money = money + Double.valueOf(item.get(0).getExpressPrice());
+        }
+
         isBind = true;
+        helper.setOnClickListener(R.id.tv_receive, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onReceiveListener.onReceive(item.get(0).getOrderNum());
+            }
+        });
         helper.setText(R.id.tv_money, "合计：￥" + String.valueOf(new BigDecimal(money).setScale(2, BigDecimal.ROUND_HALF_DOWN)));
         helper.setText(R.id.tv_count, "共" + String.valueOf(count) + "件商品")
                 .setOnClickListener(R.id.tv_cancel, new View.OnClickListener() {
@@ -71,6 +107,7 @@ public class UserGoodsStatusAdapter extends BaseQuickAdapter<List<UserOrderStatu
                 .setOnClickListener(R.id.tv_pay, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+
                         Intent intent = new Intent(context, GoodsPaymentActivity.class);
                         Gson gson = new Gson();
                         HashSet<String> strings = new HashSet<>(goodsList);
@@ -87,6 +124,16 @@ public class UserGoodsStatusAdapter extends BaseQuickAdapter<List<UserOrderStatu
 
     public interface onClickListener {
         void onClickListener(String orderNum);
+    }
+
+    private onReceiveListener onReceiveListener;
+
+    public void setOnReceiveListener(UserGoodsStatusAdapter.onReceiveListener onReceiveListener) {
+        this.onReceiveListener = onReceiveListener;
+    }
+
+    public interface onReceiveListener {
+        void onReceive(String orderNum);
     }
 
     @Override
@@ -120,7 +167,7 @@ public class UserGoodsStatusAdapter extends BaseQuickAdapter<List<UserOrderStatu
             helper.setText(R.id.tv_goods_name, item.getGoodsName())
                     .setText(R.id.tv_time, item.getStyleName())
                     .setText(R.id.tv_price, "￥" + new BigDecimal(Double.valueOf(item.getStylePrice())).setScale(2, BigDecimal.ROUND_HALF_DOWN) + "")
-                    .setText(R.id.tv_count, "共 " + item.getCount() + " 件商品");
+                    .setText(R.id.tv_count, "x " + item.getCount());
             GlideUtil.loadRoundCornerAvatarImage(item.getGoodsPicUrl(), (ImageView) helper.getView(R.id.iv_cover), 8);
         }
     }

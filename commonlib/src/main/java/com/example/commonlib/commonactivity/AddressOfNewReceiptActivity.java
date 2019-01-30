@@ -117,7 +117,7 @@ public class AddressOfNewReceiptActivity extends BaseActivity<AddressOfNewReceip
 
     @Override
     public void hideDialog() {
-        hideDlalog();
+        mhideDialog();
     }
 
 

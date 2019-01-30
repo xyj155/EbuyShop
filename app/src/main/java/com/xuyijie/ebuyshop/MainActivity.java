@@ -18,7 +18,7 @@ import com.example.commonlib.gson.UserGson;
 import com.example.commonlib.presenter.LoginPresent;
 import com.example.commonlib.util.RouterUtil;
 import com.example.commonlib.view.MyDialog;
-import com.example.home.fragment.view.HomeFragment;
+import com.example.home.view.HomeFragment;
 
 import java.util.List;
 

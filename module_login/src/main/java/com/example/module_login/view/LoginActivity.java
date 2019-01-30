@@ -184,6 +184,7 @@ public class LoginActivity extends BaseActivity<UserContract.View, UserPresenter
         map.put("avatar", userGson.getAvatar());
         map.put("telphone", userGson.getTelphone());
         map.put("uid", String.valueOf(userGson.getId()));
+        map.put("userToken", String.valueOf(userGson.getUserToken()));
         map.put("islogin", true);
         SharePreferenceUtil.saveUser(map);
         finish();
@@ -209,7 +210,7 @@ public class LoginActivity extends BaseActivity<UserContract.View, UserPresenter
 
     @Override
     public void hideDialog() {
-        hideDlalog();
+        mhideDialog();
     }
 
 }

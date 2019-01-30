@@ -5,6 +5,7 @@ import com.example.commonlib.gson.BannerGson;
 import com.example.commonlib.gson.CouponGson;
 import com.example.commonlib.gson.EmptyGson;
 import com.example.commonlib.gson.ExpressGson;
+import com.example.commonlib.gson.GoodsCommentGson;
 import com.example.commonlib.gson.GoodsDetailGson;
 import com.example.commonlib.gson.GoodsGson;
 import com.example.commonlib.gson.GoodsShareGson;
@@ -135,9 +136,16 @@ public interface Api {
 
     @FormUrlEncoded
     @POST("/StuShop/public/index.php/index/User/submitOrderByUserId")
-    Observable<BaseGson<EmptyGson>> submitOrderByUserId(@Field("userId") String userId, @Field("address") String address, @Field("goodsId") String goodsId, @Field("couponId") String couponId, @Field("orderNum") String orderNum, @Field("userToken") String userToken, @Field("message") String message);
+    Observable<BaseGson<EmptyGson>> submitOrderByUserId(@Field("userId") String userId, @Field("address") String address, @Field("goodsId") String goodsId, @Field("couponId") String couponId, @Field("orderNum") String orderNum, @Field("userToken") String userToken, @Field("message") String message, @Field("expressId") String expressId);
 
     @GET("/StuShop/public/index.php/index/User/queryUserAccount")
     Observable<BaseGson<EmptyGson>> queryUserAccount(@Query("username") String username);
+
+    @GET("/StuShop/public/index.php/index/Goods/queryGoodsComment")
+    Observable<BaseGson<GoodsCommentGson>> queryGoodsComment(@Query("goodsId") String goodsId);
+
+    @FormUrlEncoded
+    @POST("/StuShop/public/index.php/index/User/updateOrderStatusByReceive")
+    Observable<BaseGson<EmptyGson>> updateOrderStatusByReceive(@Field("userId") String userId, @Field("orderNum") String orderNum);
 
 }

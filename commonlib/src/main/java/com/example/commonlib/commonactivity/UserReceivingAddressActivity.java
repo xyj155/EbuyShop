@@ -96,7 +96,7 @@ public class UserReceivingAddressActivity extends BaseActivity<UserReceivingAddr
 
     @Override
     public void hideDialog() {
-        hideDlalog();
+        mhideDialog();
     }
 
 

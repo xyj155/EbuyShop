@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
 import android.support.annotation.Nullable;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,7 +13,6 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.webkit.WebSettings;
-import android.webkit.WebView;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -30,12 +30,14 @@ import com.example.commonlib.base.BaseActivity;
 import com.example.commonlib.contract.GoodsDetailContract;
 import com.example.commonlib.gson.GoodsDetailGson;
 import com.example.commonlib.gson.SubmitOrderGson;
+import com.example.commonlib.http.RetrofitUtils;
 import com.example.commonlib.loader.GoodsBannerViewHolder;
 import com.example.commonlib.presenter.GoodsDetailPresenter;
 import com.example.commonlib.util.RouterUtil;
 import com.example.commonlib.util.SharePreferenceUtil;
 import com.example.commonlib.view.ShopChooseDialog;
 import com.example.commonlib.view.SlideDetailsLayout;
+import com.example.commonlib.view.WebViewMod;
 import com.google.gson.Gson;
 import com.zhouwei.mzbanner.MZBannerView;
 import com.zhouwei.mzbanner.holder.MZHolderCreator;
@@ -103,7 +105,7 @@ public class GoodsDetailActivity extends BaseActivity<GoodsDetailContract.View, 
     @BindView(R2.id.ll_title)
     FrameLayout llTitle;
     @BindView(R2.id.webView)
-    WebView webView;
+    WebViewMod webView;
 
     private ServiceAdapter serviceAdapter = new ServiceAdapter(null);
     private GoodsCommentPicAdapter goodsCommentPicAdapter = new GoodsCommentPicAdapter(null);
@@ -112,7 +114,9 @@ public class GoodsDetailActivity extends BaseActivity<GoodsDetailContract.View, 
     TextView tvAdd;
     @BindView(R2.id.tv_buy)
     TextView tvBuy;
-    private ShopChooseDialog shopChooseDialog;
+    @BindView(R2.id.tv_describe)
+    TextView tvDescribe;
+    private ShopChooseDialog shopChooseDialogBuy, shopChooseDialogChoose;
 
 
     @Override
@@ -202,7 +206,7 @@ public class GoodsDetailActivity extends BaseActivity<GoodsDetailContract.View, 
 
     @Override
     public void hideDialog() {
-        hideDlalog();
+        mhideDialog();
     }
 
     @Override
@@ -249,8 +253,10 @@ public class GoodsDetailActivity extends BaseActivity<GoodsDetailContract.View, 
 
     @Override
     public void loadGoodsDetail(final GoodsDetailGson goodsGson) {
+        tvCommentCount.setText("( " + goodsGson.getComment() + " )");
         tvBannerSize.setText("1/" + goodsGson.getGoodsPicUrl().size());
         Log.i(TAG, "loadGoodsDetail: " + goodsGson.getGoodsPicUrl().size());
+        tvDescribe.setText("商品描述：" + goodsGson.getGoodsDescribe());
         List<String> goodsPicUrl = goodsGson.getGoodsPicUrl();
         bannerGoods.setPages(goodsPicUrl, new MZHolderCreator() {
             @Override
@@ -263,9 +269,27 @@ public class GoodsDetailActivity extends BaseActivity<GoodsDetailContract.View, 
         bannerGoods.setBannerPageClickListener(new MZBannerView.BannerPageClickListener() {
             @Override
             public void onPageClick(View view, int i) {
-                tvBannerSize.setText((i + 1) + "/" + goodsGson.getGoodsPicUrl().size());
+                Log.i(TAG, "onPageClick: "+i);
+
             }
         });
+        bannerGoods.addPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                tvBannerSize.setText((position + 1) + "/" + goodsGson.getGoodsPicUrl().size());
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+
         bannerGoods.start();
         tvGoodsTitle.setText(goodsGson.getGoodsName());
         tvNewPrice.setText(goodsGson.getGoodsPrice());
@@ -274,18 +298,28 @@ public class GoodsDetailActivity extends BaseActivity<GoodsDetailContract.View, 
         goodsDetailPurseAdapter.replaceData(goodsGson.getPurseGoodsList());
         goodsCommentPicAdapter.replaceData(goodsGson.getGoodsCommentPic());
         tvCommentpicCount.setText(goodsGson.getGoodsCommentPic().size() + "");
-        tvCommentCount.setText(goodsGson.getComment().size() + "");
-        webView.loadUrl(goodsGson.getGoodsDetailWeb());
+        Log.i(TAG, "loadGoodsDetail: " + RetrofitUtils.BASE_URL + "/StuShop/public/index.php/index/index/goodsDetail?id=" + getIntent().getStringExtra("goodsId"));
+        webView.loadUrl(RetrofitUtils.BASE_URL + "/StuShop/public/index.php/index/index/goodsDetail?id=" + getIntent().getStringExtra("goodsId"));
         webView.setFocusable(false);
         WebSettings webSettings = webView.getSettings();
         webSettings.setLoadWithOverviewMode(true);
         webSettings.setBuiltInZoomControls(true);
+        webView.getSettings().setJavaScriptEnabled(true);//启用js
+        webView.getSettings().setBlockNetworkImage(false);//解决图片不显示
         webSettings.setLoadsImagesAutomatically(true);
         webSettings.setRenderPriority(WebSettings.RenderPriority.HIGH);
-        webSettings.setBlockNetworkImage(true);
         webSettings.setUseWideViewPort(true);
         webSettings.setBuiltInZoomControls(false);
-        webSettings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
+        webView.setHorizontalScrollBarEnabled(false);//禁止水平滚动
+        webView.setVerticalScrollBarEnabled(true);//允许垂直滚动
+        // 设置WebView属性，能够执行JavaScript脚本
+
+        webView.getSettings().setSupportZoom(true);
+        webView.getSettings().setBuiltInZoomControls(true);
+        webView.getSettings().setUseWideViewPort(true);
+        webView.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
+        webView.getSettings().setLoadWithOverviewMode(true);
+
         ivShare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -298,6 +332,9 @@ public class GoodsDetailActivity extends BaseActivity<GoodsDetailContract.View, 
                 oks.show(GoodsDetailActivity.this);
             }
         });
+        shopChooseDialogBuy = new ShopChooseDialog(this, getIntent().getStringExtra("goodsId"), false);
+        shopChooseDialogChoose = new ShopChooseDialog(this, getIntent().getStringExtra("goodsId"), true);
+        tvCommentpicCount.setText("( " + goodsGson.getGoodsCommentPic().size() + " )");
     }
 
     @Override
@@ -345,16 +382,14 @@ public class GoodsDetailActivity extends BaseActivity<GoodsDetailContract.View, 
 
     private GoodsDetailPresenter submitOrderPresenter = new GoodsDetailPresenter(this);
 
-    @OnClick({R2.id.tv_add, R2.id.tv_buy, R2.id.iv_close})
+    @OnClick({R2.id.tv_add, R2.id.tv_buy, R2.id.iv_close, R2.id.ll_comment})
     public void onViewClicked(View view) {
         int id = view.getId();
         if (id == R.id.tv_add) {
-            shopChooseDialog = new ShopChooseDialog(this, getIntent().getStringExtra("goodsId"), false);
-            shopChooseDialog.show();
+            shopChooseDialogBuy.show();
         } else if (id == R.id.tv_buy) {
-            shopChooseDialog = new ShopChooseDialog(this, getIntent().getStringExtra("goodsId"), true);
-            shopChooseDialog.show();
-            shopChooseDialog.setOnSubmitOrderListener(new ShopChooseDialog.onSubmitOrderListener() {
+            shopChooseDialogChoose.show();
+            shopChooseDialogChoose.setOnSubmitOrderListener(new ShopChooseDialog.onSubmitOrderListener() {
                 @Override
                 public void onSubmitListener(String goodsId, String count) {
                     goodsIdList.clear();
@@ -367,20 +402,16 @@ public class GoodsDetailActivity extends BaseActivity<GoodsDetailContract.View, 
             });
         } else if (id == R.id.iv_close) {
             finish();
+        } else if (id == R.id.ll_current_goods) {
+
+        } else if (id == R.id.ll_comment) {
+            Intent intent = new Intent(GoodsDetailActivity.this, GoodsCommentActivity.class);
+            intent.putExtra("goodsId", getIntent().getStringExtra("goodsId"));
+            startActivity(intent);
         }
     }
 
-//    @Override
-//    public void submitUserOrder(boolean submit, String goodsOrderNum) {
-//        if (submit) {
-//            Gson gson = new Gson();
-//            Intent intent = new Intent(GoodsDetailActivity.this, GoodsPaymentActivity.class);
-//            String jsonStr = gson.toJson(goodsIdList);
-//            intent.putExtra("goodsArray", jsonStr);
-//            intent.putExtra("orderNum", goodsOrderNum);
-//            startActivity(intent);
-//        }
-//    }
+
 
     private List<String> goodsIdList = new ArrayList<>();
 

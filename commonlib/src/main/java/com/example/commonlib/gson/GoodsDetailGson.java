@@ -60,7 +60,7 @@ private String goodsParameter;
     private List<String> goodsService;
     private List<String> goodsPicUrl;
     private List<PurseGoodsListBean> purseGoodsList;
-    private List<CommentBean> comment;
+    private String comment;
     private List<String> goodsCommentPic;
 
     public int getId() {
@@ -231,11 +231,11 @@ private String goodsParameter;
         this.purseGoodsList = purseGoodsList;
     }
 
-    public List<CommentBean> getComment() {
+    public String getComment() {
         return comment;
     }
 
-    public void setComment(List<CommentBean> comment) {
+    public void setComment(String comment) {
         this.comment = comment;
     }
 

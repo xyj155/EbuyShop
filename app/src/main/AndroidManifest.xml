@@ -139,10 +139,11 @@
 
         <activity
             android:name="com.example.commonlib.wxapi.WXEntryActivity"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
         <meta-data
             android:name="com.netease.nim.appKey"
             android:value="3c23a62b1c4ac728a2bc4f15f3ca2746" />

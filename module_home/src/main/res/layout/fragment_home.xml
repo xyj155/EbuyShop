@@ -159,6 +159,7 @@
 
 
                     <LinearLayout
+                        android:id="@+id/ll_flash_time"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/dp_7"

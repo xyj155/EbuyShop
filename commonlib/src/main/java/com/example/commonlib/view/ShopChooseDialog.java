@@ -88,6 +88,8 @@ public class ShopChooseDialog extends Dialog implements GoodsStyleContract.View,
                 Glide.with(context).asBitmap().load(imageUrl).apply(options).into(ivAvatar);
                 tvPrice.setMoneyText(price);
                 tvChoose.setText("已选择：" + styleName);
+                chooseGoodsId = String.valueOf(position);
+                Log.i(TAG, "onClickListener: "+chooseGoodsId);
             }
         });
         ivClose.setOnClickListener(new View.OnClickListener() {
@@ -145,7 +147,6 @@ public class ShopChooseDialog extends Dialog implements GoodsStyleContract.View,
             RequestOptions options = RequestOptions.bitmapTransform(roundedCorners).override(300, 300);
             Glide.with(context).asBitmap().load(goodsGson.get(0).getGoodsPicUrl()).apply(options).into(ivAvatar);
         }
-
     }
 
     @Override
@@ -210,16 +211,15 @@ public class ShopChooseDialog extends Dialog implements GoodsStyleContract.View,
 
         @Override
         protected void convert(final BaseViewHolder helper, final GoodsStyleGson item) {
-            Log.i(TAG, "convert: " + item.getGoodsName());
-            chooseGoodsId = String.valueOf(item.getId());
             helper.setText(R.id.tv_style_name, item.getGoodsName())
                     .setOnCheckedChangeListener(R.id.tv_style_name, new CompoundButton.OnCheckedChangeListener() {
                         @Override
                         public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                             if (isChecked) {
                                 index = helper.getPosition();
-                                chooseGoodsId = String.valueOf(item.getId());
-                                onItemClickListener.onClickListener(helper.getPosition(), item.getGoodsPrice(), item.getGoodsPicUrl(), item.getGoodsName());
+
+                                Log.i(TAG, "onCheckedChanged-------: "+goodsId);
+                                onItemClickListener.onClickListener(item.getId(), item.getGoodsPrice(), item.getGoodsPicUrl(), item.getGoodsName());
                                 if (!onBind) {
                                     notifyDataSetChanged();
                                 }
@@ -228,6 +228,7 @@ public class ShopChooseDialog extends Dialog implements GoodsStyleContract.View,
                     });
             onBind = true;
             if (index == helper.getPosition()) {
+
                 helper.setChecked(R.id.tv_style_name, true);
             } else {
                 helper.setChecked(R.id.tv_style_name, false);

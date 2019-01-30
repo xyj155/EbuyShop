@@ -137,7 +137,7 @@ public class ShopServiceConversationActivity extends BaseActivity<GoodsDetailCon
                         listInvocationFuture.setCallback(new RequestCallback<List<IMMessage>>() {
                             @Override
                             public void onSuccess(List<IMMessage> param) {
-                                hideDlalog();
+                                mhideDialog();
                                 Collections.reverse(param);
                                 for (IMMessage imMessage : param) {
                                     if (imMessage.getDirect() == MsgDirectionEnum.In) {
@@ -154,7 +154,7 @@ public class ShopServiceConversationActivity extends BaseActivity<GoodsDetailCon
 
                             @Override
                             public void onFailed(int code) {
-                                hideDlalog();
+                                mhideDialog();
                                 Toast.makeText(ShopServiceConversationActivity.this, "加载失败", Toast.LENGTH_SHORT).show();
                             }
 

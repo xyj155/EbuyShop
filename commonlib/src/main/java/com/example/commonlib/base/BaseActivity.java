@@ -76,7 +76,7 @@ public abstract class BaseActivity<V extends BaseView, T extends BasePresenter<V
         progressDialog.show();
     }
 
-    public void hideDlalog() {
+    public void mhideDialog() {
         progressDialog.cancel();
     }
 

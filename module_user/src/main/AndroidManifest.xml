@@ -15,7 +15,8 @@
     <!-- </application> -->
     <application>
         <activity android:name="com.example.user.view.UserCouponActivity" />
-        <activity android:name="com.example.user.view.UserFormStatusActivity"></activity>
+        <activity android:name="com.example.user.view.UserFormStatusActivity" />
+        <activity android:name="com.example.user.view.SubmitGoodsCommentActivity"></activity>
     </application>
 
 </manifest>

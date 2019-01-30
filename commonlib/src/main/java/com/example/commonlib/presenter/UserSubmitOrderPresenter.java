@@ -19,8 +19,8 @@ public class UserSubmitOrderPresenter extends BasePresenter<UserSubmitOrderContr
     private UserSubmitOrderModel userSubmitOrderModel = new UserSubmitOrderModel();
 
     @Override
-    public void submitOrderByUserId(String userId, String address,String goodsId, String couponId, String orderNum, String userToken,String message) {
-        userSubmitOrderModel.submitOrderByUserId(userId, address,goodsId, couponId, orderNum, userToken,message)
+    public void submitOrderByUserId(String userId, String address,String goodsId, String couponId, String orderNum, String userToken,String message,String expressId) {
+        userSubmitOrderModel.submitOrderByUserId(userId, address,goodsId, couponId, orderNum, userToken,message,expressId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseObserver<BaseGson<EmptyGson>>() {

@@ -9,7 +9,7 @@ import rx.Observable;
 
 public class UserSubmitOrderModel implements UserSubmitOrderContract.Model {
     @Override
-    public Observable<BaseGson<EmptyGson>> submitOrderByUserId(String userId,String address, String goodsId, String couponId, String orderNum, String userToken,String message) {
-        return RetrofitUtils.getInstance().create().submitOrderByUserId(userId,address,goodsId,couponId,orderNum,userToken,message);
+    public Observable<BaseGson<EmptyGson>> submitOrderByUserId(String userId,String address, String goodsId, String couponId, String orderNum, String userToken,String message,String expressId) {
+        return RetrofitUtils.getInstance().create().submitOrderByUserId(userId,address,goodsId,couponId,orderNum,userToken,message,expressId);
     }
 }

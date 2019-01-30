@@ -12,11 +12,8 @@
         <activity android:name=".commonactivity.GoodsPaymentActivity" />
         <activity android:name=".commonactivity.UserReceivingAddressActivity" />
         <activity android:name=".commonactivity.AddressOfNewReceiptActivity" />
-        <activity android:name=".commonactivity.PaymentStatusActivity"></activity>
-
-
-
-
+        <activity android:name=".commonactivity.PaymentStatusActivity" />
+        <activity android:name=".commonactivity.GoodsCommentActivity"></activity>
     </application>
 
 </manifest>

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.example.home.fragment.view.GoodsOrderShareActivity">
+    tools:context="com.example.home.view.GoodsOrderShareActivity">
 
     <include layout="@layout/common_toolbar" />
 
