@@ -22,6 +22,9 @@ import com.example.home.view.HomeFragment;
 
 import java.util.List;
 
+import cn.jpush.android.api.CustomPushNotificationBuilder;
+import cn.jpush.android.api.JPushInterface;
+
 
 @Route(path = RouterUtil.HomePage)
 public class MainActivity extends BaseActivity<HomeContract.View, LoginPresent> implements HomeContract.View {
@@ -140,6 +143,7 @@ public class MainActivity extends BaseActivity<HomeContract.View, LoginPresent> 
 
     }
 
+
     private void showFirstPosition() {
         supportFragmentManager = getSupportFragmentManager();
         final FragmentTransaction transaction = supportFragmentManager.beginTransaction();
@@ -168,7 +172,18 @@ public class MainActivity extends BaseActivity<HomeContract.View, LoginPresent> 
 
     @Override
     public void initData() {
-
+        CustomPushNotificationBuilder builder = new
+                CustomPushNotificationBuilder(MainActivity.this,
+                R.layout.customer_notitfication_layout,
+                R.id.icon,
+                R.id.title,
+                R.id.text);
+        // 指定定制的 Notification Layout
+        builder.statusBarDrawable = R.mipmap.app_icon;
+        // 指定最顶层状态栏小图标
+        builder.layoutIconDrawable = R.mipmap.app_icon;
+        // 指定下拉状态栏时显示的通知图标
+        JPushInterface.setPushNotificationBuilder(2, builder);
     }
 
 
@@ -199,5 +214,9 @@ public class MainActivity extends BaseActivity<HomeContract.View, LoginPresent> 
         return true;
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
 
+    }
 }

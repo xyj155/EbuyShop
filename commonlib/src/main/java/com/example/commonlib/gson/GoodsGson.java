@@ -42,6 +42,16 @@ public class GoodsGson {
     private String originalPrice;
     private String postFree;
     private int isTimePurse;
+    private String addTime;
+
+    public String getAddTime() {
+        return addTime;
+    }
+
+    public void setAddTime(String addTime) {
+        this.addTime = addTime;
+    }
+
     private int orderNum;
 
     private List<String> goodsPicUrl;

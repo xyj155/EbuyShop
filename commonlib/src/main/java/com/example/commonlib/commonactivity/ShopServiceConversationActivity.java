@@ -1,7 +1,6 @@
 package com.example.commonlib.commonactivity;
 
 
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -10,7 +9,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.example.commonlib.R;
@@ -21,6 +19,7 @@ import com.example.commonlib.contract.GoodsDetailContract;
 import com.example.commonlib.entity.ConversationEntity;
 import com.example.commonlib.presenter.GoodsDetailPresenter;
 import com.example.commonlib.util.RouterUtil;
+import com.example.commonlib.view.toast.ToastUtils;
 import com.netease.nimlib.sdk.InvocationFuture;
 import com.netease.nimlib.sdk.NIMClient;
 import com.netease.nimlib.sdk.Observer;
@@ -155,7 +154,7 @@ public class ShopServiceConversationActivity extends BaseActivity<GoodsDetailCon
                             @Override
                             public void onFailed(int code) {
                                 mhideDialog();
-                                Toast.makeText(ShopServiceConversationActivity.this, "加载失败", Toast.LENGTH_SHORT).show();
+                                ToastUtils.show("加载失败");
                             }
 
                             @Override
@@ -181,12 +180,6 @@ public class ShopServiceConversationActivity extends BaseActivity<GoodsDetailCon
                 .setCallback(callback);
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-
-    }
 
     @Override
     protected void onDestroy() {

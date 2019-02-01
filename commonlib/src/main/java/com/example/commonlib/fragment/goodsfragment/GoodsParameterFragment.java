@@ -18,6 +18,7 @@ import com.example.commonlib.contract.GoodsDetailContract;
 import com.example.commonlib.gson.GoodsDetailGson;
 import com.example.commonlib.gson.SubmitOrderGson;
 import com.example.commonlib.presenter.GoodsDetailPresenter;
+import com.example.commonlib.util.SharePreferenceUtil;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -46,7 +47,7 @@ public class GoodsParameterFragment extends BaseFragment<GoodsDetailPresenter> i
         unbinder = ButterKnife.bind(this, view);
         Log.i(TAG, "initView: " + getActivity().getIntent().getStringExtra("goodsId"));
 
-            mPresenter.setGoodsDetailById("1");
+            mPresenter.setGoodsDetailById("1", String.valueOf(SharePreferenceUtil.getUser("uid","String")));
     }
 
     private static final String TAG = "GoodsDetailPicFragment";
@@ -83,6 +84,11 @@ public class GoodsParameterFragment extends BaseFragment<GoodsDetailPresenter> i
 
     @Override
     public void insertUserOrder(SubmitOrderGson goodsGson) {
+
+    }
+
+    @Override
+    public void addCollectionSuccess(boolean success) {
 
     }
 

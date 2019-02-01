@@ -19,6 +19,7 @@ import com.example.commonlib.gson.SubmitOrderGson;
 import com.example.commonlib.gson.SubmitOrderItemGson;
 import com.example.commonlib.gson.UserGson;
 import com.example.commonlib.gson.UserOrderStatusGson;
+import com.example.commonlib.gson.UserPaymentGson;
 import com.example.commonlib.gson.UserReceiveAddressGson;
 
 import java.util.List;
@@ -67,7 +68,7 @@ public interface Api {
     Observable<BaseGson<BannerGson>> getHomeBanner();
 
     @GET("/StuShop/public/index.php/index/Goods/getGoodsDetailById")
-    Observable<BaseGson<GoodsDetailGson>> getGoodsDetailById(@Query("goodsId") String goodsId);
+    Observable<BaseGson<GoodsDetailGson>> getGoodsDetailById(@Query("goodsId") String goodsId,@Query("userId") String userId);
 
     @GET("/StuShop/public/index.php/index/Dryinglist/getGoodsShareList")
     Observable<BaseGson<GoodsShareGson>> getGoodsShareList(@Query("type") String type, @Query("page") String page);
@@ -133,6 +134,10 @@ public interface Api {
     @POST("/StuShop/public/index.php/index/Goods/insertUserOrder")
     Observable<BaseGson<SubmitOrderGson>> insertUserOrder(@Field("userId") String userId, @Field("goodsId") String goodsId);
 
+    @FormUrlEncoded
+    @POST("/StuShop/public/index.php/index/Goods/addUserCollection")
+    Observable<BaseGson<EmptyGson>> addUserCollection(@Field("userId") String userId, @Field("goodsId") String goodsId, @Field("isDelete") String isDelete);
+
 
     @FormUrlEncoded
     @POST("/StuShop/public/index.php/index/User/submitOrderByUserId")
@@ -144,8 +149,20 @@ public interface Api {
     @GET("/StuShop/public/index.php/index/Goods/queryGoodsComment")
     Observable<BaseGson<GoodsCommentGson>> queryGoodsComment(@Query("goodsId") String goodsId);
 
+
+    @GET("/StuShop/public/index.php/index/User/queryUserOrderCount")
+    Observable<BaseGson<UserPaymentGson>> queryUserOrderCount(@Query("userId") String userId);
+
+    @GET("/StuShop/public/index.php/index/User/queryUserCollection")
+    Observable<BaseGson<GoodsGson>> queryUserCollection(@Query("userId") String userId);
+
     @FormUrlEncoded
     @POST("/StuShop/public/index.php/index/User/updateOrderStatusByReceive")
     Observable<BaseGson<EmptyGson>> updateOrderStatusByReceive(@Field("userId") String userId, @Field("orderNum") String orderNum);
 
+    @Multipart
+    @POST("/StuShop/public/index.php/index/Feedback/userFeedBack")
+    Observable<BaseGson<EmptyGson>> userFeedBack(
+            @PartMap() Map<String, RequestBody> partMap,
+            @Part List<MultipartBody.Part> file);
 }

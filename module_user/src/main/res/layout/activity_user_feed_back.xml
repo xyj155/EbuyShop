@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.user.view.UserFeedBackActivity">
+
+    <include layout="@layout/common_toolbar" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv_choose"
+        android:layout_margin="@dimen/dp_15"
+        android:background="@drawable/user_feed_back_bg"
+        android:drawableRight="@mipmap/ic_arrow_down"
+        android:hint="请选择反馈类型"
+        android:padding="@dimen/dp_14" />
+
+    <EditText
+        android:textSize="14sp"
+        android:id="@+id/tv_content"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_130"
+        android:layout_marginLeft="@dimen/dp_15"
+        android:layout_marginRight="@dimen/dp_15"
+        android:background="@drawable/user_feed_back_bg"
+        android:gravity="top"
+        android:hint="请填写反馈内容"
+        android:padding="@dimen/dp_5" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/dp_15"
+        android:paddingTop="@dimen/dp_10"
+        android:paddingBottom="@dimen/dp_10"
+        android:text="添加图片" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/ry_picture"
+        android:overScrollMode="never"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_13"
+        android:layout_marginTop="@dimen/dp_20"
+        android:layout_marginRight="@dimen/dp_13"
+        android:background="#ffdb12"
+        android:gravity="center"
+        android:id="@+id/tv_submit"
+        android:padding="@dimen/dp_15"
+        android:text="提交"
+        android:textColor="#000"
+        android:textSize="17sp" />
+</LinearLayout>

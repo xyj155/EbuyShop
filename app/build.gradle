@@ -1,16 +1,18 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion rootProject.ext.android.compileSdkVersion
     defaultConfig {
-        minSdkVersion 19
-        targetSdkVersion 28
-        flavorDimensions "versionCode"
-        versionCode 1
-        versionName "1.0"
+        minSdkVersion rootProject.ext.android.minSdkVersion
+        targetSdkVersion rootProject.ext.android.targetSdkVersion
+        versionCode rootProject.ext.android.versionCode
+        applicationId rootProject.ext.android.applicationId
         multiDexEnabled true
-        applicationId "com.xuyijie.ebuyshop"
+        versionName rootProject.ext.android.versionName
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        vectorDrawables.useSupportLibrary = true
+
         javaCompileOptions {
             annotationProcessorOptions {
                 arguments = [AROUTER_MODULE_NAME: project.getName()]
@@ -25,7 +27,7 @@ android {
 
         manifestPlaceholders = [
                 JPUSH_PKGNAME: applicationId,
-                JPUSH_APPKEY : "f115c053cc96ea4845858f79", //JPush上注册的包名对应的appkey.
+                JPUSH_APPKEY : "b115a26e2d2b360f3655db24", //JPush上注册的包名对应的appkey.
                 JPUSH_CHANNEL: "developer-default", //暂时填写默认值即可.
         ]
         packagingOptions {
@@ -34,6 +36,7 @@ android {
             exclude 'META-INF/NOTICE.txt'
         }
         manifestPlaceholders = [qqappid: "1108087612"]
+        flavorDimensions "default"
     }
     signingConfigs {
         debug {
@@ -66,13 +69,18 @@ android {
     }
 
     productFlavors {
-        baiduyun {
-            manifestPlaceholders = [JPUSH_PKGNAME      : "com.xuyijie.ebuyshop",
+        baidu {
+            manifestPlaceholders = [
+                    JPUSH_PKGNAME      : "com.xuyijie.ebuyshop",
+                    JPUSH_CHANNEL      : "baidu",
+                    JPUSH_APPKEY      : "b115a26e2d2b360f3655db24",
                                     GT_INSTALL_CHANNEL      : "yinyongbao"
             ]
         }
-        wandoujia {
+        yinyongbao {
             manifestPlaceholders = [JPUSH_PKGNAME      : "com.xuyijie.ebuyshop",
+                                    JPUSH_CHANNEL      : "yinyongbao",
+                                    JPUSH_APPKEY      : "b115a26e2d2b360f3655db24",
                                     GT_INSTALL_CHANNEL      : "yinyongbao"]
         }
     }

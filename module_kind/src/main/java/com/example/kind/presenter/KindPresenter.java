@@ -10,8 +10,6 @@ import com.example.commonlib.http.BaseObserver;
 import com.example.kind.contract.KindContract;
 import com.example.kind.model.KindModel;
 
-import java.util.List;
-
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 

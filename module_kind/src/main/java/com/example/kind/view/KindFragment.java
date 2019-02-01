@@ -91,13 +91,13 @@ public class KindFragment extends BaseFragment<KindPresenter> implements KindCon
 
     @Override
     public void showDialog(String msg) {
-
+//        createDialog(msg);
     }
 
 
     @Override
     public void hideDialog() {
-
+//        dialogCancel();
     }
 
 }

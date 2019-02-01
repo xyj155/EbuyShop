@@ -29,7 +29,7 @@ public class GoodsDetailGson {
      * comment : [{"avatar":"https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=1554278126,1318599153&fm=27&gp=0.jpg","username":"17374131273","comment":"还可以"},{"avatar":"https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=1554278126,1318599153&fm=27&gp=0.jpg","username":"17374131273","comment":"还可以"},{"avatar":"https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=3243445518,1285394533&fm=27&gp=0.jpg","username":"徐易杰","comment":"还可以"}]
      * goodsCommentPic : ["https://img.alicdn.com/bao/uploaded/i2/O1CN01TkB9yy1LzxUEyWa48_!!0-rate.jpg_400x400.jpg","https://img.alicdn.com/bao/uploaded/i3/TB2KDGUXMHqK1RjSZFPXXcwapXa_!!0-rate.jpg_400x400.jpg","https://img.alicdn.com/bao/uploaded/i2/TB2nL1UXSzqK1RjSZPxXXc4tVXa_!!0-rate.jpg_400x400.jpg","https://img.alicdn.com/bao/uploaded/i2/TB2PB9VXMHqK1RjSZFkXXX.WFXa_!!0-rate.jpg_400x400.jpg"]
      */
-private String goodsParameter;
+    private String goodsParameter;
 
     public String getGoodsParameter() {
         return goodsParameter;
@@ -62,6 +62,15 @@ private String goodsParameter;
     private List<PurseGoodsListBean> purseGoodsList;
     private String comment;
     private List<String> goodsCommentPic;
+    private boolean isCollection;
+
+    public boolean isCollection() {
+        return isCollection;
+    }
+
+    public void setCollection(boolean collection) {
+        isCollection = collection;
+    }
 
     public int getId() {
         return id;

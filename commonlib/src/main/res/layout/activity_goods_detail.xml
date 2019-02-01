@@ -458,7 +458,7 @@
                 android:textSize="10sp" />
 
             <CheckBox
-                android:id="@+id/tv_collection"
+                android:id="@+id/cb_collection"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"

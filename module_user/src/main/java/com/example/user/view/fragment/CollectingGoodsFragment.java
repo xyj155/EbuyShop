@@ -78,7 +78,7 @@ public class CollectingGoodsFragment extends BaseFragment<UserFormStatusPresente
         userGoodsStatusAdapter.setEmptyView(View.inflate(getContext(), R.layout.order_empty_layout, null));
         userGoodsStatusAdapter.replaceData(userOrderStatusGsons);
         smlCollecting.finishRefresh();
-        userGoodsStatusAdapter.setOnReceiveListener(new UserGoodsStatusAdapter.onReceiveListener() {
+        userGoodsStatusAdapter.setOnReceiveListener(new UserGoodsStatusAdapter.OnReceiveListener() {
             @Override
             public void onReceive(final String orderNum) {
                 final MyDialog myDialog1 = new MyDialog(getContext(), new int[]{R.id.dialog_btn_close, R.id.dialog_btn_cancel});

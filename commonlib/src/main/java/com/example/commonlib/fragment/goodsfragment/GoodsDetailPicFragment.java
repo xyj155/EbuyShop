@@ -10,7 +10,6 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
-
 import com.example.commonlib.R;
 import com.example.commonlib.R2;
 import com.example.commonlib.base.BaseFragment;
@@ -19,7 +18,7 @@ import com.example.commonlib.contract.GoodsDetailContract;
 import com.example.commonlib.gson.GoodsDetailGson;
 import com.example.commonlib.gson.SubmitOrderGson;
 import com.example.commonlib.presenter.GoodsDetailPresenter;
-
+import com.example.commonlib.util.SharePreferenceUtil;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -48,7 +47,7 @@ public class GoodsDetailPicFragment extends BaseFragment<GoodsDetailPresenter> i
         unbinder = ButterKnife.bind(this, view);
         Log.i(TAG, "initView: " + getActivity().getIntent().getStringExtra("goodId"));
         if (mPresenter != null) {
-            mPresenter.setGoodsDetailById(activity.getIntent().getStringExtra("goodId"));
+            mPresenter.setGoodsDetailById(activity.getIntent().getStringExtra("goodId"), String.valueOf(SharePreferenceUtil.getUser("uid","String")));
         }
     }
 
@@ -85,6 +84,11 @@ public class GoodsDetailPicFragment extends BaseFragment<GoodsDetailPresenter> i
 
     @Override
     public void insertUserOrder(SubmitOrderGson goodsGson) {
+
+    }
+
+    @Override
+    public void addCollectionSuccess(boolean success) {
 
     }
 

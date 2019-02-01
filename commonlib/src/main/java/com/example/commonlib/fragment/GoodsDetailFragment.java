@@ -15,6 +15,7 @@ import com.example.commonlib.contract.GoodsDetailContract;
 import com.example.commonlib.gson.GoodsDetailGson;
 import com.example.commonlib.gson.SubmitOrderGson;
 import com.example.commonlib.presenter.GoodsDetailPresenter;
+import com.example.commonlib.util.SharePreferenceUtil;
 import com.tencent.smtt.sdk.WebView;
 
 import butterknife.BindView;
@@ -36,7 +37,7 @@ public class GoodsDetailFragment extends BaseFragment<GoodsDetailPresenter> impl
     public void initView(View view) {
         unbinder = ButterKnife.bind(this, view);
         if (mPresenter != null) {
-            mPresenter.setGoodsDetailById(activity.getIntent().getStringExtra("goodsId"));
+            mPresenter.setGoodsDetailById(activity.getIntent().getStringExtra("goodsId"), String.valueOf(SharePreferenceUtil.getUser("uid","String")));
         }
 
     }
@@ -82,6 +83,11 @@ public class GoodsDetailFragment extends BaseFragment<GoodsDetailPresenter> impl
 
     @Override
     public void insertUserOrder(SubmitOrderGson goodsGson) {
+
+    }
+
+    @Override
+    public void addCollectionSuccess(boolean success) {
 
     }
 

@@ -3,6 +3,7 @@ package com.example.user.view;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -55,7 +56,9 @@ public class UserCouponActivity extends BaseActivity<UserCouponContract.View, Us
         initToolBar().setToolBarTitle("我的优惠券");
         ryCoupon.setLayoutManager(new LinearLayoutManager(UserCouponActivity.this));
         double money = getIntent().getDoubleExtra("money", 0);
-        couponAdapter = new CouponAdapter(null, UserCouponActivity.this, money);
+        boolean isUse = getIntent().getBooleanExtra("isUse", false);
+        Log.i(TAG, "initView: "+isUse);
+        couponAdapter = new CouponAdapter(null, UserCouponActivity.this, money,isUse);
         couponAdapter.bindToRecyclerView(ryCoupon);
         View inflate = View.inflate(UserCouponActivity.this, R.layout.coupon_empty, null);
         TextView viewById = inflate.findViewById(R.id.tv_empty);

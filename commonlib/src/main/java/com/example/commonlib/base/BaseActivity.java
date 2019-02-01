@@ -35,6 +35,7 @@ public abstract class BaseActivity<V extends BaseView, T extends BasePresenter<V
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -1,7 +1,6 @@
 package com.example.commonlib.commonactivity;
 
 import android.os.Build;
-import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.RecyclerView;
@@ -24,6 +23,7 @@ import com.example.commonlib.base.BaseActivity;
 import com.example.commonlib.contract.GoodsSortedContract;
 import com.example.commonlib.gson.GoodsGson;
 import com.example.commonlib.presenter.GoodsSortedPresenter;
+import com.example.commonlib.util.GlideUtil;
 import com.example.commonlib.util.RouterUtil;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -95,7 +95,10 @@ public class GoodsListSortedActivity extends BaseActivity<GoodsSortedContract.Vi
         mPresenter.getGoodsListByKind(getIntent().getStringExtra("kind"), sortedType, isSetDesc);
         Log.i(TAG, "initView: " + getIntent().getStringExtra("kind"));
         goodsSortedAdapter = new GoodsSortedAdapter(GoodsListSortedActivity.this, null);
-        goodsSortedAdapter.setEmptyView(View.inflate(GoodsListSortedActivity.this, R.layout.common_empty, null));
+        View inflate = View.inflate(GoodsListSortedActivity.this, R.layout.common_empty, null);
+        ImageView viewById = inflate.findViewById(R.id.iv_empty);
+        GlideUtil.loadGeneralImage(R.drawable.ic_empty_goods,viewById);
+        goodsSortedAdapter.setEmptyView(inflate);
         rySorted.setAdapter(goodsSortedAdapter);
         slSorted.setOnRefreshListener(new OnRefreshListener() {
             @Override
@@ -165,13 +168,6 @@ public class GoodsListSortedActivity extends BaseActivity<GoodsSortedContract.Vi
 
 
 
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-
-    }
 
     @Override
     public void setGoodsListByKind(List<GoodsGson> listByKind) {

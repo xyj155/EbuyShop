@@ -57,20 +57,17 @@ public class BrowserActivity extends BaseActivity<HomeContract.View, LoginPresen
         mWebView.loadUrl(getIntent().getStringExtra("url"));
 
         mWebView.getSettings().setJavaScriptEnabled(true);// 支持js
-        mWebView.setWebViewClient(new WebViewClient());//防止加载网页时调起系统浏览器
+
         mWebView.setWebViewClient(new WebViewClient() {
             @Override
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
-                String title = view.getTitle();
+                String title = mWebView.getTitle();
                 if (!TextUtils.isEmpty(title)) {
                     initToolBar().setToolBarTitle(title);
                     Log.i(TAG, "initView: " + title);
                 }
             }
-        });
-//        mWebView.setWebViewClient(new CommentWebViewClient());
-        mWebView.setWebViewClient(new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 // 如下方案可在非微信内部WebView的H5页面中调出微信支付
@@ -81,7 +78,6 @@ public class BrowserActivity extends BaseActivity<HomeContract.View, LoginPresen
                     startActivity(intent);
                     return true;
                 }
-//                view.loadUrl(url);
                 return false;
             }
         });

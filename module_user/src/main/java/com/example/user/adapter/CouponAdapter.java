@@ -17,11 +17,13 @@ import java.util.List;
 public class CouponAdapter extends BaseQuickAdapter<CouponGson, BaseViewHolder> {
     private Activity context;
     private double index;
+    private boolean isShow;
 
-    public CouponAdapter(@Nullable List<CouponGson> data, Activity context, double index) {
+    public CouponAdapter(@Nullable List<CouponGson> data, Activity context, double index, boolean isShow) {
         super(R.layout.ry_coupon_item, data);
         this.context = context;
         this.index = index;
+        this.isShow = isShow;
     }
 
     @Override
@@ -43,13 +45,16 @@ public class CouponAdapter extends BaseQuickAdapter<CouponGson, BaseViewHolder> 
                 });
         ImageView view = helper.getView(R.id.iv_cant_use);
         View view1 = helper.getView(R.id.ll_coupon);
-        if (index > Double.valueOf(item.getCouponTotal())) {
+        if (isShow){
             view.setVisibility(View.GONE);
-            view1.setClickable(true);
-        } else {
-            view.setVisibility(View.VISIBLE);
-            view1.setClickable(false);
+        }else {
+            if (index > Double.valueOf(item.getCouponTotal())) {
+                view.setVisibility(View.GONE);
+                view1.setClickable(true);
+            } else {
+                view.setVisibility(View.VISIBLE);
+                view1.setClickable(false);
+            }
         }
-
     }
 }

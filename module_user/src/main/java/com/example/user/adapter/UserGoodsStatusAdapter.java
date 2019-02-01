@@ -29,6 +29,7 @@ public class UserGoodsStatusAdapter extends BaseQuickAdapter<List<UserOrderStatu
     private boolean isBind;
     private Context context;
 
+    private OnReceiveListener onReceiveListener;
 
     public UserGoodsStatusAdapter(@Nullable List<List<UserOrderStatusGson>> data, Context context) {
         super(R.layout.abc_shopcar_user_order_status_item, data);
@@ -44,6 +45,7 @@ public class UserGoodsStatusAdapter extends BaseQuickAdapter<List<UserOrderStatu
     @Override
     protected void convert(final BaseViewHolder helper, final List<UserOrderStatusGson> item) {
         Log.i(TAG, "convert: " + item.get(0).getOrderNum());
+
         final List<String> goodsList = new ArrayList<>();
         helper.setText(R.id.tv_order_num, "订单编号：" + item.get(0).getOrderNum())
                 .setText(R.id.tv_status, item.get(0).getStatus().equals("1") ? "待付款" : item.get(0).getStatus().equals("2") ? "待发货" : item.get(0).getStatus().equals("3") ? "待收货" : item.get(0).getStatus().equals("4") ? "待评价" : "");
@@ -63,8 +65,11 @@ public class UserGoodsStatusAdapter extends BaseQuickAdapter<List<UserOrderStatu
             helper.setVisible(R.id.tv_pay, false)
                     .setVisible(R.id.tv_cancel, false)
                     .setVisible(R.id.tv_evaluate, false)
+                    .setVisible(R.id.tv_receive, false)
                     .setVisible(R.id.tv_deliver, false);
-            if (item.get(0).getCouponReduce()!=null){
+            View view1 = helper.getView(R.id.rl_order);
+            view1.setVisibility(View.GONE);
+            if (item.get(0).getCouponReduce() != null) {
                 money = money - Double.valueOf(item.get(0).getCouponReduce());
             }
             money = money + Double.valueOf(item.get(0).getExpressPrice());
@@ -74,26 +79,27 @@ public class UserGoodsStatusAdapter extends BaseQuickAdapter<List<UserOrderStatu
                     .setVisible(R.id.tv_evaluate, false)
                     .setVisible(R.id.tv_deliver, true)
                     .setVisible(R.id.tv_cancel, false);
-            if (item.get(0).getCouponReduce()!=null){
+            if (item.get(0).getCouponReduce() != null) {
                 money = money - Double.valueOf(item.get(0).getCouponReduce());
             }
-          money = money + Double.valueOf(item.get(0).getExpressPrice());
+            money = money + Double.valueOf(item.get(0).getExpressPrice());
         } else if (status.equals("4")) {
             helper.setVisible(R.id.tv_pay, false)
                     .setVisible(R.id.tv_deliver, false)
+                    .setVisible(R.id.tv_receive, false)
                     .setVisible(R.id.tv_evaluate, true)
                     .setVisible(R.id.tv_cancel, false);
-            if (item.get(0).getCouponReduce()!=null){
+            if (item.get(0).getCouponReduce() != null) {
                 money = money - Double.valueOf(item.get(0).getCouponReduce());
             }
-          money = money + Double.valueOf(item.get(0).getExpressPrice());
+            money = money + Double.valueOf(item.get(0).getExpressPrice());
         }
 
         isBind = true;
         helper.setOnClickListener(R.id.tv_receive, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onReceiveListener.onReceive(item.get(0).getOrderNum());
+                    onReceiveListener.onReceive(item.get(0).getOrderNum());
             }
         });
         helper.setText(R.id.tv_money, "合计：￥" + String.valueOf(new BigDecimal(money).setScale(2, BigDecimal.ROUND_HALF_DOWN)));
@@ -126,13 +132,12 @@ public class UserGoodsStatusAdapter extends BaseQuickAdapter<List<UserOrderStatu
         void onClickListener(String orderNum);
     }
 
-    private onReceiveListener onReceiveListener;
 
-    public void setOnReceiveListener(UserGoodsStatusAdapter.onReceiveListener onReceiveListener) {
+    public void setOnReceiveListener(OnReceiveListener onReceiveListener) {
         this.onReceiveListener = onReceiveListener;
     }
 
-    public interface onReceiveListener {
+    public interface OnReceiveListener {
         void onReceive(String orderNum);
     }
 

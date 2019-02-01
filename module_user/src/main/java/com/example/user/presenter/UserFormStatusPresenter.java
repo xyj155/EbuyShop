@@ -28,7 +28,7 @@ public class UserFormStatusPresenter extends BasePresenter<UserFormStatusContrac
                 .subscribe(new BaseObserver<BaseGson<List<UserOrderStatusGson>>>() {
                     @Override
                     public void onCompleted() {
-
+                        mMvpView.hideDialog();
                     }
 
                     @Override

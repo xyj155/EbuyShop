@@ -2,7 +2,6 @@ package com.example.commonlib.commonactivity;
 
 import android.content.Intent;
 import android.graphics.Color;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.SpannableString;
@@ -14,7 +13,6 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
@@ -33,6 +31,7 @@ import com.example.commonlib.util.RouterUtil;
 import com.example.commonlib.util.SharePreferenceUtil;
 import com.example.commonlib.view.CommonDialog;
 import com.example.commonlib.view.ExpressChooseDialog;
+import com.example.commonlib.view.toast.ToastUtils;
 import com.google.gson.Gson;
 
 import java.math.BigDecimal;
@@ -232,12 +231,12 @@ public class GoodsPaymentActivity extends BaseActivity<OrderDetailContract.View,
 
                     @Override
                     public void payFailed() {
-                        Toast.makeText(GoodsPaymentActivity.this, "支付失败", Toast.LENGTH_SHORT).show();
+                        ToastUtils.show("支付失败！");
                     }
                 });
             } else {
                 if (expressName.isEmpty()) {
-                    Toast.makeText(this, "你还没有选择配送方式！", Toast.LENGTH_SHORT).show();
+                    ToastUtils.show("你还没有选择配送方式！");
                 } else {
                     PaymentUtil.paymentByGoods(GoodsPaymentActivity.this, "商学院自营商品", "商品", 1, new PaymentInterface() {
                         @Override
@@ -247,7 +246,7 @@ public class GoodsPaymentActivity extends BaseActivity<OrderDetailContract.View,
 
                         @Override
                         public void payFailed() {
-                            Toast.makeText(GoodsPaymentActivity.this, "支付失败", Toast.LENGTH_SHORT).show();
+                            ToastUtils.show("支付失败！");
                         }
                     });
                 }
@@ -288,17 +287,11 @@ public class GoodsPaymentActivity extends BaseActivity<OrderDetailContract.View,
     @Override
     public void submitStatus(boolean success) {
         if (success) {
-            Toast.makeText(this, "支付成功", Toast.LENGTH_SHORT).show();
+            ToastUtils.show("支付成功！");
         } else {
-            Toast.makeText(this, "支付失败", Toast.LENGTH_SHORT).show();
+            ToastUtils.show("支付失败！");
         }
         finish();
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
-    }
 }

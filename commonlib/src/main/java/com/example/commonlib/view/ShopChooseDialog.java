@@ -217,7 +217,6 @@ public class ShopChooseDialog extends Dialog implements GoodsStyleContract.View,
                         public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                             if (isChecked) {
                                 index = helper.getPosition();
-
                                 Log.i(TAG, "onCheckedChanged-------: "+goodsId);
                                 onItemClickListener.onClickListener(item.getId(), item.getGoodsPrice(), item.getGoodsPicUrl(), item.getGoodsName());
                                 if (!onBind) {
@@ -228,7 +227,6 @@ public class ShopChooseDialog extends Dialog implements GoodsStyleContract.View,
                     });
             onBind = true;
             if (index == helper.getPosition()) {
-
                 helper.setChecked(R.id.tv_style_name, true);
             } else {
                 helper.setChecked(R.id.tv_style_name, false);

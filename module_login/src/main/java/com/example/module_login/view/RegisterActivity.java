@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.AssetManager;
 import android.graphics.Color;
-import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -114,6 +113,12 @@ public class RegisterActivity extends BaseActivity<UserRegisterContract.View, Us
 
     @Override
     public void initView() {
+        ISNav.getInstance().init(new ImageLoader() {
+            @Override
+            public void displayImage(Context context, String path, ImageView imageView) {
+                Glide.with(context).load(path).into(imageView);
+            }
+        });
         List<String> ageList = new ArrayList<>();
         for (int i = 18; i < 25; i++) {
             ageList.add(i + "岁");
@@ -196,20 +201,6 @@ public class RegisterActivity extends BaseActivity<UserRegisterContract.View, Us
     }
 
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-
-        // 自定义图片加载器
-        ISNav.getInstance().init(new ImageLoader() {
-            @Override
-            public void displayImage(Context context, String path, ImageView imageView) {
-                Glide.with(context).load(path).into(imageView);
-            }
-        });
-
-    }
 
     private ListDialog dialogAge;
 

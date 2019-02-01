@@ -1,7 +1,6 @@
 package com.example.commonlib.commonactivity;
 
 import android.content.Context;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
@@ -12,7 +11,6 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.commonlib.R;
 import com.example.commonlib.R2;
@@ -22,6 +20,7 @@ import com.example.commonlib.presenter.AddressOfNewReceiptPresenter;
 import com.example.commonlib.util.SharePreferenceUtil;
 import com.example.commonlib.view.CityPickerPopWindow;
 import com.example.commonlib.view.SwitchButton;
+import com.example.commonlib.view.toast.ToastUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -98,7 +97,7 @@ public class AddressOfNewReceiptActivity extends BaseActivity<AddressOfNewReceip
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    Toast.makeText(AddressOfNewReceiptActivity.this, "添加失败！", Toast.LENGTH_SHORT).show();
+                    ToastUtils.show("添加失败！");
                 }
             });
 
@@ -144,7 +143,7 @@ public class AddressOfNewReceiptActivity extends BaseActivity<AddressOfNewReceip
             imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
         } else if (id == R.id.tv_add_news_address) {
             if (etUsername.getText().toString().isEmpty()||etDetail.getText().toString().isEmpty()||etTel.getText().toString().isEmpty()||tvLocal.getText().toString().isEmpty()){
-                Toast.makeText(this, "不可为空哦！", Toast.LENGTH_SHORT).show();
+                ToastUtils.show("不可为空哦！");
             }else {
                 mPresenter.saveNewAddress(etUsername.getText().toString(), etTel.getText().toString(), tvLocal.getText().toString(), etDetail.getText().toString(), isDefault, (String) SharePreferenceUtil.getUser("uid","String"));
             }
@@ -158,10 +157,4 @@ public class AddressOfNewReceiptActivity extends BaseActivity<AddressOfNewReceip
         Log.i(TAG, "pickValue: " + value);
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
-    }
 }

@@ -63,19 +63,19 @@ public class MessageFragment extends BaseFragment<GoodsDetailPresenter> {
     ImageView ivPass;
     private RecyclerView ryRecent;
     private ConversationAdapter conversationAdapter;
-    private List<Integer> imgs=new ArrayList<>();
-    int time=3;
-    Handler handler=new Handler(){
+    private List<Integer> imgs = new ArrayList<>();
+    int time = 3;
+    Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            sendEmptyMessageDelayed(1,3000);
+            sendEmptyMessageDelayed(1, 3000);
         }
     };
-Runnable runnable = new Runnable(){
+    Runnable runnable = new Runnable() {
         @Override
-        public void run(){
-            GlideUtil.loadGeneralImageWithAnim(imgs.get(time%imgs.size()),ivPass);
+        public void run() {
+            GlideUtil.loadGeneralImageWithAnim(imgs.get(time % imgs.size()), ivPass);
             time++;
             //延迟1秒执行
             handler.postDelayed(this, 8000);
@@ -91,14 +91,14 @@ Runnable runnable = new Runnable(){
     @Override
     public void onDestroy() {
         super.onDestroy();
-        handler=null;
+        handler = null;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public void initView(View view) {
         unbinder = ButterKnife.bind(this, view);
-        handler.sendEmptyMessageDelayed(1,1000);
+        handler.sendEmptyMessageDelayed(1, 1000);
         imgs.add(R.mipmap.ic_message_deliver);
         imgs.add(R.mipmap.ic_message_other);
         ryRecent = view.findViewById(R.id.ry_recent);

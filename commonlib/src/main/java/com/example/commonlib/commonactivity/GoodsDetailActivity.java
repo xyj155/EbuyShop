@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.webkit.WebSettings;
+import android.widget.CheckBox;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -106,6 +107,12 @@ public class GoodsDetailActivity extends BaseActivity<GoodsDetailContract.View, 
     FrameLayout llTitle;
     @BindView(R2.id.webView)
     WebViewMod webView;
+    @BindView(R2.id.tv_service)
+    TextView tvService;
+    @BindView(R2.id.cb_collection)
+    CheckBox cbCollection;
+    @BindView(R2.id.tv_shopcar)
+    TextView tvShopcar;
 
     private ServiceAdapter serviceAdapter = new ServiceAdapter(null);
     private GoodsCommentPicAdapter goodsCommentPicAdapter = new GoodsCommentPicAdapter(null);
@@ -154,7 +161,7 @@ public class GoodsDetailActivity extends BaseActivity<GoodsDetailContract.View, 
             }
         });
         svSwitch.setOnSlideDetailsListener(this);
-        mPresenter.setGoodsDetailById(getIntent().getStringExtra("goodsId"));
+        mPresenter.setGoodsDetailById(getIntent().getStringExtra("goodsId"), String.valueOf(SharePreferenceUtil.getUser("uid", "String")));
         ryEnsure.setLayoutManager(new GridLayoutManager(GoodsDetailActivity.this, 3));
         ryEnsure.setNestedScrollingEnabled(false);
         ryEnsure.setAdapter(serviceAdapter);
@@ -253,6 +260,11 @@ public class GoodsDetailActivity extends BaseActivity<GoodsDetailContract.View, 
 
     @Override
     public void loadGoodsDetail(final GoodsDetailGson goodsGson) {
+        if (goodsGson.isCollection()) {
+            cbCollection.setChecked(true);
+        } else {
+            cbCollection.setChecked(false);
+        }
         tvCommentCount.setText("( " + goodsGson.getComment() + " )");
         tvBannerSize.setText("1/" + goodsGson.getGoodsPicUrl().size());
         Log.i(TAG, "loadGoodsDetail: " + goodsGson.getGoodsPicUrl().size());
@@ -269,7 +281,7 @@ public class GoodsDetailActivity extends BaseActivity<GoodsDetailContract.View, 
         bannerGoods.setBannerPageClickListener(new MZBannerView.BannerPageClickListener() {
             @Override
             public void onPageClick(View view, int i) {
-                Log.i(TAG, "onPageClick: "+i);
+                Log.i(TAG, "onPageClick: " + i);
 
             }
         });
@@ -335,6 +347,16 @@ public class GoodsDetailActivity extends BaseActivity<GoodsDetailContract.View, 
         shopChooseDialogBuy = new ShopChooseDialog(this, getIntent().getStringExtra("goodsId"), false);
         shopChooseDialogChoose = new ShopChooseDialog(this, getIntent().getStringExtra("goodsId"), true);
         tvCommentpicCount.setText("( " + goodsGson.getGoodsCommentPic().size() + " )");
+        cbCollection.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (cbCollection.isChecked()) {
+                    mPresenter.addUserCollection(String.valueOf(SharePreferenceUtil.getUser("uid", "String")), String.valueOf(goodsGson.getId()), "0");
+                }else {
+                    mPresenter.addUserCollection(String.valueOf(SharePreferenceUtil.getUser("uid", "String")), String.valueOf(goodsGson.getId()), "1");
+                }
+            }
+        });
     }
 
     @Override
@@ -348,6 +370,11 @@ public class GoodsDetailActivity extends BaseActivity<GoodsDetailContract.View, 
         intent.putExtra("goodsArray", gson.toJson(goodsIdList));
         startActivity(intent);
         goodsIdList.clear();
+    }
+
+    @Override
+    public void addCollectionSuccess(boolean success) {
+
     }
 
     private class GoodsCommentPicAdapter extends BaseQuickAdapter<String, BaseViewHolder> {
@@ -410,7 +437,6 @@ public class GoodsDetailActivity extends BaseActivity<GoodsDetailContract.View, 
             startActivity(intent);
         }
     }
-
 
 
     private List<String> goodsIdList = new ArrayList<>();

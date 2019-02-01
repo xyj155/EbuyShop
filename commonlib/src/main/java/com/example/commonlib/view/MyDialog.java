@@ -67,7 +67,7 @@ public class MyDialog extends Dialog implements View.OnClickListener {
         void onCenterItemClick(MyDialog dialog, View view);
     }
 
-    //很明显我们要在这里面写个接口，然后添加一个方法
+
     public void setOnCenterItemClickListener(OnCenterItemClickListener listener) {
         this.listener = listener;
 

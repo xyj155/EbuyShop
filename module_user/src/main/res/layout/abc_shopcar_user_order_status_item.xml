@@ -64,13 +64,30 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="right"
+            android:id="@+id/rl_order"
             android:orientation="horizontal"
             android:paddingTop="@dimen/dp_7">
+
+            <TextView
+                android:id="@+id/tv_deliver"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/tv_cancel"
+                android:layout_toLeftOf="@+id/tv_receive"
+                android:gravity="center"
+                android:paddingLeft="@dimen/dp_15"
+                android:paddingTop="@dimen/dp_6"
+                android:paddingRight="@dimen/dp_15"
+                android:paddingBottom="@dimen/dp_6"
+                android:text="查看物流"
+                android:textSize="16sp"
+                android:visibility="gone" />
 
             <TextView
                 android:id="@+id/tv_receive"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
                 android:layout_gravity="right"
                 android:layout_margin="@dimen/dp_10"
                 android:background="@drawable/user_order_payment_bg"
@@ -84,21 +101,6 @@
                 android:textSize="16sp"
                 android:visibility="gone" />
 
-            <TextView
-                android:id="@+id/tv_deliver"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:layout_margin="@dimen/dp_10"
-                android:layout_toLeftOf="@+id/tv_receive"
-                android:gravity="center"
-                android:paddingLeft="@dimen/dp_15"
-                android:paddingTop="@dimen/dp_6"
-                android:paddingRight="@dimen/dp_15"
-                android:paddingBottom="@dimen/dp_6"
-                android:text="查看物流"
-                android:textSize="16sp"
-                android:visibility="gone" />
 
             <TextView
                 android:id="@+id/tv_cancel"
@@ -119,6 +121,7 @@
                 android:id="@+id/tv_evaluate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
                 android:layout_gravity="right"
                 android:layout_margin="@dimen/dp_10"
                 android:background="@drawable/user_order_payment_bg"

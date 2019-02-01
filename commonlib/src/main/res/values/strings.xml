@@ -1,1 +1,5 @@
-<resources></resources>
+<resources>
+    <string name="text_remind_late"></string>
+    <string name="update_now">升级</string>
+    <string name="install_now">安装</string>
+</resources>
