@@ -291,6 +291,7 @@
                             android:background="#fafafa" />
 
                         <LinearLayout
+                            android:visibility="gone"
                             android:id="@+id/ll_comment_pic"
                             android:layout_width="match_parent"
                             android:layout_height="44dp"
@@ -343,6 +344,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="#fff"
+                            android:visibility="gone"
                             android:paddingBottom="@dimen/dp_10">
 
                             <android.support.v7.widget.RecyclerView

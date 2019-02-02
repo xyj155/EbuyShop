@@ -11,6 +11,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.example.commonlib.R;
 import com.example.commonlib.gson.GoodsCommentGson;
+import com.example.commonlib.http.RetrofitUtils;
 import com.example.commonlib.util.GlideUtil;
 
 import java.util.List;
@@ -25,22 +26,18 @@ public class GoodsCommentAdapter extends BaseQuickAdapter<GoodsCommentGson, Base
 
     @Override
     protected void convert(BaseViewHolder helper, GoodsCommentGson item) {
-        Log.i(TAG, "convert: "+item.getGoodsName());
+        Log.i(TAG, "convert: " + item.getGoodsName());
         String username = item.getUser().getUsername();
         String replace = username.replace(username.substring(4, 8), "****");
         helper.setText(R.id.tv_username, replace)
                 .setText(R.id.tv_time, item.getGoodsName())
-                .setText(R.id.tv_content, item.getComment());
-        GlideUtil.loadGeneralImage(item.getUser().getAvatar(), (ImageView) helper.getView(R.id.iv_avatar));
+                .setText(R.id.tv_content, item.getComment())
+                .setText(R.id.tv_date, item.getUpdateTime());
+        Log.i(TAG, "convert:RetrofitUtils " + RetrofitUtils.BASE_URL + item.getUser().getAvatar());
+        GlideUtil.loadGeneralImage(RetrofitUtils.BASE_URL + item.getUser().getAvatar(), (ImageView) helper.getView(R.id.iv_avatar));
         PictureAdapter pictureAdapter = new PictureAdapter(null);
         RecyclerView view = helper.getView(R.id.ry_comment);
-        if (item.getPicture().size()==1){
-            view.setLayoutManager(new GridLayoutManager(context,1));
-        }else if (item.getPicture().size()==2){
-            view.setLayoutManager(new GridLayoutManager(context,2));
-        }else if (item.getPicture().size()>=3){
-            view.setLayoutManager(new GridLayoutManager(context,3));
-        }
+        view.setLayoutManager(new GridLayoutManager(context, 3));
         pictureAdapter.replaceData(item.getPicture());
         view.setAdapter(pictureAdapter);
     }
@@ -53,7 +50,7 @@ public class GoodsCommentAdapter extends BaseQuickAdapter<GoodsCommentGson, Base
 
         @Override
         protected void convert(BaseViewHolder helper, String item) {
-            GlideUtil.loadGeneralImage(item, (ImageView) helper.getView(R.id.iv_pic));
+            GlideUtil.loadGeneralImage(RetrofitUtils.BASE_URL + item, (ImageView) helper.getView(R.id.iv_pic));
         }
     }
 }

@@ -64,61 +64,61 @@
                             android:layout_height="wrap_content"
                             android:id="@+id/iv_news"
                             android:layout_weight="1"
-                            android:drawableTop="@mipmap/pic1"
+                            android:drawableTop="@mipmap/l_chongzhi_gouwu"
                             android:drawablePadding="@dimen/dp_6"
                             android:gravity="center"
                             android:text="新上架"
                             android:textColor="#000"
-                            android:textSize="12sp" />
+                            android:textSize="13sp" />
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:drawableTop="@mipmap/pic2"
+                            android:drawableTop="@mipmap/l_chongzhi_zaotang"
                             android:drawablePadding="@dimen/dp_6"
                             android:id="@+id/tv_goods_news"
                             android:gravity="center"
-                            android:text="淘好货"
+                            android:text="大牌热卖"
                             android:textColor="#000"
-                            android:textSize="12sp" />
+                            android:textSize="13sp" />
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:drawableTop="@mipmap/pic3"
+                            android:drawableTop="@mipmap/l_chongzhi_yinshui"
                             android:drawablePadding="@dimen/dp_6"
                             android:gravity="center"
                             android:id="@+id/iv_school_vip"
-                            android:text="校园VIP"
+                            android:text="打折促销"
                             android:textColor="#000"
-                            android:textSize="12sp" />
+                            android:textSize="13sp" />
 
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:drawableTop="@mipmap/pic4"
+                            android:drawableTop="@mipmap/l_chongzhi_xiyi"
                             android:id="@+id/iv_best"
                             android:drawablePadding="@dimen/dp_6"
                             android:gravity="center"
-                            android:text="心选精品"
+                            android:text="闲置商品"
                             android:textColor="#000"
-                            android:textSize="12sp" />
+                            android:textSize="13sp" />
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:id="@+id/iv_share"
-                            android:drawableTop="@mipmap/pic5"
+                            android:drawableTop="@mipmap/l_chongzhi_chuifeng"
                             android:drawablePadding="@dimen/dp_6"
                             android:gravity="center"
-                            android:text="晒单 社区"
+                            android:text="社区讨论"
                             android:textColor="#000"
-                            android:textSize="12sp" />
+                            android:textSize="13sp" />
 
                     </LinearLayout>
 
@@ -176,9 +176,10 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:padding="@dimen/dp_10"
+                                android:padding="@dimen/dp_9"
                                 android:text="限时抢购"
                                 android:textColor="#000"
+                                android:textSize="16sp"
                                 android:textStyle="bold" />
 
                             <TextView
@@ -193,7 +194,7 @@
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:drawableRight="@mipmap/ic_arrow_right_new"
+                                android:drawableRight="@mipmap/ic_arrow_right"
                                 android:drawablePadding="@dimen/dp_10"
                                 android:gravity="center|right"
                                 android:paddingRight="@dimen/dp_7"

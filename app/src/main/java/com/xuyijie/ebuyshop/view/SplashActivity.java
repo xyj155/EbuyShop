@@ -1,10 +1,13 @@
 package com.xuyijie.ebuyshop.view;
 
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.os.Handler;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.example.commonlib.base.BaseActivity;
@@ -25,6 +28,9 @@ public class SplashActivity extends BaseActivity<AdvertisementContract.View, Adv
 
     @BindView(R.id.iv_ad)
     ImageView ivAd;
+    @BindView(R.id.tv_time)
+    TextView tvTime;
+    private MyCountDownTimer mc;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +64,17 @@ public class SplashActivity extends BaseActivity<AdvertisementContract.View, Adv
 
     @Override
     public void initData() {
+        mc = new MyCountDownTimer(4000, 1000);
+        mc.start();
         mPresenter.queryFlashAdvertisement();
+        tvTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(MainActivity.class);
+                finish();
+
+            }
+        });
     }
 
     private static final String TAG = "SplashActivity";
@@ -67,7 +83,7 @@ public class SplashActivity extends BaseActivity<AdvertisementContract.View, Adv
     @Override
     public void loadAdvertisement(AdvertisementGson advertisementGson) {
         GlideUtil.loadGeneralImage(advertisementGson.getBannerUrl(), ivAd);
-        new Handler().postDelayed(new Runnable() {
+        handler.postDelayed(new Runnable() {
             @Override
             public void run() {
                 boolean user = (boolean) SharePreferenceUtil.getUser("islogin", "boolean");
@@ -83,8 +99,7 @@ public class SplashActivity extends BaseActivity<AdvertisementContract.View, Adv
 
     @Override
     public void loadEmpty() {
-
-        new Handler().postDelayed(new Runnable() {
+        handler.postDelayed(new Runnable() {
             @Override
             public void run() {
                 boolean user = (boolean) SharePreferenceUtil.getUser("islogin", "boolean");
@@ -110,6 +125,24 @@ public class SplashActivity extends BaseActivity<AdvertisementContract.View, Adv
 
     @Override
     public void hideDialog() {
+
+    }
+
+    private Handler handler = new Handler();
+
+    class MyCountDownTimer extends CountDownTimer {
+
+        public MyCountDownTimer(long millisInFuture, long countDownInterval) {
+            super(millisInFuture, countDownInterval);
+        }
+
+        public void onFinish() {
+
+        }
+
+        public void onTick(long millisUntilFinished) {
+            tvTime.setText(millisUntilFinished / 1000 + " 秒后跳过");
+        }
 
     }
 }

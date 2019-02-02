@@ -6,6 +6,7 @@ import com.example.commonlib.gson.BannerGson;
 import com.example.commonlib.gson.CouponGson;
 import com.example.commonlib.gson.EmptyGson;
 import com.example.commonlib.gson.ExpressGson;
+import com.example.commonlib.gson.ExpressTraceGson;
 import com.example.commonlib.gson.GoodsCommentGson;
 import com.example.commonlib.gson.GoodsDetailGson;
 import com.example.commonlib.gson.GoodsGson;
@@ -52,6 +53,8 @@ public interface Api {
     @GET("/StuShop/public/index.php/index/Goods/getGoodsKindList")
     Observable<BaseGson<KindItemGson>> getGoodsList();
 
+    @GET("/StuShop/public/index.php/index/Express/queryExpressByNum")
+    Observable<BaseGson<ExpressTraceGson>> queryExpressByNum(@Query("expressNum") String expressNum);
     //通过商品id查询商品列表
     @GET("/StuShop/public/index.php/index/Goods/getGoodsListByPid")
     Observable<BaseGson<KindItemGson>> getGoodsListByPid(@Query("pid") String pid);
@@ -167,6 +170,12 @@ public interface Api {
     @Multipart
     @POST("/StuShop/public/index.php/index/Feedback/userFeedBack")
     Observable<BaseGson<EmptyGson>> userFeedBack(
+            @PartMap() Map<String, RequestBody> partMap,
+            @Part List<MultipartBody.Part> file);
+
+    @Multipart
+    @POST("/StuShop/public/index.php/index/Goods/updateGoodsEvaluate")
+    Observable<BaseGson<EmptyGson>> updateGoodsEvaluate(
             @PartMap() Map<String, RequestBody> partMap,
             @Part List<MultipartBody.Part> file);
 }

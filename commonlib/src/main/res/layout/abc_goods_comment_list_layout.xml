@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    android:orientation="vertical" xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
+    android:layout_marginLeft="@dimen/dp_9"
+    android:layout_marginRight="@dimen/dp_9"
+    android:layout_marginTop="@dimen/dp_3"
+    android:layout_marginBottom="@dimen/dp_3"
     android:layout_height="wrap_content"
-    android:background="#fff">
+    android:background="@drawable/abc_comment_bg">
 
     <LinearLayout
         android:id="@+id/ll_comment"
@@ -26,7 +31,7 @@
                 android:id="@+id/tv_username"
                 android:textSize="17sp"
                 android:textStyle="bold"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center|left"
@@ -59,9 +64,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tv_content" />
-    <View
-        android:layout_below="@+id/ry_comment"
+    <TextView
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_1"
-        android:background="#fafafa"/>
-</RelativeLayout>
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dp_7"
+        android:layout_marginBottom="@dimen/dp_8"
+        android:id="@+id/tv_date"
+        android:text="日期"
+        android:textSize="13sp"
+        android:gravity="right" />
+</LinearLayout>

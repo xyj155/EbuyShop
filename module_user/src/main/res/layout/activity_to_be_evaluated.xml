@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#fff"
+    android:orientation="vertical"
+    tools:context="com.example.user.view.ToBeEvaluatedActivity">
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/tb_common"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_55"
+        android:background="#fff">
+
+
+        <ImageView
+            android:id="@+id/iv_close"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_margin="@dimen/dp_8"
+            android:src="@mipmap/ic_back" />
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_toEndOf="@+id/iv_close"
+            android:ellipsize="end"
+            android:gravity="center|left"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:maxLength="11"
+            android:text=""
+            android:textColor="#000" />
+
+        <TextView
+            android:id="@+id/tv_menu"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:paddingRight="@dimen/dp_10"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:layout_marginRight="@dimen/dp_10"
+            android:padding="@dimen/dp_6"
+            android:text=""
+            android:textColor="#000"
+            android:textStyle="bold" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="left|center"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_30"
+            android:text="评分"
+            android:textColor="#000"
+            android:textStyle="bold" />
+
+        <RadioGroup
+            android:id="@+id/rg_evaluate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/dp_40"
+            android:orientation="horizontal"
+            android:weightSum="3">
+
+            <RadioButton
+                android:id="@+id/rb_goods"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:button="@null"
+                android:drawableTop="@mipmap/ic_product_score_seek_high"
+                android:gravity="center"
+                android:text="好评"
+                android:textColor="@color/rb_to_be_evaluate_text_color"
+                android:textSize="13sp"
+                android:textStyle="bold" />
+
+            <RadioButton
+                android:id="@+id/rb_middle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:button="@null"
+                android:drawableTop="@mipmap/ic_product_score_seek_general"
+                android:gravity="center"
+                android:text="中评"
+                android:textColor="@color/rb_to_be_evaluate_text_color"
+                android:textSize="13sp"
+                android:textStyle="bold" />
+
+            <RadioButton
+                android:id="@+id/rb_low"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:button="@null"
+                android:drawableTop="@mipmap/ic_product_score_seek_poor"
+                android:gravity="center"
+                android:text="差评"
+                android:textColor="@color/rb_to_be_evaluate_text_color"
+                android:textSize="13sp"
+                android:textStyle="bold" />
+        </RadioGroup>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_3"
+        android:layout_marginTop="@dimen/dp_10"
+        android:background="#fafafa" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_160"
+        android:background="#fff"
+        android:id="@+id/et_content"
+        android:gravity="top"
+        android:hint="评价最少30个字哦！"
+        android:paddingLeft="@dimen/dp_15"
+        android:paddingTop="@dimen/dp_6"
+        android:paddingRight="@dimen/dp_15"
+        android:textSize="14sp" />
+<TextView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="添加图片"
+    android:padding="@dimen/dp_14"
+    android:textColor="#000"
+    android:textStyle="bold"/>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/ry_picture"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dp_8"
+        android:overScrollMode="never" />
+</LinearLayout>

@@ -79,7 +79,7 @@ public class ApplicationInitial {
         Beta.autoCheckUpgrade = true;
         Beta.largeIconId = R.mipmap.app_icon;
         Beta.smallIconId = R.mipmap.app_icon;
-        Beta.initDelay = 6 * 1000;
+        Beta.initDelay = 20 * 1000;
         Beta.upgradeDialogLayoutId = R.layout.upgrade_dialog;
         Beta.smallIconId = R.mipmap.app_icon;
         Beta.strUpgradeDialogCancelBtn = MyApp.getInstance().getString(R.string.text_remind_late);

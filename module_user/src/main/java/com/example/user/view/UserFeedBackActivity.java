@@ -3,6 +3,7 @@ package com.example.user.view;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -22,6 +23,7 @@ import com.example.commonlib.util.RxPartMapUtils;
 import com.example.commonlib.util.SharePreferenceUtil;
 import com.example.commonlib.view.FullyGridLayoutManager;
 import com.example.commonlib.view.ListDialog;
+import com.example.commonlib.view.MyDialog;
 import com.example.commonlib.view.toast.ToastUtils;
 import com.example.user.adapter.GridImageAdapter;
 import com.example.user.contract.UserFeedBackContract;
@@ -87,11 +89,33 @@ public class UserFeedBackActivity extends BaseActivity<UserFeedBackContract.View
     }
 
     private ISListConfig config;
-
+    private MyDialog myDialog1;
     @Override
     public void initView() {
         ButterKnife.bind(this);
-        initToolBar().setToolBarTitle("问题反馈");
+        ivClose = findViewById(R.id.iv_close);
+        tvTitle = findViewById(R.id.tv_title);
+        tvTitle.setText("问题反馈");
+        ivClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                myDialog1 = new MyDialog(UserFeedBackActivity.this, new int[]{R.id.dialog_btn_close, R.id.dialog_btn_cancel});
+                myDialog1.setContent("你的评价还没有完成哦！");
+                myDialog1.setTitle("是否退出评价");
+                myDialog1.setOnCenterItemClickListener(new MyDialog.OnCenterItemClickListener() {
+                    @Override
+                    public void onCenterItemClick(MyDialog dialog, View view) {
+                        int i = view.getId();
+                        if (i == R.id.dialog_btn_close) {
+                            dialog.dismiss();
+                        } else if (i == R.id.dialog_btn_cancel) {
+                            finish();
+                        }
+                    }
+                });
+                myDialog1.show();
+            }
+        });
         FullyGridLayoutManager layout = new FullyGridLayoutManager(this, 5, GridLayoutManager.VERTICAL, false);
         ryPicture.setLayoutManager(layout);
         pictureAddedAdapter = new GridImageAdapter(UserFeedBackActivity.this, new GridImageAdapter.onAddPicClickListener() {
@@ -221,6 +245,13 @@ public class UserFeedBackActivity extends BaseActivity<UserFeedBackContract.View
     }
 
     private boolean isChoose = false;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
+    }
 
     private class FeedBackChooseListAdapter extends BaseQuickAdapter<String, BaseViewHolder> {
 

@@ -20,7 +20,8 @@
         <activity android:name="com.example.user.view.UserAllOrdersActivity" />
         <activity android:name="com.example.user.view.UserFeedBackActivity" />
         <activity android:name="com.example.user.view.UserCollectionActivity" />
-        <activity android:name="com.example.user.view.UserSettingActivity"></activity>
+        <activity android:name="com.example.user.view.UserSettingActivity" />
+        <activity android:name="com.example.user.view.ToBeEvaluatedActivity"></activity>
     </application>
 
 </manifest>

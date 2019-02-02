@@ -8,6 +8,41 @@
         <attr name="isBoldface" format="boolean"/>
         <attr name="isLetterCenter" format="boolean"/>
     </declare-styleable>
+    <style name="divider_all_horizontal_middle"><!-- 浅线水平全部分割粗线颜色深-->
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">8dp</item>
+        <item name="android:background">#F4F4F4</item>
+        <item name="android:orientation">horizontal</item>
+    </style>
+    <!--自定义dialog-->
+    <style name="DialogStyle" parent="@android:style/Theme.Dialog">
+        <item name="android:windowFrame">@null</item>
+        <!--  边框-->
+        <item name="android:windowIsFloating">true</item>
+        <!--是否浮现在activity之上-->
+        <item name="android:windowIsTranslucent">false</item>
+        <!--半透明-->
+        <item name="android:windowNoTitle">true</item>
+        <!--无标题-->
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowContentOverlay">@null</item>
+    </style>
+
+    <style name="dialogAnim" parent="android:Animation">
+        <item name="android:windowEnterAnimation">@anim/dialog_show</item>
+        <item name="android:windowExitAnimation">@anim/dialog_dismiss</item>
+    </style>
+    <declare-styleable name="LogisticsInformationView">
+        <attr name="width" format="dimension"/>
+        <attr name="radius" format="dimension"/>
+    </declare-styleable>
+    <declare-styleable name="AdTimePickView">
+        <attr name="mSmallCircleBg" format="color"></attr>
+        <attr name="mTextSize1" format="dimension"></attr>
+        <attr name="mTextColor1" format="color"></attr>
+        <attr name="mProgressWidth" format="dimension"></attr>
+        <attr name="mRadius" format="dimension"></attr>
+    </declare-styleable>
     <declare-styleable name="SwitchButton">
         <attr name="sb_shadow_radius" format="reference|dimension"/>
         <attr name="sb_shadow_offset" format="reference|dimension"/>

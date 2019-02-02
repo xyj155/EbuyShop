@@ -7,7 +7,48 @@
     android:orientation="vertical"
     tools:context="com.example.user.view.UserFeedBackActivity">
 
-    <include layout="@layout/common_toolbar" />
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/tb_common"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_55"
+        android:background="#fff">
+
+
+        <ImageView
+            android:id="@+id/iv_close"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_margin="@dimen/dp_8"
+            android:src="@mipmap/ic_back" />
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_toEndOf="@+id/iv_close"
+            android:ellipsize="end"
+            android:gravity="center|left"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:maxLength="11"
+            android:text=""
+            android:textColor="#000" />
+
+        <TextView
+            android:id="@+id/tv_menu"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:paddingRight="@dimen/dp_10"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:layout_marginRight="@dimen/dp_10"
+            android:padding="@dimen/dp_6"
+            android:text=""
+            android:textColor="#000"
+            android:textStyle="bold" />
+    </RelativeLayout>
 
     <TextView
         android:layout_width="match_parent"

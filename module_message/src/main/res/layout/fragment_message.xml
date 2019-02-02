@@ -76,39 +76,26 @@
                             android:background="@drawable/home_message__item_bg"
                             android:elevation="@dimen/dp_1"
                             android:orientation="horizontal"
-                            android:paddingTop="@dimen/dp_25"
+                            android:paddingTop="@dimen/dp_15"
                             android:paddingBottom="@dimen/dp_15"
                             android:weightSum="3">
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:orientation="vertical">
-
-                                <ImageView
-                                    android:id="@+id/iv_pass"
-                                    android:layout_width="match_parent"
-                                    android:layout_margin="@dimen/dp_4"
-                                    android:layout_height="wrap_content"
-                                    android:src="@mipmap/ic_message_deliver" />
-
-                                <TextView
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="1"
-                                    android:gravity="center"
-                                    android:text="交易物流"
-                                    android:textSize="14sp" />
-                            </LinearLayout>
 
 
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:drawablePadding="@dimen/dp_4"
                                 android:layout_weight="1"
-                                android:drawableTop="@mipmap/ic_message_notification"
+                                android:drawableTop="@mipmap/l_my_shengji"
+                                android:gravity="center"
+                                android:text="交易物流" />
+
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:drawableTop="@mipmap/l_my_message"
+                                android:drawablePadding="@dimen/dp_4"
                                 android:gravity="center"
                                 android:text="通知消息"
                                 android:textSize="14sp" />
@@ -117,8 +104,8 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
+                                android:drawableTop="@mipmap/l_my_record"
                                 android:drawablePadding="@dimen/dp_4"
-                                android:drawableTop="@mipmap/ic_message_other"
                                 android:gravity="center"
                                 android:text="其他"
                                 android:textSize="14sp" />

@@ -248,9 +248,17 @@ public class GoodsDetailActivity extends BaseActivity<GoodsDetailContract.View, 
         }
 
         @Override
-        protected void convert(BaseViewHolder helper, GoodsDetailGson.PurseGoodsListBean item) {
+        protected void convert(BaseViewHolder helper, final GoodsDetailGson.PurseGoodsListBean item) {
             helper.setText(R.id.tv_goods_name, item.getGoodsName())
-                    .setText(R.id.tv_price, "￥" + item.getGoodsPrice());
+                    .setText(R.id.tv_price, "￥" + item.getGoodsPrice())
+            .setOnClickListener(R.id.ll_goods, new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent view = new Intent(GoodsDetailActivity.this,GoodsDetailActivity.class);
+                    view.putExtra("goodsId",String.valueOf(item.getId()));
+                    startActivity(view);
+                }
+            });
             RoundedCorners roundedCorners = new RoundedCorners(6);
             RequestOptions options = RequestOptions.bitmapTransform(roundedCorners).override(300, 300);
             Glide.with(GoodsDetailActivity.this).asBitmap().load(item.getGoodsPic()).apply(options).into((ImageView) helper.getView(R.id.iv_cover));
@@ -387,7 +395,7 @@ public class GoodsDetailActivity extends BaseActivity<GoodsDetailContract.View, 
         protected void convert(BaseViewHolder helper, String item) {
             RoundedCorners roundedCorners = new RoundedCorners(10);
             RequestOptions options = RequestOptions.bitmapTransform(roundedCorners).override(300, 300);
-            Glide.with(GoodsDetailActivity.this).asBitmap().load(item).apply(options).into((ImageView) helper.getView(R.id.iv_pic));
+            Glide.with(GoodsDetailActivity.this).asBitmap().load(RetrofitUtils.BASE_URL+item).apply(options).into((ImageView) helper.getView(R.id.iv_pic));
         }
     }
 

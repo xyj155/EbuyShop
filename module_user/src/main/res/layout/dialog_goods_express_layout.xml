@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    cardCornerRadius="@dimen/dp_15"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="@dimen/dp_5"
+    android:background="#fff"
+    tools:ignore="MissingDefaultResource">
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.example.commonlib.view.expressTrace.LogisticsInformationView
+            android:id="@+id/logistics_InformationView"
+            android:layout_width="match_parent"
+            android:layout_marginLeft="@dimen/dp_14"
+            android:layout_marginRight="@dimen/dp_14"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/dp_16"
+            android:background="#fff"
+            android:layout_marginBottom="@dimen/dp_50"
+            app:radius="5dp"
+            app:width="2dp" />
+    </android.support.v4.widget.NestedScrollView>
+
+</android.support.v7.widget.CardView>

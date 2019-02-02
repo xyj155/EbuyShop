@@ -25,6 +25,8 @@
         android:layout_height="wrap_content"
         android:text="￥ 90.0"
         android:textSize="@dimen/dp_11"
+        android:textColor="#d8d8d8"
+        android:textStyle="bold"
         android:paddingLeft="@dimen/dp_5"
         android:id="@+id/tv_price_orign" />
 </LinearLayout>

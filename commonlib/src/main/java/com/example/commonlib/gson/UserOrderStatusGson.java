@@ -48,6 +48,65 @@ public class UserOrderStatusGson {
      * expressName : 申通快递
      * expressPrice : 12.00
      */
+    private String expressNum;
+
+    public String getExpressNum() {
+        return expressNum;
+    }
+
+    @Override
+    public String toString() {
+        return "UserOrderStatusGson{" +
+                "expressNum='" + expressNum + '\'' +
+                ", expressId=" + expressId +
+                ", couponId='" + couponId + '\'' +
+                ", address='" + address + '\'' +
+                ", gid=" + gid +
+                ", status='" + status + '\'' +
+                ", goodsId=" + goodsId +
+                ", styleName='" + styleName + '\'' +
+                ", stylePrice='" + stylePrice + '\'' +
+                ", goodsPicUrl='" + goodsPicUrl + '\'' +
+                ", count=" + count +
+                ", orderNum='" + orderNum + '\'' +
+                ", addTime='" + addTime + '\'' +
+                ", id=" + id +
+                ", goodsName='" + goodsName + '\'' +
+                ", goodsService='" + goodsService + '\'' +
+                ", goodsLocation='" + goodsLocation + '\'' +
+                ", goodsPrice='" + goodsPrice + '\'' +
+                ", goodsPic='" + goodsPic + '\'' +
+                ", goodsDescribe='" + goodsDescribe + '\'' +
+                ", goodsOwner='" + goodsOwner + '\'' +
+                ", updateTime='" + updateTime + '\'' +
+                ", goodsKind='" + goodsKind + '\'' +
+                ", isPurse=" + isPurse +
+                ", originalPrice='" + originalPrice + '\'' +
+                ", postFree='" + postFree + '\'' +
+                ", isTimePurse='" + isTimePurse + '\'' +
+                ", goodsDetailWeb='" + goodsDetailWeb + '\'' +
+                ", goodsParameter='" + goodsParameter + '\'' +
+                ", isShow='" + isShow + '\'' +
+                ", orderCount='" + orderCount + '\'' +
+                ", userId=" + userId +
+                ", saveName='" + saveName + '\'' +
+                ", saveTel='" + saveTel + '\'' +
+                ", saveLocal='" + saveLocal + '\'' +
+                ", saveAddressDetail='" + saveAddressDetail + '\'' +
+                ", isDefault='" + isDefault + '\'' +
+                ", couponName='" + couponName + '\'' +
+                ", couponTotal='" + couponTotal + '\'' +
+                ", couponReduce='" + couponReduce + '\'' +
+                ", startTime='" + startTime + '\'' +
+                ", endTime='" + endTime + '\'' +
+                ", expressName='" + expressName + '\'' +
+                ", expressPrice='" + expressPrice + '\'' +
+                '}';
+    }
+
+    public void setExpressNum(String expressNum) {
+        this.expressNum = expressNum;
+    }
 
     private int expressId;
     private String couponId;

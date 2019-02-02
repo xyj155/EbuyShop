@@ -86,7 +86,7 @@ public class UserFragment extends BaseFragment<UserPaymentPresenter> implements 
     @Override
     public void initView(View view) {
         unbinder = ButterKnife.bind(this, view);
-        tvUsername.setText(String .valueOf(SharePreferenceUtil.getUser("username","String")));
+        tvUsername.setText(String .valueOf(SharePreferenceUtil.getUser("username","String")).replace(String .valueOf(SharePreferenceUtil.getUser("username","String")).substring(3,7),"****"));
         waveView = view.findViewById(R.id.wave_view);
         ivHead = view.findViewById(R.id.ivHead);
         final FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(-2, -2);

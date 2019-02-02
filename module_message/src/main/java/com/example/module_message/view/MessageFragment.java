@@ -3,8 +3,6 @@ package com.example.module_message.view;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,14 +12,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.example.commonlib.base.BaseFragment;
 import com.example.commonlib.presenter.GoodsDetailPresenter;
-import com.example.commonlib.util.GlideUtil;
 import com.example.commonlib.util.RouterUtil;
 import com.example.commonlib.view.ObservableScrollView;
 import com.example.module_message.R;
@@ -40,7 +36,6 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.scwang.smartrefresh.layout.listener.SimpleMultiPurposeListener;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -55,52 +50,29 @@ public class MessageFragment extends BaseFragment<GoodsDetailPresenter> {
     @BindView(R2.id.tv_title)
     TextView tvTitle;
     Unbinder unbinder1;
-    @BindView(R2.id.iv_bg)
-    ImageView ivBg;
     @BindView(R2.id.sl_message)
     ObservableScrollView slMessage;
-    @BindView(R2.id.iv_pass)
-    ImageView ivPass;
     private RecyclerView ryRecent;
     private ConversationAdapter conversationAdapter;
-    private List<Integer> imgs = new ArrayList<>();
-    int time = 3;
-    Handler handler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            sendEmptyMessageDelayed(1, 3000);
-        }
-    };
-    Runnable runnable = new Runnable() {
-        @Override
-        public void run() {
-            GlideUtil.loadGeneralImageWithAnim(imgs.get(time % imgs.size()), ivPass);
-            time++;
-            //延迟1秒执行
-            handler.postDelayed(this, 8000);
-        }
-    };
+
+
 
 
     @Override
     public void initData() {
-        handler.post(runnable);
+
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        handler = null;
+
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public void initView(View view) {
         unbinder = ButterKnife.bind(this, view);
-        handler.sendEmptyMessageDelayed(1, 1000);
-        imgs.add(R.mipmap.ic_message_deliver);
-        imgs.add(R.mipmap.ic_message_other);
         ryRecent = view.findViewById(R.id.ry_recent);
         ryRecent.setLayoutManager(new LinearLayoutManager(getContext()));
         conversationAdapter = new ConversationAdapter(null);
