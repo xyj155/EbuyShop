@@ -2,42 +2,51 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rl_splash"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#fff"
-    android:id="@+id/rl_splash"
-    tools:context=".SplashActivity">
-<LinearLayout
-    android:layout_gravity="center|bottom"
-    android:layout_width="wrap_content"
-    android:layout_alignParentBottom="true"
-    android:layout_centerInParent="true"
-    android:layout_marginBottom="@dimen/dp_8"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal">
-    <ImageView
-        android:src="@mipmap/app_icon"
-        android:layout_width="@dimen/dp_45"
-        android:layout_height="@dimen/dp_45" />
+    tools:context=".view.SplashActivity">
+
     <LinearLayout
         android:layout_width="wrap_content"
-        android:gravity="center|left"
-        android:padding="@dimen/dp_6.5"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-        <TextView
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerInParent="true"
+        android:layout_gravity="center|bottom"
+        android:layout_marginBottom="@dimen/dp_8"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="@dimen/dp_45"
+            android:layout_height="@dimen/dp_45"
+            android:src="@mipmap/app_icon" />
+
+        <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="#000"
-            android:textStyle="bold"
-            android:text="商学院"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="你身边的校园商城"
-            android:textSize="@dimen/dp_10"/>
+            android:layout_height="match_parent"
+            android:gravity="center|left"
+            android:orientation="vertical"
+            android:padding="@dimen/dp_6.5">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="商学院"
+                android:textColor="#000"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="你身边的校园商城"
+                android:textSize="@dimen/dp_10" />
+        </LinearLayout>
     </LinearLayout>
-</LinearLayout>
 
-
+    <ImageView
+        android:id="@+id/iv_ad"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="fitXY" />
 </FrameLayout>

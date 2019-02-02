@@ -1,6 +1,7 @@
 package com.example.commonlib.api;
 
 import com.example.commonlib.base.BaseGson;
+import com.example.commonlib.gson.AdvertisementGson;
 import com.example.commonlib.gson.BannerGson;
 import com.example.commonlib.gson.CouponGson;
 import com.example.commonlib.gson.EmptyGson;
@@ -155,6 +156,9 @@ public interface Api {
 
     @GET("/StuShop/public/index.php/index/User/queryUserCollection")
     Observable<BaseGson<GoodsGson>> queryUserCollection(@Query("userId") String userId);
+
+    @GET("/StuShop/public/index.php/index/Banner/queryFlashAdvertisement")
+    Observable<BaseGson<AdvertisementGson>> queryFlashAdvertisement();
 
     @FormUrlEncoded
     @POST("/StuShop/public/index.php/index/User/updateOrderStatusByReceive")
