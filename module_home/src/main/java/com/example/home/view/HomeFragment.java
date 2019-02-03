@@ -359,15 +359,15 @@ public class HomeFragment extends BaseFragment<HomePagePresenter> implements Hom
         unbinder.unbind();
     }
 
-    @OnClick({R2.id.iv_news,R2.id.ll_flash_time, R2.id.tv_goods_news, R2.id.iv_school_vip, R2.id.iv_best, R2.id.iv_share, R2.id.ivKind})
+    @OnClick({R2.id.iv_news, R2.id.ll_flash_time, R2.id.tv_goods_news, R2.id.iv_school_vip, R2.id.iv_best, R2.id.iv_share, R2.id.ivKind})
     public void onViewClicked(View view) {
         int id = view.getId();
         Log.i(TAG, "onViewClicked: ");
         if (id == R.id.iv_news) {
             Log.i(TAG, "onViewClicked: ");
-
+            startActivity(new Intent(getContext(), NewUpperShelfActivity.class));
         } else if (id == R.id.tv_goods_news) {
-
+        
         } else if (id == R.id.iv_school_vip) {
             Intent intent = new Intent(getContext(), BrowserActivity.class);
             intent.putExtra("url", RetrofitUtils.BASE_URL + "/StuShop/public/index.php/index/Index/vipRecharge");
@@ -378,7 +378,7 @@ public class HomeFragment extends BaseFragment<HomePagePresenter> implements Hom
             loginWraper(UserType.ISPERMITED, GoodsOrderShareActivity.class);
         } else if (id == R.id.ivKind) {
             startActivity(new Intent(getContext(), GoodsKindSortedActivity.class));
-        }else if (id==R.id.ll_flash_time){
+        } else if (id == R.id.ll_flash_time) {
             startActivity(new Intent(getContext(), TimeFlashSaleActivity.class));
         }
     }

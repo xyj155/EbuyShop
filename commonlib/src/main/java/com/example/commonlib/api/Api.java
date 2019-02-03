@@ -15,6 +15,7 @@ import com.example.commonlib.gson.GoodsStyleGson;
 import com.example.commonlib.gson.HotPurseActivityGson;
 import com.example.commonlib.gson.KindItemGson;
 import com.example.commonlib.gson.MarQueenGson;
+import com.example.commonlib.gson.NewestShelfGson;
 import com.example.commonlib.gson.OrderDetailGson;
 import com.example.commonlib.gson.ShopCarGson;
 import com.example.commonlib.gson.SubmitOrderGson;
@@ -178,4 +179,8 @@ public interface Api {
     Observable<BaseGson<EmptyGson>> updateGoodsEvaluate(
             @PartMap() Map<String, RequestBody> partMap,
             @Part List<MultipartBody.Part> file);
+
+
+    @GET("/StuShop/public/index.php/index/Goods/newUpperShelf")
+    Observable<BaseGson<NewestShelfGson>> newUpperShelf(@Query("date")String date);
 }

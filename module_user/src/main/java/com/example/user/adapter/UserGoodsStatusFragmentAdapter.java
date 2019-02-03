@@ -8,9 +8,9 @@ import java.util.List;
 
 public class UserGoodsStatusFragmentAdapter extends FragmentPagerAdapter {
     private List<Fragment> fragmentList;
-    private String [] title;
+    private List<String > title;
 
-    public UserGoodsStatusFragmentAdapter(FragmentManager fm, List<Fragment> fragmentList, String[] title) {
+    public UserGoodsStatusFragmentAdapter(FragmentManager fm, List<Fragment> fragmentList, List<String> title) {
         super(fm);
         this.fragmentList = fragmentList;
         this.title = title;

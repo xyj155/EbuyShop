@@ -38,7 +38,10 @@ public class UserFormStatusActivity extends BaseActivity<EmptyContract.View, Emp
     MagicIndicator magicIndicator;
     @BindView(R2.id.view_pager)
     ViewPager viewPager;
-    private String title[] = new String[]{"待付款", "代发货", "待收货", "待评价"};
+    //    private String title[] = new String[]{"待付款", "代发货", "待收货", "待评价"};
+    private List<String> title = new ArrayList<String>();
+
+
     private UserGoodsStatusFragmentAdapter userGoodsStatusAdapter;
     private List<Fragment> fragmentList = new ArrayList<>();
 
@@ -61,6 +64,10 @@ public class UserFormStatusActivity extends BaseActivity<EmptyContract.View, Emp
     @Override
     public void initView() {
         ButterKnife.bind(this);
+        title.add("待付款");
+        title.add("代发货");
+        title.add("待收货");
+        title.add("待评价");
         fragmentList.add(new SubstitutePaymentFragment());
         fragmentList.add(new SubstituteShipmentFragment());
         fragmentList.add(new CollectingGoodsFragment());
@@ -94,13 +101,13 @@ public class UserFormStatusActivity extends BaseActivity<EmptyContract.View, Emp
         commonNavigator.setAdapter(new CommonNavigatorAdapter() {
             @Override
             public int getCount() {
-                return title == null ? 0 : title.length;
+                return title == null ? 0 : title.size();
             }
 
             @Override
             public IPagerTitleView getTitleView(Context context, final int index) {
                 ScaleTransitionPagerTitleView simplePagerTitleView = new ScaleTransitionPagerTitleView(context);
-                simplePagerTitleView.setText(title[index]);
+                simplePagerTitleView.setText(title.get(index));
                 simplePagerTitleView.setTextSize(18);
                 simplePagerTitleView.setNormalColor(Color.GRAY);
                 simplePagerTitleView.setSelectedColor(Color.BLACK);

@@ -9,7 +9,8 @@
     <application>
         <activity android:name="com.example.home.view.GoodsOrderShareActivity" />
         <activity android:name="com.example.home.view.GoodsKindSortedActivity" />
-        <activity android:name="com.example.home.view.TimeFlashSaleActivity"></activity>
+        <activity android:name="com.example.home.view.TimeFlashSaleActivity" />
+        <activity android:name="com.example.home.view.NewUpperShelfActivity"></activity>
     </application>
 
 </manifest>

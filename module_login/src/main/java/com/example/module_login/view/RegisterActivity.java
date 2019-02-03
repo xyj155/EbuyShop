@@ -339,7 +339,7 @@ public class RegisterActivity extends BaseActivity<UserRegisterContract.View, Us
         Map<String, Object> map = new HashMap<>();
         map.put("username", emptyGson.getUsername());
         map.put("uid", String.valueOf(emptyGson.getId()));
-        String s = RetrofitUtils.BASE_URL + "/StuShop/" + emptyGson.getAvatar();
+        String s = RetrofitUtils.BASE_URL + emptyGson.getAvatar();
         map.put("avatar", s.replace("\\", "/"));
         map.put("sex", emptyGson.getSex());
         map.put("age", emptyGson.getAge());

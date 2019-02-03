@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.home.view.NewUpperShelfActivity"
+    tools:ignore="MissingDefaultResource">
+
+    <include layout="@layout/common_toolbar" />
+
+    <net.lucode.hackware.magicindicator.MagicIndicator
+        android:layout_width="match_parent"
+        android:id="@+id/mg_newest"
+        android:layout_height="@dimen/dp_55" />
+
+   <android.support.v4.view.ViewPager
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"
+       android:id="@+id/vp_newest"/>
+
+</LinearLayout>

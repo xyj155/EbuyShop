@@ -31,7 +31,7 @@ public class HomeGoodsTimerPurseAdapter extends BaseQuickAdapter<GoodsGson, Base
         TextView view = helper.getView(R.id.tv_price_orign);
         view.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
         view.getPaint().setAntiAlias(true);
-        RoundedCorners roundedCorners = new RoundedCorners(10);
+        RoundedCorners roundedCorners = new RoundedCorners(18);
         RequestOptions options = RequestOptions.bitmapTransform(roundedCorners).override(300, 300);
         Log.i(TAG, "convert: " + item.getGoodsPic());
         Glide.with(context).asBitmap().load(item.getGoodsPic()).apply(options).into((ImageView) helper.getView(R.id.iv_goodsPic));

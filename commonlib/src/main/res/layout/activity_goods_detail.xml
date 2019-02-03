@@ -33,7 +33,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="#eeeff3"
+                        android:background="#fff"
                         android:orientation="vertical">
 
                         <FrameLayout
@@ -65,7 +65,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="10dp"
                             android:alpha="0.4"
-                            android:background="#dddddd" />
+                            android:background="#fafafa" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -135,6 +135,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="" />
                             <View
+                                android:visibility="gone"
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/dp_10"
                                 android:background="#fafafa" />
@@ -180,7 +181,7 @@
 
                         <View
                             android:layout_width="match_parent"
-                            android:layout_height="@dimen/dp_10"
+                            android:layout_height="@dimen/dp_6"
                             android:background="#fafafa" />
 
                         <LinearLayout
@@ -281,6 +282,7 @@
 
                         <android.support.v7.widget.RecyclerView
                             android:id="@+id/ry_comment"
+                           android:background="#fff"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center" />
