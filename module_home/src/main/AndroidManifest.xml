@@ -16,7 +16,8 @@
             android:name="com.example.home.view.AddSecondHandTradingActivity"
             android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity android:name="com.example.home.view.SecondHandsKindActivity" />
-        <activity android:name="com.example.home.view.SecondGoodsDetailActivity"></activity>
+        <activity android:name="com.example.home.view.SecondGoodsDetailActivity" />
+        <activity android:name="com.example.home.view.HomeActivityActivity"></activity>
     </application>
 
 </manifest>

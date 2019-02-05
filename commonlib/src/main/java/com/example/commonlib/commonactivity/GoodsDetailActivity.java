@@ -202,7 +202,7 @@ public class GoodsDetailActivity extends BaseActivity<GoodsDetailContract.View, 
         boolean isTimer = getIntent().getBooleanExtra("isTimer", false);
         if (isTimer){
             rlTimer.setVisibility(View.VISIBLE);
-            tvTime.setText(getIntent().getStringExtra("time").substring(0,10));
+            tvTime.setText(getIntent().getStringExtra("time").substring(0,10)+"  00:00:00");
         }
     }
 

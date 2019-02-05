@@ -1,6 +1,7 @@
 package com.example.home.view;
 
 import android.annotation.SuppressLint;
+import android.content.ComponentName;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
@@ -28,6 +29,7 @@ import com.bumptech.glide.Glide;
 import com.example.commonlib.annotation.UserType;
 import com.example.commonlib.base.BaseFragment;
 import com.example.commonlib.commonactivity.BrowserActivity;
+import com.example.commonlib.commonactivity.GoodsDetailActivity;
 import com.example.commonlib.gson.BannerGson;
 import com.example.commonlib.gson.GoodsGson;
 import com.example.commonlib.gson.HotPurseActivityGson;
@@ -45,6 +47,7 @@ import com.example.home.presenter.HomePagePresenter;
 import com.example.home.util.ComplexViewMF;
 import com.gongwen.marqueen.MarqueeFactory;
 import com.gongwen.marqueen.MarqueeView;
+import com.gongwen.marqueen.util.OnItemClickListener;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshFooter;
 import com.scwang.smartrefresh.layout.api.RefreshHeader;
@@ -384,6 +387,26 @@ public class HomeFragment extends BaseFragment<HomePagePresenter> implements Hom
     public void loadMarqueenList(List<MarQueenGson> list) {
         MarqueeFactory<LinearLayout, MarQueenGson> marqueeFactory = new ComplexViewMF(getContext());
         marqueeFactory.setData(list);
+        marqueeView.setOnItemClickListener(new OnItemClickListener<LinearLayout, MarQueenGson>() {
+            @Override
+            public void onItemClickListener(LinearLayout mView, MarQueenGson mData, int mPosition) {
+
+                if (mData.getGoodId()!=null){
+                    Intent intent = new Intent(getContext(), GoodsDetailActivity.class);
+                    intent.putExtra("goodsId", mData.getGoodId());
+                    startActivity(intent);
+                }else if (mData.getPackName()!=null){
+                    Intent intent = new Intent();
+                    intent.setComponent(new ComponentName("com.xuyijie.ebuyshop",mData.getPackName()));
+                    startActivity(intent);
+                }else if (mData.getUrl()!=null){
+                    Intent intent = new Intent(getContext(), BrowserActivity.class);
+                    intent.putExtra("url", mData.getUrl());
+                    startActivity(intent);
+                }
+
+            }
+        });
         marqueeView.setMarqueeFactory(marqueeFactory);
         marqueeView.startFlipping();
     }
@@ -407,10 +430,10 @@ public class HomeFragment extends BaseFragment<HomePagePresenter> implements Hom
             long hours = (diff - days * (1000 * 60 * 60 * 24)) / (1000 * 60 * 60);
             long minutes = (diff - days * (1000 * 60 * 60 * 24) - hours * (1000 * 60 * 60)) / (1000 * 60);
             long second = (diff % (1000 * 60)) / 1000;
-            mDay=days;
-            mHour=hours;
-            mMin=minutes;
-            mSecond=second;
+            mDay = days;
+            mHour = hours;
+            mMin = minutes;
+            mSecond = second;
             startRun();
         } catch (ParseException e) {
             e.printStackTrace();
@@ -423,10 +446,10 @@ public class HomeFragment extends BaseFragment<HomePagePresenter> implements Hom
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            if (msg.what==1) {
+            if (msg.what == 1) {
                 computeTime();
-                tvTime.setText("  "+mHour+"    "+mMin+"   "+mSecond);
-                if (mDay==0&&mHour==0&&mMin==0&&mSecond==0) {
+                tvTime.setText("  " + mHour + "    " + mMin + "   " + mSecond);
+                if (mDay == 0 && mHour == 0 && mMin == 0 && mSecond == 0) {
 
                 }
             }
@@ -476,7 +499,6 @@ public class HomeFragment extends BaseFragment<HomePagePresenter> implements Hom
             }
         }
     }
-
 
 
     @Override

@@ -188,7 +188,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
                                 android:background="@mipmap/mall_flash_sale_time"
-                                android:text=" 03  48  50"
+                                android:text=""
                                 android:textColor="#fff"
                                 android:textSize="@dimen/dp_15" />
 

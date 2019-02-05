@@ -23,18 +23,10 @@ public class MarQueenGson {
 
     private int id;
     private String mar_text;
-    private Object url;
-    private Object packName;
-    private Object goodId;
+    private String url;
+    private String  packName;
+    private String goodId;
     private String tag;
-
-    public String getTag() {
-        return tag;
-    }
-
-    public void setTag(String tag) {
-        this.tag = tag;
-    }
 
     public int getId() {
         return id;
@@ -52,27 +44,35 @@ public class MarQueenGson {
         this.mar_text = mar_text;
     }
 
-    public Object getUrl() {
+    public String getUrl() {
         return url;
     }
 
-    public void setUrl(Object url) {
+    public void setUrl(String url) {
         this.url = url;
     }
 
-    public Object getPackName() {
+    public String getPackName() {
         return packName;
     }
 
-    public void setPackName(Object packName) {
+    public void setPackName(String packName) {
         this.packName = packName;
     }
 
-    public Object getGoodId() {
+    public String getGoodId() {
         return goodId;
     }
 
-    public void setGoodId(Object goodId) {
+    public void setGoodId(String goodId) {
         this.goodId = goodId;
+    }
+
+    public String getTag() {
+        return tag;
+    }
+
+    public void setTag(String tag) {
+        this.tag = tag;
     }
 }

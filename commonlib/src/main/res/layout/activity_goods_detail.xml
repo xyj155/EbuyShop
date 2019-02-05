@@ -63,18 +63,23 @@
 
                         <RelativeLayout
                             android:id="@+id/rl_timer"
-
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/dp_55"
-                            android:background="@drawable/bg_goods_detail_timer">
+                            android:background="@drawable/bg_goods_detail_timer"
+                            android:visibility="gone">
 
                             <TextView
                                 android:id="@+id/iv_time"
-                                android:layout_width="@dimen/dp_110"
-                                android:layout_height="@dimen/dp_44"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
                                 android:layout_centerVertical="true"
-                                android:background="@drawable/btn_follow_n"
+                                android:layout_marginLeft="@dimen/dp_15"
+                                android:background="@mipmap/btn_follow_n"
                                 android:gravity="center"
+                                android:paddingLeft="@dimen/dp_14"
+                                android:paddingTop="@dimen/dp_8"
+                                android:paddingRight="@dimen/dp_14"
+                                android:paddingBottom="@dimen/dp_8"
                                 android:text="限时秒杀"
                                 android:textColor="#fff"
                                 android:textSize="16sp" />
@@ -82,29 +87,30 @@
                             <LinearLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
-                                android:padding="@dimen/dp_4"
                                 android:layout_toLeftOf="@+id/iv_arrow"
-                                android:orientation="vertical">
+                                android:orientation="vertical"
+                                android:padding="@dimen/dp_4">
 
                                 <TextView
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
-                                    android:layout_weight="1.2"
-                                    android:textSize="13sp"
                                     android:layout_toRightOf="@+id/iv_time"
-                                    android:text="结束时间"
+                                    android:layout_weight="1.2"
                                     android:gravity="center|left"
-                                    android:textColor="#ffd321" />
+                                    android:text="结束时间"
+                                    android:textColor="#ffd321"
+                                    android:textSize="13sp" />
+
                                 <TextView
-                                    android:paddingTop="@dimen/dp_3"
-                                    android:textSize="15sp"
-                                    android:textStyle="bold"
                                     android:id="@+id/tv_time"
-                                    android:layout_weight="0.8"
                                     android:layout_width="wrap_content"
                                     android:layout_height="match_parent"
+                                    android:layout_weight="0.8"
+                                    android:paddingTop="@dimen/dp_3"
+                                    android:text="2016-2-2"
                                     android:textColor="#ffd321"
-                                    android:text="2016-2-2"/>
+                                    android:textSize="15sp"
+                                    android:textStyle="bold" />
                             </LinearLayout>
 
                             <ImageView

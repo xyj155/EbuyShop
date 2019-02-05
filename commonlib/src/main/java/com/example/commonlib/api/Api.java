@@ -204,4 +204,6 @@ public interface Api {
     @GET("/StuShop/public/index.php/index/Time/queryGoodsTime")
     Observable<BaseGson<TimeGoodsGson>> queryGoodsTime(@Query("timeId")String timeId);
 
+    @GET("/StuShop/public/index.php/index/Goods/queryHomeActivityByName")
+    Observable<BaseGson<GoodsGson>> queryHomeActivityByName(@Query("activityName")String activityName);
 }

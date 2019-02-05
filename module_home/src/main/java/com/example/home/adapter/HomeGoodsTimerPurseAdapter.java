@@ -14,8 +14,8 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.example.commonlib.commonactivity.GoodsDetailActivity;
 import com.example.commonlib.gson.GoodsGson;
+import com.example.home.view.TimeFlashSaleActivity;
 import com.xuyijie.home.R;
 
 import java.util.List;
@@ -34,8 +34,7 @@ public class HomeGoodsTimerPurseAdapter extends BaseQuickAdapter<GoodsGson, Base
         .setOnClickListener(R.id.ll_goods, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(context,GoodsDetailActivity.class);
-                intent.putExtra("goodsId",String.valueOf(item.getId()));
+                Intent intent=new Intent(context,TimeFlashSaleActivity.class);
                 context.startActivity(intent);
             }
         });

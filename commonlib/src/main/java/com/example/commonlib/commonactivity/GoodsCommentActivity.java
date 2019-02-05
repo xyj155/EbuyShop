@@ -3,7 +3,9 @@ package com.example.commonlib.commonactivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.example.commonlib.R;
 import com.example.commonlib.R2;
@@ -50,6 +52,10 @@ public class GoodsCommentActivity extends BaseActivity<GoodsCommentContract.View
         mPresenter.queryGoodsComment(getIntent().getStringExtra("goodsId"));
         ryComment.setLayoutManager(new LinearLayoutManager(GoodsCommentActivity.this));
         commnetAdater = new GoodsCommentAdapter(null, GoodsCommentActivity.this);
+        View inflate = View.inflate(GoodsCommentActivity.this, R.layout.common_empty, null);
+        TextView viewById = inflate.findViewById(R.id.tv_empty);
+        viewById.setText("还没有人评论哦！要不坐个沙发？");
+        commnetAdater.setEmptyView(inflate);
         ryComment.setAdapter(commnetAdater);
     }
 

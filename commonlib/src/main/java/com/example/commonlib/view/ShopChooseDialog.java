@@ -15,7 +15,6 @@ import android.view.WindowManager;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
@@ -27,6 +26,7 @@ import com.example.commonlib.contract.GoodsStyleContract;
 import com.example.commonlib.gson.GoodsStyleGson;
 import com.example.commonlib.presenter.GoodsStylePresenter;
 import com.example.commonlib.util.SharePreferenceUtil;
+import com.example.commonlib.view.toast.ToastUtils;
 
 import java.util.List;
 
@@ -152,9 +152,9 @@ public class ShopChooseDialog extends Dialog implements GoodsStyleContract.View,
     @Override
     public void addGoodsInShopCar(boolean isSuccess) {
         if (isSuccess) {
-            Toast.makeText(context, "添加成功", Toast.LENGTH_SHORT).show();
+            ToastUtils.show("添加成功");
         } else {
-            Toast.makeText(context, "添加失败", Toast.LENGTH_SHORT).show();
+            ToastUtils.show("添加失败");
         }
         dismiss();
     }

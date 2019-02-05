@@ -99,7 +99,7 @@ public class UserFragment extends BaseFragment<UserPaymentPresenter> implements 
             }
         });
         Log.i(TAG, "initView: " + SharePreferenceUtil.getUser("avatar", "String"));
-        Glide.with(getContext()).asBitmap().apply(new RequestOptions().error(R.mipmap.ic_user_avatar_bg)).load(SharePreferenceUtil.getUser("avatar", "String")).into(ivHead);
+        Glide.with(getContext()).asBitmap().apply(new RequestOptions().error(R.mipmap.ic_user_avatar_bg)).load(RetrofitUtils.BASE_URL+SharePreferenceUtil.getUser("avatar", "String")).into(ivHead);
         Log.i(TAG, "initView: queryUserOrderCount" + String.valueOf(SharePreferenceUtil.getUser("uid", "1")));
         ViewTreeObserver viewTreeObserver = rlToolbar.getViewTreeObserver();
         viewTreeObserver.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {

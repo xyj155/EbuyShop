@@ -1,10 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
+    android:orientation="vertical"
+    android:gravity="center"
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
     android:layout_height="match_parent">
-<TextView
-    android:layout_width="@dimen/dp_110"
-    android:layout_height="@dimen/dp_110"
+<ImageView
+    android:layout_width="wrap_content"
+    android:layout_margin="@dimen/dp_15"
+    android:layout_height="wrap_content"
+    android:src="@mipmap/ic_empty_myallgift"/>
+    <TextView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     android:text="还没有数据哦，看看其他的吧！"
     android:layout_centerVertical="true"
     android:textColor="#000"
@@ -12,6 +19,5 @@
     android:textStyle="bold"
     android:layout_centerInParent="true"
     android:gravity="center"
-    android:drawablePadding="@dimen/dp_16"
-    android:drawableTop="@mipmap/ic_empty_myallgift"/>
-</RelativeLayout>
+    android:drawablePadding="@dimen/dp_16" />
+</LinearLayout>

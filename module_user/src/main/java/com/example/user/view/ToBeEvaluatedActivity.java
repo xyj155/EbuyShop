@@ -140,13 +140,15 @@ public class ToBeEvaluatedActivity extends BaseActivity<ToBeEvaluatedContract.Vi
                     ToastUtils.show("评价内容你还没有填写哦！");
                 } else if (evaluate.isEmpty()) {
                     ToastUtils.show("你还没有选择评价级别哦！");
+                } else if (pictureList.size() < 1) {
+                    ToastUtils.show("为什么不上传买家秀呢？");
                 } else {
                     final Map<String, RequestBody> partMap = new HashMap<>();
                     partMap.put("userId", RxPartMapUtils.toRequestBodyOfText(String.valueOf(SharePreferenceUtil.getUser("uid", "String"))));
                     partMap.put("goodsId", RxPartMapUtils.toRequestBodyOfText(getIntent().getStringExtra("goodsId")));
                     partMap.put("userComment", RxPartMapUtils.toRequestBodyOfText(etContent.getText().toString()));
                     partMap.put("orderNum", RxPartMapUtils.toRequestBodyOfText(getIntent().getStringExtra("orderNum")));
-                    partMap.put("evaluateRank", RxPartMapUtils.toRequestBodyOfText("小米"));
+                    partMap.put("evaluateRank", RxPartMapUtils.toRequestBodyOfText(evaluate));
                     final List<MultipartBody.Part> Imagelist = new ArrayList<>();
                     for (Object media : pictureList) {
                         if (!media.equals(R.drawable.ic_product_evaluating_add)) {

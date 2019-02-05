@@ -36,7 +36,6 @@ public class PurseGoodsAdapter extends BaseQuickAdapter<GoodsGson, BaseViewHolde
                         context.startActivity(view);
                     }
                 });
-        ;
         Glide.with(context).asBitmap().load(item.getGoodsPic()).into((ImageView) helper.getView(R.id.ivCover));
     }
 }
