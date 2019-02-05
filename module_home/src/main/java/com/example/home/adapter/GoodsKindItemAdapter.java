@@ -36,7 +36,7 @@ public class GoodsKindItemAdapter extends BaseQuickAdapter<KindItemGson, BaseVie
                     @Override
                     public void onClick(View v) {
                         Intent intent = new Intent(context, GoodsListSortedActivity.class);
-                        intent.putExtra("kind", item.getKind_name());
+                        intent.putExtra("kind", String.valueOf(item.getId()));
                         context.startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(context).toBundle());
                     }
                 });
