@@ -3,6 +3,7 @@ package com.example.commonlib.commonactivity;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.NestedScrollView;
@@ -17,6 +18,7 @@ import android.widget.CheckBox;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
@@ -113,6 +115,10 @@ public class GoodsDetailActivity extends BaseActivity<GoodsDetailContract.View, 
     CheckBox cbCollection;
     @BindView(R2.id.tv_shopcar)
     TextView tvShopcar;
+    @BindView(R2.id.tv_time)
+    TextView tvTime;
+    @BindView(R2.id.rl_timer)
+    RelativeLayout rlTimer;
 
     private ServiceAdapter serviceAdapter = new ServiceAdapter(null);
     private GoodsCommentPicAdapter goodsCommentPicAdapter = new GoodsCommentPicAdapter(null);
@@ -193,6 +199,11 @@ public class GoodsDetailActivity extends BaseActivity<GoodsDetailContract.View, 
                 }
             }
         });
+        boolean isTimer = getIntent().getBooleanExtra("isTimer", false);
+        if (isTimer){
+            rlTimer.setVisibility(View.VISIBLE);
+            tvTime.setText(getIntent().getStringExtra("time").substring(0,10));
+        }
     }
 
     @Override
@@ -225,6 +236,13 @@ public class GoodsDetailActivity extends BaseActivity<GoodsDetailContract.View, 
         }
     }
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
+    }
+
 
     private class ServiceAdapter extends BaseQuickAdapter<String, BaseViewHolder> {
 
@@ -251,14 +269,14 @@ public class GoodsDetailActivity extends BaseActivity<GoodsDetailContract.View, 
         protected void convert(BaseViewHolder helper, final GoodsDetailGson.PurseGoodsListBean item) {
             helper.setText(R.id.tv_goods_name, item.getGoodsName())
                     .setText(R.id.tv_price, "￥" + item.getGoodsPrice())
-            .setOnClickListener(R.id.ll_goods, new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent view = new Intent(GoodsDetailActivity.this,GoodsDetailActivity.class);
-                    view.putExtra("goodsId",String.valueOf(item.getId()));
-                    startActivity(view);
-                }
-            });
+                    .setOnClickListener(R.id.ll_goods, new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent view = new Intent(GoodsDetailActivity.this, GoodsDetailActivity.class);
+                            view.putExtra("goodsId", String.valueOf(item.getId()));
+                            startActivity(view);
+                        }
+                    });
             RoundedCorners roundedCorners = new RoundedCorners(6);
             RequestOptions options = RequestOptions.bitmapTransform(roundedCorners).override(300, 300);
             Glide.with(GoodsDetailActivity.this).asBitmap().load(item.getGoodsPic()).apply(options).into((ImageView) helper.getView(R.id.iv_cover));
@@ -360,7 +378,7 @@ public class GoodsDetailActivity extends BaseActivity<GoodsDetailContract.View, 
             public void onClick(View v) {
                 if (cbCollection.isChecked()) {
                     mPresenter.addUserCollection(String.valueOf(SharePreferenceUtil.getUser("uid", "String")), String.valueOf(goodsGson.getId()), "0");
-                }else {
+                } else {
                     mPresenter.addUserCollection(String.valueOf(SharePreferenceUtil.getUser("uid", "String")), String.valueOf(goodsGson.getId()), "1");
                 }
             }
@@ -395,7 +413,7 @@ public class GoodsDetailActivity extends BaseActivity<GoodsDetailContract.View, 
         protected void convert(BaseViewHolder helper, String item) {
             RoundedCorners roundedCorners = new RoundedCorners(10);
             RequestOptions options = RequestOptions.bitmapTransform(roundedCorners).override(300, 300);
-            Glide.with(GoodsDetailActivity.this).asBitmap().load(RetrofitUtils.BASE_URL+item).apply(options).into((ImageView) helper.getView(R.id.iv_pic));
+            Glide.with(GoodsDetailActivity.this).asBitmap().load(RetrofitUtils.BASE_URL + item).apply(options).into((ImageView) helper.getView(R.id.iv_pic));
         }
     }
 

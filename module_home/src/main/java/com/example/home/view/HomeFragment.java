@@ -1,10 +1,14 @@
 package com.example.home.view;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.RequiresApi;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -28,13 +32,14 @@ import com.example.commonlib.gson.BannerGson;
 import com.example.commonlib.gson.GoodsGson;
 import com.example.commonlib.gson.HotPurseActivityGson;
 import com.example.commonlib.gson.MarQueenGson;
+import com.example.commonlib.gson.TimeGoodsGson;
 import com.example.commonlib.http.RetrofitUtils;
 import com.example.commonlib.loader.BannerViewHolder;
 import com.example.commonlib.util.RouterUtil;
 import com.example.commonlib.view.ObservableScrollView;
-import com.example.home.adapter.PurseGoodsAdapter;
 import com.example.home.adapter.HomeGoodsTimerPurseAdapter;
 import com.example.home.adapter.HomeHotGoodsActivityAdapter;
+import com.example.home.adapter.PurseGoodsAdapter;
 import com.example.home.contract.HomePageContract;
 import com.example.home.presenter.HomePagePresenter;
 import com.example.home.util.ComplexViewMF;
@@ -52,6 +57,11 @@ import com.zhouwei.mzbanner.MZBannerView;
 import com.zhouwei.mzbanner.holder.MZHolderCreator;
 import com.zhouwei.mzbanner.holder.MZViewHolder;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
@@ -76,6 +86,8 @@ public class HomeFragment extends BaseFragment<HomePagePresenter> implements Hom
     @BindView(R2.id.iv_share)
     TextView ivShare;
     Unbinder unbinder;
+    @BindView(R2.id.tv_time)
+    TextView tvTime;
     private MZBannerView<BannerGson> banner;
     private PurseGoodsAdapter purseGoodsAdapter;
     private RecyclerView ryPurse, ryTimerPurse, ryHot;
@@ -92,6 +104,7 @@ public class HomeFragment extends BaseFragment<HomePagePresenter> implements Hom
     private SmartRefreshLayout srHome;
     private HomeGoodsTimerPurseAdapter homeGoodsTimerPurseAdapter;
     private HomeHotGoodsActivityAdapter homeHotGoodsItemAdapter;
+    private List<BannerGson> bannerGsons = new ArrayList<>();
 
     @Override
     public void initData() {
@@ -114,6 +127,7 @@ public class HomeFragment extends BaseFragment<HomePagePresenter> implements Hom
         ryTimerPurse.setLayoutManager(linearLayoutManager);
 
         banner = view.findViewById(R.id.banner);
+
         ryPurse = view.findViewById(R.id.ryPurse);
         slHome = view.findViewById(R.id.slHome);
         llTitle = view.findViewById(R.id.llTitle);
@@ -247,7 +261,16 @@ public class HomeFragment extends BaseFragment<HomePagePresenter> implements Hom
         ryHot.setNestedScrollingEnabled(false);
         ryTimerPurse.setNestedScrollingEnabled(false);
         ryPurse.setNestedScrollingEnabled(false);
-
+        banner.setBannerPageClickListener(new MZBannerView.BannerPageClickListener() {
+            @Override
+            public void onPageClick(View view, int position) {
+                if (bannerGsons.size() != 0) {
+                    Intent intent = new Intent(getContext(), BrowserActivity.class);
+                    intent.putExtra("url", bannerGsons.get(position).getWeb_url());
+                    startActivity(intent);
+                }
+            }
+        });
     }
 
     @Override
@@ -260,6 +283,7 @@ public class HomeFragment extends BaseFragment<HomePagePresenter> implements Hom
     public void onResume() {
         super.onResume();
         banner.start();//开始轮播
+        marqueeView.startFlipping();
     }
 
 
@@ -325,7 +349,8 @@ public class HomeFragment extends BaseFragment<HomePagePresenter> implements Hom
     }
 
     @Override
-    public void loadHomeBanner(List<BannerGson> userGson) {
+    public void loadHomeBanner(final List<BannerGson> userGson) {
+        bannerGsons.addAll(userGson);
         banner.setPages(userGson, new MZHolderCreator() {
             @Override
             public MZViewHolder createViewHolder() {
@@ -334,7 +359,25 @@ public class HomeFragment extends BaseFragment<HomePagePresenter> implements Hom
         });
         banner.setDuration(200);
         banner.setIndicatorVisible(true);
+
+        banner.addPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                Log.i(TAG, "onPageScrolled: ");
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                Log.i(TAG, "onPageSelected: ");
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+                Log.i(TAG, "onPageScrollStateChanged: ");
+            }
+        });
         banner.start();
+
     }
 
     @Override
@@ -344,6 +387,97 @@ public class HomeFragment extends BaseFragment<HomePagePresenter> implements Hom
         marqueeView.setMarqueeFactory(marqueeFactory);
         marqueeView.startFlipping();
     }
+
+    private long mDay = 10;
+    private long mHour = 10;
+    private long mMin = 30;
+    private long mSecond = 00;
+    private boolean isRun = true;
+
+    @Override
+    public void loadTimer(TimeGoodsGson.TimeBean timeBean) {
+        Log.i(TAG, "loadTimer: " + timeBean);
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date d1 = null;
+        try {
+            d1 = df.parse(timeBean.getEndTime());
+            Date d2 = df.parse(timeBean.getCurrentTime());
+            long diff = d1.getTime() - d2.getTime();//这样得到的差值是微秒级别
+            long days = diff / (1000 * 60 * 60 * 24);
+            long hours = (diff - days * (1000 * 60 * 60 * 24)) / (1000 * 60 * 60);
+            long minutes = (diff - days * (1000 * 60 * 60 * 24) - hours * (1000 * 60 * 60)) / (1000 * 60);
+            long second = (diff % (1000 * 60)) / 1000;
+            mDay=days;
+            mHour=hours;
+            mMin=minutes;
+            mSecond=second;
+            startRun();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @SuppressLint("HandlerLeak")
+    private Handler timeHandler = new Handler() {
+
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            if (msg.what==1) {
+                computeTime();
+                tvTime.setText("  "+mHour+"    "+mMin+"   "+mSecond);
+                if (mDay==0&&mHour==0&&mMin==0&&mSecond==0) {
+
+                }
+            }
+        }
+    };
+
+
+    /**
+     * 开启倒计时
+     */
+    private void startRun() {
+        new Thread(new Runnable() {
+
+            @Override
+            public void run() {
+                // TODO Auto-generated method stub
+                while (isRun) {
+                    try {
+                        Thread.sleep(1000); // sleep 1000ms
+                        Message message = Message.obtain();
+                        message.what = 1;
+                        timeHandler.sendMessage(message);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }).start();
+    }
+
+    /**
+     * 倒计时计算
+     */
+    private void computeTime() {
+        mSecond--;
+        if (mSecond < 0) {
+            mMin--;
+            mSecond = 59;
+            if (mMin < 0) {
+                mMin = 59;
+                mHour--;
+                if (mHour < 0) {
+                    // 倒计时结束
+                    mHour = 23;
+                    mDay--;
+                }
+            }
+        }
+    }
+
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -367,13 +501,13 @@ public class HomeFragment extends BaseFragment<HomePagePresenter> implements Hom
             Log.i(TAG, "onViewClicked: ");
             startActivity(new Intent(getContext(), NewUpperShelfActivity.class));
         } else if (id == R.id.tv_goods_news) {
-        
+
         } else if (id == R.id.iv_school_vip) {
             Intent intent = new Intent(getContext(), BrowserActivity.class);
             intent.putExtra("url", RetrofitUtils.BASE_URL + "/StuShop/public/index.php/index/Index/vipRecharge");
             startActivity(intent);
         } else if (id == R.id.iv_best) {
-
+            startActivity(new Intent(getContext(), SecondHandTradingMarketActivity.class));
         } else if (id == R.id.iv_share) {
             loginWraper(UserType.ISPERMITED, GoodsOrderShareActivity.class);
         } else if (id == R.id.ivKind) {

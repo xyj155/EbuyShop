@@ -5,7 +5,7 @@
 
     <ImageView
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_200"
+        android:layout_height="@dimen/dp_260"
         android:background="@drawable/live_vip_privileged_bg" />
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -49,6 +49,7 @@
         <RadioGroup
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:id="@+id/rg_time"
             android:orientation="horizontal"
             android:paddingLeft="@dimen/dp_10"
             android:paddingRight="@dimen/dp_10"
@@ -130,12 +131,11 @@
             android:layout_width="match_parent"
             android:padding="@dimen/dp_8"
             android:background="@drawable/alpha_bg"
-            android:layout_marginLeft="@dimen/dp_15"
-            android:layout_marginRight="@dimen/dp_15"
             android:layout_marginTop="@dimen/dp_17"
             android:layout_height="match_parent">
             <android.support.v7.widget.RecyclerView
                 android:layout_width="match_parent"
+                android:layout_marginTop="@dimen/dp_15"
                 android:layout_height="match_parent"
                 android:id="@+id/ry_time_sell"/>
         </LinearLayout>

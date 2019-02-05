@@ -23,7 +23,7 @@ import com.example.commonlib.util.SharePreferenceUtil;
 import com.example.commonlib.view.FullyGridLayoutManager;
 import com.example.commonlib.view.MyDialog;
 import com.example.commonlib.view.toast.ToastUtils;
-import com.example.user.adapter.GridImageAdapter;
+import com.example.commonlib.adapter.GridImageAdapter;
 import com.example.user.contract.ToBeEvaluatedContract;
 import com.example.user.presenter.ToBeEvaluatedPresenter;
 import com.xuyijie.user.R;

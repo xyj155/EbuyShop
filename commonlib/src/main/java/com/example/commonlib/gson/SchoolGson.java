@@ -16,7 +16,10 @@ public class SchoolGson {
     }
 
     public static class RECORDSBean {
+
+
         /**
+
          * name : 北京大学
          */
 

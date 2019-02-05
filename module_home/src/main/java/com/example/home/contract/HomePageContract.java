@@ -6,6 +6,7 @@ import com.example.commonlib.gson.BannerGson;
 import com.example.commonlib.gson.GoodsGson;
 import com.example.commonlib.gson.HotPurseActivityGson;
 import com.example.commonlib.gson.MarQueenGson;
+import com.example.commonlib.gson.TimeGoodsGson;
 
 import java.util.List;
 
@@ -22,6 +23,7 @@ public interface HomePageContract {
         Observable<BaseGson<BannerGson>> getHomeBanner();
 
         Observable<BaseGson<MarQueenGson>> getMarqueenList();
+        Observable<BaseGson<TimeGoodsGson.TimeBean>> queryTimeSell();
     }
 
     interface View extends BaseView {
@@ -34,6 +36,8 @@ public interface HomePageContract {
         void loadHomeBanner(List<BannerGson> userGson);
 
         void loadMarqueenList(List<MarQueenGson> list);
+
+        void loadTimer(TimeGoodsGson.TimeBean timeBean);
     }
 
     interface Presenter {

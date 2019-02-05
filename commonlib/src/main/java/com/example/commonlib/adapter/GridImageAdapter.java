@@ -1,4 +1,4 @@
-package com.example.user.adapter;
+package com.example.commonlib.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -8,8 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.example.commonlib.R;
 import com.example.commonlib.util.GlideUtil;
-import com.xuyijie.user.R;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -71,23 +71,24 @@ android {
     productFlavors {
         baidu {
             manifestPlaceholders = [
-                    JPUSH_PKGNAME      : "com.xuyijie.ebuyshop",
-                    JPUSH_CHANNEL      : "baidu",
+                    JPUSH_PKGNAME     : "com.xuyijie.ebuyshop",
+                    JPUSH_CHANNEL     : "baidu",
                     JPUSH_APPKEY      : "b115a26e2d2b360f3655db24",
-                                    GT_INSTALL_CHANNEL      : "yinyongbao"
+                    GT_INSTALL_CHANNEL: "yinyongbao"
             ]
         }
         yinyongbao {
-            manifestPlaceholders = [JPUSH_PKGNAME      : "com.xuyijie.ebuyshop",
-                                    JPUSH_CHANNEL      : "yinyongbao",
+            manifestPlaceholders = [JPUSH_PKGNAME     : "com.xuyijie.ebuyshop",
+                                    JPUSH_CHANNEL     : "yinyongbao",
                                     JPUSH_APPKEY      : "b115a26e2d2b360f3655db24",
-                                    GT_INSTALL_CHANNEL      : "yinyongbao"]
+                                    GT_INSTALL_CHANNEL: "yinyongbao"]
         }
     }
 }
 
 dependencies {
     implementation 'com.alibaba:arouter-api:1.4.1'
+    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
     annotationProcessor 'com.alibaba:arouter-compiler:1.2.2'
     implementation project(':commonlib')
 //    if (!isNeedShopCarModule.toBoolean()) {

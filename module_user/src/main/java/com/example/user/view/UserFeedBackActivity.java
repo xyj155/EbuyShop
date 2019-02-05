@@ -25,7 +25,7 @@ import com.example.commonlib.view.FullyGridLayoutManager;
 import com.example.commonlib.view.ListDialog;
 import com.example.commonlib.view.MyDialog;
 import com.example.commonlib.view.toast.ToastUtils;
-import com.example.user.adapter.GridImageAdapter;
+import com.example.commonlib.adapter.GridImageAdapter;
 import com.example.user.contract.UserFeedBackContract;
 import com.example.user.presenter.UserFeedBackPresenter;
 import com.xuyijie.user.R;

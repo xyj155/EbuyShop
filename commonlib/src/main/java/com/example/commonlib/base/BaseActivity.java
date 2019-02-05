@@ -22,7 +22,7 @@ public abstract class BaseActivity<V extends BaseView, T extends BasePresenter<V
     /***获取TAG的activity名称**/
     protected final String TAG = this.getClass().getSimpleName();
     public T mPresenter;
-    private Dialog progressDialog;
+    public Dialog progressDialog;
 
     public void loginWraper(UserType type, Class context) {
         switch (type) {
@@ -49,6 +49,12 @@ public abstract class BaseActivity<V extends BaseView, T extends BasePresenter<V
         setContentView(intiLayout());
         getWindow().setEnterTransition(new Explode().setDuration(400));
         getWindow().setExitTransition(new Explode().setDuration(400));
+        progressDialog = new Dialog(BaseActivity.this, R.style.progress_dialog);
+        progressDialog.setContentView(R.layout.base_dialog);
+        progressDialog.setCancelable(true);
+        progressDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        TextView msg = (TextView) progressDialog.findViewById(R.id.id_tv_loadingmsg);
+        msg.setText("");
         //初始化控件
         initView();
         //设置数据
@@ -68,17 +74,16 @@ public abstract class BaseActivity<V extends BaseView, T extends BasePresenter<V
     }
 
     public void createDialog(String msgStr) {
-        progressDialog = new Dialog(BaseActivity.this, R.style.progress_dialog);
-        progressDialog.setContentView(R.layout.base_dialog);
-        progressDialog.setCancelable(true);
-        progressDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-        TextView msg = (TextView) progressDialog.findViewById(R.id.id_tv_loadingmsg);
-        msg.setText(msgStr);
+
+
         progressDialog.show();
+
+
     }
 
     public void mhideDialog() {
-        progressDialog.cancel();
+        if (progressDialog.isShowing() || progressDialog != null)
+            progressDialog.cancel();
     }
 
 
@@ -88,6 +93,7 @@ public abstract class BaseActivity<V extends BaseView, T extends BasePresenter<V
         if (mPresenter != null) {
             mPresenter.detachView();
         }
+        progressDialog = null;
 
     }
 

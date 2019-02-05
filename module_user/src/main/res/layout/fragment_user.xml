@@ -28,11 +28,12 @@
 
                 <com.example.commonlib.view.CircleImageView
                     android:id="@+id/ivHead"
-                    android:layout_width="90dp"
-                    android:layout_height="90dp"
+                    android:src="@mipmap/ic_user_avatar_bg"
+                    android:layout_width="@dimen/dp_120"
+                    android:layout_height="@dimen/dp_120"
                     android:layout_gravity="bottom|center"
                     app:civ_border_color="#fff"
-                    app:civ_border_width="@dimen/dp_2" />
+                    app:civ_border_width="@dimen/dp_4" />
 
 
             </FrameLayout>

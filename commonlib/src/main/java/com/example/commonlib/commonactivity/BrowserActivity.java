@@ -19,6 +19,8 @@ import com.example.commonlib.base.BaseActivity;
 import com.example.commonlib.contract.HomeContract;
 import com.example.commonlib.presenter.LoginPresent;
 import com.example.commonlib.util.RouterUtil;
+import com.tencent.smtt.sdk.DownloadListener;
+import com.tencent.smtt.sdk.WebChromeClient;
 import com.tencent.smtt.sdk.WebView;
 import com.tencent.smtt.sdk.WebViewClient;
 
@@ -28,6 +30,7 @@ import butterknife.OnClick;
 
 @Route(path = RouterUtil.BROWSER)
 public class BrowserActivity extends BaseActivity<HomeContract.View, LoginPresent> {
+
     @BindView(R2.id.iv_close)
     ImageView ivClose;
     private WebView mWebView;
@@ -58,7 +61,8 @@ public class BrowserActivity extends BaseActivity<HomeContract.View, LoginPresen
 
         mWebView.getSettings().setJavaScriptEnabled(true);// 支持js
 
-        mWebView.setWebViewClient(new WebViewClient() {
+        WebViewClient webViewClient = new WebViewClient() {
+
             @Override
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
@@ -68,6 +72,7 @@ public class BrowserActivity extends BaseActivity<HomeContract.View, LoginPresen
                     Log.i(TAG, "initView: " + title);
                 }
             }
+
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 // 如下方案可在非微信内部WebView的H5页面中调出微信支付
@@ -80,6 +85,28 @@ public class BrowserActivity extends BaseActivity<HomeContract.View, LoginPresen
                 }
                 return false;
             }
+        };
+        mWebView.setWebViewClient(webViewClient);
+        mWebView.setWebChromeClient(new WebChromeClient() {
+            @Override
+            public void onProgressChanged(WebView view, int newProgress) {
+                if (newProgress == 100) {
+                    mhideDialog();
+                } else {
+                    createDialog("");
+                }
+                super.onProgressChanged(view, newProgress);
+            }
+        });
+        mWebView.setDownloadListener(new DownloadListener() {
+            @Override
+            public void onDownloadStart(String url, String userAgent, String contentDisposition, String mimeType, long contentLength) {
+                Uri uri = Uri.parse(url);
+
+                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+
+                startActivity(intent);
+            }
         });
     }
 
@@ -91,6 +118,9 @@ public class BrowserActivity extends BaseActivity<HomeContract.View, LoginPresen
         mWebView.destroy();
         mWebView = null;
     }
+
+
+
 
 
     //判断app是否安装
@@ -135,8 +165,6 @@ public class BrowserActivity extends BaseActivity<HomeContract.View, LoginPresen
     public void initData() {
 
     }
-
-
 
 
     @OnClick({R2.id.iv_close})

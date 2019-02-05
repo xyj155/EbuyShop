@@ -17,9 +17,12 @@ import com.example.commonlib.gson.KindItemGson;
 import com.example.commonlib.gson.MarQueenGson;
 import com.example.commonlib.gson.NewestShelfGson;
 import com.example.commonlib.gson.OrderDetailGson;
+import com.example.commonlib.gson.SecondHandsGoodsGson;
+import com.example.commonlib.gson.SecondKindGson;
 import com.example.commonlib.gson.ShopCarGson;
 import com.example.commonlib.gson.SubmitOrderGson;
 import com.example.commonlib.gson.SubmitOrderItemGson;
+import com.example.commonlib.gson.TimeGoodsGson;
 import com.example.commonlib.gson.UserGson;
 import com.example.commonlib.gson.UserOrderStatusGson;
 import com.example.commonlib.gson.UserPaymentGson;
@@ -68,6 +71,8 @@ public interface Api {
     @GET("/StuShop/public/index.php/index/Goods/getHomeActivity")
     Observable<BaseGson<HotPurseActivityGson>> getHomeActivity();
 
+    @GET("/StuShop/public/index.php/index/Goods/queryTimeSell")
+    Observable<BaseGson<TimeGoodsGson.TimeBean>> queryTimeSell();
     //获取主页轮播图
     @GET("/StuShop/public/index.php/index/Banner/getHomeBanner")
     Observable<BaseGson<BannerGson>> getHomeBanner();
@@ -183,4 +188,20 @@ public interface Api {
 
     @GET("/StuShop/public/index.php/index/Goods/newUpperShelf")
     Observable<BaseGson<NewestShelfGson>> newUpperShelf(@Query("date")String date);
+
+    @GET("/StuShop/public/index.php/index/Second/queryAllSecondKind")
+    Observable<BaseGson<SecondKindGson>> queryAllSecondKind();
+
+    @Multipart
+    @POST("/StuShop/public/index.php/index/Second/addSecondHanding")
+    Observable<BaseGson<EmptyGson>> addSecondHanding(
+            @PartMap() Map<String, RequestBody> partMap,
+            @Part       List<MultipartBody.Part> file);
+
+    @GET("/StuShop/public/index.php/index/Second/queryAllSecondGoods")
+    Observable<BaseGson<SecondHandsGoodsGson>> queryAllSecondGoods(@Query("limit")String limit,@Query("page")String page);
+
+    @GET("/StuShop/public/index.php/index/Time/queryGoodsTime")
+    Observable<BaseGson<TimeGoodsGson>> queryGoodsTime(@Query("timeId")String timeId);
+
 }

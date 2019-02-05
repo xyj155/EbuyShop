@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#fff"
+    android:orientation="vertical"
+    tools:context="com.example.home.view.AddSecondHandTradingActivity">
+
+    <include layout="@layout/common_toolbar" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.v4.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="@dimen/dp_60">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <EditText
+                    android:id="@+id/et_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_55"
+                    android:background="#fff"
+                    android:textSize="14sp"
+                    android:hint="标题  品类品牌型号  买家搜索的关键字"
+                    android:paddingLeft="@dimen/dp_10" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_1"
+                    android:background="#fafafa" />
+
+                <TextView
+                    android:id="@+id/tv_school"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_55"
+                    android:background="#fff"
+                    android:textSize="14sp"
+                    android:drawableRight="@mipmap/forum_home_follow_title_forward_ic"
+                    android:gravity="center|left"
+                    android:hint="你的学校"
+                    android:paddingLeft="@dimen/dp_10"
+                    android:paddingRight="@dimen/dp_10"
+                    android:textColor="#000" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_1"
+                    android:background="#fafafa" />
+
+                <EditText
+                    android:id="@+id/et_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_145"
+                    android:background="#fff"
+                    android:gravity="top"
+                    android:textSize="14sp"
+                    android:hint="商品出手的原因"
+                    android:paddingLeft="@dimen/dp_10"
+                    android:paddingTop="@dimen/dp_10" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_1"
+                    android:background="#fafafa" />
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/ry_second"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_8"
+                    android:background="#fafafa" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_55"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:padding="@dimen/dp_10"
+                        android:text="￥"
+                        android:textColor="#000"
+                        android:textSize="@dimen/dp_21"
+                        android:textStyle="bold" />
+
+                    <EditText
+                        android:id="@+id/et_price"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp_55"
+                        android:background="#fff"
+                        android:drawableRight="@mipmap/forum_home_follow_title_forward_ic"
+                        android:gravity="left|center"
+                        android:hint="价格"
+                        android:textSize="14sp"
+                        android:inputType="numberDecimal"
+                        android:paddingLeft="@dimen/dp_10"
+                        android:paddingRight="@dimen/dp_10" />
+                </LinearLayout>
+
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_8"
+                    android:background="#fafafa" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_55"
+                    android:background="#fff">
+
+                    <TextView
+                        android:id="@+id/tv_post_free"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/dp_55"
+                        android:gravity="left|center"
+                        android:paddingLeft="@dimen/dp_10"
+                        android:paddingRight="@dimen/dp_10"
+                        android:text="运费"
+                        android:textSize="17sp" />
+
+                    <EditText
+                        android:id="@+id/et_post_free"
+                        android:layout_width="@dimen/dp_150"
+                        android:layout_height="match_parent"
+                        android:layout_toRightOf="@+id/tv_post_free"
+                        android:backgroundTint="#fff"
+                        android:hint="价格"
+                        android:textSize="14sp"
+                        android:padding="@dimen/dp_5" />
+
+                    <RadioGroup
+                        android:id="@+id/rg_post_method"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_toRightOf="@+id/et_post_free"
+                        android:orientation="horizontal"
+                        android:weightSum="2">
+
+                        <RadioButton
+                            android:id="@+id/rb_free_shipping"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:button="@null"
+                            android:drawableLeft="@drawable/cb_second_goods_bg_check"
+                            android:drawablePadding="@dimen/dp_8"
+                            android:text="包邮" />
+
+                        <RadioButton
+                            android:id="@+id/rb_same_city"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:button="@null"
+                            android:drawableLeft="@drawable/cb_second_goods_bg_check"
+                            android:drawablePadding="@dimen/dp_8"
+                            android:text="同校交易" />
+                    </RadioGroup>
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_1"
+                    android:background="#fafafa" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/dp_55"
+                        android:background="#fff"
+                        android:gravity="left|center"
+                        android:paddingLeft="@dimen/dp_10"
+                        android:paddingRight="@dimen/dp_10"
+                        android:text="分类"
+                        android:textSize="17sp" />
+
+                    <TextView
+                        android:id="@+id/tv_kind"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:drawableRight="@mipmap/forum_home_follow_title_forward_ic"
+                        android:gravity="right|center"
+                        android:hint="点击选择"
+                        android:paddingRight="@dimen/dp_10"
+                        android:textColor="#000"
+                        android:textSize="17sp" />
+                </LinearLayout>
+
+            </LinearLayout>
+        </android.support.v4.widget.NestedScrollView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="#fff">
+
+            <TextView
+                android:id="@+id/tv_submit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/dp_16"
+                android:background="#ffd321"
+                android:gravity="center"
+                android:padding="@dimen/dp_14"
+                android:text="确认发布"
+                android:textColor="#000"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+    </RelativeLayout>
+
+
+</LinearLayout>

@@ -1,9 +1,11 @@
 package com.example.home.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Paint;
 import android.support.annotation.Nullable;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -12,6 +14,7 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
+import com.example.commonlib.commonactivity.GoodsDetailActivity;
 import com.example.commonlib.gson.GoodsGson;
 import com.xuyijie.home.R;
 
@@ -27,7 +30,15 @@ public class HomeGoodsTimerPurseAdapter extends BaseQuickAdapter<GoodsGson, Base
 
     @Override
     protected void convert(BaseViewHolder helper, final GoodsGson item) {
-        helper.setText(R.id.tv_price, "￥" + item.getGoodsPrice());
+        helper.setText(R.id.tv_price, "￥" + item.getGoodsPrice())
+        .setOnClickListener(R.id.ll_goods, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(context,GoodsDetailActivity.class);
+                intent.putExtra("goodsId",String.valueOf(item.getId()));
+                context.startActivity(intent);
+            }
+        });
         TextView view = helper.getView(R.id.tv_price_orign);
         view.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
         view.getPaint().setAntiAlias(true);

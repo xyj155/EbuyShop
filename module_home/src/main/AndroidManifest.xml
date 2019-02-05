@@ -10,7 +10,13 @@
         <activity android:name="com.example.home.view.GoodsOrderShareActivity" />
         <activity android:name="com.example.home.view.GoodsKindSortedActivity" />
         <activity android:name="com.example.home.view.TimeFlashSaleActivity" />
-        <activity android:name="com.example.home.view.NewUpperShelfActivity"></activity>
+        <activity android:name="com.example.home.view.NewUpperShelfActivity" />
+        <activity android:name="com.example.home.view.SecondHandTradingMarketActivity" />
+        <activity
+            android:name="com.example.home.view.AddSecondHandTradingActivity"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity android:name="com.example.home.view.SecondHandsKindActivity" />
+        <activity android:name="com.example.home.view.SecondGoodsDetailActivity"></activity>
     </application>
 
 </manifest>

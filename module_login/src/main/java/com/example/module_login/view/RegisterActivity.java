@@ -16,10 +16,8 @@ import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.alibaba.android.arouter.launcher.ARouter;
-import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.example.commonlib.base.BaseActivity;
@@ -32,6 +30,7 @@ import com.example.commonlib.util.SharePreferenceUtil;
 import com.example.commonlib.view.CircleImageView;
 import com.example.commonlib.view.ListDialog;
 import com.example.commonlib.view.SideIndexBar;
+import com.example.commonlib.view.toast.ToastUtils;
 import com.example.module_login.R;
 import com.example.module_login.R2;
 import com.example.module_login.contract.UserRegisterContract;
@@ -39,7 +38,6 @@ import com.example.module_login.presenter.UserRegisterPresenter;
 import com.google.gson.Gson;
 import com.qq.e.comm.util.Md5Util;
 import com.yuyh.library.imgsel.ISNav;
-import com.yuyh.library.imgsel.common.ImageLoader;
 import com.yuyh.library.imgsel.config.ISListConfig;
 
 import java.io.BufferedReader;
@@ -113,12 +111,8 @@ public class RegisterActivity extends BaseActivity<UserRegisterContract.View, Us
 
     @Override
     public void initView() {
-        ISNav.getInstance().init(new ImageLoader() {
-            @Override
-            public void displayImage(Context context, String path, ImageView imageView) {
-                Glide.with(context).load(path).into(imageView);
-            }
-        });
+
+        initToolBar().setToolBarTitle("用户信息");
         List<String> ageList = new ArrayList<>();
         for (int i = 18; i < 25; i++) {
             ageList.add(i + "岁");
@@ -237,9 +231,9 @@ public class RegisterActivity extends BaseActivity<UserRegisterContract.View, Us
             dialogSchool.show();
         } else if (id == R.id.tv_login) {
             if (tvPassword.getText().toString().isEmpty()){
-                Toast.makeText(this, "请输入密码", Toast.LENGTH_SHORT).show();
+                ToastUtils.show("请输入密码");
             }else if (tvPassword.getText().toString().length()<6){
-                Toast.makeText(this, "密码不可少于六位", Toast.LENGTH_SHORT).show();
+                ToastUtils.show("密码不可少于六位");
             }else {
                 int size = pathList.size();
                 if (rbBoy.isChecked() || rbGirl.isChecked()) {
@@ -252,10 +246,11 @@ public class RegisterActivity extends BaseActivity<UserRegisterContract.View, Us
                             mPresenter.userRegister(tvUsername.getText().toString(), Md5Util.encode(tvPassword.getText().toString()), String.valueOf(SharePreferenceUtil.getUser("telphone", "String")), tvAge.getText().toString(), rbBoy.isChecked() ? "男" : "女", tvCollage.getText().toString(), avatar);
                         }
                     } else {
-                        Toast.makeText(this, "你还没有选择头像", Toast.LENGTH_SHORT).show();
+                        ToastUtils.show("你还没有选择头像");
+
                     }
                 } else {
-                    Toast.makeText(this, "请选择你的性别", Toast.LENGTH_SHORT).show();
+                    ToastUtils.show("请选择你的性别");
                 }
             }
         }
@@ -356,7 +351,7 @@ public class RegisterActivity extends BaseActivity<UserRegisterContract.View, Us
 
     @Override
     public void registerFailed() {
-        Toast.makeText(this, "注册失败", Toast.LENGTH_SHORT).show();
+        ToastUtils.show("注册失败");
     }
 
     @Override

@@ -230,6 +230,11 @@ public class ApplicationInitial {
         return this;
     }
 
+    public ApplicationInitial initPermission() {
+
+        return this;
+    }
+
     public ApplicationInitial initX5() {
         //x5內核初始化回调
         QbSdk.PreInitCallback cb = new QbSdk.PreInitCallback() {
