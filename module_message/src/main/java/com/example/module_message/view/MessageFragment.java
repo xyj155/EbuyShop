@@ -1,5 +1,6 @@
 package com.example.module_message.view;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -40,6 +41,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 
 @Route(path = RouterUtil.MESSAGE_Fragment_Main)
@@ -52,10 +54,14 @@ public class MessageFragment extends BaseFragment<GoodsDetailPresenter> {
     Unbinder unbinder1;
     @BindView(R2.id.sl_message)
     ObservableScrollView slMessage;
+    @BindView(R2.id.tv_express)
+    TextView tvExpress;
+    @BindView(R2.id.tv_notice)
+    TextView tvNotice;
+    @BindView(R2.id.tv_other)
+    TextView tvOther;
     private RecyclerView ryRecent;
     private ConversationAdapter conversationAdapter;
-
-
 
 
     @Override
@@ -78,9 +84,8 @@ public class MessageFragment extends BaseFragment<GoodsDetailPresenter> {
         conversationAdapter = new ConversationAdapter(null);
         ryRecent.setAdapter(conversationAdapter);
         conversationAdapter.bindToRecyclerView(ryRecent);
-        View inflate = View.inflate(getContext(), R.layout.common_empty, null);
+        View inflate = View.inflate(getContext(), R.layout.common_empty_message, null);
         TextView viewById = inflate.findViewById(R.id.tv_empty);
-        viewById.setText("你还没有消息哦！");
         conversationAdapter.setEmptyView(inflate);
         smlContact.autoRefresh();
         smlContact.setOnRefreshListener(new OnRefreshListener() {
@@ -197,5 +202,17 @@ public class MessageFragment extends BaseFragment<GoodsDetailPresenter> {
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+    }
+
+    @OnClick({R2.id.tv_express, R2.id.tv_notice, R2.id.tv_other})
+    public void onViewClicked(View view) {
+        int i = view.getId();
+        if (i == R.id.tv_express) {
+            startActivity(new Intent(getContext(), MessageExpressActivity.class));
+        } else if (i == R.id.tv_notice) {
+            startActivity(new Intent(getContext(), MessageNoticeActivity.class));
+        } else if (i == R.id.tv_other) {
+            startActivity(new Intent(getContext(), MessageOtherActivity.class));
+        }
     }
 }

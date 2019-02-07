@@ -3,6 +3,7 @@ package com.example.commonlib.api;
 import com.example.commonlib.base.BaseGson;
 import com.example.commonlib.gson.AdvertisementGson;
 import com.example.commonlib.gson.BannerGson;
+import com.example.commonlib.gson.CommentDetailGson;
 import com.example.commonlib.gson.CouponGson;
 import com.example.commonlib.gson.EmptyGson;
 import com.example.commonlib.gson.ExpressGson;
@@ -15,6 +16,7 @@ import com.example.commonlib.gson.GoodsStyleGson;
 import com.example.commonlib.gson.HotPurseActivityGson;
 import com.example.commonlib.gson.KindItemGson;
 import com.example.commonlib.gson.MarQueenGson;
+import com.example.commonlib.gson.MemberGson;
 import com.example.commonlib.gson.NewestShelfGson;
 import com.example.commonlib.gson.OrderDetailGson;
 import com.example.commonlib.gson.SecondHandsGoodsGson;
@@ -22,6 +24,7 @@ import com.example.commonlib.gson.SecondKindGson;
 import com.example.commonlib.gson.ShopCarGson;
 import com.example.commonlib.gson.SubmitOrderGson;
 import com.example.commonlib.gson.SubmitOrderItemGson;
+import com.example.commonlib.gson.SystemMessageGson;
 import com.example.commonlib.gson.TimeGoodsGson;
 import com.example.commonlib.gson.UserGson;
 import com.example.commonlib.gson.UserOrderStatusGson;
@@ -59,6 +62,7 @@ public interface Api {
 
     @GET("/StuShop/public/index.php/index/Express/queryExpressByNum")
     Observable<BaseGson<ExpressTraceGson>> queryExpressByNum(@Query("expressNum") String expressNum);
+
     //通过商品id查询商品列表
     @GET("/StuShop/public/index.php/index/Goods/getGoodsListByPid")
     Observable<BaseGson<KindItemGson>> getGoodsListByPid(@Query("pid") String pid);
@@ -73,12 +77,13 @@ public interface Api {
 
     @GET("/StuShop/public/index.php/index/Goods/queryTimeSell")
     Observable<BaseGson<TimeGoodsGson.TimeBean>> queryTimeSell();
+
     //获取主页轮播图
     @GET("/StuShop/public/index.php/index/Banner/getHomeBanner")
     Observable<BaseGson<BannerGson>> getHomeBanner();
 
     @GET("/StuShop/public/index.php/index/Goods/getGoodsDetailById")
-    Observable<BaseGson<GoodsDetailGson>> getGoodsDetailById(@Query("goodsId") String goodsId,@Query("userId") String userId);
+    Observable<BaseGson<GoodsDetailGson>> getGoodsDetailById(@Query("goodsId") String goodsId, @Query("userId") String userId);
 
     @GET("/StuShop/public/index.php/index/Dryinglist/getGoodsShareList")
     Observable<BaseGson<GoodsShareGson>> getGoodsShareList(@Query("type") String type, @Query("page") String page);
@@ -187,7 +192,7 @@ public interface Api {
 
 
     @GET("/StuShop/public/index.php/index/Goods/newUpperShelf")
-    Observable<BaseGson<NewestShelfGson>> newUpperShelf(@Query("date")String date);
+    Observable<BaseGson<NewestShelfGson>> newUpperShelf(@Query("date") String date);
 
     @GET("/StuShop/public/index.php/index/Second/queryAllSecondKind")
     Observable<BaseGson<SecondKindGson>> queryAllSecondKind();
@@ -196,14 +201,30 @@ public interface Api {
     @POST("/StuShop/public/index.php/index/Second/addSecondHanding")
     Observable<BaseGson<EmptyGson>> addSecondHanding(
             @PartMap() Map<String, RequestBody> partMap,
-            @Part       List<MultipartBody.Part> file);
+            @Part List<MultipartBody.Part> file);
 
     @GET("/StuShop/public/index.php/index/Second/queryAllSecondGoods")
-    Observable<BaseGson<SecondHandsGoodsGson>> queryAllSecondGoods(@Query("limit")String limit,@Query("page")String page);
+    Observable<BaseGson<SecondHandsGoodsGson>> queryAllSecondGoods(@Query("limit") String limit, @Query("page") String page);
 
     @GET("/StuShop/public/index.php/index/Time/queryGoodsTime")
-    Observable<BaseGson<TimeGoodsGson>> queryGoodsTime(@Query("timeId")String timeId);
+    Observable<BaseGson<TimeGoodsGson>> queryGoodsTime(@Query("timeId") String timeId);
+
+    @GET("/StuShop/public/index.php/index/Dryinglist/queryGoodsCommentById")
+    Observable<BaseGson<CommentDetailGson>> queryGoodsCommentById(@Query("commentId") String commentId);
 
     @GET("/StuShop/public/index.php/index/Goods/queryHomeActivityByName")
-    Observable<BaseGson<GoodsGson>> queryHomeActivityByName(@Query("activityName")String activityName);
+    Observable<BaseGson<GoodsGson>> queryHomeActivityByName(@Query("activityName") String activityName);
+
+    @GET("/StuShop/public/index.php/index/User/queryMemberPrice")
+    Observable<BaseGson<MemberGson>> queryMemberPrice();
+
+    @GET("/StuShop/public/index.php/index/Banner/querySystemPushMessage")
+    Observable<BaseGson<SystemMessageGson>> querySystemPushMessage(@Query("page") String page);
+
+    @GET("/StuShop/public/index.php/index/Goods/queryMemberShipGoods")
+    Observable<BaseGson<GoodsGson>> queryMemberShipGoods();
+
+    @FormUrlEncoded
+    @POST("/StuShop/public/index.php/index/User/submitUserMemberShip")
+    Observable<BaseGson<EmptyGson>> submitUserMemberShip(@Field("userId") String userId, @Field("memberRank") String memberRank);
 }

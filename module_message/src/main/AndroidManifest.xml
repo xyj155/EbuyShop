@@ -1,2 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.module_message" />
+    package="com.example.module_message">
+
+    <application>
+        <activity android:name=".view.MessageExpressActivity" />
+        <activity android:name=".view.MessageNoticeActivity" />
+        <activity android:name=".view.MessageOtherActivity"></activity>
+    </application>
+
+</manifest>

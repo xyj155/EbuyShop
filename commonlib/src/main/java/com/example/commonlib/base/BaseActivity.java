@@ -74,10 +74,7 @@ public abstract class BaseActivity<V extends BaseView, T extends BasePresenter<V
     }
 
     public void createDialog(String msgStr) {
-
-
         progressDialog.show();
-
 
     }
 

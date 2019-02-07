@@ -16,13 +16,13 @@ public class GoodsSharePresenter extends BasePresenter<GoodsShareContract.View> 
 
     public GoodsSharePresenter(GoodsShareContract.View mMvpView) {
         super(mMvpView);
-        mMvpView.showDialog("数据加载中...");
     }
 
     private GoodsShareModel shareModel = new GoodsShareModel();
     private static final String TAG = "GoodsSharePresenter";
     @Override
     public void getUserShareCommentList(String type, String page) {
+        mMvpView.showDialog("");
         Log.i(TAG, "getUserShareCommentList: ");
         shareModel.getUserShareCommentList(type, page)
                 .subscribeOn(Schedulers.io())
@@ -36,7 +36,33 @@ public class GoodsSharePresenter extends BasePresenter<GoodsShareContract.View> 
 
                     @Override
                     public void onNext(BaseGson<GoodsShareGson> goodsShareGsonBaseGson) {
+                        mMvpView.hideDialog();
                         mMvpView.loadUserShareCommentList(goodsShareGsonBaseGson.getData());
+                    }
+
+                    @Override
+                    public void onError(String error) {
+                        mMvpView.hideDialog();
+                    }
+                });
+    }
+
+    @Override
+    public void getMoreUserShareCommentList(String type, String page) {
+        Log.i(TAG, "getUserShareCommentList: ");
+        shareModel.getUserShareCommentList(type, page)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseObserver<BaseGson<GoodsShareGson>>() {
+
+                    @Override
+                    public void onCompleted() {
+                        mMvpView.hideDialog();
+                    }
+
+                    @Override
+                    public void onNext(BaseGson<GoodsShareGson> goodsShareGsonBaseGson) {
+                        mMvpView.loadMoreShareCommentList(goodsShareGsonBaseGson.getData());
                     }
 
                     @Override

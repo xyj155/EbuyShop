@@ -1,23 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    android:orientation="vertical"
-    android:gravity="center"
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
-<ImageView
-    android:layout_width="wrap_content"
-    android:layout_margin="@dimen/dp_15"
-    android:layout_height="wrap_content"
-    android:src="@mipmap/ic_empty_myallgift"/>
-    <TextView
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:text="还没有数据哦，看看其他的吧！"
-    android:layout_centerVertical="true"
-    android:textColor="#000"
-    android:id="@+id/tv_empty"
-    android:textStyle="bold"
-    android:layout_centerInParent="true"
-    android:gravity="center"
-    android:drawablePadding="@dimen/dp_16" />
-</LinearLayout>
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical">
+        <ImageView
+            android:layout_width="@dimen/dp_108"
+            android:layout_height="@dimen/dp_108"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="102dp"
+            android:src="@drawable/live_pack_empty_ic" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="你还没有优惠券"
+            android:textSize="17sp"
+            android:id="@+id/tv_empty"
+            android:gravity="center"
+            android:padding="@dimen/dp_14"/>
+    </LinearLayout>
+</RelativeLayout>

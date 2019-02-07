@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.home.view.SearchGoodsActivity"
+    tools:ignore="MissingDefaultResource">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_65"
+        android:background="#fff">
+
+        <EditText
+            android:layout_centerInParent="true"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_45"
+            android:background="#fafafa"
+            android:textSize="14sp"
+            android:paddingLeft="@dimen/dp_7"
+            android:layout_margin="@dimen/dp_7"
+            android:layout_toLeftOf="@+id/tv_cancel"
+            android:drawableLeft="@mipmap/home_search"
+            android:hint="搜索你感兴趣的商品" />
+        <TextView
+            android:text="取消"
+            android:layout_margin="@dimen/dp_16"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_cancel"/>
+    </RelativeLayout>
+</RelativeLayout>

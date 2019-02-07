@@ -77,7 +77,6 @@
                             android:elevation="@dimen/dp_1"
                             android:orientation="horizontal"
                             android:paddingTop="@dimen/dp_15"
-                            android:paddingBottom="@dimen/dp_15"
                             android:weightSum="3">
 
 
@@ -85,12 +84,14 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
+                                android:id="@+id/tv_express"
                                 android:drawableTop="@mipmap/l_my_shengji"
                                 android:gravity="center"
                                 android:text="交易物流" />
 
 
                             <TextView
+                                android:id="@+id/tv_notice"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -101,6 +102,7 @@
                                 android:textSize="14sp" />
 
                             <TextView
+                                android:id="@+id/tv_other"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -114,8 +116,7 @@
                         <android.support.v7.widget.RecyclerView
                             android:id="@+id/ry_recent"
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_marginTop="@dimen/dp_15" />
+                            android:layout_height="match_parent" />
                     </LinearLayout>
 
                 </FrameLayout>

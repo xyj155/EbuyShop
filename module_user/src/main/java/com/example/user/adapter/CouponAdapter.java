@@ -28,10 +28,15 @@ public class CouponAdapter extends BaseQuickAdapter<CouponGson, BaseViewHolder> 
 
     @Override
     protected void convert(BaseViewHolder helper, final CouponGson item) {
+        if (item.getStartTime().equals("0000-00-00 00:00:00")) {
+            helper.setText(R.id.tv_date, "有效日期：无限期" );
+        } else {
+            helper.setText(R.id.tv_date, "有效日期：" + item.getStartTime() + " -- " + item.getEndTime());
+        }
         helper.setText(R.id.tv_name, item.getCouponName())
                 .setText(R.id.tv_comment, "满减优惠券：满 " + item.getCouponTotal() + " 减 " + item.getCouponReduce())
                 .setText(R.id.tv_price, "￥" + item.getCouponReduce())
-                .setText(R.id.tv_date, "有效日期：" + item.getStartTime() + " -- " + item.getEndTime())
+
                 .setOnClickListener(R.id.ll_coupon, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -45,9 +50,9 @@ public class CouponAdapter extends BaseQuickAdapter<CouponGson, BaseViewHolder> 
                 });
         ImageView view = helper.getView(R.id.iv_cant_use);
         View view1 = helper.getView(R.id.ll_coupon);
-        if (isShow){
+        if (isShow) {
             view.setVisibility(View.GONE);
-        }else {
+        } else {
             if (index > Double.valueOf(item.getCouponTotal())) {
                 view.setVisibility(View.GONE);
                 view1.setClickable(true);

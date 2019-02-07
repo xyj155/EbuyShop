@@ -140,8 +140,6 @@ public class ToBeEvaluatedActivity extends BaseActivity<ToBeEvaluatedContract.Vi
                     ToastUtils.show("评价内容你还没有填写哦！");
                 } else if (evaluate.isEmpty()) {
                     ToastUtils.show("你还没有选择评价级别哦！");
-                } else if (pictureList.size() < 1) {
-                    ToastUtils.show("为什么不上传买家秀呢？");
                 } else {
                     final Map<String, RequestBody> partMap = new HashMap<>();
                     partMap.put("userId", RxPartMapUtils.toRequestBodyOfText(String.valueOf(SharePreferenceUtil.getUser("uid", "String"))));

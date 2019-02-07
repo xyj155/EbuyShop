@@ -2,6 +2,7 @@ package com.example.commonlib.util;
 
 import android.content.Context;
 
+import com.example.commonlib.MyApp;
 import com.payelves.sdk.EPay;
 import com.payelves.sdk.enums.EPayResult;
 import com.payelves.sdk.listener.PayResultListener;
@@ -9,8 +10,8 @@ import com.payelves.sdk.listener.PayResultListener;
 public class PaymentUtil {
 
 
-    public static void paymentByGoods(Context context, String goodsName, String goodsDescribe, int amount, final PaymentInterface paymentInterface) {
-        EPay.getInstance(context).pay(goodsName, goodsDescribe, amount,
+    public static void paymentByGoods( String goodsName, String goodsDescribe, int amount, final PaymentInterface paymentInterface) {
+        EPay.getInstance(MyApp.getInstance()).pay(goodsName, goodsDescribe, amount,
                 "", "", "https://zhidao.baidu.com/question/1495498822853007219.html", new PayResultListener() {
                     @Override
                     public void onFinish(Context context, Long payId, String orderId, String payUserId,

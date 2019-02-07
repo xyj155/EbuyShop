@@ -223,7 +223,7 @@ public class GoodsPaymentActivity extends BaseActivity<OrderDetailContract.View,
         } else if (id == R.id.tv_pay) {
             boolean b = money > 188;
             if (b) {
-                PaymentUtil.paymentByGoods(GoodsPaymentActivity.this, "商学院自营商品", "商品", 1, new PaymentInterface() {
+                PaymentUtil.paymentByGoods("商学院自营商品", "商品", 1, new PaymentInterface() {
                     @Override
                     public void paySuccess() {
                         userSubmitOrderPresenter.submitOrderByUserId((String) SharePreferenceUtil.getUser("uid", "String"), addressId, new Gson().toJson(goodsIdList), couponId, orderNum, (String) SharePreferenceUtil.getUser("userToken", "String"), etMessage.getText().toString(), "36");
@@ -238,7 +238,7 @@ public class GoodsPaymentActivity extends BaseActivity<OrderDetailContract.View,
                 if (expressName.isEmpty()) {
                     ToastUtils.show("你还没有选择配送方式！");
                 } else {
-                    PaymentUtil.paymentByGoods(GoodsPaymentActivity.this, "商学院自营商品", "商品", 1, new PaymentInterface() {
+                    PaymentUtil.paymentByGoods("商学院自营商品", "商品", 1, new PaymentInterface() {
                         @Override
                         public void paySuccess() {
                             userSubmitOrderPresenter.submitOrderByUserId((String) SharePreferenceUtil.getUser("uid", "String"), addressId, new Gson().toJson(goodsIdList), "5", orderNum, (String) SharePreferenceUtil.getUser("userToken", "String"), etMessage.getText().toString(), expressId);

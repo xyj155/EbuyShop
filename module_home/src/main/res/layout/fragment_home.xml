@@ -75,11 +75,11 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:drawableTop="@mipmap/l_chongzhi_zaotang"
+                            android:drawableTop="@mipmap/l_chongzhi_xizao"
                             android:drawablePadding="@dimen/dp_6"
-                            android:id="@+id/tv_goods_news"
+                            android:id="@+id/tv_member"
                             android:gravity="center"
-                            android:text="大牌热卖"
+                            android:text="会员尊享"
                             android:textColor="#000"
                             android:textSize="13sp" />
 
@@ -116,7 +116,7 @@
                             android:drawableTop="@mipmap/l_chongzhi_chuifeng"
                             android:drawablePadding="@dimen/dp_6"
                             android:gravity="center"
-                            android:text="社区讨论"
+                            android:text="购物晒单"
                             android:textColor="#000"
                             android:textSize="13sp" />
 

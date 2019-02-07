@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center|top"
+    tools:ignore="MissingDefaultResource">
+
+    <ImageView
+        android:layout_width="@dimen/dp_350"
+        android:layout_height="@dimen/dp_170"
+        android:src="@drawable/ic_empty_message" />
+</LinearLayout>

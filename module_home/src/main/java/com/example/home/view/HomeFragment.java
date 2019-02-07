@@ -1,6 +1,7 @@
 package com.example.home.view;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.graphics.Color;
@@ -38,6 +39,7 @@ import com.example.commonlib.gson.TimeGoodsGson;
 import com.example.commonlib.http.RetrofitUtils;
 import com.example.commonlib.loader.BannerViewHolder;
 import com.example.commonlib.util.RouterUtil;
+import com.example.commonlib.util.SharePreferenceUtil;
 import com.example.commonlib.view.ObservableScrollView;
 import com.example.home.adapter.HomeGoodsTimerPurseAdapter;
 import com.example.home.adapter.HomeHotGoodsActivityAdapter;
@@ -80,8 +82,8 @@ public class HomeFragment extends BaseFragment<HomePagePresenter> implements Hom
 
     @BindView(R2.id.iv_news)
     TextView ivNews;
-    @BindView(R2.id.tv_goods_news)
-    TextView tvGoodsNews;
+    @BindView(R2.id.tv_member)
+    TextView tvMember;
     @BindView(R2.id.iv_school_vip)
     TextView ivSchoolVip;
     @BindView(R2.id.iv_best)
@@ -91,6 +93,8 @@ public class HomeFragment extends BaseFragment<HomePagePresenter> implements Hom
     Unbinder unbinder;
     @BindView(R2.id.tv_time)
     TextView tvTime;
+    @BindView(R2.id.tvSearch)
+    TextView tvSearch;
     private MZBannerView<BannerGson> banner;
     private PurseGoodsAdapter purseGoodsAdapter;
     private RecyclerView ryPurse, ryTimerPurse, ryHot;
@@ -98,7 +102,6 @@ public class HomeFragment extends BaseFragment<HomePagePresenter> implements Hom
     private ObservableScrollView slHome;
     private int mHeight;
     private LinearLayout llTitle;
-    private TextView tvSearch;
     @BindView(R2.id.ivKind)
     ImageView ivKind;
     @BindView(R2.id.ll_flash_time)
@@ -134,7 +137,6 @@ public class HomeFragment extends BaseFragment<HomePagePresenter> implements Hom
         ryPurse = view.findViewById(R.id.ryPurse);
         slHome = view.findViewById(R.id.slHome);
         llTitle = view.findViewById(R.id.llTitle);
-        tvSearch = view.findViewById(R.id.tvSearch);
         ivKind = view.findViewById(R.id.ivKind);
         ivShopCar = view.findViewById(R.id.ivShopCar);
         marqueeView = view.findViewById(R.id.marqueeView);
@@ -196,7 +198,6 @@ public class HomeFragment extends BaseFragment<HomePagePresenter> implements Hom
             public void onHeaderPulling(RefreshHeader header, float percent, int offset, int headerHeight, int extendHeight) {
                 Log.i(TAG, "onHeaderPulling: " + headerHeight + "----------" + extendHeight + "---------" + percent);
                 llTitle.setVisibility(View.GONE);
-
             }
 
             @Override
@@ -390,16 +391,15 @@ public class HomeFragment extends BaseFragment<HomePagePresenter> implements Hom
         marqueeView.setOnItemClickListener(new OnItemClickListener<LinearLayout, MarQueenGson>() {
             @Override
             public void onItemClickListener(LinearLayout mView, MarQueenGson mData, int mPosition) {
-
-                if (mData.getGoodId()!=null){
+                if (mData.getGoodId() != null) {
                     Intent intent = new Intent(getContext(), GoodsDetailActivity.class);
                     intent.putExtra("goodsId", mData.getGoodId());
                     startActivity(intent);
-                }else if (mData.getPackName()!=null){
+                } else if (mData.getPackName() != null) {
                     Intent intent = new Intent();
-                    intent.setComponent(new ComponentName("com.xuyijie.ebuyshop",mData.getPackName()));
+                    intent.setComponent(new ComponentName("com.xuyijie.ebuyshop", mData.getPackName()));
                     startActivity(intent);
-                }else if (mData.getUrl()!=null){
+                } else if (mData.getUrl() != null) {
                     Intent intent = new Intent(getContext(), BrowserActivity.class);
                     intent.putExtra("url", mData.getUrl());
                     startActivity(intent);
@@ -448,7 +448,7 @@ public class HomeFragment extends BaseFragment<HomePagePresenter> implements Hom
             super.handleMessage(msg);
             if (msg.what == 1) {
                 computeTime();
-                tvTime.setText("  " + mHour + "    " + mMin + "   " + mSecond);
+                tvTime.setText(" " + (mHour < 10 ? "0"+mHour : mHour) + "   " +  (mMin < 10 ? "0"+mMin : mMin) + "   " + mSecond);
                 if (mDay == 0 && mHour == 0 && mMin == 0 && mSecond == 0) {
 
                 }
@@ -460,24 +460,26 @@ public class HomeFragment extends BaseFragment<HomePagePresenter> implements Hom
     /**
      * 开启倒计时
      */
-    private void startRun() {
-        new Thread(new Runnable() {
+    Runnable target = new Runnable() {
 
-            @Override
-            public void run() {
-                // TODO Auto-generated method stub
-                while (isRun) {
-                    try {
-                        Thread.sleep(1000); // sleep 1000ms
-                        Message message = Message.obtain();
-                        message.what = 1;
-                        timeHandler.sendMessage(message);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
+        @Override
+        public void run() {
+            // TODO Auto-generated method stub
+            while (isRun) {
+                try {
+                    Thread.sleep(1000); // sleep 1000ms
+                    Message message = Message.obtain();
+                    message.what = 1;
+                    timeHandler.sendMessage(message);
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
             }
-        }).start();
+        }
+    };
+
+    private void startRun() {
+        new Thread(target).start();
     }
 
     /**
@@ -515,15 +517,13 @@ public class HomeFragment extends BaseFragment<HomePagePresenter> implements Hom
         unbinder.unbind();
     }
 
-    @OnClick({R2.id.iv_news, R2.id.ll_flash_time, R2.id.tv_goods_news, R2.id.iv_school_vip, R2.id.iv_best, R2.id.iv_share, R2.id.ivKind})
+    @OnClick({R2.id.tv_member, R2.id.tvSearch, R2.id.iv_news, R2.id.ll_flash_time, R2.id.iv_school_vip, R2.id.iv_best, R2.id.iv_share, R2.id.ivKind})
     public void onViewClicked(View view) {
         int id = view.getId();
         Log.i(TAG, "onViewClicked: ");
         if (id == R.id.iv_news) {
             Log.i(TAG, "onViewClicked: ");
             startActivity(new Intent(getContext(), NewUpperShelfActivity.class));
-        } else if (id == R.id.tv_goods_news) {
-
         } else if (id == R.id.iv_school_vip) {
             Intent intent = new Intent(getContext(), BrowserActivity.class);
             intent.putExtra("url", RetrofitUtils.BASE_URL + "/StuShop/public/index.php/index/Index/vipRecharge");
@@ -536,6 +536,19 @@ public class HomeFragment extends BaseFragment<HomePagePresenter> implements Hom
             startActivity(new Intent(getContext(), GoodsKindSortedActivity.class));
         } else if (id == R.id.ll_flash_time) {
             startActivity(new Intent(getContext(), TimeFlashSaleActivity.class));
+        } else if (id == R.id.tvSearch) {
+            startActivity(new Intent(getContext(), SearchGoodsActivity.class));
+            ((Activity) mContext).overridePendingTransition(R.anim.bottom_to_top_anim_in,
+                    R.anim.bottom_to_top_anim_out);
+        } else if (id == R.id.tv_member) {
+            Object user = SharePreferenceUtil.getUser("member", "String");
+            Log.i(TAG, "onViewClicked: "+user);
+            if (user.toString().isEmpty()){
+                startActivity(new Intent(getContext(), MembershipOpeningActivity.class));
+            }else {
+                startActivity(new Intent(getContext(), MemberShipRightActivity.class));
+            }
+
         }
     }
 }

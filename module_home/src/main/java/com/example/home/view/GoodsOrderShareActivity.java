@@ -2,11 +2,10 @@ package com.example.home.view;
 
 import android.animation.ObjectAnimator;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
@@ -18,11 +17,11 @@ import com.example.commonlib.gson.GoodsShareGson;
 import com.example.commonlib.view.HidingScrollListener;
 import com.example.home.adapter.GoodsShareAdapter;
 import com.example.home.contract.GoodsShareContract;
-import com.example.home.entity.GoodsShareEntity;
 import com.example.home.presenter.GoodsSharePresenter;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
+import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.xuyijie.home.R;
 import com.xuyijie.home.R2;
 
@@ -31,7 +30,6 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnCheckedChanged;
 import butterknife.OnClick;
 
 public class GoodsOrderShareActivity extends BaseActivity<GoodsShareContract.View, GoodsSharePresenter> implements GoodsShareContract.View {
@@ -60,6 +58,9 @@ public class GoodsOrderShareActivity extends BaseActivity<GoodsShareContract.Vie
     @BindView(R2.id.rb_sorted_bad)
     RadioButton rbSortedBad;
     private GoodsShareAdapter goodsShareAdapter;
+    private int type = 5;
+    private int page = 1;
+
 
     @Override
     public boolean isSetStatusBarTranslucent() {
@@ -76,8 +77,6 @@ public class GoodsOrderShareActivity extends BaseActivity<GoodsShareContract.Vie
         return R.layout.activity_goods_order_share;
     }
 
-    private int page = 1;
-    List<GoodsShareEntity> list = new ArrayList<>();
 
     @Override
     public void initView() {
@@ -85,25 +84,18 @@ public class GoodsOrderShareActivity extends BaseActivity<GoodsShareContract.Vie
         initToolBar().setToolBarTitle("晒单");
         rslShare.autoRefresh();
         rbSortedAll.setChecked(true);
-        final GoodsShareEntity goodsShareEntity = new GoodsShareEntity(GoodsShareEntity.TYPE_TWO);
 
-        rslShare.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
+        rslShare.setOnRefreshListener(new OnRefreshListener() {
             @Override
-            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                List<GoodsShareEntity> data = goodsShareAdapter.getData();
-                data.clear();
-                goodsShareAdapter.notifyDataSetChanged();
-                page = 1;
-                list.add(goodsShareEntity);
-                mPresenter.getUserShareCommentList("1", "1");
-                refreshLayout.finishRefresh();
+            public void onRefresh(RefreshLayout refreshLayout) {
+                mPresenter.getUserShareCommentList(String.valueOf(type), "1");
             }
-
+        });
+        rslShare.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
-            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+            public void onLoadMore(RefreshLayout refreshLayout) {
                 page++;
-                mPresenter.getUserShareCommentList("1", String.valueOf(page));
-                refreshLayout.finishLoadMore();
+                mPresenter.getMoreUserShareCommentList(String.valueOf(type), String.valueOf(page));
             }
         });
         ryShare.setLayoutManager(new LinearLayoutManager(GoodsOrderShareActivity.this));
@@ -127,34 +119,33 @@ public class GoodsOrderShareActivity extends BaseActivity<GoodsShareContract.Vie
 
     @Override
     public void initData() {
-        goodsShareAdapter = new GoodsShareAdapter(null);
-//        goodsShareAdapter.set(View.inflate(GoodsOrderShareActivity.this,R.layout.common_header,null));
-        ryShare.setAdapter(goodsShareAdapter);
-    }
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
 
     }
+
 
     @OnClick(R2.id.iv_close)
     public void onViewClicked() {
         finish();
     }
 
+    List<GoodsShareGson> goodsShareGsons = new ArrayList<>();
+
     @Override
     public void loadUserShareCommentList(List<GoodsShareGson> goodsShareGsonList) {
         rslShare.finishRefresh();
         rslShare.finishLoadMore();
-        for (int i = 0; i < goodsShareGsonList.size(); i++) {
-            GoodsShareEntity entity = new GoodsShareEntity(GoodsShareEntity.TYPE_ONE);
-            entity.setSeriesEntity(goodsShareGsonList.get(i));
-            list.add(entity);
-        }
-        goodsShareAdapter.addData(list);
-        list.clear();
+        goodsShareGsons.addAll(goodsShareGsonList);
+        goodsShareAdapter = new GoodsShareAdapter(null, GoodsOrderShareActivity.this);
+        goodsShareAdapter.addData(goodsShareGsons);
+        ryShare.setAdapter(goodsShareAdapter);
+    }
+
+    @Override
+    public void loadMoreShareCommentList(List<GoodsShareGson> goodsShareGsonList) {
+        rslShare.finishRefresh();
+        rslShare.finishLoadMore();
+        goodsShareGsons.addAll(goodsShareGsonList);
+        goodsShareAdapter.replaceData(goodsShareGsons);
     }
 
     @Override
@@ -165,7 +156,6 @@ public class GoodsOrderShareActivity extends BaseActivity<GoodsShareContract.Vie
     @Override
     public void showDialog(String msg) {
         createDialog(msg);
-
     }
 
     @Override
@@ -175,19 +165,44 @@ public class GoodsOrderShareActivity extends BaseActivity<GoodsShareContract.Vie
         rslShare.finishLoadMore();
     }
 
-    @OnCheckedChanged({R2.id.rb_sorted_all, R2.id.rb_sorted_picture, R2.id.rb_sorted_video, R2.id.rb_sorted_goods, R2.id.rb_sorted_bad})
-    public  void onCheckedChanged(CompoundButton buttonView, boolean isChecked)  {
-//        switch (view.getId()) {
-//            case R.id.rb_sorted_all:
-//                break;
-//            case R.id.rb_sorted_picture:
-//                break;
-//            case R.id.rb_sorted_video:
-//                break;
-//            case R.id.rb_sorted_goods:
-//                break;
-//            case R.id.rb_sorted_bad:
-//                break;
-//        }
+
+
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
+    }
+
+    @OnClick({R2.id.rb_sorted_all, R2.id.rb_sorted_picture, R2.id.rb_sorted_video, R2.id.rb_sorted_goods, R2.id.rb_sorted_bad})
+    public void onViewClicked(View view) {
+        int i = view.getId();
+        page = 1;
+        goodsShareGsons.clear();
+        if (i == R.id.rb_sorted_all) {
+            type = 5;
+            Log.i(TAG, "onLoadMore: " + page + "type==" + type);
+            mPresenter.getUserShareCommentList("5", String.valueOf(page));
+        } else if (i == R.id.rb_sorted_picture) {
+            type = 1;
+            Log.i(TAG, "onLoadMore: " + page + "type==" + type);
+            mPresenter.getUserShareCommentList("1", String.valueOf(page));
+        } else if (i == R.id.rb_sorted_video) {
+            type = 2;
+            Log.i(TAG, "onLoadMore: " + page + "type==" + type);
+            mPresenter.getUserShareCommentList("2", String.valueOf(page));
+        } else if (i == R.id.rb_sorted_goods) {
+            type = 3;
+            Log.i(TAG, "onLoadMore: " + page + "type==" + type);
+            mPresenter.getUserShareCommentList("3", String.valueOf(page));
+        } else if (i == R.id.rb_sorted_bad) {
+            type = 4;
+            Log.i(TAG, "onLoadMore: " + page + "type==" + type);
+            mPresenter.getUserShareCommentList("4", String.valueOf(page));
+        }
+        if (goodsShareAdapter != null) {
+            goodsShareAdapter.notifyDataSetChanged();
+        }
     }
 }

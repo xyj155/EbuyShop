@@ -1,0 +1,427 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/bg_shake_n"
+        android:orientation="vertical"
+        tools:context="com.example.home.view.MembershipOpeningActivity"
+        tools:ignore="MissingDefaultResource">
+
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/tb_common"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_80"
+            android:gravity="center|left"
+            android:paddingTop="@dimen/dp_25">
+
+
+            <ImageView
+                android:id="@+id/iv_close"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp_20"
+                android:src="@mipmap/mall_ic_product_back" />
+
+        </LinearLayout>
+
+        <com.example.commonlib.view.ObservableScrollView
+            android:id="@+id/sl_member"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <com.example.commonlib.view.CircleImageView
+                        android:id="@+id/iv_avatar"
+                        android:layout_width="@dimen/dp_70"
+                        android:layout_height="@dimen/dp_70"
+                        android:layout_margin="@dimen/dp_10"
+                        app:civ_border_color="#fff"
+                        app:civ_border_width="@dimen/dp_2" />
+
+                    <LinearLayout
+                        android:id="@+id/ll_user"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dp_20"
+                        android:layout_toRightOf="@+id/iv_avatar"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/tv_username"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="17374131273"
+                            android:textColor="#fff"
+                            android:textSize="20sp"
+                            android:textStyle="bold" />
+
+                        <ImageView
+                            android:id="@+id/iv_rank"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/dp_10"
+                            android:src="@mipmap/ic_rank1"
+                            android:visibility="gone" />
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/tv_endTime"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/ll_user"
+                        android:layout_marginTop="@dimen/dp_10"
+                        android:layout_toRightOf="@+id/iv_avatar"
+                        android:text="你还没有开通会员"
+                        android:textColor="#fff" />
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/dp_20"
+                    android:background="@drawable/member_white_25_bg"
+                    android:orientation="vertical"
+                    android:padding="@dimen/dp_16">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/tv_name1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:drawableLeft="@mipmap/ic_rank1"
+                            android:drawablePadding="@dimen/dp_8"
+                            android:padding="@dimen/dp_10"
+                            android:text="会员特权"
+                            android:textColor="#000"
+                            android:textSize="20sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/tv_member_price1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:layout_toRightOf="@+id/tv_name1"
+                            android:text="￥ 10"
+                            android:textColor="#fa4646"
+                            android:textSize="@dimen/dp_20"
+                            android:textStyle="bold" />
+
+                        <CheckBox
+                            android:id="@+id/rb_rank1"
+                            android:layout_width="@dimen/dp_30"
+                            android:layout_height="@dimen/dp_30"
+                            android:layout_alignParentRight="true"
+                            android:background="@drawable/cb_goods_car_bg_check"
+                            android:button="@null" />
+                    </RelativeLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_centerInParent="true"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:weightSum="3">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:drawableTop="@mipmap/ic_discount_select"
+                                android:drawablePadding="@dimen/dp_10"
+                                android:gravity="center"
+                                android:text="商品折扣"
+                                android:textColor="#000" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:drawableTop="@mipmap/ic_coupon_normal"
+                                android:drawablePadding="@dimen/dp_10"
+                                android:gravity="center"
+                                android:text="优惠券"
+                                android:textColor="#000" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:drawableTop="@mipmap/ic_second_hand_normal"
+                                android:drawablePadding="@dimen/dp_10"
+                                android:gravity="center"
+                                android:text="二手出售"
+                                android:textColor="#000" />
+
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/dp_20">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/member_white_25_bg"
+                        android:orientation="vertical"
+                        android:padding="@dimen/dp_16">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+
+                            <TextView
+                                android:id="@+id/tv_name2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:drawableLeft="@mipmap/ic_rank2"
+                                android:drawablePadding="@dimen/dp_8"
+                                android:padding="@dimen/dp_10"
+                                android:text="会员特权"
+                                android:textColor="#000"
+                                android:textSize="20sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/tv_member_price2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true"
+                                android:layout_toRightOf="@+id/tv_name2"
+                                android:text="￥ 20"
+                                android:textColor="#fa4646"
+                                android:textSize="@dimen/dp_20"
+                                android:textStyle="bold" />
+
+                            <CheckBox
+                                android:id="@+id/rb_rank2"
+                                android:layout_width="@dimen/dp_30"
+                                android:layout_height="@dimen/dp_30"
+                                android:layout_alignParentRight="true"
+                                android:background="@drawable/cb_goods_car_bg_check"
+                                android:button="@null" />
+                        </RelativeLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_centerInParent="true"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:weightSum="3">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:drawableTop="@mipmap/ic_discount_select"
+                                    android:drawablePadding="@dimen/dp_10"
+                                    android:gravity="center"
+                                    android:text="商品折扣"
+                                    android:textColor="#000" />
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:drawableTop="@mipmap/ic_coupon_select"
+                                    android:drawablePadding="@dimen/dp_10"
+                                    android:gravity="center"
+                                    android:text="优惠券"
+                                    android:textColor="#000" />
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:drawableTop="@mipmap/ic_second_hand_normal"
+                                    android:drawablePadding="@dimen/dp_10"
+                                    android:gravity="center"
+                                    android:text="二手出售"
+                                    android:textColor="#000" />
+
+                            </LinearLayout>
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/ic_hot" />
+                </FrameLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/dp_20"
+                    android:background="@drawable/member_white_25_bg"
+                    android:orientation="vertical"
+                    android:padding="@dimen/dp_16">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/tv_name3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:drawableLeft="@mipmap/ic_rank3"
+                            android:drawablePadding="@dimen/dp_8"
+                            android:padding="@dimen/dp_10"
+                            android:text="会员特权"
+                            android:textColor="#000"
+                            android:textSize="20sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/tv_member_price3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:layout_toRightOf="@+id/tv_name3"
+                            android:text="￥ 40"
+                            android:textColor="#fa4646"
+                            android:textSize="@dimen/dp_20"
+                            android:textStyle="bold" />
+
+                        <CheckBox
+                            android:id="@+id/rb_rank3"
+                            android:layout_width="@dimen/dp_30"
+                            android:layout_height="@dimen/dp_30"
+                            android:layout_alignParentRight="true"
+                            android:background="@drawable/cb_goods_car_bg_check"
+                            android:button="@null" />
+                    </RelativeLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_centerInParent="true"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:weightSum="3">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:drawableTop="@mipmap/ic_discount_select"
+                                android:drawablePadding="@dimen/dp_10"
+                                android:gravity="center"
+                                android:text="商品折扣"
+                                android:textColor="#000" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:drawableTop="@mipmap/ic_coupon_select"
+                                android:drawablePadding="@dimen/dp_10"
+                                android:gravity="center"
+                                android:text="优惠券"
+                                android:textColor="#000" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:drawableTop="@mipmap/ic_second_hand_select"
+                                android:drawablePadding="@dimen/dp_10"
+                                android:gravity="center"
+                                android:text="二手出售"
+                                android:textColor="#000" />
+
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp_20"
+                    android:layout_marginRight="@dimen/dp_20"
+                    android:layout_marginBottom="@dimen/dp_30"
+                    android:background="@drawable/member_white_25_bg"
+                    android:orientation="vertical"
+                    android:padding="@dimen/dp_16">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="规则介绍"
+                        android:textColor="#000"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:lineSpacingExtra="@dimen/dp_5"
+                        android:paddingTop="@dimen/dp_10"
+                        android:text="@string/member_service" />
+                </LinearLayout>
+            </LinearLayout>
+
+        </com.example.commonlib.view.ObservableScrollView>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_recharge"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="#fff">
+
+        <TextView
+            android:id="@+id/tv_submit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dp_10"
+            android:background="@drawable/abc_member_rechager_bg"
+            android:gravity="center"
+            android:padding="@dimen/dp_14"
+            android:text="立即充值"
+            android:textColor="#fff" />
+    </LinearLayout>
+</RelativeLayout>

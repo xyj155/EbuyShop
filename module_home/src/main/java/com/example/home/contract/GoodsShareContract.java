@@ -15,9 +15,11 @@ public interface GoodsShareContract {
 
     interface View extends BaseView {
         void loadUserShareCommentList(List<GoodsShareGson> goodsShareGsonList);
+        void loadMoreShareCommentList(List<GoodsShareGson> goodsShareGsonList);
     }
 
     interface Presenter {
         void getUserShareCommentList(String type, String page);
+        void getMoreUserShareCommentList(String type, String page);
     }
 }

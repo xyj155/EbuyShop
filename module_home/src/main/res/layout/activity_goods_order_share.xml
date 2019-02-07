@@ -14,25 +14,26 @@
         android:layout_height="match_parent">
 
 
-        <com.scwang.smartrefresh.layout.SmartRefreshLayout
-            android:id="@+id/rsl_share"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
 
-            <com.scwang.smartrefresh.layout.header.ClassicsHeader
+            <com.scwang.smartrefresh.layout.SmartRefreshLayout
+                android:id="@+id/rsl_share"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:srlEnableLastTime="false" />
+                android:layout_height="match_parent">
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/ry_share"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                <com.scwang.smartrefresh.layout.header.ClassicsHeader
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:srlEnableLastTime="false" />
 
-            <com.scwang.smartrefresh.layout.footer.ClassicsFooter
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-        </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/ry_share"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+                <com.scwang.smartrefresh.layout.footer.ClassicsFooter
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
 
         <RadioGroup
@@ -53,6 +54,7 @@
                 android:background="@drawable/abc_goods_share_rb_bg"
                 android:button="@null"
                 android:gravity="center"
+                android:padding="@dimen/dp_5"
                 android:text="全部"
                 android:textColor="@color/abc_goods_share_tag_color_select" />
 
@@ -65,6 +67,7 @@
                 android:background="@drawable/abc_goods_share_rb_bg"
                 android:button="@null"
                 android:gravity="center"
+                android:padding="@dimen/dp_5"
                 android:text="有图"
                 android:textColor="@color/abc_goods_share_tag_color_select" />
 
@@ -77,7 +80,8 @@
                 android:background="@drawable/abc_goods_share_rb_bg"
                 android:button="@null"
                 android:gravity="center"
-                android:text="视频"
+                android:padding="@dimen/dp_5"
+                android:text="文字"
                 android:textColor="@color/abc_goods_share_tag_color_select" />
 
             <RadioButton
@@ -89,6 +93,7 @@
                 android:background="@drawable/abc_goods_share_rb_bg"
                 android:button="@null"
                 android:gravity="center"
+                android:padding="@dimen/dp_5"
                 android:text="好评"
                 android:textColor="@color/abc_goods_share_tag_color_select" />
 
@@ -101,6 +106,7 @@
                 android:background="@drawable/abc_goods_share_rb_bg"
                 android:button="@null"
                 android:gravity="center"
+                android:padding="@dimen/dp_5"
                 android:text="差评"
                 android:textColor="@color/abc_goods_share_tag_color_select" />
         </RadioGroup>
