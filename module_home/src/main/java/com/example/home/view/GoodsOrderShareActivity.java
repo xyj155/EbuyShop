@@ -19,9 +19,11 @@ import com.example.home.adapter.GoodsShareAdapter;
 import com.example.home.contract.GoodsShareContract;
 import com.example.home.presenter.GoodsSharePresenter;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshFooter;
+import com.scwang.smartrefresh.layout.api.RefreshHeader;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
-import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
+import com.scwang.smartrefresh.layout.constant.RefreshState;
+import com.scwang.smartrefresh.layout.listener.OnMultiPurposeListener;
 import com.xuyijie.home.R;
 import com.xuyijie.home.R2;
 
@@ -84,20 +86,90 @@ public class GoodsOrderShareActivity extends BaseActivity<GoodsShareContract.Vie
         initToolBar().setToolBarTitle("晒单");
         rslShare.autoRefresh();
         rbSortedAll.setChecked(true);
-
-        rslShare.setOnRefreshListener(new OnRefreshListener() {
+        rslShare.setOnMultiPurposeListener(new OnMultiPurposeListener() {
             @Override
-            public void onRefresh(RefreshLayout refreshLayout) {
-                mPresenter.getUserShareCommentList(String.valueOf(type), "1");
+            public void onHeaderPulling(RefreshHeader header, float percent, int offset, int headerHeight, int extendHeight) {
+                ObjectAnimator objectAnimator = ObjectAnimator.ofFloat(llSorted, View.TRANSLATION_Y, 0, -llSorted.getHeight());
+                objectAnimator.setDuration(500);
+                objectAnimator.start();
             }
-        });
-        rslShare.setOnLoadMoreListener(new OnLoadMoreListener() {
+
+            @Override
+            public void onHeaderReleased(RefreshHeader header, int headerHeight, int extendHeight) {
+
+            }
+
+            @Override
+            public void onHeaderReleasing(RefreshHeader header, float percent, int offset, int headerHeight, int extendHeight) {
+
+            }
+
+            @Override
+            public void onHeaderStartAnimator(RefreshHeader header, int headerHeight, int extendHeight) {
+
+            }
+
+            @Override
+            public void onHeaderFinish(RefreshHeader header, boolean success) {
+                ObjectAnimator objectAnimator = ObjectAnimator.ofFloat(llSorted, View.TRANSLATION_Y, -llSorted.getHeight(), 0);
+                objectAnimator.setDuration(500);
+                objectAnimator.start();
+            }
+
+            @Override
+            public void onFooterPulling(RefreshFooter footer, float percent, int offset, int footerHeight, int extendHeight) {
+
+            }
+
+            @Override
+            public void onFooterReleased(RefreshFooter footer, int footerHeight, int extendHeight) {
+
+            }
+
+            @Override
+            public void onFooterReleasing(RefreshFooter footer, float percent, int offset, int footerHeight, int extendHeight) {
+
+            }
+
+            @Override
+            public void onFooterStartAnimator(RefreshFooter footer, int footerHeight, int extendHeight) {
+
+            }
+
+            @Override
+            public void onFooterFinish(RefreshFooter footer, boolean success) {
+
+            }
+
             @Override
             public void onLoadMore(RefreshLayout refreshLayout) {
                 page++;
                 mPresenter.getMoreUserShareCommentList(String.valueOf(type), String.valueOf(page));
             }
+
+            @Override
+            public void onRefresh(RefreshLayout refreshLayout) {
+
+                mPresenter.getUserShareCommentList(String.valueOf(type), "1");
+            }
+
+            @Override
+            public void onStateChanged(RefreshLayout refreshLayout, RefreshState oldState, RefreshState newState) {
+
+            }
         });
+//        rslShare.setOnRefreshListener(new OnRefreshListener() {
+//            @Override
+//            public void onRefresh(RefreshLayout refreshLayout) {
+//
+//            }
+//        });
+//        rslShare.setOnLoadMoreListener(new OnLoadMoreListener() {
+//            @Override
+//            public void onLoadMore(RefreshLayout refreshLayout) {
+//
+//            }
+//        });
         ryShare.setLayoutManager(new LinearLayoutManager(GoodsOrderShareActivity.this));
         ryShare.addOnScrollListener(new HidingScrollListener() {
 
@@ -164,8 +236,6 @@ public class GoodsOrderShareActivity extends BaseActivity<GoodsShareContract.Vie
         rslShare.finishRefresh();
         rslShare.finishLoadMore();
     }
-
-
 
 
     @Override

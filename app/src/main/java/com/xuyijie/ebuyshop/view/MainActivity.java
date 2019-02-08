@@ -1,30 +1,42 @@
 package com.xuyijie.ebuyshop.view;
 
 
+import android.os.Build;
 import android.support.annotation.IdRes;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.text.TextUtils;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.PopupWindow;
 import android.widget.RadioGroup;
+import android.widget.RelativeLayout;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.example.commonlib.MyApp;
 import com.example.commonlib.base.BaseActivity;
 import com.example.commonlib.contract.HomeContract;
 import com.example.commonlib.gson.UserGson;
 import com.example.commonlib.presenter.LoginPresent;
 import com.example.commonlib.util.RouterUtil;
+import com.example.commonlib.util.SharePreferenceUtil;
 import com.example.commonlib.view.MyDialog;
 import com.example.home.view.HomeFragment;
 import com.xuyijie.ebuyshop.R;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import cn.jpush.android.api.CustomPushNotificationBuilder;
 import cn.jpush.android.api.JPushInterface;
+import cn.jpush.android.api.TagAliasCallback;
 
 
 @Route(path = RouterUtil.HomePage)
@@ -39,6 +51,7 @@ public class MainActivity extends BaseActivity<HomeContract.View, LoginPresent> 
     Fragment messageFragment;
     Fragment kindFragment;
     Fragment goodsCarFragment;
+    private RelativeLayout rlContainer;
     Fragment userFragment;
     public static final String UPDATE_STATUS_ACTION = "com.xuyijie.ebuyshop.action.UPDATE_STATUS";
 
@@ -84,10 +97,65 @@ public class MainActivity extends BaseActivity<HomeContract.View, LoginPresent> 
         return super.onKeyDown(keyCode, event);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    private void showAdvertisement() {
+        View contentView = LayoutInflater.from(MainActivity.this).inflate(R.layout.advertisement_popuplayout, null);
+        PopupWindow mPopWindow = new PopupWindow(contentView,
+                RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT, true);
+        mPopWindow.setContentView(contentView);
+//        mPopWindow.showAtLocation(rootview, Gravity.BOTTOM, 0, 0);
+        mPopWindow.showAsDropDown(rlContainer, Gravity.BOTTOM,0,0);
+    }
+
+    private void setTagAndAlias() {
+        /**
+         *这里设置了别名，在这里获取的用户登录的信息
+         *并且此时已经获取了用户的userId,然后就可以用用户的userId来设置别名了
+         **/
+        //false状态为未设置标签与别名成功
+        //if (UserUtils.getTagAlias(getHoldingActivity()) == false) {
+        Set<String> tags = new HashSet<String>();
+        //这里可以设置你要推送的人，一般是用户uid 不为空在设置进去 可同时添加多个
+        if (!TextUtils.isEmpty((String) SharePreferenceUtil.getUser("uid", "String"))) {
+            tags.add(String.valueOf(SharePreferenceUtil.getUser("uid", "String")));//设置tag
+        }
+        //上下文、别名【Sting行】、标签【Set型】、回调
+        JPushInterface.setAliasAndTags(MyApp.getInstance(), String.valueOf(SharePreferenceUtil.getUser("uid", "String")), tags,
+                mAliasCallback);
+        // }
+    }
+
+    private final TagAliasCallback mAliasCallback = new TagAliasCallback() {
+        @Override
+        public void gotResult(int code, String alias, Set<String> tags) {
+            String logs;
+            switch (code) {
+                case 0:
+                    //这里可以往 SharePreference 里写一个成功设置的状态。成功设置一次后，以后不必再次设置了。
+                    //UserUtils.saveTagAlias(getHoldingActivity(), true);
+                    logs = "Set tag and alias success极光推送别名设置成功";
+                    Log.e("TAG", logs);
+                    break;
+                case 6002:
+                    //极低的可能设置失败 我设置过几百回 出现3次失败 不放心的话可以失败后继续调用上面那个方面 重连3次即可 记得return 不要进入死循环了...
+                    logs = "Failed to set alias and tags due to timeout. Try again after 60s.极光推送别名设置失败，60秒后重试";
+                    Log.e("TAG", logs);
+                    break;
+                default:
+                    logs = "极光推送设置失败，Failed with errorCode = " + code;
+                    Log.e("TAG", logs);
+                    break;
+            }
+        }
+    };
+
 
     @Override
     public void initView() {
+        setTagAndAlias();
+        rlContainer = findViewById(R.id.rl_container);
         bottomBar = findViewById(R.id.bottomBar);
+
         bottomBar.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {

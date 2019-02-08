@@ -57,11 +57,12 @@ public class UserCouponActivity extends BaseActivity<UserCouponContract.View, Us
         ryCoupon.setLayoutManager(new LinearLayoutManager(UserCouponActivity.this));
         double money = getIntent().getDoubleExtra("money", 0);
         boolean isUse = getIntent().getBooleanExtra("isUse", false);
-        Log.i(TAG, "initView: "+isUse);
-        couponAdapter = new CouponAdapter(null, UserCouponActivity.this, money,isUse);
+        Log.i(TAG, "initView: " + isUse);
+        couponAdapter = new CouponAdapter(null, UserCouponActivity.this, money, isUse);
         couponAdapter.bindToRecyclerView(ryCoupon);
         View inflate = View.inflate(UserCouponActivity.this, R.layout.coupon_empty, null);
         TextView viewById = inflate.findViewById(R.id.tv_empty);
+//        GlideUtil.loadGeneralImage(R.drawable.iv_empty_coupon, (ImageView) viewById.findViewById(R.id.iv_empty));
         viewById.setText("你还没有优惠券哦！");
         couponAdapter.setEmptyView(inflate);
         ryCoupon.setAdapter(couponAdapter);
@@ -69,7 +70,7 @@ public class UserCouponActivity extends BaseActivity<UserCouponContract.View, Us
         smlCoupon.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshLayout) {
-                mPresenter.queryUserCouponList((String) SharePreferenceUtil.getUser("uid","String"));
+                mPresenter.queryUserCouponList((String) SharePreferenceUtil.getUser("uid", "String"));
             }
         });
 

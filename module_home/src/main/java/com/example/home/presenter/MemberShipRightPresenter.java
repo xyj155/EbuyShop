@@ -2,6 +2,7 @@ package com.example.home.presenter;
 
 import com.example.commonlib.base.BaseGson;
 import com.example.commonlib.base.BasePresenter;
+import com.example.commonlib.gson.CouponGson;
 import com.example.commonlib.gson.GoodsGson;
 import com.example.commonlib.http.BaseObserver;
 import com.example.home.contract.MemberShipRightContract;
@@ -35,6 +36,33 @@ public class MemberShipRightPresenter extends BasePresenter<MemberShipRightContr
                         mMvpView.hideDialog();
                         if (goodsGsonBaseGson.isStatus()) {
                             mMvpView.queryMemberShipGoods(goodsGsonBaseGson.getData());
+                        }
+                    }
+
+                    @Override
+                    public void onError(String error) {
+                        mMvpView.hideDialog();
+                    }
+                });
+    }
+
+    @Override
+    public void queryMemberShipCoupon(String userId) {
+        mMvpView.showDialog("");
+        memberShipRightModel.queryMemberShipCoupon(userId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseObserver<BaseGson<CouponGson>>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onNext(BaseGson<CouponGson> goodsGsonBaseGson) {
+                        mMvpView.hideDialog();
+                        if (goodsGsonBaseGson.isStatus()) {
+                            mMvpView.queryMemberShipCoupon(goodsGsonBaseGson.getData());
                         }
                     }
 

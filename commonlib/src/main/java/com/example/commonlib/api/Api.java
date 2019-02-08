@@ -127,7 +127,7 @@ public interface Api {
     );
 
     @GET("/StuShop/public/index.php/index/User/queryUserCouponList")
-    Observable<BaseGson<CouponGson>> queryUserCouponList(@Query("userId") String goodId);
+    Observable<BaseGson<CouponGson>> queryUserCouponList(@Query("userId") String userId);
 
     @GET("/StuShop/public/index.php/index/Express/queryAllExpress")
     Observable<BaseGson<ExpressGson>> queryAllExpress();

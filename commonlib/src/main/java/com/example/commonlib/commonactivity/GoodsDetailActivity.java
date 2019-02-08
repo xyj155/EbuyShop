@@ -200,9 +200,9 @@ public class GoodsDetailActivity extends BaseActivity<GoodsDetailContract.View, 
             }
         });
         boolean isTimer = getIntent().getBooleanExtra("isTimer", false);
-        if (isTimer){
+        if (isTimer) {
             rlTimer.setVisibility(View.VISIBLE);
-            tvTime.setText(getIntent().getStringExtra("time").substring(0,10)+"  00:00:00");
+            tvTime.setText(getIntent().getStringExtra("time").substring(0, 10) + "  00:00:00");
         }
     }
 
@@ -327,7 +327,6 @@ public class GoodsDetailActivity extends BaseActivity<GoodsDetailContract.View, 
 
             }
         });
-
         bannerGoods.start();
         tvGoodsTitle.setText(goodsGson.getGoodsName());
         tvNewPrice.setText(goodsGson.getGoodsPrice());
@@ -336,27 +335,7 @@ public class GoodsDetailActivity extends BaseActivity<GoodsDetailContract.View, 
         goodsDetailPurseAdapter.replaceData(goodsGson.getPurseGoodsList());
         goodsCommentPicAdapter.replaceData(goodsGson.getGoodsCommentPic());
         tvCommentpicCount.setText(goodsGson.getGoodsCommentPic().size() + "");
-        Log.i(TAG, "loadGoodsDetail: " + RetrofitUtils.BASE_URL + "/StuShop/public/index.php/index/index/goodsDetail?id=" + getIntent().getStringExtra("goodsId"));
-        webView.loadUrl(RetrofitUtils.BASE_URL + "/StuShop/public/index.php/index/index/goodsDetail?id=" + getIntent().getStringExtra("goodsId"));
-        webView.setFocusable(false);
-        WebSettings webSettings = webView.getSettings();
-        webSettings.setLoadWithOverviewMode(true);
-        webSettings.setBuiltInZoomControls(true);
-        webView.getSettings().setJavaScriptEnabled(true);//启用js
-        webView.getSettings().setBlockNetworkImage(false);//解决图片不显示
-        webSettings.setLoadsImagesAutomatically(true);
-        webSettings.setRenderPriority(WebSettings.RenderPriority.HIGH);
-        webSettings.setUseWideViewPort(true);
-        webSettings.setBuiltInZoomControls(false);
-        webView.setHorizontalScrollBarEnabled(false);//禁止水平滚动
-        webView.setVerticalScrollBarEnabled(true);//允许垂直滚动
-        // 设置WebView属性，能够执行JavaScript脚本
-
-        webView.getSettings().setSupportZoom(true);
-        webView.getSettings().setBuiltInZoomControls(true);
-        webView.getSettings().setUseWideViewPort(true);
-        webView.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
-        webView.getSettings().setLoadWithOverviewMode(true);
+        initWebView();
 
         ivShare.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -383,6 +362,24 @@ public class GoodsDetailActivity extends BaseActivity<GoodsDetailContract.View, 
                 }
             }
         });
+    }
+
+    private void initWebView() {
+        Log.i(TAG, "loadGoodsDetail: " + RetrofitUtils.BASE_URL + "/StuShop/public/index.php/index/index/goodsDetail?id=" + getIntent().getStringExtra("goodsId"));
+        webView.loadUrl(RetrofitUtils.BASE_URL + "/StuShop/public/index.php/index/index/goodsDetail?id=" + getIntent().getStringExtra("goodsId"));
+        webView.setFocusable(false);
+        WebSettings webSettings = webView.getSettings();
+        webSettings.setLoadWithOverviewMode(true);
+        webView.getSettings().setJavaScriptEnabled(true);//启用js
+        webView.getSettings().setBlockNetworkImage(false);//解决图片不显示
+        webSettings.setLoadsImagesAutomatically(true);
+        webSettings.setRenderPriority(WebSettings.RenderPriority.HIGH);
+        webSettings.setUseWideViewPort(true);
+        webSettings.setBuiltInZoomControls(false);
+        webView.setHorizontalScrollBarEnabled(false);//禁止水平滚动
+        webView.setVerticalScrollBarEnabled(true);//允许垂直滚动
+        // 设置WebView属性，能够执行JavaScript脚本
+        webView.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
     }
 
     @Override

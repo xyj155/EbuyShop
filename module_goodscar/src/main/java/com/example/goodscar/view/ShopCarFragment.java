@@ -61,8 +61,7 @@ public class ShopCarFragment extends BaseFragment<ShopCarPresenter> implements S
     @BindView(R2.id.iv_count)
     ImageView ivCount;
     Unbinder unbinder1;
-    @BindView(R2.id.rlshopcar)
-    LinearLayout rlShopcar;
+
     public ShopCarAdapter shopCarAdapter;
     private SubmitOrderPresenter submitOrderPresenter = new SubmitOrderPresenter(this);
 
@@ -164,6 +163,8 @@ public class ShopCarFragment extends BaseFragment<ShopCarPresenter> implements S
                 }
             }
         });
+        View inflate = View.inflate(getContext(), R.layout.empty_goodscar_layout, null);
+        shopCarAdapter.setEmptyView(inflate);
     }
 
     private List<String> goodsList = new ArrayList<>();
@@ -227,11 +228,6 @@ public class ShopCarFragment extends BaseFragment<ShopCarPresenter> implements S
 
     @Override
     public void loadUserShopCar(final List<ShopCarGson> shopCarGsons) {
-        if (shopCarGsons.size() == 0) {
-            rlShopcar.setVisibility(View.VISIBLE);
-        } else {
-            rlShopcar.setVisibility(View.GONE);
-        }
         shopCarGso.clear();
         shopCarGso.addAll(shopCarGsons);
         shopCarAdapter.replaceData(shopCarGso);

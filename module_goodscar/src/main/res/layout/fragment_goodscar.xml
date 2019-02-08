@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -7,95 +7,64 @@
     android:orientation="vertical">
 
     <LinearLayout
+        android:id="@+id/llTitle"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_88"
+        android:background="#ffffff"
+        android:gravity="left"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/dp_5"
+        android:paddingTop="@dimen/dp_25"
+        android:paddingRight="@dimen/dp_5"
+        android:paddingBottom="@dimen/dp_5"
+        android:weightSum="5">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center|bottom"
+            android:padding="@dimen/dp_8"
+            android:text="购物车"
+            android:textColor="#000"
+            android:textSize="17sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <LinearLayout
-            android:id="@+id/llTitle"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_88"
-            android:background="#ffffff"
-            android:gravity="left"
-            android:orientation="horizontal"
-            android:paddingLeft="@dimen/dp_5"
-            android:paddingTop="@dimen/dp_25"
-            android:paddingRight="@dimen/dp_5"
-            android:paddingBottom="@dimen/dp_5"
-            android:weightSum="5">
-
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:gravity="center|bottom"
-                android:padding="@dimen/dp_8"
-                android:text="购物车"
-                android:textColor="#000"
-                android:textSize="17sp"
-                android:textStyle="bold" />
-
-        </LinearLayout>
+        android:layout_below="@+id/llTitle">
 
         <com.scwang.smartrefresh.layout.SmartRefreshLayout
             android:id="@+id/sml_shopcar"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <com.scwang.smartrefresh.layout.header.ClassicsHeader
+            <pl.droidsonroids.gif.GifImageView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:srlEnableLastTime="false" />
+                android:layout_height="@dimen/dp_100"
+                android:src="@drawable/loadingview"
+                app:layout_srlBackgroundColor="@android:color/transparent"
+                app:layout_srlSpinnerStyle="Translate" />
 
-            <FrameLayout
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/ry_goodscar"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent" />
 
-
-
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/ry_goodscar"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
-                <LinearLayout
-                    android:id="@+id/rlshopcar"
-                    android:visibility="gone"
-                    android:layout_gravity="center"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
-                    android:layout_centerHorizontal="true"
-                    android:gravity="center"
-                    android:orientation="vertical">
-
-                    <ImageView
-                        android:layout_width="@dimen/dp_100"
-                        android:layout_margin="@dimen/dp_10"
-                        android:layout_height="@dimen/dp_100"
-                        android:id="@+id/iv_empty"
-                        android:src="@drawable/ic_empty_cart" />
-
-                    <TextView
-                        android:id="@+id/tv_empty"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
-                        android:layout_centerVertical="true"
-                        android:drawablePadding="@dimen/dp_8"
-                        android:gravity="center"
-                        android:text="你购物车里面还没有商品哦！"
-                        android:textColor="#000"
-                        android:textStyle="bold" />
-                </LinearLayout>
-            </FrameLayout>
 
         </com.scwang.smartrefresh.layout.SmartRefreshLayout>
-    </LinearLayout>
 
+
+
+    </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_60"
+        android:layout_alignParentBottom="true"
         android:layout_gravity="bottom"
         android:layout_marginLeft="@dimen/dp_30"
         android:layout_marginRight="@dimen/dp_30"
@@ -125,7 +94,7 @@
                 android:id="@+id/tv_total_money"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="合计 ￥0.00"
+                android:text="合计 0.00"
                 android:textColor="#fff"
                 android:textSize="21sp" />
 
@@ -133,7 +102,7 @@
                 android:id="@+id/tv_total_count"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="共 0 件商品"
+                android:text="共  0  件商品"
                 android:textColor="#fff" />
         </LinearLayout>
 
@@ -156,4 +125,4 @@
 
     </RelativeLayout>
 
-</FrameLayout>
+</RelativeLayout>

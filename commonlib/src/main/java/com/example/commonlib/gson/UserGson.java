@@ -25,6 +25,15 @@ public class UserGson {
 
     private int id;
     private String username;
+private String vipRank;
+
+    public String getVipRank() {
+        return vipRank;
+    }
+
+    public void setVipRank(String vipRank) {
+        this.vipRank = vipRank;
+    }
 
     @Override
     public String toString() {

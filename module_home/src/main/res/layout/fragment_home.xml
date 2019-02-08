@@ -12,11 +12,13 @@
         android:layout_height="match_parent"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true">
-
-        <com.example.commonlib.view.CustomRefreshHeader
+        <pl.droidsonroids.gif.GifImageView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dp_50" />
+            android:layout_height="@dimen/dp_100"
+            android:src="@drawable/loadingview"
+            android:layout_marginTop="@dimen/dp_30"
+            app:layout_srlSpinnerStyle="Translate"
+            app:layout_srlBackgroundColor="@android:color/transparent"/>
 
         <com.example.commonlib.view.ObservableScrollView
             android:id="@+id/slHome"
@@ -91,7 +93,7 @@
                             android:drawablePadding="@dimen/dp_6"
                             android:gravity="center"
                             android:id="@+id/iv_school_vip"
-                            android:text="打折促销"
+                            android:text="微商加入"
                             android:textColor="#000"
                             android:textSize="13sp" />
 

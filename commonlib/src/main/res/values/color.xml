@@ -7,6 +7,7 @@
     <color name="dark">#9E9E9E</color>
     <color name="text_yellow">#f0d25b</color>
     <color name="yellow">#ffd321</color>
+    <color name="bg">#fafafa</color>
     <color name="transent">#00000000</color>
 
     <color name="normalColor">#cccccc</color>

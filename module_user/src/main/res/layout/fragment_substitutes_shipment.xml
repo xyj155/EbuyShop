@@ -9,10 +9,14 @@
         android:id="@+id/sml_send"
         android:layout_height="match_parent">
 
-        <com.scwang.smartrefresh.layout.header.ClassicsHeader
+        <pl.droidsonroids.gif.GifImageView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:srlEnableLastTime="false" />
+            android:layout_height="@dimen/dp_100"
+            android:src="@drawable/loadingview"
+            android:layout_marginTop="@dimen/dp_30"
+            app:layout_srlSpinnerStyle="Translate"
+            app:layout_srlBackgroundColor="@android:color/transparent"/>
+
 
         <android.support.v7.widget.RecyclerView
             android:layout_width="match_parent"

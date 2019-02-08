@@ -13,6 +13,7 @@ import android.widget.Toast;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.example.commonlib.base.BaseActivity;
 import com.example.commonlib.util.RouterUtil;
+import com.example.commonlib.view.toast.ToastUtils;
 import com.example.module_login.R;
 import com.example.module_login.R2;
 import com.example.module_login.contract.UserContract;
@@ -120,7 +121,7 @@ public class TelPhoneRegisterVerifyActivity extends BaseActivity<UserContract.Vi
                     Object data = msg.obj;
                     if (event == SMSSDK.EVENT_GET_VERIFICATION_CODE) {
                         if (result == SMSSDK.RESULT_COMPLETE) {
-                            Toast.makeText(TelPhoneRegisterVerifyActivity.this, "验证码发送成功", Toast.LENGTH_SHORT).show();
+                            ToastUtils.show("验证码发送成功！");
                         } else {
                             ((Throwable) data).printStackTrace();
                         }
@@ -133,9 +134,9 @@ public class TelPhoneRegisterVerifyActivity extends BaseActivity<UserContract.Vi
                             // TODO 处理错误的结果
                             ((Throwable) data).printStackTrace();
                             if (etCode.getText().toString().isEmpty()) {
-                                Toast.makeText(TelPhoneRegisterVerifyActivity.this, "请输入验证码！", Toast.LENGTH_SHORT).show();
+                                ToastUtils.show("请输入验证码！");
                             } else {
-                                Toast.makeText(TelPhoneRegisterVerifyActivity.this, "验证码错误！", Toast.LENGTH_SHORT).show();
+                                ToastUtils.show("验证码错误！");
                             }
 
                         }

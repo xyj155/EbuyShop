@@ -7,14 +7,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
+        android:layout_centerInParent="true"
         android:orientation="vertical">
+
         <ImageView
             android:layout_width="@dimen/dp_108"
+            android:id="@+id/iv_empty"
             android:layout_height="@dimen/dp_108"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="102dp"
-            android:src="@drawable/live_pack_empty_ic" />
+            android:src="@drawable/iv_empty_coupon" />
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

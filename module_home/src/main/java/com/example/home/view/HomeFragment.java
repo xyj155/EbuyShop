@@ -36,7 +36,6 @@ import com.example.commonlib.gson.GoodsGson;
 import com.example.commonlib.gson.HotPurseActivityGson;
 import com.example.commonlib.gson.MarQueenGson;
 import com.example.commonlib.gson.TimeGoodsGson;
-import com.example.commonlib.http.RetrofitUtils;
 import com.example.commonlib.loader.BannerViewHolder;
 import com.example.commonlib.util.RouterUtil;
 import com.example.commonlib.util.SharePreferenceUtil;
@@ -525,8 +524,8 @@ public class HomeFragment extends BaseFragment<HomePagePresenter> implements Hom
             Log.i(TAG, "onViewClicked: ");
             startActivity(new Intent(getContext(), NewUpperShelfActivity.class));
         } else if (id == R.id.iv_school_vip) {
-            Intent intent = new Intent(getContext(), BrowserActivity.class);
-            intent.putExtra("url", RetrofitUtils.BASE_URL + "/StuShop/public/index.php/index/Index/vipRecharge");
+            Intent intent = new Intent(getContext(), UpdateMicroShopActivity.class);
+//            intent.putExtra("url", RetrofitUtils.BASE_URL + "/StuShop/public/index.php/index/Index/vipRecharge");
             startActivity(intent);
         } else if (id == R.id.iv_best) {
             startActivity(new Intent(getContext(), SecondHandTradingMarketActivity.class));

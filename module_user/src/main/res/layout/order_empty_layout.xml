@@ -5,6 +5,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
+        android:layout_centerInParent="true"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:orientation="vertical">
@@ -14,7 +15,6 @@
             android:layout_height="@dimen/dp_108"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="102dp"
             android:src="@drawable/live_pack_empty_ic" />
 
         <TextView

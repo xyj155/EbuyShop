@@ -3,16 +3,21 @@
 
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:id="@+id/sml_time"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
-        <com.scwang.smartrefresh.layout.header.ClassicsHeader
+        <pl.droidsonroids.gif.GifImageView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="@dimen/dp_100"
+            android:src="@drawable/loadingview"
+            android:layout_marginTop="@dimen/dp_30"
+            app:layout_srlSpinnerStyle="Translate"
+            app:layout_srlBackgroundColor="@android:color/transparent"/>
+
 
         <android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/ry_newest"
@@ -21,7 +26,7 @@
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
 
-    <include
-        layout="@layout/common_empty"
-        android:visibility="gone" />
+    <!--<include-->
+        <!--layout="@layout/common_empty"-->
+        <!--android:visibility="gone" />-->
 </FrameLayout>

@@ -125,6 +125,7 @@ public class MemberShipRightActivity extends BaseActivity<MemberShipRightContrac
     @Override
     public void initView() {
         ButterKnife.bind(this);
+        initToolBar().setToolBarTitle("会员尊享");
         List<Fragment> fragmentList = new ArrayList<>();
         fragmentList.add(new MemberGoodsFragment());
         fragmentList.add(new MemberCouponFragment());

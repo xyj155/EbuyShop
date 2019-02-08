@@ -65,7 +65,7 @@ public class SubstitutePaymentFragment extends BaseFragment<UserFormStatusPresen
         userGoodsStatusAdapter.setEmptyView(View.inflate(getContext(), R.layout.order_empty_layout, null));
         ryPayment.setLayoutManager(new LinearLayoutManager(getContext()));
         ryPayment.setAdapter(userGoodsStatusAdapter);
-        userGoodsStatusAdapter.setEmptyView(View.inflate(getContext(), R.layout.order_empty_layout, null));
+//        userGoodsStatusAdapter.setEmptyView(View.inflate(getContext(), R.layout.order_empty_layout, null));
         userGoodsStatusAdapter.setOnClickListener(new UserGoodsStatusAdapter.onClickListener() {
             @Override
             public void onClickListener(final String orderNum) {

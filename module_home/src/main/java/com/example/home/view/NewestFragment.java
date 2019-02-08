@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 
 import com.example.commonlib.base.BaseFragment;
 import com.example.commonlib.gson.NewestShelfGson;
@@ -27,9 +26,7 @@ import butterknife.Unbinder;
 public class NewestFragment extends BaseFragment<NewUpperShelfPresenter> implements NewUpperShelfContract.View {
     RecyclerView ryNewest;
     Unbinder unbinder;
-    RelativeLayout rlEmpty;
     SmartRefreshLayout smlTime;
-    ImageView ivEmpty;
     Unbinder unbinder1;
     private NewestAdapter newestAdapter;
     public static final String EXTRA_TEXT = "extra_text";
@@ -60,14 +57,15 @@ public class NewestFragment extends BaseFragment<NewUpperShelfPresenter> impleme
     public void initView(View view) {
         unbinder = ButterKnife.bind(this, view);
         ryNewest = view.findViewById(R.id.ry_newest);
-        rlEmpty = view.findViewById(R.id.rl_empty);
         smlTime = view.findViewById(R.id.sml_time);
-        ivEmpty = view.findViewById(R.id.iv_empty);
         ryNewest.setLayoutManager(new LinearLayoutManager(getContext()));
         newestAdapter = new NewestAdapter(null, getActivity());
         ryNewest.setAdapter(newestAdapter);
+        View inflate = View.inflate(getContext(), R.layout.common_empty, null);
+        ImageView viewById = inflate.findViewById(R.id.iv_empty);
+        GlideUtil.loadGeneralImage(R.drawable.ic_empty_new_shelf, viewById);
+        newestAdapter.setEmptyView(inflate);
 
-        GlideUtil.loadGeneralImage(R.drawable.ic_empty_cart, ivEmpty);
 
     }
 
@@ -94,9 +92,6 @@ public class NewestFragment extends BaseFragment<NewUpperShelfPresenter> impleme
         Log.i(TAG, "loadDateList: " + timeBeans.getGoods().toString());
         if (timeBeans.getGoods().size() > 0) {
             newestAdapter.replaceData(timeBeans.getGoods());
-            rlEmpty.setVisibility(View.GONE);
-        } else {
-            rlEmpty.setVisibility(View.VISIBLE);
         }
         if (smlTime != null)
             smlTime.finishRefresh();

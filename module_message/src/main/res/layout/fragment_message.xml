@@ -12,13 +12,18 @@
         android:background="#fff"
         android:orientation="vertical">
 
-        <com.scwang.smartrefresh.layout.header.ClassicsHeader
+        <pl.droidsonroids.gif.GifImageView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:srlEnableLastTime="false" />
+            android:layout_height="@dimen/dp_100"
+            android:src="@drawable/loadingview"
+            android:layout_marginTop="@dimen/dp_30"
+            app:layout_srlSpinnerStyle="Translate"
+            app:layout_srlBackgroundColor="@android:color/transparent"/>
+
 
         <com.example.commonlib.view.ObservableScrollView
             android:id="@+id/sl_message"
+            android:fillViewport="true"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scrollbars="none">

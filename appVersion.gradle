@@ -59,8 +59,9 @@ ext {
             "push"                         : "com.netease.nimlib:push:${dependVersion.nimlib}",
             "crashreport_upgrade"          : 'com.tencent.bugly:crashreport_upgrade:1.2.0',
             "nativecrashreport"            : 'com.tencent.bugly:nativecrashreport:2.2.0',
-            "jpush"            : 'cn.jiguang.sdk:jpush:3.1.6',
-            "jcore"            : 'cn.jiguang.sdk:jcore:1.2.5'
+            "jpush"                        : 'cn.jiguang.sdk:jpush:3.1.6',
+            "jcore"                        : 'cn.jiguang.sdk:jcore:1.2.5',
+            "android-gif-drawable"         : 'pl.droidsonroids.gif:android-gif-drawable:1.2.3'
     ]
 
 

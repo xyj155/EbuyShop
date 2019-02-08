@@ -3,9 +3,11 @@ package com.example.user.view;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ImageView;
 
 import com.example.commonlib.base.BaseActivity;
 import com.example.commonlib.gson.GoodsGson;
+import com.example.commonlib.util.GlideUtil;
 import com.example.commonlib.util.SharePreferenceUtil;
 import com.example.user.adapter.UserCollectionAdapter;
 import com.example.user.contract.UserCollectionContract;
@@ -59,7 +61,9 @@ public class UserCollectionActivity extends BaseActivity<UserCollectionContract.
             }
         });
         ryCollection.setAdapter(userCollectionAdapter);
-        userCollectionAdapter.setEmptyView(View.inflate(UserCollectionActivity.this, R.layout.collection_empty_layout, null));
+        View inflate = View.inflate(UserCollectionActivity.this, R.layout.collection_empty_layout, null);
+        GlideUtil.loadGeneralImage(R.drawable.ic_empty_collection, (ImageView) inflate.findViewById(R.id.iv_empty));
+        userCollectionAdapter.setEmptyView(inflate);
 
     }
 

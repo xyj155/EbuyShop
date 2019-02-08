@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.example.commonlib.rxpermissions2.Permission;
 import com.example.commonlib.rxpermissions2.RxPermissions;
+import com.example.commonlib.util.MobileInfoUtils;
 import com.example.commonlib.view.toast.ToastUtils;
 import com.xuyijie.ebuyshop.R;
 
@@ -20,6 +21,7 @@ public class PermissionRequestActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_permission_request);
+        MobileInfoUtils.jumpStartInterface(PermissionRequestActivity.this);
         rxPermissions = new RxPermissions(this);
         rxPermissions.setLogging(true);
         rxPermissions.requestEachCombined(Manifest.permission.READ_EXTERNAL_STORAGE,

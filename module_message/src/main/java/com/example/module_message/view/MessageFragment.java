@@ -85,7 +85,6 @@ public class MessageFragment extends BaseFragment<GoodsDetailPresenter> {
         ryRecent.setAdapter(conversationAdapter);
         conversationAdapter.bindToRecyclerView(ryRecent);
         View inflate = View.inflate(getContext(), R.layout.common_empty_message, null);
-        TextView viewById = inflate.findViewById(R.id.tv_empty);
         conversationAdapter.setEmptyView(inflate);
         smlContact.autoRefresh();
         smlContact.setOnRefreshListener(new OnRefreshListener() {

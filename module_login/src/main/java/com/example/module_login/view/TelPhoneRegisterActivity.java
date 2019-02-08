@@ -9,11 +9,11 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.commonlib.base.BaseActivity;
 import com.example.commonlib.gson.UserGson;
 import com.example.commonlib.util.SharePreferenceUtil;
+import com.example.commonlib.view.toast.ToastUtils;
 import com.example.module_login.R;
 import com.example.module_login.R2;
 import com.example.module_login.contract.UserContract;
@@ -28,10 +28,13 @@ import butterknife.OnClick;
 import cn.smssdk.EventHandler;
 import cn.smssdk.SMSSDK;
 
+
 public class TelPhoneRegisterActivity extends BaseActivity<UserContract.View, UserPresenter> implements UserContract.View {
 
     @BindView(R2.id.tv_having)
     TextView tvHaving;
+    private long lastClickTime = 0L;
+    private static final int FAST_CLICK_DELAY_TIME = 500;  // 快速点击间隔
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,26 +63,19 @@ public class TelPhoneRegisterActivity extends BaseActivity<UserContract.View, Us
                     if (event == SMSSDK.EVENT_GET_VERIFICATION_CODE) {
                         if (result == SMSSDK.RESULT_COMPLETE) {
                             // TODO 处理成功得到验证码的结果
-                            // 请注意，此时只是完成了发送验证码的请求，验证码短信还需要几秒钟之后才送达
-                            Toast.makeText(TelPhoneRegisterActivity.this, "发送验证码成功！", Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(TelPhoneRegisterActivity.this, TelPhoneRegisterVerifyActivity.class);
-                            intent.putExtra("telphone", etTel.getText().toString());
-                            startActivity(intent);
+                            // 请注意，此时只是完成了发送验证码的请求，验证码短信还需要几秒钟之后才送达]
+                            ToastUtils.show("发送验证码成功！");
                             Map<String, Object> map = new HashMap<>();
                             map.put("username", etTel.getText().toString());
                             map.put("telphone", etTel.getText().toString());
                             SharePreferenceUtil.saveUser(map);
+                            Intent intent = new Intent(TelPhoneRegisterActivity.this, TelPhoneRegisterVerifyActivity.class);
+                            intent.putExtra("telphone", etTel.getText().toString());
+                            startActivity(intent);
                         } else {
                             // TODO 处理错误的结果
                             ((Throwable) data).printStackTrace();
-                            Toast.makeText(TelPhoneRegisterActivity.this, "发送验证码失败！", Toast.LENGTH_SHORT).show();
-                        }
-                    } else if (event == SMSSDK.EVENT_SUBMIT_VERIFICATION_CODE) {
-                        if (result == SMSSDK.RESULT_COMPLETE) {
-                            // TODO 处理验证码验证通过的结果
-                        } else {
-                            // TODO 处理错误的结果
-                            ((Throwable) data).printStackTrace();
+                            ToastUtils.show("发送验证码失败！错误信息"+data.toString());
                         }
                     }
                     return false;
@@ -147,6 +143,11 @@ public class TelPhoneRegisterActivity extends BaseActivity<UserContract.View, Us
         if (isHaving) {
             tvHaving.setText("此手机号码已注册！请直接登录");
         } else {
+            if (System.currentTimeMillis() - lastClickTime < FAST_CLICK_DELAY_TIME) {
+                return;
+            }
+            lastClickTime = System.currentTimeMillis();
+            ToastUtils.show("电话号码："+etTel.getText().toString());
             SMSSDK.getVerificationCode("86", etTel.getText().toString());
         }
     }
@@ -158,11 +159,11 @@ public class TelPhoneRegisterActivity extends BaseActivity<UserContract.View, Us
 
     @Override
     public void showDialog(String msg) {
-
+        createDialog("");
     }
 
     @Override
     public void hideDialog() {
-
+        mhideDialog();
     }
 }

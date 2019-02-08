@@ -3,11 +3,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center|top"
+    android:orientation="vertical"
+    android:gravity="center"
     tools:ignore="MissingDefaultResource">
 
     <ImageView
-        android:layout_width="@dimen/dp_350"
-        android:layout_height="@dimen/dp_170"
+        android:layout_width="@dimen/dp_120"
+        android:layout_height="@dimen/dp_150"
         android:src="@drawable/ic_empty_message" />
+    <TextView
+        android:layout_width="match_parent"
+        android:gravity="center"
+        android:textSize="15sp"
+        android:padding="@dimen/dp_10"
+        android:layout_height="wrap_content"
+        android:text="你还没有消息哦！"/>
 </LinearLayout>

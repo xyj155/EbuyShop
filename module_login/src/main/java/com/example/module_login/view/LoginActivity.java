@@ -1,6 +1,8 @@
 package com.example.module_login.view;
 
 import android.content.Intent;
+import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -17,6 +19,7 @@ import com.example.commonlib.commonactivity.BrowserActivity;
 import com.example.commonlib.gson.UserGson;
 import com.example.commonlib.http.RetrofitUtils;
 import com.example.commonlib.interfaces.UserLoginInterface;
+import com.example.commonlib.util.CustomVideoView;
 import com.example.commonlib.util.RouterUtil;
 import com.example.commonlib.util.SharePreferenceUtil;
 import com.example.commonlib.util.ThirdLoginUtil;
@@ -60,11 +63,40 @@ public class LoginActivity extends BaseActivity<UserContract.View, UserPresenter
     EditText etPassword;
     @BindView(R2.id.tv_forget)
     TextView tvForget;
+    @BindView(R2.id.video_login)
+    CustomVideoView videoLogin;
 
+    private void initVideo() {
+        //设置播放加载路径
+        videoLogin.setVideoURI(Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.login_video));
+        //播放
+        videoLogin.start();
+        //循环播放
+        videoLogin.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer mp) {
+                videoLogin.start();
+            }
+        });
+    }
+
+    //返回重启加载
+    @Override
+    protected void onRestart() {
+        initVideo();
+        super.onRestart();
+    }
+
+    //防止锁屏或者切出的时候，音乐在播放
+    @Override
+    protected void onStop() {
+        videoLogin.stopPlayback();
+        super.onStop();
+    }
 
     @Override
     public boolean isSetStatusBarTranslucent() {
-        return false;
+        return true;
     }
 
     @Override
@@ -80,7 +112,7 @@ public class LoginActivity extends BaseActivity<UserContract.View, UserPresenter
     @Override
     public void initView() {
         ButterKnife.bind(this);
-
+        initVideo();
     }
 
     @Override
@@ -169,7 +201,7 @@ public class LoginActivity extends BaseActivity<UserContract.View, UserPresenter
             startActivityForResult(new Intent(LoginActivity.this, TelPhoneRegisterActivity.class), LOGIN_CODE);
         } else if (id == R.id.tv_forget) {
             Intent intent = new Intent(LoginActivity.this, BrowserActivity.class);
-            intent.putExtra("url", RetrofitUtils.BASE_URL+"/StuShop/public/index.php/index/index/forgetPassword");
+            intent.putExtra("url", RetrofitUtils.BASE_URL + "/StuShop/public/index.php/index/index/forgetPassword");
             startActivity(intent);
         }
     }
@@ -186,6 +218,7 @@ public class LoginActivity extends BaseActivity<UserContract.View, UserPresenter
         map.put("uid", String.valueOf(userGson.getId()));
         map.put("userToken", String.valueOf(userGson.getUserToken()));
         map.put("islogin", true);
+        map.put("member", userGson.getVipRank());
         SharePreferenceUtil.saveUser(map);
         finish();
     }
