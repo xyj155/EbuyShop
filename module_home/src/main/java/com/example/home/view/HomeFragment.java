@@ -165,7 +165,7 @@ public class HomeFragment extends BaseFragment<HomePagePresenter> implements Hom
                         if (t <= 0) {
                             //顶部图处于最顶部，标题栏透明
                             llTitle.setBackgroundColor(Color.argb(0, 255, 255, 255));
-                            Glide.with(getContext()).asBitmap().load(R.mipmap.home_kind).into(ivKind);
+                            Glide.with(getContext()).asBitmap().load(R.drawable.icon_logo).into(ivKind);
                             Glide.with(getContext()).asBitmap().load(R.mipmap.home_shopcar).into(ivShopCar);
                             tvSearch.setBackgroundResource(R.drawable.home_search_bg);
                             llTitle.setVisibility(View.VISIBLE);
@@ -175,14 +175,14 @@ public class HomeFragment extends BaseFragment<HomePagePresenter> implements Hom
                             float scale = (float) t / mHeight;//算出滑动距离比例
                             float alpha = (255 * scale);//得到透明度
                             llTitle.setBackgroundColor(Color.argb((int) alpha, 255, 255, 255));
-                            Glide.with(getContext()).asBitmap().load(R.mipmap.home_kind_red).into(ivKind);
+                            Glide.with(getContext()).asBitmap().load(R.drawable.icon_logo).into(ivKind);
                             Glide.with(getContext()).asBitmap().load(R.mipmap.home_shopcar_red).into(ivShopCar);
                         } else {
                             //过顶部图区域，标题栏定色
                             llTitle.setVisibility(View.VISIBLE);
                             llTitle.setBackgroundColor(Color.argb(255, 255, 255, 255));
                             tvSearch.setBackgroundResource(R.drawable.home_search_bg_dark);
-                            Glide.with(getContext()).asBitmap().load(R.mipmap.home_kind_red).into(ivKind);
+                            Glide.with(getContext()).asBitmap().load(R.drawable.icon_logo).into(ivKind);
                             Glide.with(getContext()).asBitmap().load(R.mipmap.home_shopcar_red).into(ivShopCar);
                         }
 
@@ -274,6 +274,7 @@ public class HomeFragment extends BaseFragment<HomePagePresenter> implements Hom
                 }
             }
         });
+        mPresenter.queryTimeSell();
     }
 
     @Override
@@ -447,7 +448,7 @@ public class HomeFragment extends BaseFragment<HomePagePresenter> implements Hom
             super.handleMessage(msg);
             if (msg.what == 1) {
                 computeTime();
-                tvTime.setText(" " + (mHour < 10 ? "0"+mHour : mHour) + "   " +  (mMin < 10 ? "0"+mMin : mMin) + "   " + mSecond);
+                tvTime.setText(" " + (mHour < 10 ? "0" + mHour : mHour) + "   " + (mMin < 10 ? "0" + mMin : mMin) + "   " + mSecond);
                 if (mDay == 0 && mHour == 0 && mMin == 0 && mSecond == 0) {
 
                 }
@@ -524,9 +525,7 @@ public class HomeFragment extends BaseFragment<HomePagePresenter> implements Hom
             Log.i(TAG, "onViewClicked: ");
             startActivity(new Intent(getContext(), NewUpperShelfActivity.class));
         } else if (id == R.id.iv_school_vip) {
-            Intent intent = new Intent(getContext(), UpdateMicroShopActivity.class);
-//            intent.putExtra("url", RetrofitUtils.BASE_URL + "/StuShop/public/index.php/index/Index/vipRecharge");
-            startActivity(intent);
+            startActivity(new Intent(getContext(), GoodsKindSortedActivity.class));
         } else if (id == R.id.iv_best) {
             startActivity(new Intent(getContext(), SecondHandTradingMarketActivity.class));
         } else if (id == R.id.iv_share) {
@@ -541,10 +540,10 @@ public class HomeFragment extends BaseFragment<HomePagePresenter> implements Hom
                     R.anim.bottom_to_top_anim_out);
         } else if (id == R.id.tv_member) {
             Object user = SharePreferenceUtil.getUser("member", "String");
-            Log.i(TAG, "onViewClicked: "+user);
-            if (user.toString().isEmpty()){
+            Log.i(TAG, "onViewClicked: " + user);
+            if (user.toString().isEmpty()) {
                 startActivity(new Intent(getContext(), MembershipOpeningActivity.class));
-            }else {
+            } else {
                 startActivity(new Intent(getContext(), MemberShipRightActivity.class));
             }
 

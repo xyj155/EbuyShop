@@ -44,7 +44,7 @@
                     <com.zhouwei.mzbanner.MZBannerView
                         android:id="@+id/banner"
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/dp_158"
+                        android:layout_height="@dimen/dp_148"
                         android:layout_marginTop="@dimen/dp_75"
                         android:layout_marginBottom="@dimen/dp_15"
                         app:canLoop="true"
@@ -85,17 +85,7 @@
                             android:textColor="#000"
                             android:textSize="13sp" />
 
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:drawableTop="@mipmap/l_chongzhi_yinshui"
-                            android:drawablePadding="@dimen/dp_6"
-                            android:gravity="center"
-                            android:id="@+id/iv_school_vip"
-                            android:text="微商加入"
-                            android:textColor="#000"
-                            android:textSize="13sp" />
+
 
 
                         <TextView
@@ -121,7 +111,17 @@
                             android:text="购物晒单"
                             android:textColor="#000"
                             android:textSize="13sp" />
-
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:drawableTop="@mipmap/l_chongzhi_yongcan"
+                            android:drawablePadding="@dimen/dp_6"
+                            android:gravity="center"
+                            android:id="@+id/iv_school_vip"
+                            android:text="全部商品"
+                            android:textColor="#000"
+                            android:textSize="13sp" />
                     </LinearLayout>
 
 
@@ -306,16 +306,16 @@
 
         <ImageView
             android:id="@+id/ivKind"
-            android:layout_width="@dimen/dp_24"
+            android:layout_width="@dimen/dp_58"
             android:layout_height="@dimen/dp_24"
-            android:src="@mipmap/home_kind" />
+            android:src="@drawable/icon_logo" />
 
 
         <TextView
             android:id="@+id/tvSearch"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_36"
-            android:layout_marginLeft="@dimen/dp_8"
+            android:layout_marginLeft="@dimen/dp_5"
             android:layout_marginRight="@dimen/dp_8"
             android:layout_weight="0.45"
             android:background="@drawable/home_search_bg"

@@ -42,6 +42,7 @@ public interface HomePageContract {
 
     interface Presenter {
         void setPurseGoodsList(String type1, String type2);
+        void  queryTimeSell();
 
     }
 }

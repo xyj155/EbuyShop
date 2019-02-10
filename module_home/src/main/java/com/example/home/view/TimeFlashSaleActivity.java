@@ -86,7 +86,7 @@ public class TimeFlashSaleActivity extends BaseActivity<TimeFlashContract.View, 
                 finish();
             }
         });
-        rbTime1.setChecked(true);
+
         rgTime.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
@@ -116,33 +116,49 @@ public class TimeFlashSaleActivity extends BaseActivity<TimeFlashContract.View, 
     }
 
     private TimerGoodsAdapter purseGoodsAdapter;
+    private String endTime;
 
     @Override
     public void queryTimeGoods(TimeGoodsGson goodsGsons) {
         if (purseGoodsAdapter != null) {
             if (isInDate(goodsGsons.getTime().get(0).getStartTime(), goodsGsons.getTime().get(0).getEndTime())) {
                 rbTime1.setText(setTimerTitle(goodsGsons.getTime().get(0).getStartTime().substring(5, 10) + "\n" + "正在开始"));
+                endTime= goodsGsons.getTime().get(0).getEndTime();
+                rbTime1.setChecked(true);
             } else {
                 rbTime1.setClickable(false);
                 rbTime1.setText(setTimerTitle(goodsGsons.getTime().get(0).getStartTime().substring(5, 10) + "\n" + "等待开始"));
             }
             if (isInDate(goodsGsons.getTime().get(1).getStartTime(), goodsGsons.getTime().get(1).getEndTime())) {
                 rbTime2.setText(setTimerTitle(goodsGsons.getTime().get(1).getStartTime().substring(5, 10) + "\n" + "正在开始"));
+                endTime= goodsGsons.getTime().get(1).getEndTime();
+                rbTime2.setChecked(true);
             } else {
                 rbTime2.setClickable(false);
                 rbTime2.setText(setTimerTitle(goodsGsons.getTime().get(1).getStartTime().substring(5, 10) + "\n" + "等待开始"));
             }
             if (isInDate(goodsGsons.getTime().get(2).getStartTime(), goodsGsons.getTime().get(2).getEndTime())) {
                 rbTime3.setText(setTimerTitle(goodsGsons.getTime().get(2).getStartTime().substring(5, 10) + "\n" + "正在开始"));
+                endTime= goodsGsons.getTime().get(2).getEndTime();
+                rbTime3.setChecked(true);
             } else {
                 rbTime3.setClickable(false);
                 rbTime3.setText(setTimerTitle(goodsGsons.getTime().get(2).getStartTime().substring(5, 10) + "\n" + "等待开始"));
             }
             if (isInDate(goodsGsons.getTime().get(3).getStartTime(), goodsGsons.getTime().get(3).getEndTime())) {
                 rbTime4.setText(setTimerTitle(goodsGsons.getTime().get(3).getStartTime().substring(5, 10) + "\n" + "正在开始"));
+                endTime= goodsGsons.getTime().get(3).getEndTime();
+                rbTime4.setChecked(true);
             } else {
                 rbTime4.setClickable(false);
                 rbTime4.setText(setTimerTitle(goodsGsons.getTime().get(3).getStartTime().substring(5, 10) + "\n" + "等待开始"));
+            }
+            if (rbTime2.isChecked()){
+                rbTime1.setText(setTimerTitle(goodsGsons.getTime().get(0).getStartTime().substring(5, 10) + "\n" + "活动结束"));
+            }
+            if (rbTime3.isChecked()){
+                rbTime2.setText(setTimerTitle(goodsGsons.getTime().get(2).getStartTime().substring(5, 10) + "\n" + "活动结束"));
+                rbTime1.setText(setTimerTitle(goodsGsons.getTime().get(0).getStartTime().substring(5, 10) + "\n" + "活动结束"));
             }
             purseGoodsAdapter.replaceData(goodsGsons.getGoods());
         }
@@ -227,6 +243,7 @@ public class TimeFlashSaleActivity extends BaseActivity<TimeFlashContract.View, 
                             view.putExtra("goodsId", String.valueOf(item.getId()));
                             view.putExtra("isTimer", true);
                             view.putExtra("time", item.getTime());
+                            view.putExtra("endTime", endTime);
                             context.startActivity(view);
                         }
                     });

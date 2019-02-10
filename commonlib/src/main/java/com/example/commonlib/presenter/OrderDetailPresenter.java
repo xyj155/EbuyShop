@@ -1,5 +1,7 @@
 package com.example.commonlib.presenter;
 
+import android.util.Log;
+
 import com.example.commonlib.base.BaseGson;
 import com.example.commonlib.base.BasePresenter;
 import com.example.commonlib.contract.OrderDetailContract;
@@ -21,6 +23,7 @@ public class OrderDetailPresenter extends BasePresenter<OrderDetailContract.View
     @Override
     public void confirmationOrderByUserId(String userId, String goodsId,String orderNum) {
         mMvpView.showDialog("");
+        Log.i(TAG, "confirmationOrderByUserId:userId= "+userId+"goodsId="+goodsId+"orderNum"+orderNum);
         orderDetailModel.confirmationOrderByUserId(userId, goodsId,orderNum)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

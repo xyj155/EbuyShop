@@ -2,6 +2,7 @@ package com.xuyijie.ebuyshop.view;
 
 import android.os.CountDownTimer;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -87,6 +88,7 @@ public class SplashActivity extends BaseActivity<AdvertisementContract.View, Adv
         @Override
         public void run() {
             boolean user = (boolean) SharePreferenceUtil.getUser("islogin", "boolean");
+            Log.i(TAG, "run: "+user);
             if (user) {
                 ARouter.getInstance().build(RouterUtil.HomePage).navigation();
             } else {
@@ -98,7 +100,9 @@ public class SplashActivity extends BaseActivity<AdvertisementContract.View, Adv
 
     @Override
     public void loadAdvertisement(AdvertisementGson advertisementGson) {
-        GlideUtil.loadGeneralImage(advertisementGson.getBannerUrl(), ivAd);
+        if (advertisementGson.getIsShow().equals("1")){
+            GlideUtil.loadGeneralImage(advertisementGson.getBannerUrl(), ivAd);
+        }
         handler.postDelayed(runnable, 4000);
     }
 

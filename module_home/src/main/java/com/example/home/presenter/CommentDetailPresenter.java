@@ -3,6 +3,7 @@ package com.example.home.presenter;
 import com.example.commonlib.base.BaseGson;
 import com.example.commonlib.base.BasePresenter;
 import com.example.commonlib.gson.CommentDetailGson;
+import com.example.commonlib.gson.EmptyGson;
 import com.example.commonlib.http.BaseObserver;
 import com.example.home.contract.CommentDetailContract;
 import com.example.home.model.CommentDetailModel;
@@ -41,5 +42,29 @@ public class CommentDetailPresenter extends BasePresenter<CommentDetailContract.
                         mMvpView.hideDialog();
                     }
                 });
+    }
+
+    @Override
+    public void submitGoodsComment(String userId, String content, String postId) {
+        commentDetailModel.submitGoodsComment(userId, content, postId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseObserver<BaseGson<EmptyGson>>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onNext(BaseGson<EmptyGson> emptyGsonBaseGson) {
+                        mMvpView.submitGoodsComment(emptyGsonBaseGson.isStatus());
+                    }
+
+                    @Override
+                    public void onError(String error) {
+
+                    }
+                });
+
     }
 }

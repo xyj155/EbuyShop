@@ -32,13 +32,12 @@ public class HomeDataEntity {
         this.marQueenGsonList = marQueenGsonList;
     }
 
-    public HomeDataEntity(List<GoodsGson> timePurseGoodsList, List<GoodsGson> purseGoodsList, List<HotPurseActivityGson> hotPurseActivityGsons, List<BannerGson> bannerGsons, List<MarQueenGson> marQueenGsonList, TimeGoodsGson.TimeBean timeBean) {
+    public HomeDataEntity(List<GoodsGson> timePurseGoodsList, List<GoodsGson> purseGoodsList, List<HotPurseActivityGson> hotPurseActivityGsons, List<BannerGson> bannerGsons, List<MarQueenGson> marQueenGsonList) {
         this.timePurseGoodsList = timePurseGoodsList;
         this.purseGoodsList = purseGoodsList;
         this.hotPurseActivityGsons = hotPurseActivityGsons;
         this.bannerGsons = bannerGsons;
         this.marQueenGsonList = marQueenGsonList;
-        this.timeBean = timeBean;
     }
 
 

@@ -82,10 +82,19 @@
                                 android:paddingBottom="@dimen/dp_8"
                                 android:text="限时秒杀"
                                 android:textColor="#fff"
-                                android:textSize="16sp" />
+                                android:textSize="16sp"
+                                android:visibility="gone" />
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentLeft="true"
+                                android:layout_centerInParent="true"
+                                android:layout_marginLeft="@dimen/dp_30"
+                                android:src="@drawable/ic_flash_sale_title" />
 
                             <LinearLayout
-                                android:layout_width="wrap_content"
+                                android:layout_width="@dimen/dp_120"
                                 android:layout_height="match_parent"
                                 android:layout_toLeftOf="@+id/iv_arrow"
                                 android:orientation="vertical"
@@ -96,20 +105,21 @@
                                     android:layout_height="match_parent"
                                     android:layout_toRightOf="@+id/iv_time"
                                     android:layout_weight="1.2"
-                                    android:gravity="center|left"
-                                    android:text="结束时间"
+                                    android:gravity="center|right"
+                                    android:text="距结束"
                                     android:textColor="#ffd321"
-                                    android:textSize="13sp" />
+                                    android:textSize="11sp" />
 
                                 <TextView
                                     android:id="@+id/tv_time"
                                     android:layout_width="wrap_content"
                                     android:layout_height="match_parent"
+                                    android:layout_gravity="right"
                                     android:layout_weight="0.8"
                                     android:paddingTop="@dimen/dp_3"
-                                    android:text="2016-2-2"
+                                    android:text=""
                                     android:textColor="#ffd321"
-                                    android:textSize="15sp"
+                                    android:textSize="17sp"
                                     android:textStyle="bold" />
                             </LinearLayout>
 
@@ -149,7 +159,7 @@
                                 android:textStyle="bold" />
 
 
-                            <LinearLayout
+                            <RelativeLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="15dp"
@@ -160,8 +170,10 @@
                                 android:paddingRight="12dp">
 
                                 <TextView
+                                    android:id="@+id/tv_tag"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
+                                    android:layout_centerVertical="true"
                                     android:text="￥"
                                     android:textColor="#ec0f38"
                                     android:textSize="14sp"
@@ -171,7 +183,9 @@
                                     android:id="@+id/tv_new_price"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
+                                    android:layout_centerInParent="true"
                                     android:layout_marginLeft="3dp"
+                                    android:layout_toRightOf="@+id/tv_tag"
                                     android:text="599"
                                     android:textColor="#ec0f38"
                                     android:textSize="21sp"
@@ -181,13 +195,24 @@
                                     android:id="@+id/tv_old_price"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
+                                    android:layout_centerInParent="true"
                                     android:layout_marginLeft="7dp"
+                                    android:layout_toRightOf="@+id/tv_new_price"
                                     android:gravity="center_vertical"
                                     android:text="￥799"
                                     android:textColor="#888888"
                                     android:textSize="13sp" />
 
-                            </LinearLayout>
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentRight="true"
+                                    android:layout_centerVertical="true"
+                                    android:text="销量："
+                                    android:layout_marginRight="@dimen/dp_10"
+                                    android:id="@+id/tv_count"
+                                    android:textSize="12sp" />
+                            </RelativeLayout>
 
                             <TextView
                                 android:id="@+id/tv_describe"
@@ -489,7 +514,8 @@
                     <com.example.commonlib.view.WebViewMod
                         android:id="@+id/webView"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/dp_0" />
                 </LinearLayout>
 
             </com.example.commonlib.view.SlideDetailsLayout>

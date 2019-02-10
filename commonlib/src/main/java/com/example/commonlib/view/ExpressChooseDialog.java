@@ -81,7 +81,9 @@ public class ExpressChooseDialog extends Dialog implements ExpressContract.View 
         tvSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onItemClickListenerByGId.onClickListener(expressPrice, expressName,expressId);
+                if (onItemClickListenerByGId!=null){
+                    onItemClickListenerByGId.onClickListener(expressPrice, expressName,expressId);
+                }
             }
         });
     }

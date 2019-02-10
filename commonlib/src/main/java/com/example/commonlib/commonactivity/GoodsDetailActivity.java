@@ -4,6 +4,8 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.NestedScrollView;
@@ -46,7 +48,11 @@ import com.zhouwei.mzbanner.MZBannerView;
 import com.zhouwei.mzbanner.holder.MZHolderCreator;
 import com.zhouwei.mzbanner.holder.MZViewHolder;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 
@@ -119,6 +125,71 @@ public class GoodsDetailActivity extends BaseActivity<GoodsDetailContract.View, 
     TextView tvTime;
     @BindView(R2.id.rl_timer)
     RelativeLayout rlTimer;
+    @SuppressLint("HandlerLeak")
+    private Handler timeHandler = new Handler() {
+
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            if (msg.what == 1) {
+                computeTime();
+                tvTime.setText((mHour < 10 ? "0"+mHour : mHour) + ":" +  (mMin < 10 ? "0"+mMin : mMin) + ":" + mSecond);
+                if (mDay == 0 && mHour == 0 && mMin == 0 && mSecond == 0) {
+
+                }
+            }
+        }
+    };
+
+
+    /**
+     * 开启倒计时
+     */
+    Runnable target = new Runnable() {
+
+        @Override
+        public void run() {
+            // TODO Auto-generated method stub
+            while (isRun) {
+                try {
+                    Thread.sleep(1000); // sleep 1000ms
+                    Message message = Message.obtain();
+                    message.what = 1;
+                    timeHandler.sendMessage(message);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    };
+
+    private void startRun() {
+        new Thread(target).start();
+    }
+    private long mDay = 10;
+    private long mHour = 10;
+    private long mMin = 30;
+    private long mSecond = 00;
+    private boolean isRun = true;
+    /**
+     * 倒计时计算
+     */
+    private void computeTime() {
+        mSecond--;
+        if (mSecond < 0) {
+            mMin--;
+            mSecond = 59;
+            if (mMin < 0) {
+                mMin = 59;
+                mHour--;
+                if (mHour < 0) {
+                    // 倒计时结束
+                    mHour = 23;
+                    mDay--;
+                }
+            }
+        }
+    }
 
     private ServiceAdapter serviceAdapter = new ServiceAdapter(null);
     private GoodsCommentPicAdapter goodsCommentPicAdapter = new GoodsCommentPicAdapter(null);
@@ -129,6 +200,8 @@ public class GoodsDetailActivity extends BaseActivity<GoodsDetailContract.View, 
     TextView tvBuy;
     @BindView(R2.id.tv_describe)
     TextView tvDescribe;
+    @BindView(R2.id.tv_count)
+    TextView tvCount;
     private ShopChooseDialog shopChooseDialogBuy, shopChooseDialogChoose;
 
 
@@ -202,7 +275,29 @@ public class GoodsDetailActivity extends BaseActivity<GoodsDetailContract.View, 
         boolean isTimer = getIntent().getBooleanExtra("isTimer", false);
         if (isTimer) {
             rlTimer.setVisibility(View.VISIBLE);
-            tvTime.setText(getIntent().getStringExtra("time").substring(0, 10) + "  00:00:00");
+//            tvTime.setText(getIntent().getStringExtra("time").substring(0, 10) + "  00:00:00");
+            DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            Date d1 = null;
+            try {
+                d1 = df.parse(getIntent().getStringExtra("endTime"));
+
+                Date d2 =  new Date(System.currentTimeMillis());
+//                Date d2 = df.parse(getIntent().getStringExtra("time"));
+                Log.i(TAG, "initView:endTime "+getIntent().getStringExtra("endTime"));
+                Log.i(TAG, "initView:time "+df.format(d2));
+                long diff = d1.getTime() - d2.getTime();//这样得到的差值是微秒级别
+                long days = diff / (1000 * 60 * 60 * 24);
+                long hours = (diff - days * (1000 * 60 * 60 * 24)) / (1000 * 60 * 60);
+                long minutes = (diff - days * (1000 * 60 * 60 * 24) - hours * (1000 * 60 * 60)) / (1000 * 60);
+                long second = (diff % (1000 * 60)) / 1000;
+                mDay = days;
+                mHour = hours;
+                mMin = minutes;
+                mSecond = second;
+                startRun();
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -291,6 +386,7 @@ public class GoodsDetailActivity extends BaseActivity<GoodsDetailContract.View, 
         } else {
             cbCollection.setChecked(false);
         }
+        tvCount.setText("销量："+goodsGson.getOrderNum());
         tvCommentCount.setText("( " + goodsGson.getComment() + " )");
         tvBannerSize.setText("1/" + goodsGson.getGoodsPicUrl().size());
         Log.i(TAG, "loadGoodsDetail: " + goodsGson.getGoodsPicUrl().size());

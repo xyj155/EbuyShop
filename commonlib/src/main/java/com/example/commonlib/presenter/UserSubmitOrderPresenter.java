@@ -1,5 +1,7 @@
 package com.example.commonlib.presenter;
 
+import android.util.Log;
+
 import com.example.commonlib.base.BaseGson;
 import com.example.commonlib.base.BasePresenter;
 import com.example.commonlib.contract.UserSubmitOrderContract;
@@ -17,10 +19,20 @@ public class UserSubmitOrderPresenter extends BasePresenter<UserSubmitOrderContr
     }
 
     private UserSubmitOrderModel userSubmitOrderModel = new UserSubmitOrderModel();
+    private static final String TAG = "UserSubmitOrderPresente";
 
     @Override
-    public void submitOrderByUserId(String userId, String address,String goodsId, String couponId, String orderNum, String userToken,String message,String expressId) {
-        userSubmitOrderModel.submitOrderByUserId(userId, address,goodsId, couponId, orderNum, userToken,message,expressId)
+    public void submitOrderByUserId(String userId, String address, String goodsId, String couponId, String orderNum, String userToken, String message, String expressId) {
+        Log.i(TAG, "submitOrderByUserId: "
+                + "userId="+userId
+                + "address="+ address
+                + "goodsId="+goodsId
+                + "couponId="+couponId
+                + "orderNum="+orderNum
+                + "userToken="+userToken
+                + "message="+message
+                + "expressId="+expressId);
+        userSubmitOrderModel.submitOrderByUserId(userId, address, goodsId, couponId, orderNum, userToken, message, expressId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseObserver<BaseGson<EmptyGson>>() {

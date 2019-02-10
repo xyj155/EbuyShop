@@ -50,7 +50,7 @@ public class GoodsShareAdapter extends BaseQuickAdapter<GoodsShareGson, BaseView
         String username = item.getUser().getUsername();
         helper.setText(R.id.tv_username, isMobile(username) ? username.replace(username.substring(3, 7), "****") : username)
                 .setText(R.id.tv_comment, item.getComment())
-                .setText(R.id.tv_comment_count, helper.getPosition() + "")
+                .setText(R.id.tv_comment_count, item.getCount() + "")
                 .setText(R.id.tv_goods_name, item.getGoods().getGoodsName())
                 .setOnClickListener(R.id.ll_comment_item, new View.OnClickListener() {
                     @Override

@@ -6,6 +6,7 @@ import android.content.pm.ActivityInfo;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.transition.Explode;
 import android.view.View;
@@ -34,6 +35,11 @@ public abstract class BaseActivity<V extends BaseView, T extends BasePresenter<V
                 break;
         }
     }
+//    @Override
+//    public void onBackPressed() {
+//        super.onBackPressed();
+//        ActivityCompat.finishAfterTransition(this);
+//    }
 
 
     @Override
@@ -106,6 +112,7 @@ public abstract class BaseActivity<V extends BaseView, T extends BasePresenter<V
             @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
             public void onClick(View v) {
+                overridePendingTransition(R.anim.anim_popup_zoom_enter, R.anim.anim_popup_zoom_exit);
                 finish();
             }
         });

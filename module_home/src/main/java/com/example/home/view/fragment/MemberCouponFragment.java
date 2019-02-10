@@ -1,5 +1,6 @@
 package com.example.home.view.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -16,6 +17,7 @@ import com.example.commonlib.gson.GoodsGson;
 import com.example.commonlib.util.SharePreferenceUtil;
 import com.example.home.contract.MemberShipRightContract;
 import com.example.home.presenter.MemberShipRightPresenter;
+import com.example.home.view.GoodsKindSortedActivity;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
@@ -126,7 +128,13 @@ public class MemberCouponFragment extends BaseFragment<MemberShipRightPresenter>
         protected void convert(BaseViewHolder helper, CouponGson item) {
             helper.setText(R.id.tv_money, item.getCouponReduce())
                     .setText(R.id.tv_coupon_msg, item.getCouponName())
-                    .setText(R.id.tv_msg, "满 " + item.getCouponTotal() + " 元减 " + item.getCouponReduce() + "元");
+                    .setText(R.id.tv_msg, "满 " + item.getCouponTotal() + " 元减 " + item.getCouponReduce() + "元")
+                    .setOnClickListener(R.id.ll_coupon, new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            startActivity(new Intent(getContext(), GoodsKindSortedActivity.class));
+                        }
+                    });
             if (item.getStartTime().equals("0000-00-00 00:00:00")) {
                 helper.setText(R.id.tv_time, "有效日期：无限期");
             } else {

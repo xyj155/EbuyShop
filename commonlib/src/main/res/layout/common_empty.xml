@@ -7,9 +7,9 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
+        android:layout_centerVertical="true"
+        android:layout_centerInParent="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="165dp"
         android:gravity="center"
         android:orientation="vertical">
 
@@ -18,7 +18,7 @@
             android:layout_margin="@dimen/dp_10"
             android:id="@+id/iv_empty"
             android:layout_height="@dimen/dp_110"
-            android:src="@drawable/ic_empty" />
+            android:src="@drawable/ic_empty_comment" />
 
         <TextView
             android:id="@+id/tv_empty"
@@ -28,9 +28,7 @@
             android:layout_centerVertical="true"
             android:drawablePadding="@dimen/dp_8"
             android:gravity="center"
-            android:text="还没有数据哦，看看其他的吧！"
-            android:textColor="#000"
-            android:textStyle="bold" />
+            android:text="还没有数据哦，看看其他的吧！" />
     </LinearLayout>
 
 </RelativeLayout>

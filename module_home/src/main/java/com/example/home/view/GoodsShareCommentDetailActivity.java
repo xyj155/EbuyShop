@@ -1,11 +1,18 @@
 package com.example.home.view;
 
+import android.app.Activity;
+import android.content.Context;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
+import android.view.ViewTreeObserver;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -16,7 +23,9 @@ import com.example.commonlib.base.BaseActivity;
 import com.example.commonlib.gson.CommentDetailGson;
 import com.example.commonlib.http.RetrofitUtils;
 import com.example.commonlib.util.GlideUtil;
+import com.example.commonlib.util.SharePreferenceUtil;
 import com.example.commonlib.view.CircleImageView;
+import com.example.commonlib.view.toast.ToastUtils;
 import com.example.home.contract.CommentDetailContract;
 import com.example.home.presenter.CommentDetailPresenter;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -29,6 +38,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class GoodsShareCommentDetailActivity extends BaseActivity<CommentDetailContract.View, CommentDetailPresenter> implements CommentDetailContract.View {
 
@@ -60,6 +70,12 @@ public class GoodsShareCommentDetailActivity extends BaseActivity<CommentDetailC
     TextView tvCommentCount;
     @BindView(R2.id.ry_comment)
     RecyclerView ryComment;
+    @BindView(R2.id.tv_submit)
+    TextView tvSubmit;
+    @BindView(R2.id.et_content)
+    EditText etContent;
+    @BindView(R2.id.rl_content)
+    RelativeLayout rlContent;
 
     @Override
     public boolean isSetStatusBarTranslucent() {
@@ -79,6 +95,7 @@ public class GoodsShareCommentDetailActivity extends BaseActivity<CommentDetailC
     @Override
     public void initView() {
         ButterKnife.bind(this);
+        initToolBar().setToolBarTitle("评论详情");
         smlComment.autoRefresh();
         smlComment.setOnRefreshListener(new OnRefreshListener() {
             @Override
@@ -91,6 +108,49 @@ public class GoodsShareCommentDetailActivity extends BaseActivity<CommentDetailC
         ryPicture.setAdapter(goodsPictureAdapter);
         ryComment.setAdapter(goodsUserCommentAdapter);
         ryComment.setNestedScrollingEnabled(false);
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
+        rlContent.getViewTreeObserver().addOnGlobalLayoutListener(
+                new ViewTreeObserver.OnGlobalLayoutListener() {
+                    @Override
+                    public void onGlobalLayout() {
+                        Rect r = new Rect();
+                        rlContent.getWindowVisibleDisplayFrame(r);
+                        int screenHeight = rlContent.getRootView()
+                                .getHeight();
+                        int heightDifference = screenHeight - (r.bottom);
+                        if (heightDifference > 200) {
+                            Log.i(TAG, "onFocusChange: 1111");
+                            tvSubmit.setVisibility(View.VISIBLE);
+                        } else {
+                            //软键盘隐藏
+                            tvSubmit.setVisibility(View.GONE);
+                            Log.i(TAG, "onFocusChange: 22222");
+                        }
+                    }
+
+                });
+    }
+
+    @OnClick(R2.id.tv_submit)
+    public void onViewClicked(View view) {
+        int id = view.getId();
+        if (id == R.id.tv_submit) {
+            Log.i(TAG, "onViewClicked: ");
+//            etContent.clearFocus();//失去焦点
+            View views = GoodsShareCommentDetailActivity.this.getCurrentFocus();
+            if (views != null) {
+                InputMethodManager inputMethodManager = (InputMethodManager) GoodsShareCommentDetailActivity.this.getSystemService(Activity.INPUT_METHOD_SERVICE);
+                inputMethodManager.hideSoftInputFromWindow(views.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+            }
+            if (etContent.getText().toString().isEmpty()) {
+                ToastUtils.show("评论不可为空！");
+            } else {
+
+                mPresenter.submitGoodsComment(String.valueOf(SharePreferenceUtil.getUser("uid", "String")), etContent.getText().toString(), getIntent().getStringExtra("commentId"));
+            }
+            tvSubmit.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -117,6 +177,18 @@ public class GoodsShareCommentDetailActivity extends BaseActivity<CommentDetailC
         goodsUserCommentAdapter.replaceData(goodsComment.getDiscussUser());
         smlComment.finishRefresh();
     }
+
+    @Override
+    public void submitGoodsComment(boolean isSubmit) {
+        if (isSubmit) {
+            etContent.setText("");
+            mPresenter.queryGoodsCommentById(getIntent().getStringExtra("commentId"));
+        } else {
+            ToastUtils.show("评论失败！");
+        }
+
+    }
+
 
     private class GoodsPictureAdapter extends BaseQuickAdapter<String, BaseViewHolder> {
 

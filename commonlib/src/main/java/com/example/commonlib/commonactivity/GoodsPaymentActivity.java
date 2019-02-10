@@ -94,7 +94,7 @@ public class GoodsPaymentActivity extends BaseActivity<OrderDetailContract.View,
     @Override
     public void initView() {
         ButterKnife.bind(this);
-        mPresenter.confirmationOrderByUserId((String) SharePreferenceUtil.getUser("uid", "String"), getIntent().getStringExtra("goodsArray"), getIntent().getStringExtra("orderNum"));
+
         initToolBar().setToolBarTitle("订单详情");
         ryGoods.setLayoutManager(new LinearLayoutManager(GoodsPaymentActivity.this));
 
@@ -106,7 +106,7 @@ public class GoodsPaymentActivity extends BaseActivity<OrderDetailContract.View,
     @Override
     protected void onResume() {
         super.onResume();
-
+        mPresenter.confirmationOrderByUserId((String) SharePreferenceUtil.getUser("uid", "String"), getIntent().getStringExtra("goodsArray"), getIntent().getStringExtra("orderNum"));
     }
 
     @Override
@@ -133,12 +133,21 @@ public class GoodsPaymentActivity extends BaseActivity<OrderDetailContract.View,
 
     private String orderNum;
     private List<String> goodsIdList = new ArrayList<>();
+    private boolean isAddressFind = false;
 
     @Override
     public void loadOrderDetail(OrderDetailGson orderDetailGson) {
         Log.i(TAG, "loadOrderDetail: " + orderDetailGson.getGoods().size());
         orderDetailGoodsAdapter.replaceData(orderDetailGson.getGoods());
-        addressId = String.valueOf(orderDetailGson.getUserAddress().getId());
+        if (orderDetailGson.getUserAddress() == null) {
+            isAddressFind = false;
+            ToastUtils.show("你还没有添加地址！");
+            startActivityForResult(new Intent(GoodsPaymentActivity.this, UserReceivingAddressActivity.class), 0x1);
+        } else {
+            isAddressFind = true;
+            addressId = String.valueOf(orderDetailGson.getUserAddress().getId());
+        }
+
         if (orderDetailGson.getUserAddress() == null) {
             rlEmptyAddress.setVisibility(View.VISIBLE);
             flAddress.setVisibility(View.GONE);
@@ -221,27 +230,13 @@ public class GoodsPaymentActivity extends BaseActivity<OrderDetailContract.View,
         } else if (id == R.id.tv_pay_type) {
             ARouter.getInstance().build(RouterUtil.USERCOUPON).withDouble("money", money).navigation(GoodsPaymentActivity.this, 0x11);
         } else if (id == R.id.tv_pay) {
-            boolean b = money > 188;
-            if (b) {
-                PaymentUtil.paymentByGoods("商学院自营商品", "商品", 1, new PaymentInterface() {
-                    @Override
-                    public void paySuccess() {
-                        userSubmitOrderPresenter.submitOrderByUserId((String) SharePreferenceUtil.getUser("uid", "String"), addressId, new Gson().toJson(goodsIdList), couponId, orderNum, (String) SharePreferenceUtil.getUser("userToken", "String"), etMessage.getText().toString(), "36");
-                    }
-
-                    @Override
-                    public void payFailed() {
-                        ToastUtils.show("支付失败！");
-                    }
-                });
-            } else {
-                if (expressName.isEmpty()) {
-                    ToastUtils.show("你还没有选择配送方式！");
-                } else {
+            if (isAddressFind){
+                boolean b = money > 188;
+                if (b) {
                     PaymentUtil.paymentByGoods("商学院自营商品", "商品", 1, new PaymentInterface() {
                         @Override
                         public void paySuccess() {
-                            userSubmitOrderPresenter.submitOrderByUserId((String) SharePreferenceUtil.getUser("uid", "String"), addressId, new Gson().toJson(goodsIdList), "5", orderNum, (String) SharePreferenceUtil.getUser("userToken", "String"), etMessage.getText().toString(), expressId);
+                            userSubmitOrderPresenter.submitOrderByUserId((String) SharePreferenceUtil.getUser("uid", "String"), addressId, new Gson().toJson(goodsIdList), couponId, orderNum, (String) SharePreferenceUtil.getUser("userToken", "String"), etMessage.getText().toString(), "36");
                         }
 
                         @Override
@@ -249,8 +244,27 @@ public class GoodsPaymentActivity extends BaseActivity<OrderDetailContract.View,
                             ToastUtils.show("支付失败！");
                         }
                     });
+                } else {
+                    if (expressName.isEmpty()) {
+                        ToastUtils.show("你还没有选择配送方式！");
+                    } else {
+                        PaymentUtil.paymentByGoods("商学院自营商品", "商品", 1, new PaymentInterface() {
+                            @Override
+                            public void paySuccess() {
+                                userSubmitOrderPresenter.submitOrderByUserId((String) SharePreferenceUtil.getUser("uid", "String"), addressId, new Gson().toJson(goodsIdList), "5", orderNum, (String) SharePreferenceUtil.getUser("userToken", "String"), etMessage.getText().toString(), expressId);
+                            }
+
+                            @Override
+                            public void payFailed() {
+                                ToastUtils.show("支付失败！");
+                            }
+                        });
+                    }
                 }
+            }else {
+                ToastUtils.show("你没有选择地址");
             }
+
 
         } else if (id == R.id.tv_cancel) {
             finish();

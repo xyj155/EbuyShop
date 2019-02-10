@@ -139,8 +139,9 @@ public interface Api {
     @POST("/StuShop/public/index.php/index/Goods/submitUserOrder")
     Observable<BaseGson<SubmitOrderItemGson>> submitUserOrder(@Field("userId") String userId, @Field("goodsId") String goodsId);
 
-    @GET("/StuShop/public/index.php/index/User/confirmationOrderByUserId")
-    Observable<BaseGson<OrderDetailGson>> confirmationOrderByUserId(@Query("userId") String userId, @Query("goodsId") String goodsId, @Query("orderNum") String orderNum);
+    @FormUrlEncoded
+    @POST("/StuShop/public/index.php/index/User/confirmationOrderByUserId")
+    Observable<BaseGson<OrderDetailGson>> confirmationOrderByUserId(@Field("userId") String userId, @Field("goodsId") String goodsId, @Field("orderNum") String orderNum);
 
     @GET("/StuShop/public/index.php/index/User/deleteOrderByOrderNum")
     Observable<BaseGson<EmptyGson>> deleteOrderByOrderNum(@Query("orderNum") String orderNum, @Query("userId") String userId);
@@ -223,6 +224,10 @@ public interface Api {
 
     @GET("/StuShop/public/index.php/index/Goods/queryMemberShipGoods")
     Observable<BaseGson<GoodsGson>> queryMemberShipGoods();
+
+    @FormUrlEncoded
+    @POST("/StuShop/public/index.php/index/Dryinglist/submitGoodsComment")
+    Observable<BaseGson<EmptyGson>> submitGoodsComment(@Field("userId")String userId,@Field("content")String content,@Field("postId")String postId);
 
     @FormUrlEncoded
     @POST("/StuShop/public/index.php/index/User/submitUserMemberShip")

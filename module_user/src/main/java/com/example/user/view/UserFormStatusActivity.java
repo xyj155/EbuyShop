@@ -65,7 +65,7 @@ public class UserFormStatusActivity extends BaseActivity<EmptyContract.View, Emp
     public void initView() {
         ButterKnife.bind(this);
         title.add("待付款");
-        title.add("代发货");
+        title.add("待发货");
         title.add("待收货");
         title.add("待评价");
         fragmentList.add(new SubstitutePaymentFragment());

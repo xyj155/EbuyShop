@@ -54,102 +54,103 @@ public class UserGoodsStatusAdapter extends BaseQuickAdapter<List<UserOrderStatu
 
     @Override
     protected void convert(final BaseViewHolder helper, final List<UserOrderStatusGson> item) {
-        Log.i(TAG, "convert: " + item.get(0).getOrderNum());
+        if (item.size()>0){
+            final List<String> goodsList = new ArrayList<>();
+            helper.setText(R.id.tv_order_num, "订单编号：" + item.get(0).getOrderNum())
+                    .setText(R.id.tv_status, item.get(0).getStatus().equals("1") ? "待付款" : item.get(0).getStatus().equals("2") ? "待发货" : item.get(0).getStatus().equals("3") ? "待收货" : item.get(0).getStatus().equals("4") ? "待评价" : item.get(0).getStatus().equals("5") ? "订单完成" : "");
+            RecyclerView view = helper.getView(R.id.ry_user_status);
+            final UserGoodsStatusInnerAdapter userGoodsStatusInnerAdapter = new UserGoodsStatusInnerAdapter(item, item.get(0).getStatus().equals("4"));
+            view.setLayoutManager(new LinearLayoutManager(MyApp.getInstance()));
+            view.setAdapter(userGoodsStatusInnerAdapter);
+            double money = 0.00;
+            int count = 0;
+            String status = item.get(0).getStatus();
+            for (int i = 0; i < item.size(); i++) {
+                money += Double.valueOf(item.get(i).getStylePrice()) * item.get(i).getCount();
+                count += item.get(i).getCount();
+                goodsList.add(String.valueOf(item.get(i).getGid()));
+            }
+            if (status.equals("2")) {
+                helper.setVisible(R.id.tv_pay, false)
+                        .setVisible(R.id.tv_cancel, false)
+                        .setVisible(R.id.tv_receive, false)
+                        .setVisible(R.id.tv_deliver, false);
+                View view1 = helper.getView(R.id.rl_order);
+                view1.setVisibility(View.GONE);
+                if (item.get(0).getCouponReduce() != null) {
+                    money = money - Double.valueOf(item.get(0).getCouponReduce());
+                }
+                money = money + Double.valueOf(item.get(0).getExpressPrice());
+            } else if (status.equals("3")) {
+                helper.setVisible(R.id.tv_receive, true)
+                        .setVisible(R.id.tv_pay, false)
+                        .setVisible(R.id.tv_deliver, true)
+                        .setVisible(R.id.tv_cancel, false);
+                if (item.get(0).getCouponReduce() != null) {
+                    money = money - Double.valueOf(item.get(0).getCouponReduce());
+                }
+                money = money + Double.valueOf(item.get(0).getExpressPrice());
+            } else if (status.equals("4")) {
+                View view1 = helper.getView(R.id.rl_order);
+                view1.setVisibility(View.GONE);
+                helper.setVisible(R.id.tv_pay, false)
+                        .setVisible(R.id.tv_deliver, false)
+                        .setVisible(R.id.tv_receive, false)
+                        .setVisible(R.id.tv_cancel, false);
+                if (item.get(0).getCouponReduce() != null) {
+                    money = money - Double.valueOf(item.get(0).getCouponReduce());
+                }
+                money = money + Double.valueOf(item.get(0).getExpressPrice());
+            } else if (status.equals("5")) {
+                View view1 = helper.getView(R.id.rl_order);
+                view1.setVisibility(View.GONE);
+                if (item.get(0).getCouponReduce() != null) {
+                    money = money - Double.valueOf(item.get(0).getCouponReduce());
+                }
+                money = money + Double.valueOf(item.get(0).getExpressPrice());
+            }
 
-        final List<String> goodsList = new ArrayList<>();
-        helper.setText(R.id.tv_order_num, "订单编号：" + item.get(0).getOrderNum())
-                .setText(R.id.tv_status, item.get(0).getStatus().equals("1") ? "待付款" : item.get(0).getStatus().equals("2") ? "待发货" : item.get(0).getStatus().equals("3") ? "待收货" : item.get(0).getStatus().equals("4") ? "待评价" : item.get(0).getStatus().equals("5") ? "订单完成" : "");
-        RecyclerView view = helper.getView(R.id.ry_user_status);
-        final UserGoodsStatusInnerAdapter userGoodsStatusInnerAdapter = new UserGoodsStatusInnerAdapter(item, item.get(0).getStatus().equals("4"));
-        view.setLayoutManager(new LinearLayoutManager(MyApp.getInstance()));
-        view.setAdapter(userGoodsStatusInnerAdapter);
-        double money = 0.00;
-        int count = 0;
-        String status = item.get(0).getStatus();
-        for (int i = 0; i < item.size(); i++) {
-            money += Double.valueOf(item.get(i).getStylePrice()) * item.get(i).getCount();
-            count += item.get(i).getCount();
-            goodsList.add(String.valueOf(item.get(i).getGid()));
+            isBind = true;
+            helper.setOnClickListener(R.id.tv_receive, new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onReceiveListener.onReceive(item.get(0).getOrderNum());
+                }
+            });
+
+            helper.setText(R.id.tv_money, "合计：￥" + String.valueOf(new BigDecimal(money).setScale(2, BigDecimal.ROUND_HALF_DOWN)));
+            helper.setText(R.id.tv_count, "共" + String.valueOf(count) + "件商品")
+                    .setOnClickListener(R.id.tv_cancel, new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            onClickListener.onClickListener(item.get(0).getOrderNum());
+                        }
+                    })
+                    .setOnClickListener(R.id.tv_pay, new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent intent = new Intent(context, GoodsPaymentActivity.class);
+                            Gson gson = new Gson();
+                            HashSet<String> strings = new HashSet<>(goodsList);
+                            goodsList.clear();
+                            goodsList.addAll(strings);//去重
+                            String gsonList = gson.toJson(goodsList);
+                            intent.putExtra("goodsArray", gsonList);
+                            intent.putExtra("orderNum", item.get(0).getOrderNum());
+                            context.startActivity(intent);
+                        }
+                    });
+            isBind = false;
+            final ExpressTracePresenter expressTracePresenter = new ExpressTracePresenter(this);
+            helper.setOnClickListener(R.id.tv_deliver, new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Log.i(TAG, "onClick: getExpressNum" + item.get(0).toString());
+                    expressTracePresenter.queryExpressByNum(item.get(0).getExpressNum());
+                }
+            });
         }
-        if (status.equals("2")) {
-            helper.setVisible(R.id.tv_pay, false)
-                    .setVisible(R.id.tv_cancel, false)
-                    .setVisible(R.id.tv_receive, false)
-                    .setVisible(R.id.tv_deliver, false);
-            View view1 = helper.getView(R.id.rl_order);
-            view1.setVisibility(View.GONE);
-            if (item.get(0).getCouponReduce() != null) {
-                money = money - Double.valueOf(item.get(0).getCouponReduce());
-            }
-            money = money + Double.valueOf(item.get(0).getExpressPrice());
-        } else if (status.equals("3")) {
-            helper.setVisible(R.id.tv_receive, true)
-                    .setVisible(R.id.tv_pay, false)
-                    .setVisible(R.id.tv_deliver, true)
-                    .setVisible(R.id.tv_cancel, false);
-            if (item.get(0).getCouponReduce() != null) {
-                money = money - Double.valueOf(item.get(0).getCouponReduce());
-            }
-            money = money + Double.valueOf(item.get(0).getExpressPrice());
-        } else if (status.equals("4")) {
-            View view1 = helper.getView(R.id.rl_order);
-            view1.setVisibility(View.GONE);
-            helper.setVisible(R.id.tv_pay, false)
-                    .setVisible(R.id.tv_deliver, false)
-                    .setVisible(R.id.tv_receive, false)
-                    .setVisible(R.id.tv_cancel, false);
-            if (item.get(0).getCouponReduce() != null) {
-                money = money - Double.valueOf(item.get(0).getCouponReduce());
-            }
-            money = money + Double.valueOf(item.get(0).getExpressPrice());
-        }else if (status.equals("5")){
-            View view1 = helper.getView(R.id.rl_order);
-            view1.setVisibility(View.GONE);
-            if (item.get(0).getCouponReduce() != null) {
-                money = money - Double.valueOf(item.get(0).getCouponReduce());
-            }
-            money = money + Double.valueOf(item.get(0).getExpressPrice());
-        }
 
-        isBind = true;
-        helper.setOnClickListener(R.id.tv_receive, new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onReceiveListener.onReceive(item.get(0).getOrderNum());
-            }
-        });
-
-        helper.setText(R.id.tv_money, "合计：￥" + String.valueOf(new BigDecimal(money).setScale(2, BigDecimal.ROUND_HALF_DOWN)));
-        helper.setText(R.id.tv_count, "共" + String.valueOf(count) + "件商品")
-                .setOnClickListener(R.id.tv_cancel, new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        onClickListener.onClickListener(item.get(0).getOrderNum());
-                    }
-                })
-                .setOnClickListener(R.id.tv_pay, new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent intent = new Intent(context, GoodsPaymentActivity.class);
-                        Gson gson = new Gson();
-                        HashSet<String> strings = new HashSet<>(goodsList);
-                        goodsList.clear();
-                        goodsList.addAll(strings);//去重
-                        String gsonList = gson.toJson(goodsList);
-                        intent.putExtra("goodsArray", gsonList);
-                        intent.putExtra("orderNum", item.get(0).getOrderNum());
-                        context.startActivity(intent);
-                    }
-                });
-        isBind = false;
-        final ExpressTracePresenter expressTracePresenter = new ExpressTracePresenter(this);
-        helper.setOnClickListener(R.id.tv_deliver, new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.i(TAG, "onClick: getExpressNum"+item.get(0).toString());
-                expressTracePresenter.queryExpressByNum(item.get(0).getExpressNum());
-            }
-        });
     }
 
     private CallPhoneDialog dialogCreateCall(String phoneNumber) {

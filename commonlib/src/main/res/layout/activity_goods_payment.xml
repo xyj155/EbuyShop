@@ -227,7 +227,7 @@
                         android:layout_gravity="center"
                         android:gravity="center"
                         android:id="@+id/tv_count"
-                        android:text="共2件商品   小计："
+                        android:text=""
                         android:textColor="#000" />
 
                     <TextView
@@ -236,7 +236,7 @@
                         android:gravity="center"
                         android:id="@+id/tv_money"
                         android:padding="@dimen/dp_8"
-                        android:text="￥ 33.33"
+                        android:text=""
                         android:textColor="#ff6969"
                         android:textSize="17sp"
                         android:textStyle="bold" />
