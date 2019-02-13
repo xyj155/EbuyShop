@@ -40,6 +40,25 @@ public class GoodsDetailGson {
     }
 
     private int id;
+    private String imId;
+    private String imToken;
+
+    public String getImId() {
+        return imId;
+    }
+
+    public void setImId(String imId) {
+        this.imId = imId;
+    }
+
+    public String getImToken() {
+        return imToken;
+    }
+
+    public void setImToken(String imToken) {
+        this.imToken = imToken;
+    }
+
     private String goodsName;
     private String goodsLocation;
     private String goodsTags;

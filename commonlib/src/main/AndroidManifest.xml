@@ -4,7 +4,9 @@
 
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+
     <application android:name=".MyApp">
+        <activity android:name=".commonactivity.test"></activity>
         <activity
             android:name=".commonactivity.BrowserActivity"
             android:windowSoftInputMode="stateHidden|adjustResize" />
@@ -15,7 +17,7 @@
         <activity android:name=".commonactivity.UserReceivingAddressActivity" />
         <activity android:name=".commonactivity.AddressOfNewReceiptActivity" />
         <activity android:name=".commonactivity.PaymentStatusActivity" />
-        <activity android:name=".commonactivity.GoodsCommentActivity"></activity>
+        <activity android:name=".commonactivity.GoodsCommentActivity" />
     </application>
 
 </manifest>

@@ -3,6 +3,7 @@ package com.example.user.view.fragment;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -68,8 +69,10 @@ public class SubstituteShipmentFragment extends BaseFragment<UserFormStatusPrese
         return new UserFormStatusPresenter(this);
     }
 
+    private static final String TAG = "SubstituteShipmentFragm";
     @Override
     public void loadUserOrderByStatus(List<List<UserOrderStatusGson>> userOrderStatusGsons) {
+        Log.i(TAG, "loadUserOrderByStatus: "+userOrderStatusGsons.size());
         userGoodsStatusAdapter.replaceData(userOrderStatusGsons);
         smlSend.finishRefresh();
     }

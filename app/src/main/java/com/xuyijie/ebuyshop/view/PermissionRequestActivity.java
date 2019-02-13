@@ -4,10 +4,11 @@ import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.ImageView;
 
 import com.example.commonlib.rxpermissions2.Permission;
 import com.example.commonlib.rxpermissions2.RxPermissions;
-import com.example.commonlib.util.MobileInfoUtils;
+import com.example.commonlib.util.GlideUtil;
 import com.example.commonlib.view.toast.ToastUtils;
 import com.xuyijie.ebuyshop.R;
 
@@ -21,12 +22,14 @@ public class PermissionRequestActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_permission_request);
-        MobileInfoUtils.jumpStartInterface(PermissionRequestActivity.this);
+        GlideUtil.loadRoundCornerAvatarImage(R.mipmap.app_icon, (ImageView) findViewById(R.id.iv_logo), 30);
+//        MobileInfoUtils.jumpStartInterface(PermissionRequestActivity.this);
         rxPermissions = new RxPermissions(this);
         rxPermissions.setLogging(true);
         rxPermissions.requestEachCombined(Manifest.permission.READ_EXTERNAL_STORAGE,
                 Manifest.permission.READ_EXTERNAL_STORAGE,
                 Manifest.permission.CAMERA,
+                Manifest.permission.CALL_PHONE,
                 Manifest.permission.READ_PHONE_STATE)
                 .subscribe(new Observer<Permission>() {
                     @Override

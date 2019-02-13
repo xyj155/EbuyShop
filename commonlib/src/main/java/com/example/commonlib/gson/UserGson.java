@@ -25,7 +25,16 @@ public class UserGson {
 
     private int id;
     private String username;
-private String vipRank;
+    private String vipRank;
+    private String imToken;
+
+    public String getImToken() {
+        return imToken;
+    }
+
+    public void setImToken(String imToken) {
+        this.imToken = imToken;
+    }
 
     public String getVipRank() {
         return vipRank;

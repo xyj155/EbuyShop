@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <declare-styleable name="KPSwitchPanelLayout">
+        <attr name="ignore_recommend_height" format="boolean" />
+    </declare-styleable>
     <declare-styleable name="CouponDisplayView">
         <attr name="CircleColor" format="color"/>
     </declare-styleable>

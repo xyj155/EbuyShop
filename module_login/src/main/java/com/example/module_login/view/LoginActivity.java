@@ -213,12 +213,14 @@ public class LoginActivity extends BaseActivity<UserContract.View, UserPresenter
         ARouter.getInstance().build(RouterUtil.HomePage).navigation();
         Map<String, Object> map = new HashMap<>();
         map.put("username", userGson.getUsername());
+        map.put("password", userGson.getPassword());
         map.put("avatar", userGson.getAvatar());
         map.put("telphone", userGson.getTelphone());
         map.put("uid", String.valueOf(userGson.getId()));
         map.put("userToken", String.valueOf(userGson.getUserToken()));
         map.put("islogin", true);
         map.put("member", userGson.getVipRank());
+        map.put("imToken", userGson.getImToken());
         SharePreferenceUtil.saveUser(map);
         finish();
     }

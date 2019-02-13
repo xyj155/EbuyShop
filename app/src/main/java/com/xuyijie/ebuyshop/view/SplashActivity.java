@@ -12,12 +12,15 @@ import android.widget.TextView;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.example.commonlib.base.BaseActivity;
 import com.example.commonlib.gson.AdvertisementGson;
+import com.example.commonlib.gson.PopAdvertisementGson;
 import com.example.commonlib.util.GlideUtil;
 import com.example.commonlib.util.RouterUtil;
 import com.example.commonlib.util.SharePreferenceUtil;
 import com.xuyijie.ebuyshop.R;
 import com.xuyijie.ebuyshop.contract.AdvertisementContract;
 import com.xuyijie.ebuyshop.presenter.AdvertisementPresenter;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -56,6 +59,7 @@ public class SplashActivity extends BaseActivity<AdvertisementContract.View, Adv
     @Override
     public void initView() {
         ButterKnife.bind(this);
+        GlideUtil.loadRoundCornerAvatarImage(R.mipmap.app_icon, (ImageView) findViewById(R.id.iv_logo), 30);
         mc = new MyCountDownTimer(4000, 1000);
         mc.start();
         mPresenter.queryFlashAdvertisement();
@@ -88,7 +92,7 @@ public class SplashActivity extends BaseActivity<AdvertisementContract.View, Adv
         @Override
         public void run() {
             boolean user = (boolean) SharePreferenceUtil.getUser("islogin", "boolean");
-            Log.i(TAG, "run: "+user);
+            Log.i(TAG, "run: " + user);
             if (user) {
                 ARouter.getInstance().build(RouterUtil.HomePage).navigation();
             } else {
@@ -100,7 +104,7 @@ public class SplashActivity extends BaseActivity<AdvertisementContract.View, Adv
 
     @Override
     public void loadAdvertisement(AdvertisementGson advertisementGson) {
-        if (advertisementGson.getIsShow().equals("1")){
+        if (advertisementGson.getIsShow().equals("1")) {
             GlideUtil.loadGeneralImage(advertisementGson.getBannerUrl(), ivAd);
         }
         handler.postDelayed(runnable, 4000);
@@ -109,6 +113,11 @@ public class SplashActivity extends BaseActivity<AdvertisementContract.View, Adv
     @Override
     public void loadEmpty() {
         handler.postDelayed(runnable, 4000);
+    }
+
+    @Override
+    public void queryPopWindowAd(List<PopAdvertisementGson> popAdvertisementGsons) {
+
     }
 
     @Override

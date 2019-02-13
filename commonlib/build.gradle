@@ -132,19 +132,12 @@ dependencies {
     api rootProject.ext.dependencies["recyclerview-v7"]
     api rootProject.ext.dependencies["cardview"]
     api rootProject.ext.dependencies["design"]
-    api rootProject.ext.dependencies["multidex"]
-    api rootProject.ext.dependencies["basesdk"]
-    api rootProject.ext.dependencies["nrtc"]
-    api rootProject.ext.dependencies["avchat"]
-    api rootProject.ext.dependencies["chatroom"]
-    api rootProject.ext.dependencies["rts"]
-    api rootProject.ext.dependencies["lucene"]
-    api rootProject.ext.dependencies["push"]
     api rootProject.ext.dependencies["android-gif-drawable"]
     api rootProject.ext.dependencies["crashreport_upgrade"]
     api rootProject.ext.dependencies["nativecrashreport"]
-    api rootProject.ext.dependencies["jpush"]  // 此处以JPush 3.1.6 版本为例。
-    api rootProject.ext.dependencies["jcore"]  // 此处以JCore 1.2.5 版本为例。
+    api rootProject.ext.dependencies["jmessage"]
+    api rootProject.ext.dependencies["jpush"]
+    api rootProject.ext.dependencies["jcore"]
     api project(':pictureSelector')
-//    api files('libs/ShareSDK-Email-3.4.1.jar')
+    api project(':adlibrary')
 }

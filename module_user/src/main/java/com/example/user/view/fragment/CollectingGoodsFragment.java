@@ -54,6 +54,7 @@ public class CollectingGoodsFragment extends BaseFragment<UserFormStatusPresente
                 mPresenter.queryUserOrderByStatus((String) SharePreferenceUtil.getUser("uid", "String"), "3");
             }
         });
+        userGoodsStatusAdapter.setEmptyView(View.inflate(getContext(), R.layout.order_empty_layout, null));
         ryCollecting.setAdapter(userGoodsStatusAdapter);
     }
 
@@ -75,7 +76,8 @@ public class CollectingGoodsFragment extends BaseFragment<UserFormStatusPresente
 
     @Override
     public void loadUserOrderByStatus(List<List<UserOrderStatusGson>> userOrderStatusGsons) {
-        userGoodsStatusAdapter.setEmptyView(View.inflate(getContext(), R.layout.order_empty_layout, null));
+
+        Log.i(TAG, "loadUserOrderByStatus: "+userOrderStatusGsons.size());
         userGoodsStatusAdapter.replaceData(userOrderStatusGsons);
         smlCollecting.finishRefresh();
         userGoodsStatusAdapter.setOnReceiveListener(new UserGoodsStatusAdapter.OnReceiveListener() {

@@ -147,7 +147,6 @@ public class TelPhoneRegisterActivity extends BaseActivity<UserContract.View, Us
                 return;
             }
             lastClickTime = System.currentTimeMillis();
-            ToastUtils.show("电话号码："+etTel.getText().toString());
             SMSSDK.getVerificationCode("86", etTel.getText().toString());
         }
     }

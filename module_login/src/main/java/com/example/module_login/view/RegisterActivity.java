@@ -56,6 +56,10 @@ import java.util.Map;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.jpush.im.android.api.JMessageClient;
+import cn.jpush.im.android.api.model.UserInfo;
+import cn.jpush.im.android.api.options.RegisterOptionalUserInfo;
+import cn.jpush.im.api.BasicCallback;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -195,7 +199,6 @@ public class RegisterActivity extends BaseActivity<UserRegisterContract.View, Us
     }
 
 
-
     private ListDialog dialogAge;
 
     @OnClick({R2.id.iv_avatar, R2.id.tv_age, R2.id.tv_collage, R2.id.tv_login})
@@ -230,11 +233,11 @@ public class RegisterActivity extends BaseActivity<UserRegisterContract.View, Us
         } else if (id == R.id.tv_collage) {
             dialogSchool.show();
         } else if (id == R.id.tv_login) {
-            if (tvPassword.getText().toString().isEmpty()){
+            if (tvPassword.getText().toString().isEmpty()) {
                 ToastUtils.show("请输入密码");
-            }else if (tvPassword.getText().toString().length()<6){
+            } else if (tvPassword.getText().toString().length() < 6) {
                 ToastUtils.show("密码不可少于六位");
-            }else {
+            } else {
                 int size = pathList.size();
                 if (rbBoy.isChecked() || rbGirl.isChecked()) {
                     if (size > 0) {
@@ -329,10 +332,12 @@ public class RegisterActivity extends BaseActivity<UserRegisterContract.View, Us
 
 
     @Override
-    public void registerSuccess(UserGson emptyGson) {
+    public void registerSuccess(final UserGson emptyGson) {
+        createDialog("");
         Log.i(TAG, "registerSuccess: " + emptyGson.toString());
         Map<String, Object> map = new HashMap<>();
         map.put("username", emptyGson.getUsername());
+        map.put("password", emptyGson.getPassword());
         map.put("uid", String.valueOf(emptyGson.getId()));
         String s = RetrofitUtils.BASE_URL + emptyGson.getAvatar();
         map.put("avatar", s.replace("\\", "/"));
@@ -340,13 +345,54 @@ public class RegisterActivity extends BaseActivity<UserRegisterContract.View, Us
         map.put("age", emptyGson.getAge());
         map.put("level", emptyGson.getUserLevel());
         map.put("trueName", emptyGson.getTrueName());
+        map.put("imToken", emptyGson.getImToken());
         map.put("islogin", true);
         SharePreferenceUtil.saveUser(map);
-        TelPhoneRegisterVerifyActivity.telPhoneRegisterVerifyActivity.finish();
-        TelPhoneRegisterActivity.telPhoneRegisterActivity.finish();
-        LoginActivity.loginActivity.finish();
-        finish();
+
+
         ARouter.getInstance().build(RouterUtil.HomePage).navigation();
+        RegisterOptionalUserInfo registerOptionalUserInfo = new RegisterOptionalUserInfo();
+        registerOptionalUserInfo.setNickname(tvUsername.getText().toString());
+        registerOptionalUserInfo.setAddress(tvCollage.getText().toString());
+        registerOptionalUserInfo.setGender(rbBoy.isChecked() ? UserInfo.Gender.male : UserInfo.Gender.female);
+        JMessageClient.register(String.valueOf(SharePreferenceUtil.getUser("telphone", "String")), "xuyijie", registerOptionalUserInfo, new BasicCallback() {
+            @Override
+            public void gotResult(int i, String s) {
+                if (i == 0) {
+                    JMessageClient.login(String.valueOf(SharePreferenceUtil.getUser("telphone", "String")), "xuyijie", new BasicCallback() {
+                        @Override
+                        public void gotResult(int i, String s) {
+                            Log.i(TAG, "gotResult:23131313 "+i+s);
+                            Log.i(TAG, "gotResult:pathList "+pathList.get(0));
+                            if (i == 0) {
+                                JMessageClient.updateUserAvatar(new File(pathList.get(0)), new BasicCallback() {
+                                    @Override
+                                    public void gotResult(int i, String s) {
+                                        Log.i(TAG, "gotResult: 323131313"+i+s);
+                                        if (i == 0) {
+                                            ToastUtils.show("注册成功！");
+                                            TelPhoneRegisterVerifyActivity.telPhoneRegisterVerifyActivity.finish();
+                                            TelPhoneRegisterActivity.telPhoneRegisterActivity.finish();
+                                            LoginActivity.loginActivity.finish();
+                                            finish();
+                                        } else {
+                                            ToastUtils.show("注册失败");
+                                        }
+                                    }
+                                });
+                                mhideDialog();
+                            } else {
+                                ToastUtils.show("注册失败");
+                                mhideDialog();
+                            }
+                        }
+                    });
+                } else {
+                    ToastUtils.show("注册失败");
+                }
+            }
+        });
+
     }
 
     @Override

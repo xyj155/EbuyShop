@@ -8,7 +8,6 @@ import android.os.Message;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.example.commonlib.base.BaseActivity;
@@ -156,16 +155,22 @@ public class TelPhoneRegisterVerifyActivity extends BaseActivity<UserContract.Vi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // TODO: add setContentView(...) invocation
-        telPhoneRegisterVerifyActivity=this;
+        telPhoneRegisterVerifyActivity = this;
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        SMSSDK.unregisterEventHandler(eventHandler);
     }
 
     @OnClick({R2.id.tb_common, R2.id.tv_register, R2.id.tv_send_msg})
     public void onViewClicked(View view) {
         int id = view.getId();
         if (id == R.id.tv_register) {
-            if (etCode.getText().toString().isEmpty()){
-                Toast.makeText(this, "验证码不可为空", Toast.LENGTH_SHORT).show();
-            }else {
+            if (etCode.getText().toString().isEmpty()) {
+                ToastUtils.show("验证码不可为空");
+            } else {
                 SMSSDK.submitVerificationCode("86", getIntent().getStringExtra("telphone"), etCode.getText().toString());
             }
 

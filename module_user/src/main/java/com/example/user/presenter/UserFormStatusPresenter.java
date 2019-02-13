@@ -33,7 +33,9 @@ public class UserFormStatusPresenter extends BasePresenter<UserFormStatusContrac
 
                     @Override
                     public void onNext(BaseGson<List<UserOrderStatusGson>> userOrderStatusGsonBaseGson) {
-                       mMvpView.loadUserOrderByStatus(userOrderStatusGsonBaseGson.getData());
+                        if (userOrderStatusGsonBaseGson.getData().size() > 0) {
+                            mMvpView.loadUserOrderByStatus(userOrderStatusGsonBaseGson.getData());
+                        }
                         mMvpView.hideDialog();
                     }
 

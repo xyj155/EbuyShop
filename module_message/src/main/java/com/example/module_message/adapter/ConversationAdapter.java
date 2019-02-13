@@ -1,6 +1,8 @@
 package com.example.module_message.adapter;
 
+import android.graphics.Bitmap;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -10,30 +12,50 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.example.commonlib.util.GlideUtil;
 import com.example.commonlib.util.RouterUtil;
 import com.example.module_message.R;
-import com.netease.nimlib.sdk.NIMClient;
-import com.netease.nimlib.sdk.msg.model.RecentContact;
-import com.netease.nimlib.sdk.uinfo.UserService;
-import com.netease.nimlib.sdk.uinfo.model.NimUserInfo;
 
 import java.util.List;
 
-public class ConversationAdapter extends BaseQuickAdapter<RecentContact, BaseViewHolder> {
-    public ConversationAdapter(@Nullable List<RecentContact> data) {
+import cn.jpush.im.android.api.callback.GetAvatarBitmapCallback;
+import cn.jpush.im.android.api.content.TextContent;
+import cn.jpush.im.android.api.model.Conversation;
+import cn.jpush.im.android.api.model.UserInfo;
+
+public class ConversationAdapter extends BaseQuickAdapter<Conversation, BaseViewHolder> {
+    public ConversationAdapter(@Nullable List<Conversation> data) {
         super(R.layout.abc_ry_conversation_recent_item, data);
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, RecentContact item) {
-        NimUserInfo user = NIMClient.getService(UserService.class).getUserInfo(item.getFromAccount());
-        helper.setText(R.id.iv_username, user.getAccount())
-                .setText(R.id.tv_recent_msg, item.getContent())
+    protected void convert(final BaseViewHolder helper, final Conversation item) {
+        TextContent content = (TextContent) item.getLatestMessage().getContent();
+        helper.setText(R.id.iv_username, item.getTitle())
+                .setText(R.id.tv_recent_msg, content.getText())
                 .setOnClickListener(R.id.ll_contact, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        ARouter.getInstance().build(RouterUtil.SHOPSERVICE).navigation();
+                        UserInfo targetInfo = (UserInfo) item.getTargetInfo();
+                        Log.i(TAG, "onClick: " + targetInfo.getUserName());
+                        ARouter.getInstance().build(RouterUtil.SHOPSERVICE).withString("username", targetInfo.getUserName()).navigation();
                     }
                 });
-        GlideUtil.loadRoundCornerAvatarImage(user.getAvatar(),(ImageView) helper.getView(R.id.iv_avatar),10);
-//        Glide.with(MyApp.getInstance()).asBitmap().apply(new).load(user.getAvatar()).into((ImageView) helper.getView(R.id.iv_avatar));
+        final UserInfo targetInfo = (UserInfo) item.getTargetInfo();
+        targetInfo.getAvatarBitmap(new GetAvatarBitmapCallback() {
+            @Override
+            public void gotResult(int i, String s, Bitmap bitmap) {
+                Log.i(TAG, "gotResult: "+i+s+bitmap);
+                if (i==0){
+                    GlideUtil.loadRoundCornerAvatarImage(bitmap, (ImageView) helper.getView(R.id.iv_avatar), 10);
+                }
+            }
+        });
+        Log.i(TAG, "convert: getAvatarFile=" );
+        int unReadMsgCnt = item.getUnReadMsgCnt();
+        if (unReadMsgCnt > 0) {
+            helper.setVisible(R.id.tv_msg_count, true)
+                    .setText(R.id.tv_msg_count, unReadMsgCnt + "");
+        }else {
+            helper.setVisible(R.id.tv_msg_count, false);
+        }
+
     }
 }

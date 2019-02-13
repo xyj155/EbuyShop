@@ -1,7 +1,8 @@
 package com.example.commonlib.entity;
 
 import com.chad.library.adapter.base.entity.MultiItemEntity;
-import com.netease.nimlib.sdk.msg.model.IMMessage;
+
+import cn.jpush.im.android.api.model.Message;
 
 public class ConversationEntity implements MultiItemEntity {
     public static final int TYPE_CLIENT_MESSAGE = 1;
@@ -9,9 +10,9 @@ public class ConversationEntity implements MultiItemEntity {
     public static final int TYPE_EMPTY_MESSAGE =3;
 
 
-    private IMMessage data;
+    private Message data;
     private int itemType;
-    public ConversationEntity(int itemType, IMMessage data) {
+    public ConversationEntity(int itemType, Message  data) {
         this.itemType = itemType;
         this.data = data;
     }
@@ -23,7 +24,7 @@ public class ConversationEntity implements MultiItemEntity {
      * @param data
      * @return
      */
-    public static ConversationEntity service(IMMessage data) {
+    public static ConversationEntity service(Message  data) {
         return new ConversationEntity(TYPE_SERVICES_MESSAGE, data);
     }
 
@@ -31,15 +32,15 @@ public class ConversationEntity implements MultiItemEntity {
      * @param data
      * @return
      */
-    public static ConversationEntity client(IMMessage  data) {
+    public static ConversationEntity client(Message   data) {
         return new ConversationEntity(TYPE_CLIENT_MESSAGE, data);
     }
 
-    public IMMessage getData() {
+    public Message  getData() {
         return data;
     }
 
-    public void setData(IMMessage data) {
+    public void setData(Message  data) {
         this.data = data;
     }
 }

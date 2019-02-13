@@ -10,6 +10,7 @@
         android:layout_width="@dimen/dp_45"
         android:layout_height="@dimen/dp_45"
         android:layout_margin="@dimen/dp_8"
+        android:id="@+id/iv_avatar"
         android:src="@mipmap/ic_user_avatar_bg" />
 
     <com.ruochuan.bubblelayout.BubbleLayout
@@ -20,18 +21,18 @@
         android:layout_marginTop="@dimen/dp_8"
         android:layout_marginBottom="@dimen/dp_8"
         android:layout_marginRight="@dimen/dp_45"
-        android:layout_marginLeft="@dimen/dp_8"
         android:padding="@dimen/dp_5"
         app:borderColor="#fff"
         app:borderWidth="0dp"
         app:orientation="left"
-        app:radius="@dimen/dp_3">
+        app:radius="@dimen/dp_5">
 
         <TextView
             android:id="@+id/tv_content"
+            android:paddingLeft="@dimen/dp_5"
+            android:paddingRight="@dimen/dp_5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="#000"
             android:textSize="@dimen/dp_16" />
     </com.ruochuan.bubblelayout.BubbleLayout>
 

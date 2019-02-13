@@ -2,6 +2,7 @@ package com.example.user.view;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -23,6 +24,7 @@ import com.example.commonlib.gson.UserPaymentGson;
 import com.example.commonlib.http.RetrofitUtils;
 import com.example.commonlib.util.RouterUtil;
 import com.example.commonlib.util.SharePreferenceUtil;
+import com.example.commonlib.view.MyDialog;
 import com.example.commonlib.view.ObservableScrollView;
 import com.example.commonlib.view.WaveView;
 import com.example.user.contract.UserPaymentContract;
@@ -58,6 +60,8 @@ public class UserFragment extends BaseFragment<UserPaymentPresenter> implements 
     TextView tvSubstituteCollection;
     @BindView(R2.id.tv_substitute_evluate)
     TextView tvSubstituteEvluate;
+    @BindView(R2.id.tv_my_service)
+    TextView tv_my_service;
     @BindView(R2.id.tv_my_collection)
     TextView tvMyCollection;
     @BindView(R2.id.tv_my_recruit)
@@ -76,6 +80,7 @@ public class UserFragment extends BaseFragment<UserPaymentPresenter> implements 
     TextView tvCoupon;
     Unbinder unbinder;
     private int mHeight;
+    private MyDialog myDialog1;
 
     @Override
     public void initData() {
@@ -86,7 +91,7 @@ public class UserFragment extends BaseFragment<UserPaymentPresenter> implements 
     @Override
     public void initView(View view) {
         unbinder = ButterKnife.bind(this, view);
-        tvUsername.setText(String .valueOf(SharePreferenceUtil.getUser("username","String")).replace(String .valueOf(SharePreferenceUtil.getUser("username","String")).substring(3,7),"****"));
+        tvUsername.setText(String.valueOf(SharePreferenceUtil.getUser("username", "String")));
         waveView = view.findViewById(R.id.wave_view);
         ivHead = view.findViewById(R.id.ivHead);
         final FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(-2, -2);
@@ -99,7 +104,7 @@ public class UserFragment extends BaseFragment<UserPaymentPresenter> implements 
             }
         });
         Log.i(TAG, "initView: " + SharePreferenceUtil.getUser("avatar", "String"));
-        Glide.with(getContext()).asBitmap().apply(new RequestOptions().error(R.mipmap.ic_user_avatar_bg)).load(RetrofitUtils.BASE_URL+SharePreferenceUtil.getUser("avatar", "String")).into(ivHead);
+        Glide.with(getContext()).asBitmap().apply(new RequestOptions().error(R.mipmap.ic_user_avatar_bg)).load(RetrofitUtils.BASE_URL + SharePreferenceUtil.getUser("avatar", "String")).into(ivHead);
         Log.i(TAG, "initView: queryUserOrderCount" + String.valueOf(SharePreferenceUtil.getUser("uid", "1")));
         ViewTreeObserver viewTreeObserver = rlToolbar.getViewTreeObserver();
         viewTreeObserver.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -154,7 +159,7 @@ public class UserFragment extends BaseFragment<UserPaymentPresenter> implements 
     }
 
 
-    @OnClick({R2.id.iv_setting, R2.id.tv_my_recruit, R2.id.tv_my_collection, R2.id.tv_my_response, R2.id.rl_orders, R2.id.tv_my_vip, R2.id.tv_waitpay, R2.id.tv_waitsend, R2.id.tv_wait_receiver, R2.id.tv_wait_evaluate})
+    @OnClick({R2.id.tv_my_service, R2.id.iv_setting, R2.id.tv_my_recruit, R2.id.tv_my_collection, R2.id.tv_my_response, R2.id.rl_orders, R2.id.tv_my_vip, R2.id.tv_waitpay, R2.id.tv_waitsend, R2.id.tv_wait_receiver, R2.id.tv_wait_evaluate})
     public void onViewClicked(View view) {
         int id = view.getId();
         if (id == R.id.tv_my_vip) {
@@ -189,8 +194,33 @@ public class UserFragment extends BaseFragment<UserPaymentPresenter> implements 
             startActivity(intent);
         } else if (id == R.id.iv_setting) {
             startActivity(new Intent(getContext(), UserSettingActivity.class));
+        } else if (id == R.id.tv_my_service) {
+            myDialog1 = new MyDialog(getContext(), new int[]{R.id.dialog_btn_close, R.id.dialog_btn_cancel});
+            myDialog1.setTitle("是否拨打客服热线");
+            myDialog1.setContent("服务时间：9:00~21:00");
+            myDialog1.setOnCenterItemClickListener(new MyDialog.OnCenterItemClickListener() {
+                @Override
+                public void onCenterItemClick(MyDialog dialog, View view) {
+                    int i = view.getId();
+                    if (i == R.id.dialog_btn_close) {
+                        dialog.dismiss();
+
+                    } else if (i == R.id.dialog_btn_cancel) {
+                        callPhone("17374131273");
+
+                    }
+                }
+            });
+            myDialog1.show();
         }
 
+    }
+
+    public void callPhone(String phoneNum) {
+        Intent intent = new Intent(Intent.ACTION_DIAL);
+        Uri data = Uri.parse("tel:" + phoneNum);
+        intent.setData(data);
+        startActivity(intent);
     }
 
     @Override
@@ -207,25 +237,25 @@ public class UserFragment extends BaseFragment<UserPaymentPresenter> implements 
         if (userOrderCount.getCollectionGoods() > 0) {
             tvSubstituteCollection.setText(userOrderCount.getCollectionGoods() + "");
             tvSubstituteCollection.setVisibility(View.VISIBLE);
-        }else {
+        } else {
             tvSubstituteCollection.setVisibility(View.GONE);
         }
         if (userOrderCount.getSubstitutePayment() > 0) {
             tvSubstitutePay.setText(userOrderCount.getSubstitutePayment() + "");
             tvSubstitutePay.setVisibility(View.VISIBLE);
-        }else {
+        } else {
             tvSubstitutePay.setVisibility(View.GONE);
         }
         if (userOrderCount.getSubstitutesEvaluated() > 0) {
             tvSubstituteEvluate.setText(userOrderCount.getSubstitutesEvaluated() + "");
             tvSubstituteEvluate.setVisibility(View.VISIBLE);
-        }else {
+        } else {
             tvSubstituteEvluate.setVisibility(View.GONE);
         }
         if (userOrderCount.getSubstituteShipment() > 0) {
             tvSubstituteShip.setText(userOrderCount.getSubstituteShipment() + "");
             tvSubstituteShip.setVisibility(View.VISIBLE);
-        }else {
+        } else {
             tvSubstituteShip.setVisibility(View.GONE);
         }
     }

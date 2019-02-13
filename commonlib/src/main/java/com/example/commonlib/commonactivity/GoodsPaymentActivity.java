@@ -94,7 +94,7 @@ public class GoodsPaymentActivity extends BaseActivity<OrderDetailContract.View,
     @Override
     public void initView() {
         ButterKnife.bind(this);
-
+        mPresenter.confirmationOrderByUserId((String) SharePreferenceUtil.getUser("uid", "String"), getIntent().getStringExtra("goodsArray"), getIntent().getStringExtra("orderNum"));
         initToolBar().setToolBarTitle("订单详情");
         ryGoods.setLayoutManager(new LinearLayoutManager(GoodsPaymentActivity.this));
 
@@ -103,11 +103,6 @@ public class GoodsPaymentActivity extends BaseActivity<OrderDetailContract.View,
         expressChooseDialog = new ExpressChooseDialog(this);
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        mPresenter.confirmationOrderByUserId((String) SharePreferenceUtil.getUser("uid", "String"), getIntent().getStringExtra("goodsArray"), getIntent().getStringExtra("orderNum"));
-    }
 
     @Override
     public void initData() {
@@ -139,14 +134,6 @@ public class GoodsPaymentActivity extends BaseActivity<OrderDetailContract.View,
     public void loadOrderDetail(OrderDetailGson orderDetailGson) {
         Log.i(TAG, "loadOrderDetail: " + orderDetailGson.getGoods().size());
         orderDetailGoodsAdapter.replaceData(orderDetailGson.getGoods());
-        if (orderDetailGson.getUserAddress() == null) {
-            isAddressFind = false;
-            ToastUtils.show("你还没有添加地址！");
-            startActivityForResult(new Intent(GoodsPaymentActivity.this, UserReceivingAddressActivity.class), 0x1);
-        } else {
-            isAddressFind = true;
-            addressId = String.valueOf(orderDetailGson.getUserAddress().getId());
-        }
 
         if (orderDetailGson.getUserAddress() == null) {
             rlEmptyAddress.setVisibility(View.VISIBLE);
@@ -230,7 +217,9 @@ public class GoodsPaymentActivity extends BaseActivity<OrderDetailContract.View,
         } else if (id == R.id.tv_pay_type) {
             ARouter.getInstance().build(RouterUtil.USERCOUPON).withDouble("money", money).navigation(GoodsPaymentActivity.this, 0x11);
         } else if (id == R.id.tv_pay) {
-            if (isAddressFind){
+            if (tvAddress.getText().toString().isEmpty()) {
+                ToastUtils.show("你还没有选择地址哦！");
+            } else {
                 boolean b = money > 188;
                 if (b) {
                     PaymentUtil.paymentByGoods("商学院自营商品", "商品", 1, new PaymentInterface() {
@@ -261,11 +250,7 @@ public class GoodsPaymentActivity extends BaseActivity<OrderDetailContract.View,
                         });
                     }
                 }
-            }else {
-                ToastUtils.show("你没有选择地址");
             }
-
-
         } else if (id == R.id.tv_cancel) {
             finish();
         }

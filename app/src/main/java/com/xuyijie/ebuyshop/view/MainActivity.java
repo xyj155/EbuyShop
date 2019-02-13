@@ -1,6 +1,7 @@
 package com.xuyijie.ebuyshop.view;
 
 
+import android.content.Intent;
 import android.os.Build;
 import android.support.annotation.IdRes;
 import android.support.annotation.RequiresApi;
@@ -9,11 +10,8 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.KeyEvent;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.PopupWindow;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 
@@ -21,15 +19,25 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.example.commonlib.MyApp;
 import com.example.commonlib.base.BaseActivity;
+import com.example.commonlib.commonactivity.BrowserActivity;
 import com.example.commonlib.contract.HomeContract;
+import com.example.commonlib.gson.AdvertisementGson;
+import com.example.commonlib.gson.PopAdvertisementGson;
 import com.example.commonlib.gson.UserGson;
 import com.example.commonlib.presenter.LoginPresent;
 import com.example.commonlib.util.RouterUtil;
 import com.example.commonlib.util.SharePreferenceUtil;
 import com.example.commonlib.view.MyDialog;
 import com.example.home.view.HomeFragment;
+import com.uuch.adlibrary.AdConstant;
+import com.uuch.adlibrary.AdManager;
+import com.uuch.adlibrary.bean.AdInfo;
+import com.uuch.adlibrary.transformer.DepthPageTransformer;
 import com.xuyijie.ebuyshop.R;
+import com.xuyijie.ebuyshop.contract.AdvertisementContract;
+import com.xuyijie.ebuyshop.presenter.AdvertisementPresenter;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -40,7 +48,7 @@ import cn.jpush.android.api.TagAliasCallback;
 
 
 @Route(path = RouterUtil.HomePage)
-public class MainActivity extends BaseActivity<HomeContract.View, LoginPresent> implements HomeContract.View {
+public class MainActivity extends BaseActivity<HomeContract.View, LoginPresent> implements HomeContract.View, AdvertisementContract.View {
 
 
     private RadioGroup bottomBar;
@@ -97,15 +105,6 @@ public class MainActivity extends BaseActivity<HomeContract.View, LoginPresent> 
         return super.onKeyDown(keyCode, event);
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    private void showAdvertisement() {
-        View contentView = LayoutInflater.from(MainActivity.this).inflate(R.layout.advertisement_popuplayout, null);
-        PopupWindow mPopWindow = new PopupWindow(contentView,
-                RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT, true);
-        mPopWindow.setContentView(contentView);
-//        mPopWindow.showAtLocation(rootview, Gravity.BOTTOM, 0, 0);
-        mPopWindow.showAsDropDown(rlContainer, Gravity.BOTTOM,0,0);
-    }
 
     private void setTagAndAlias() {
         /**
@@ -148,14 +147,15 @@ public class MainActivity extends BaseActivity<HomeContract.View, LoginPresent> 
             }
         }
     };
+    private AdvertisementPresenter advertisementPresenter = new AdvertisementPresenter(this);
 
-
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     public void initView() {
         setTagAndAlias();
+        advertisementPresenter.queryPopWindowAd();
         rlContainer = findViewById(R.id.rl_container);
         bottomBar = findViewById(R.id.bottomBar);
-
         bottomBar.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
@@ -287,5 +287,41 @@ public class MainActivity extends BaseActivity<HomeContract.View, LoginPresent> 
     protected void onDestroy() {
         super.onDestroy();
 
+    }
+
+    @Override
+    public void loadAdvertisement(AdvertisementGson advertisementGson) {
+
+    }
+
+    @Override
+    public void loadEmpty() {
+
+    }
+
+    @Override
+    public void queryPopWindowAd(List<PopAdvertisementGson> popAdvertisementGsons) {
+        ArrayList<AdInfo> advList = new ArrayList<>();
+        for (int i = 0; i < popAdvertisementGsons.size(); i++) {
+            AdInfo adInfo = new AdInfo();
+            adInfo.setActivityImg(popAdvertisementGsons.get(i).getImgUrl());
+            adInfo.setUrl(popAdvertisementGsons.get(i).getWebUrl());
+            advList.add(adInfo);
+        }
+        final AdManager adManager = new AdManager(MainActivity.this, advList);
+        adManager.setOverScreen(true)
+                .setPageTransformer(new DepthPageTransformer());
+        adManager.setOnImageClickListener(new AdManager.OnImageClickListener() {
+            @Override
+            public void onImageClick(View view, AdInfo advInfo) {
+                if (advInfo.getUrl() != null) {
+                    Intent intent = new Intent(MainActivity.this, BrowserActivity.class);
+                    intent.putExtra("url", advInfo.getUrl());
+                    startActivity(intent);
+                    adManager.dismissAdDialog();
+                }
+            }
+        });
+        adManager.showAdDialog(AdConstant.ANIM_DOWN_TO_UP);
     }
 }

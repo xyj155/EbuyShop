@@ -12,7 +12,7 @@
         android:layout_marginLeft="@dimen/dp_5"
         android:layout_marginTop="@dimen/dp_6"
         android:padding="@dimen/dp_7"
-        android:text="订单编号：20190123564"
+        android:text=""
         android:textColor="#000"
         android:textStyle="bold" />
 
@@ -22,7 +22,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:padding="@dimen/dp_10"
-        android:text="代付款"
+        android:text=""
         android:textColor="#ff2000" />
 
     <LinearLayout

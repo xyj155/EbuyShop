@@ -77,7 +77,6 @@ public class ShopCarFragment extends BaseFragment<ShopCarPresenter> implements S
         ryGoodscar.setLayoutManager(new LinearLayoutManager(getContext()));
         ryGoodscar.setAdapter(shopCarAdapter);
         shopCarAdapter.bindToRecyclerView(ryGoodscar);
-        smlShopcar.autoRefresh();
         smlShopcar.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshLayout) {

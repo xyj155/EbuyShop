@@ -19,6 +19,7 @@ import com.example.commonlib.gson.MarQueenGson;
 import com.example.commonlib.gson.MemberGson;
 import com.example.commonlib.gson.NewestShelfGson;
 import com.example.commonlib.gson.OrderDetailGson;
+import com.example.commonlib.gson.PopAdvertisementGson;
 import com.example.commonlib.gson.SecondHandsGoodsGson;
 import com.example.commonlib.gson.SecondKindGson;
 import com.example.commonlib.gson.ShopCarGson;
@@ -224,6 +225,9 @@ public interface Api {
 
     @GET("/StuShop/public/index.php/index/Goods/queryMemberShipGoods")
     Observable<BaseGson<GoodsGson>> queryMemberShipGoods();
+
+    @GET("/StuShop/public/index.php/index/Banner/queryPopWindowAd")
+    Observable<BaseGson<PopAdvertisementGson>> queryPopWindowAd();
 
     @FormUrlEncoded
     @POST("/StuShop/public/index.php/index/Dryinglist/submitGoodsComment")

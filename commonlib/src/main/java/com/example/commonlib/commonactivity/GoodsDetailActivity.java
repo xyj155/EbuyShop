@@ -133,7 +133,7 @@ public class GoodsDetailActivity extends BaseActivity<GoodsDetailContract.View, 
             super.handleMessage(msg);
             if (msg.what == 1) {
                 computeTime();
-                tvTime.setText((mHour < 10 ? "0"+mHour : mHour) + ":" +  (mMin < 10 ? "0"+mMin : mMin) + ":" + mSecond);
+                tvTime.setText((mHour < 10 ? "0" + mHour : mHour) + ":" + (mMin < 10 ? "0" + mMin : mMin) + ":" + mSecond);
                 if (mDay == 0 && mHour == 0 && mMin == 0 && mSecond == 0) {
 
                 }
@@ -166,11 +166,13 @@ public class GoodsDetailActivity extends BaseActivity<GoodsDetailContract.View, 
     private void startRun() {
         new Thread(target).start();
     }
+
     private long mDay = 10;
     private long mHour = 10;
     private long mMin = 30;
     private long mSecond = 00;
     private boolean isRun = true;
+
     /**
      * 倒计时计算
      */
@@ -281,10 +283,10 @@ public class GoodsDetailActivity extends BaseActivity<GoodsDetailContract.View, 
             try {
                 d1 = df.parse(getIntent().getStringExtra("endTime"));
 
-                Date d2 =  new Date(System.currentTimeMillis());
+                Date d2 = new Date(System.currentTimeMillis());
 //                Date d2 = df.parse(getIntent().getStringExtra("time"));
-                Log.i(TAG, "initView:endTime "+getIntent().getStringExtra("endTime"));
-                Log.i(TAG, "initView:time "+df.format(d2));
+                Log.i(TAG, "initView:endTime " + getIntent().getStringExtra("endTime"));
+                Log.i(TAG, "initView:time " + df.format(d2));
                 long diff = d1.getTime() - d2.getTime();//这样得到的差值是微秒级别
                 long days = diff / (1000 * 60 * 60 * 24);
                 long hours = (diff - days * (1000 * 60 * 60 * 24)) / (1000 * 60 * 60);
@@ -378,6 +380,7 @@ public class GoodsDetailActivity extends BaseActivity<GoodsDetailContract.View, 
         }
     }
 
+//    private String imToken;
 
     @Override
     public void loadGoodsDetail(final GoodsDetailGson goodsGson) {
@@ -386,7 +389,8 @@ public class GoodsDetailActivity extends BaseActivity<GoodsDetailContract.View, 
         } else {
             cbCollection.setChecked(false);
         }
-        tvCount.setText("销量："+goodsGson.getOrderNum());
+//        imToken = goodsGson.getImId();
+        tvCount.setText("销量：" + goodsGson.getOrderNum());
         tvCommentCount.setText("( " + goodsGson.getComment() + " )");
         tvBannerSize.setText("1/" + goodsGson.getGoodsPicUrl().size());
         Log.i(TAG, "loadGoodsDetail: " + goodsGson.getGoodsPicUrl().size());
@@ -466,8 +470,8 @@ public class GoodsDetailActivity extends BaseActivity<GoodsDetailContract.View, 
         webView.setFocusable(false);
         WebSettings webSettings = webView.getSettings();
         webSettings.setLoadWithOverviewMode(true);
-        webView.getSettings().setJavaScriptEnabled(true);//启用js
-        webView.getSettings().setBlockNetworkImage(false);//解决图片不显示
+        webSettings.setJavaScriptEnabled(true);//启用js
+        webSettings.setBlockNetworkImage(false);//解决图片不显示
         webSettings.setLoadsImagesAutomatically(true);
         webSettings.setRenderPriority(WebSettings.RenderPriority.HIGH);
         webSettings.setUseWideViewPort(true);
@@ -528,7 +532,7 @@ public class GoodsDetailActivity extends BaseActivity<GoodsDetailContract.View, 
 
     private GoodsDetailPresenter submitOrderPresenter = new GoodsDetailPresenter(this);
 
-    @OnClick({R2.id.tv_add, R2.id.tv_buy, R2.id.iv_close, R2.id.ll_comment})
+    @OnClick({R2.id.tv_service,R2.id.tv_shopcar, R2.id.tv_add, R2.id.tv_buy, R2.id.iv_close, R2.id.ll_comment})
     public void onViewClicked(View view) {
         int id = view.getId();
         if (id == R.id.tv_add) {
@@ -554,6 +558,12 @@ public class GoodsDetailActivity extends BaseActivity<GoodsDetailContract.View, 
             Intent intent = new Intent(GoodsDetailActivity.this, GoodsCommentActivity.class);
             intent.putExtra("goodsId", getIntent().getStringExtra("goodsId"));
             startActivity(intent);
+        } else if (id == R.id.tv_shopcar) {
+
+        } else if (id == R.id.tv_service) {
+//            Intent intent = new Intent(GoodsDetailActivity.this, ShopServiceConversationActivity.class);
+//            intent.putExtra("shopToken", imToken);
+//            startActivity(intent);
         }
     }
 

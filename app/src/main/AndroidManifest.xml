@@ -8,30 +8,31 @@
     <permission
         android:name="com.xuyijie.ebuyshop.permission.JPUSH_MESSAGE"
         android:protectionLevel="signature" />
-    <!-- 权限声明 -->
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
-    <!-- 访问网络状态 -->
+    <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <!-- 控制呼吸灯，振动器等，用于新消息提醒 -->
-    <uses-permission android:name="android.permission.FLASHLIGHT" />
-    <uses-permission android:name="android.permission.VIBRATE" />
-    <!-- 外置存储存取权限 -->
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission
-        android:name="android.permission.READ_LOGS"
-        tools:ignore="ProtectedPermissions" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 
-    <!-- 多媒体相关 -->
+
+    <!-- Optional. Required for location feature -->
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.GET_TASKS" />
+
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-
-    <!-- 如果需要实时音视频通话模块，下面的权限也是必须的。否则，可以不加 -->
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
@@ -48,29 +49,6 @@
         android:name="com.xuyijie.ebuyshop.permission.RECEIVE_MSG"
         android:protectionLevel="signature" />
 
-    <uses-permission android:name="com.xuyijie.ebuyshop.permission.RECEIVE_MSG" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
-    <uses-permission
-        android:name="android.permission.WRITE_SETTINGS"
-        tools:ignore="ProtectedPermissions" />
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
-    <uses-permission android:name="android.permission.GET_TASKS" />
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
     <application
         android:name="com.example.commonlib.MyApp"
@@ -91,16 +69,15 @@
 
         </activity>
 
-        <!-- </activity> -->
-        <activity
-            android:name=".view.MainActivity"
-            android:launchMode="singleTask">
-            <intent-filter>
-                <action android:name="${applicationId}.default.MAIN" />
+        <!--<activity-->
+        <!--android:name="com.example.commonlib.commonactivity.ShopServiceConversationActivity">-->
 
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
+        <!--&lt;!&ndash;<intent-filter>&ndash;&gt;-->
+        <!--&lt;!&ndash;<action android:name="${applicationId}.default.MAIN" />&ndash;&gt;-->
+
+        <!--&lt;!&ndash;<category android:name="android.intent.category.DEFAULT" />&ndash;&gt;-->
+        <!--&lt;!&ndash;</intent-filter>&ndash;&gt;-->
+        <!--</activity>-->
 
         <receiver
             android:name="com.example.commonlib.receiver.GInsightEventReceiver"
@@ -111,93 +88,52 @@
         </receiver>
 
         <!--<activity-->
-            <!--android:name="cn.sharesdk.tencent.qq.ReceiveActivity"-->
-            <!--android:launchMode="singleTask"-->
-            <!--android:noHistory="true">-->
-            <!--<intent-filter>-->
-                <!--<action android:name="android.intent.action.VIEW" />-->
+        <!--android:name="cn.sharesdk.tencent.qq.ReceiveActivity"-->
+        <!--android:launchMode="singleTask"-->
+        <!--android:noHistory="true">-->
+        <!--<intent-filter>-->
+        <!--<action android:name="android.intent.action.VIEW" />-->
 
-                <!--<category android:name="android.intent.category.DEFAULT" />-->
-                <!--<category android:name="android.intent.category.BROWSABLE" />-->
+        <!--<category android:name="android.intent.category.DEFAULT" />-->
+        <!--<category android:name="android.intent.category.BROWSABLE" />-->
 
-                <!--<data android:scheme="tencent1108087612" />-->
-            <!--</intent-filter>-->
+        <!--<data android:scheme="tencent1108087612" />-->
+        <!--</intent-filter>-->
         <!--</activity>-->
         <!--<activity-->
-            <!--android:name="com.mob.tools.MobUIShell"-->
-            <!--android:configChanges="keyboardHidden|orientation|screenSize"-->
-            <!--android:theme="@android:style/Theme.Translucent.NoTitleBar"-->
-            <!--android:windowSoftInputMode="stateHidden|adjustResize">-->
+        <!--android:name="com.mob.tools.MobUIShell"-->
+        <!--android:configChanges="keyboardHidden|orientation|screenSize"-->
+        <!--android:theme="@android:style/Theme.Translucent.NoTitleBar"-->
+        <!--android:windowSoftInputMode="stateHidden|adjustResize">-->
 
-            <!--&lt;!&ndash; ShareSDK3.1.0版本之前才需要在MobUIShell下面注册此意图，3.1.0版本之后（包含3.1.0）不需要注册此intent &ndash;&gt;-->
-            <!--<intent-filter>-->
-                <!--<data android:scheme="tencent100371282" />-->
+        <!--&lt;!&ndash; ShareSDK3.1.0版本之前才需要在MobUIShell下面注册此意图，3.1.0版本之后（包含3.1.0）不需要注册此intent &ndash;&gt;-->
+        <!--<intent-filter>-->
+        <!--<data android:scheme="tencent100371282" />-->
 
-                <!--<action android:name="android.intent.action.VIEW" />-->
+        <!--<action android:name="android.intent.action.VIEW" />-->
 
-                <!--<category android:name="android.intent.category.BROWSABLE" />-->
-                <!--<category android:name="android.intent.category.DEFAULT" />-->
-            <!--</intent-filter>-->
+        <!--<category android:name="android.intent.category.BROWSABLE" />-->
+        <!--<category android:name="android.intent.category.DEFAULT" />-->
+        <!--</intent-filter>-->
 
-            <!--&lt;!&ndash; 调用新浪原生SDK，需要注册的回调activity &ndash;&gt;-->
-            <!--<intent-filter>-->
-                <!--<action android:name="com.sina.weibo.sdk.action.ACTION_SDK_REQ_ACTIVITY" />-->
+        <!--&lt;!&ndash; 调用新浪原生SDK，需要注册的回调activity &ndash;&gt;-->
+        <!--<intent-filter>-->
+        <!--<action android:name="com.sina.weibo.sdk.action.ACTION_SDK_REQ_ACTIVITY" />-->
 
-                <!--<category android:name="android.intent.category.DEFAULT" />-->
-            <!--</intent-filter>-->
+        <!--<category android:name="android.intent.category.DEFAULT" />-->
+        <!--</intent-filter>-->
         <!--</activity>-->
         <!--<activity-->
-            <!--android:name="com.example.commonlib.wxapi.WXEntryActivity"-->
-            <!--android:configChanges="keyboardHidden|orientation|screenSize"-->
-            <!--android:exported="true"-->
-            <!--android:screenOrientation="portrait"-->
-            <!--android:theme="@android:style/Theme.Translucent.NoTitleBar" />-->
+        <!--android:name="com.example.commonlib.wxapi.WXEntryActivity"-->
+        <!--android:configChanges="keyboardHidden|orientation|screenSize"-->
+        <!--android:exported="true"-->
+        <!--android:screenOrientation="portrait"-->
+        <!--android:theme="@android:style/Theme.Translucent.NoTitleBar" />-->
 
         <meta-data
             android:name="com.netease.nim.appKey"
             android:value="3c23a62b1c4ac728a2bc4f15f3ca2746" />
 
-        <!-- 云信后台服务，请使用独立进程。 -->
-        <service
-            android:name="com.netease.nimlib.service.NimService"
-            android:process=":core" />
-
-        <!-- 云信后台辅助服务 -->
-        <service
-            android:name="com.netease.nimlib.service.NimService$Aux"
-            android:process=":core" />
-
-        <!-- 云信后台辅助服务 -->
-        <service
-            android:name="com.netease.nimlib.job.NIMJobService"
-            android:exported="true"
-            android:permission="android.permission.BIND_JOB_SERVICE"
-            android:process=":core" />
-
-        <!-- 云信监视系统启动和网络变化的广播接收器，保持和 NimService 同一进程 -->
-        <receiver
-            android:name="com.netease.nimlib.service.NimReceiver"
-            android:exported="false"
-            android:process=":core">
-            <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
-                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
-            </intent-filter>
-        </receiver>
-
-        <!-- 云信进程间通信 Receiver -->
-        <receiver android:name="com.netease.nimlib.service.ResponseReceiver" />
-
-        <!-- 云信进程间通信service -->
-        <service android:name="com.netease.nimlib.service.ResponseService" />
-
-        <!-- 云信进程间通信provider -->
-        <!-- android:authorities="{包名}.ipc.provider", 请将com.netease.nim.demo替换为自己的包名 -->
-        <provider
-            android:name="com.netease.nimlib.ipc.NIMContentProvider"
-            android:authorities="com.xuyijie.ebuyshop.ipc.provider"
-            android:exported="false"
-            android:process=":core" />
         <provider
             android:name="com.example.commonlib.util.BuglyFileProvider"
             android:authorities="${applicationId}.fileProvider"
@@ -215,8 +151,145 @@
             android:configChanges="keyboardHidden|orientation|screenSize|locale"
             android:theme="@android:style/Theme.Translucent" />
 
-        <!-- Required SDK 核心功能 -->
-        <!-- 可配置 android:process 参数将 PushService 放在其他进程中 -->
+        <!--&lt;!&ndash; Required SDK 核心功能 &ndash;&gt;-->
+        <!--&lt;!&ndash; 可配置 android:process 参数将 PushService 放在其他进程中 &ndash;&gt;-->
+        <!--<service-->
+        <!--android:name="cn.jpush.android.service.PushService"-->
+        <!--android:enabled="true"-->
+        <!--android:exported="false">-->
+        <!--<intent-filter>-->
+        <!--<action android:name="cn.jpush.android.intent.REGISTER" />-->
+        <!--<action android:name="cn.jpush.android.intent.REPORT" />-->
+        <!--<action android:name="cn.jpush.android.intent.PushService" />-->
+        <!--<action android:name="cn.jpush.android.intent.PUSH_TIME" />-->
+        <!--</intent-filter>-->
+        <!--</service>-->
+
+        <!--&lt;!&ndash; since 3.0.9 Required SDK 核心功能 &ndash;&gt;-->
+        <!--<provider-->
+        <!--android:name="cn.jpush.android.service.DataProvider"-->
+        <!--android:authorities="com.xuyijie.ebuyshop.DataProvider"-->
+        <!--android:exported="true"-->
+        <!--tools:replace="android:exported,android:authorities" />-->
+
+        <!--&lt;!&ndash; since 1.8.0 option 可选项。用于同一设备中不同应用的 JPush 服务相互拉起的功能。 &ndash;&gt;-->
+        <!--&lt;!&ndash; 若不启用该功能可删除该组件，或把 enabled 设置成 false ；拉起服务被关闭，App 不会通过拉起服务拉起其他的 App，也不会被其他 App 拉起。 &ndash;&gt;-->
+        <!--<service-->
+        <!--android:name="cn.jpush.android.service.DaemonService"-->
+        <!--android:enabled="true"-->
+        <!--android:exported="true">-->
+        <!--<intent-filter>-->
+        <!--<action android:name="cn.jpush.android.intent.DaemonService" />-->
+
+        <!--<category android:name="com.xuyijie.ebuyshop" />-->
+        <!--</intent-filter>-->
+        <!--</service>-->
+
+        <!--&lt;!&ndash; since 3.1.0 Required SDK 核心功能 &ndash;&gt;-->
+        <!--<provider-->
+        <!--android:name="cn.jpush.android.service.DownloadProvider"-->
+        <!--android:authorities="com.xuyijie.ebuyshop.DownloadProvider"-->
+        <!--android:exported="true"-->
+        <!--tools:replace="android:authorities" />-->
+
+        <!--&lt;!&ndash; Required SDK 核心功能 &ndash;&gt;-->
+        <!--<receiver-->
+        <!--android:name="cn.jpush.android.service.PushReceiver"-->
+        <!--android:enabled="true">-->
+        <!--<intent-filter android:priority="1000">-->
+        <!--<action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED_PROXY" />-->
+
+        <!--<category android:name="com.xuyijie.ebuyshop" />-->
+        <!--</intent-filter>-->
+        <!--<intent-filter>-->
+        <!--<action android:name="android.intent.action.USER_PRESENT" />-->
+        <!--<action android:name="android.net.conn.CONNECTIVITY_CHANGE" />-->
+        <!--</intent-filter>-->
+        <!--&lt;!&ndash; Optional &ndash;&gt;-->
+        <!--<intent-filter>-->
+        <!--<action android:name="android.intent.action.PACKAGE_ADDED" />-->
+        <!--<action android:name="android.intent.action.PACKAGE_REMOVED" />-->
+
+        <!--<data android:scheme="package" />-->
+        <!--</intent-filter>-->
+        <!--</receiver>-->
+
+        <!--&lt;!&ndash; Required SDK 核心功能 &ndash;&gt;-->
+        <!--<activity-->
+        <!--android:name="cn.jpush.android.ui.PushActivity"-->
+        <!--android:configChanges="orientation|keyboardHidden"-->
+        <!--android:exported="false"-->
+        <!--android:theme="@android:style/Theme.NoTitleBar">-->
+        <!--<intent-filter>-->
+        <!--<action android:name="cn.jpush.android.ui.PushActivity" />-->
+
+        <!--<category android:name="android.intent.category.DEFAULT" />-->
+        <!--<category android:name="com.xuyijie.ebuyshop" />-->
+        <!--</intent-filter>-->
+        <!--</activity>-->
+        <!--&lt;!&ndash; SDK 核心功能 &ndash;&gt;-->
+        <!--<activity-->
+        <!--android:name="cn.jpush.android.ui.PopWinActivity"-->
+        <!--android:configChanges="orientation|keyboardHidden"-->
+        <!--android:exported="false"-->
+        <!--android:theme="@style/MyDialogStyle">-->
+        <!--<intent-filter>-->
+        <!--<category android:name="android.intent.category.DEFAULT" />-->
+        <!--<category android:name="com.xuyijie.ebuyshop" />-->
+        <!--</intent-filter>-->
+        <!--</activity>-->
+
+        <!--&lt;!&ndash; Required SDK 核心功能 &ndash;&gt;-->
+        <!--<service-->
+        <!--android:name="cn.jpush.android.service.DownloadService"-->
+        <!--android:enabled="true"-->
+        <!--android:exported="false" />-->
+
+        <!--&lt;!&ndash; Required SDK 核心功能 &ndash;&gt;-->
+        <!--<receiver android:name="cn.jpush.android.service.AlarmReceiver" />-->
+
+        <!--&lt;!&ndash; User defined. 用户自定义的广播接收器 &ndash;&gt;-->
+        <!--<receiver-->
+        <!--android:name="com.example.commonlib.mreceiver.JpushReceiver"-->
+        <!--android:enabled="true"-->
+        <!--android:exported="false">-->
+        <!--<intent-filter>-->
+
+        <!--&lt;!&ndash; Required 用户注册 SDK 的 intent &ndash;&gt;-->
+        <!--<action android:name="cn.jpush.android.intent.REGISTRATION" />-->
+        <!--&lt;!&ndash; Required 用户接收 SDK 消息的 intent &ndash;&gt;-->
+        <!--<action android:name="cn.jpush.android.intent.MESSAGE_RECEIVED" />-->
+        <!--&lt;!&ndash; Required 用户接收 SDK 通知栏信息的 intent &ndash;&gt;-->
+        <!--<action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED" />-->
+        <!--&lt;!&ndash; Required 用户打开自定义通知栏的 intent &ndash;&gt;-->
+        <!--<action android:name="cn.jpush.android.intent.NOTIFICATION_OPENED" />-->
+        <!--&lt;!&ndash; 接收网络变化 连接/断开 since 1.6.3 &ndash;&gt;-->
+        <!--<action android:name="cn.jpush.android.intent.CONNECTION" />-->
+
+        <!--<category android:name="com.xuyijie.ebuyshop" />-->
+        <!--</intent-filter>-->
+        <!--</receiver>-->
+
+        <!--<provider-->
+        <!--android:name="cn.jpush.im.android.helpers.ipc.IMProvider"-->
+        <!--android:authorities="com.xuyijie.ebuyshop.IMProvider"-->
+        <!--android:exported="false" />-->
+
+        <!--&lt;!&ndash; Required JMessage SDK核心功能&ndash;&gt;-->
+        <!--<receiver-->
+        <!--android:name="cn.jpush.im.android.helpers.IMReceiver"-->
+        <!--android:enabled="true"-->
+        <!--android:exported="false">-->
+        <!--</receiver>-->
+        <!--<meta-data-->
+        <!--android:name="${JPUSH_CHANNEL}"-->
+        <!--android:value="developer-default" />-->
+        <!--&lt;!&ndash; Required. AppKey copied from Portal &ndash;&gt;-->
+        <!--<meta-data-->
+        <!--android:name="${JPUSH_APPKEY}"-->
+        <!--android:value="b115a26e2d2b360f3655db24" />-->
+        <!-- Required SDK 核心功能-->
+        <!-- 可配置android:process参数将PushService放在其他进程中 -->
         <service
             android:name="cn.jpush.android.service.PushService"
             android:enabled="true"
@@ -229,40 +302,13 @@
             </intent-filter>
         </service>
 
-        <!-- since 3.0.9 Required SDK 核心功能 -->
-        <provider
-            android:name="cn.jpush.android.service.DataProvider"
-            android:authorities="com.xuyijie.ebuyshop.DataProvider"
-            android:exported="true"
-            tools:replace="android:exported,android:authorities" />
-
-        <!-- since 1.8.0 option 可选项。用于同一设备中不同应用的 JPush 服务相互拉起的功能。 -->
-        <!-- 若不启用该功能可删除该组件，或把 enabled 设置成 false ；拉起服务被关闭，App 不会通过拉起服务拉起其他的 App，也不会被其他 App 拉起。 -->
-        <service
-            android:name="cn.jpush.android.service.DaemonService"
-            android:enabled="true"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="cn.jpush.android.intent.DaemonService" />
-
-                <category android:name="com.xuyijie.ebuyshop" />
-            </intent-filter>
-        </service>
-
-        <!-- since 3.1.0 Required SDK 核心功能 -->
-        <provider
-            android:name="cn.jpush.android.service.DownloadProvider"
-            android:authorities="com.xuyijie.ebuyshop.DownloadProvider"
-            android:exported="true"
-            tools:replace="android:authorities" />
-
-        <!-- Required SDK 核心功能 -->
+        <!-- Required SDK核心功能-->
         <receiver
             android:name="cn.jpush.android.service.PushReceiver"
-            android:enabled="true">
+            android:enabled="true"
+            android:exported="false">
             <intent-filter android:priority="1000">
                 <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED_PROXY" />
-
                 <category android:name="com.xuyijie.ebuyshop" />
             </intent-filter>
             <intent-filter>
@@ -278,67 +324,39 @@
             </intent-filter>
         </receiver>
 
-        <!-- Required SDK 核心功能 -->
-        <activity
-            android:name="cn.jpush.android.ui.PushActivity"
-            android:configChanges="orientation|keyboardHidden"
-            android:exported="false"
-            android:theme="@android:style/Theme.NoTitleBar">
-            <intent-filter>
-                <action android:name="cn.jpush.android.ui.PushActivity" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="com.xuyijie.ebuyshop" />
-            </intent-filter>
-        </activity>
-        <!-- SDK 核心功能 -->
-        <activity
-            android:name="cn.jpush.android.ui.PopWinActivity"
-            android:configChanges="orientation|keyboardHidden"
-            android:exported="false"
-            android:theme="@style/MyDialogStyle">
-            <intent-filter>
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="com.xuyijie.ebuyshop" />
-            </intent-filter>
-        </activity>
-
-        <!-- Required SDK 核心功能 -->
-        <service
-            android:name="cn.jpush.android.service.DownloadService"
-            android:enabled="true"
+        <!-- Required SDK核心功能-->
+        <receiver
+            android:name="cn.jpush.android.service.AlarmReceiver"
             android:exported="false" />
 
-        <!-- Required SDK 核心功能 -->
-        <receiver android:name="cn.jpush.android.service.AlarmReceiver" />
+        <!-- Required since JCore 1.1.7. SDK 核心功能-->
+        <provider
+            android:name="cn.jpush.android.service.DataProvider"
+            android:authorities="com.xuyijie.ebuyshop.DataProvider"
+            android:exported="false" />
 
-        <!-- User defined. 用户自定义的广播接收器 -->
+        <!-- Required since JMessage 2.7.0 SDK 核心功能-->
+        <provider
+            android:name="cn.jpush.im.android.helpers.ipc.IMProvider"
+            android:authorities="com.xuyijie.ebuyshop.IMProvider"
+            android:exported="false" />
+
+        <!-- Required JMessage SDK核心功能-->
         <receiver
-            android:name="com.example.commonlib.mreceiver.JpushReceiver"
+            android:name="cn.jpush.im.android.helpers.IMReceiver"
             android:enabled="true"
-            android:exported="false">
+            android:exported="false"></receiver>
+
+      <service
+            android:name="cn.jpush.android.service.DaemonService"
+            android:enabled="true"
+            android:exported="true">
             <intent-filter>
-
-                <!-- Required 用户注册 SDK 的 intent -->
-                <action android:name="cn.jpush.android.intent.REGISTRATION" />
-                <!-- Required 用户接收 SDK 消息的 intent -->
-                <action android:name="cn.jpush.android.intent.MESSAGE_RECEIVED" />
-                <!-- Required 用户接收 SDK 通知栏信息的 intent -->
-                <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED" />
-                <!-- Required 用户打开自定义通知栏的 intent -->
-                <action android:name="cn.jpush.android.intent.NOTIFICATION_OPENED" />
-                <!-- 接收网络变化 连接/断开 since 1.6.3 -->
-                <action android:name="cn.jpush.android.intent.CONNECTION" />
-
+                <action android:name="cn.jpush.android.intent.DaemonService" />
                 <category android:name="com.xuyijie.ebuyshop" />
             </intent-filter>
-        </receiver>
+        </service>
 
-        <!-- Required. For publish channel feature -->
-        <!-- JPUSH_CHANNEL 是为了方便开发者统计 APK 分发渠道。 -->
-        <!-- 例如: -->
-        <!-- 发到 Google Play 的 APK 可以设置为 google-play; -->
-        <!-- 发到其他市场的 APK 可以设置为 xxx-market。 -->
         <meta-data
             android:name="${JPUSH_CHANNEL}"
             android:value="developer-default" />
@@ -346,7 +364,6 @@
         <meta-data
             android:name="${JPUSH_APPKEY}"
             android:value="b115a26e2d2b360f3655db24" />
-
         <activity android:name=".view.PermissionRequestActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -354,11 +371,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".view.MainActivity" />
+
         <receiver android:name="com.example.commonlib.mreceiver.BootReceiver">
             <intent-filter>
                 <!-- 系统启动完成后会调用-->
-                <action android:name="android.intent.action.BOOT_COMPLETED">
-                </action>
+                <action android:name="android.intent.action.BOOT_COMPLETED"></action>
             </intent-filter>
         </receiver>
 
