@@ -13,7 +13,6 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.RadioGroup;
-import android.widget.RelativeLayout;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
@@ -59,9 +58,8 @@ public class MainActivity extends BaseActivity<HomeContract.View, LoginPresent> 
     Fragment messageFragment;
     Fragment kindFragment;
     Fragment goodsCarFragment;
-    private RelativeLayout rlContainer;
     Fragment userFragment;
-    public static final String UPDATE_STATUS_ACTION = "com.xuyijie.ebuyshop.action.UPDATE_STATUS";
+
 
     @Override
     public LoginPresent getPresenter() {
@@ -154,13 +152,13 @@ public class MainActivity extends BaseActivity<HomeContract.View, LoginPresent> 
     public void initView() {
         setTagAndAlias();
         advertisementPresenter.queryPopWindowAd();
-        rlContainer = findViewById(R.id.rl_container);
         bottomBar = findViewById(R.id.bottomBar);
+        supportFragmentManager = getSupportFragmentManager();
+
         bottomBar.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
-                supportFragmentManager = getSupportFragmentManager();
-                FragmentTransaction transaction = supportFragmentManager.beginTransaction();
+                final FragmentTransaction transaction = supportFragmentManager.beginTransaction();
                 hideAllFragment(transaction);
                 switch (checkedId) {
                     case R.id.rb_home:

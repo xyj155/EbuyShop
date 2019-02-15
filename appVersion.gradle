@@ -56,7 +56,7 @@ ext {
             "jpush"                        : 'cn.jiguang.sdk:jpush:3.1.6',
             "SmartRefreshHeader"           : 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-alpha-20',
             "jcore"                        : 'cn.jiguang.sdk:jcore:1.2.6',
-            "advertisement"                        : 'cn.yipianfengye.android:ad-library:1.0',
+            "advertisement"                : 'cn.yipianfengye.android:ad-library:1.0',
             "android-gif-drawable"         : 'pl.droidsonroids.gif:android-gif-drawable:1.2.3'
     ]
 

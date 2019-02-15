@@ -1,7 +1,5 @@
 package com.example.commonlib.presenter;
 
-import android.util.Log;
-
 import com.example.commonlib.base.BaseGson;
 import com.example.commonlib.base.BasePresenter;
 import com.example.commonlib.contract.UserSubmitOrderContract;
@@ -23,15 +21,6 @@ public class UserSubmitOrderPresenter extends BasePresenter<UserSubmitOrderContr
 
     @Override
     public void submitOrderByUserId(String userId, String address, String goodsId, String couponId, String orderNum, String userToken, String message, String expressId) {
-        Log.i(TAG, "submitOrderByUserId: "
-                + "userId="+userId
-                + "address="+ address
-                + "goodsId="+goodsId
-                + "couponId="+couponId
-                + "orderNum="+orderNum
-                + "userToken="+userToken
-                + "message="+message
-                + "expressId="+expressId);
         userSubmitOrderModel.submitOrderByUserId(userId, address, goodsId, couponId, orderNum, userToken, message, expressId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

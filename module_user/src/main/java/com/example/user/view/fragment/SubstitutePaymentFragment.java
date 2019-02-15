@@ -7,12 +7,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.example.commonlib.base.BaseFragment;
 import com.example.commonlib.gson.UserOrderStatusGson;
 import com.example.commonlib.util.SharePreferenceUtil;
 import com.example.commonlib.view.MyDialog;
+import com.example.commonlib.view.toast.ToastUtils;
 import com.example.user.adapter.UserGoodsStatusAdapter;
 import com.example.user.contract.UserFormStatusContract;
 import com.example.user.contract.UserOrderDeleteContract;
@@ -36,7 +36,7 @@ public class SubstitutePaymentFragment extends BaseFragment<UserFormStatusPresen
     Unbinder unbinder;
     @BindView(R2.id.sml_payment)
     SmartRefreshLayout smlPayment;
-    private UserGoodsStatusAdapter userGoodsStatusAdapter ;
+    private UserGoodsStatusAdapter userGoodsStatusAdapter;
     final UserOrderDeletePresenter userOrderDeletePresenter = new UserOrderDeletePresenter(this);
     private static final String TAG = "SubstitutePaymentFragme";
 
@@ -45,7 +45,9 @@ public class SubstitutePaymentFragment extends BaseFragment<UserFormStatusPresen
         smlPayment.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshLayout) {
-                mPresenter.queryUserOrderByStatus((String) SharePreferenceUtil.getUser("uid","String"), "1");
+                mPresenter.queryUserOrderByStatus((String) SharePreferenceUtil.getUser("uid", "String"), "1");
+                if (userGoodsStatusAdapter != null)
+                    userGoodsStatusAdapter.notifyDataSetChanged();
             }
         });
 
@@ -54,18 +56,17 @@ public class SubstitutePaymentFragment extends BaseFragment<UserFormStatusPresen
     @Override
     public void onResume() {
         super.onResume();
-        mPresenter.queryUserOrderByStatus((String) SharePreferenceUtil.getUser("uid","String"), "1");
+        mPresenter.queryUserOrderByStatus((String) SharePreferenceUtil.getUser("uid", "String"), "1");
     }
 
     private MyDialog myDialog1;
 
     @Override
     public void initView(View view) {
-        userGoodsStatusAdapter = new UserGoodsStatusAdapter(null,getContext());
+        userGoodsStatusAdapter = new UserGoodsStatusAdapter(null, getContext());
         userGoodsStatusAdapter.setEmptyView(View.inflate(getContext(), R.layout.order_empty_layout, null));
         ryPayment.setLayoutManager(new LinearLayoutManager(getContext()));
         ryPayment.setAdapter(userGoodsStatusAdapter);
-//        userGoodsStatusAdapter.setEmptyView(View.inflate(getContext(), R.layout.order_empty_layout, null));
         userGoodsStatusAdapter.setOnClickListener(new UserGoodsStatusAdapter.onClickListener() {
             @Override
             public void onClickListener(final String orderNum) {
@@ -80,7 +81,7 @@ public class SubstitutePaymentFragment extends BaseFragment<UserFormStatusPresen
                             myDialog1.dismiss();
                         } else if (i == R.id.dialog_btn_cancel) {
                             myDialog1.dismiss();
-                            userOrderDeletePresenter.deleteOrderByOrderNum(orderNum, (String) SharePreferenceUtil.getUser("uid","String"));
+                            userOrderDeletePresenter.deleteOrderByOrderNum(orderNum, (String) SharePreferenceUtil.getUser("uid", "String"));
                         }
                     }
                 });
@@ -133,18 +134,20 @@ public class SubstitutePaymentFragment extends BaseFragment<UserFormStatusPresen
 
     @Override
     public void loadUserOrderByStatus(List<List<UserOrderStatusGson>> userOrderStatusGsons) {
-        Log.i(TAG, "loadUserOrderByStatus: " + userOrderStatusGsons.size());
+        Log.i(TAG, "loadUserOrderByStatus:313131231 " + userOrderStatusGsons.size());
         userGoodsStatusAdapter.replaceData(userOrderStatusGsons);
+        userGoodsStatusAdapter.notifyDataSetChanged();
         smlPayment.finishRefresh();
     }
 
     @Override
     public void deleteSuccess(boolean isDelete) {
-        if (isDelete){
-            mPresenter.queryUserOrderByStatus((String) SharePreferenceUtil.getUser("uid","String"), "1");
+        if (isDelete) {
+            mPresenter.queryUserOrderByStatus((String) SharePreferenceUtil.getUser("uid", "String"), "1");
             userGoodsStatusAdapter.notifyDataSetChanged();
-        }else {
-            Toast.makeText(getContext(), "删除失败", Toast.LENGTH_SHORT).show();
+            ToastUtils.show("删除成功");
+        } else {
+            ToastUtils.show("删除失败");
         }
 
     }

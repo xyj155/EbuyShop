@@ -12,13 +12,14 @@
         android:layout_height="match_parent"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true">
+
         <pl.droidsonroids.gif.GifImageView
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_100"
-            android:src="@drawable/loadingview"
             android:layout_marginTop="@dimen/dp_30"
-            app:layout_srlSpinnerStyle="Translate"
-            app:layout_srlBackgroundColor="@android:color/transparent"/>
+            android:src="@drawable/loadingview"
+            app:layout_srlBackgroundColor="@android:color/transparent"
+            app:layout_srlSpinnerStyle="Translate" />
 
         <com.example.commonlib.view.ObservableScrollView
             android:id="@+id/slHome"
@@ -62,9 +63,9 @@
                         android:weightSum="5">
 
                         <TextView
+                            android:id="@+id/iv_news"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:id="@+id/iv_news"
                             android:layout_weight="1"
                             android:drawableTop="@mipmap/l_chongzhi_gouwu"
                             android:drawablePadding="@dimen/dp_6"
@@ -74,26 +75,24 @@
                             android:textSize="13sp" />
 
                         <TextView
+                            android:id="@+id/tv_member"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:drawableTop="@mipmap/l_chongzhi_xizao"
                             android:drawablePadding="@dimen/dp_6"
-                            android:id="@+id/tv_member"
                             android:gravity="center"
                             android:text="会员尊享"
                             android:textColor="#000"
                             android:textSize="13sp" />
 
 
-
-
                         <TextView
+                            android:id="@+id/iv_best"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:drawableTop="@mipmap/l_chongzhi_xiyi"
-                            android:id="@+id/iv_best"
                             android:drawablePadding="@dimen/dp_6"
                             android:gravity="center"
                             android:text="闲置商品"
@@ -101,24 +100,25 @@
                             android:textSize="13sp" />
 
                         <TextView
+                            android:id="@+id/iv_share"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:id="@+id/iv_share"
                             android:drawableTop="@mipmap/l_chongzhi_chuifeng"
                             android:drawablePadding="@dimen/dp_6"
                             android:gravity="center"
                             android:text="购物晒单"
                             android:textColor="#000"
                             android:textSize="13sp" />
+
                         <TextView
+                            android:id="@+id/iv_school_vip"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:drawableTop="@mipmap/l_chongzhi_yongcan"
                             android:drawablePadding="@dimen/dp_6"
                             android:gravity="center"
-                            android:id="@+id/iv_school_vip"
                             android:text="全部商品"
                             android:textColor="#000"
                             android:textSize="13sp" />
@@ -230,34 +230,34 @@
                         android:layout_marginRight="@dimen/dp_7" />
 
 
-
                     <FrameLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/dp_5">
 
 
-
                         <ImageView
-                            android:layout_width="match_parent"
                             android:id="@+id/ivBanner"
-                            android:scaleType="fitXY"
+                            android:layout_width="match_parent"
                             android:layout_height="@dimen/dp_120"
-                            android:layout_marginTop="@dimen/dp_10" />
+                            android:layout_marginTop="@dimen/dp_10"
+                            android:scaleType="fitXY" />
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:background="@drawable/bg_guess_status_n"
                             android:padding="@dimen/dp_3"
                             android:text="为你推荐"
-                            android:textStyle="bold"
-                            android:textColor="#fff" />
+                            android:textColor="#fff"
+                            android:textStyle="bold" />
                     </FrameLayout>
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:gravity="center"
                         android:layout_marginTop="@dimen/dp_8"
+                        android:gravity="center"
                         android:orientation="horizontal">
 
                         <View
@@ -280,11 +280,11 @@
                             android:background="#d8d8d8" />
 
                     </LinearLayout>
+
                     <android.support.v7.widget.RecyclerView
                         android:id="@+id/ryPurse"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                      />
+                        android:layout_height="wrap_content" />
                 </LinearLayout>
             </FrameLayout>
 
@@ -298,17 +298,37 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:orientation="horizontal"
-        android:paddingLeft="@dimen/dp_8"
         android:paddingTop="@dimen/dp_25"
         android:paddingRight="@dimen/dp_5"
         android:paddingBottom="@dimen/dp_5">
 
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:gravity="center"
+            android:paddingLeft="@dimen/dp_4"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <ImageView
+                android:layout_margin="@dimen/dp_6"
+                android:id="@+id/iv_location"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/icon_home_location"/>
+            <TextView
+                android:id="@+id/ivKind"
+                android:textStyle="bold"
+                android:textSize="15sp"
+                android:textColor="#fff"
+                android:ellipsize="end"
+                android:layout_width="@dimen/dp_58"
+                android:gravity="center|left"
+                android:layout_height="@dimen/dp_24"
+                android:drawablePadding="@dimen/dp_8"
+                android:src="@drawable/icon_logo"
+                android:text="株洲" />
+        </LinearLayout>
 
-        <ImageView
-            android:id="@+id/ivKind"
-            android:layout_width="@dimen/dp_58"
-            android:layout_height="@dimen/dp_24"
-            android:src="@drawable/icon_logo" />
+
 
 
         <TextView

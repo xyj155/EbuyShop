@@ -34,6 +34,6 @@
         android:id="@+id/iv_avatar"
         android:layout_height="@dimen/dp_45"
         android:layout_margin="@dimen/dp_8"
-        android:src="@mipmap/ic_user_avatar_bg" />
+        android:src="@mipmap/app_icon" />
 
 </LinearLayout>

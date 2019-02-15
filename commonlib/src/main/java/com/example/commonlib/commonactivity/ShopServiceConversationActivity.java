@@ -1,6 +1,7 @@
 package com.example.commonlib.commonactivity;
 
 
+import android.annotation.SuppressLint;
 import android.os.Build;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -144,11 +145,14 @@ public class ShopServiceConversationActivity extends BaseActivity<GoodsDetailCon
         KPSwitchConflictUtil.onMultiWindowModeChanged(isInMultiWindowMode);
     }
 
+    private Message message = null;
+
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     public void initView() {
         createDialog("");
         ButterKnife.bind(this);
-        initToolBar().setToolBarTitle(getIntent().getStringExtra("username"));
+        initToolBar().setToolBarTitle(getIntent().getStringExtra("shopName"));
         mPanelRoot.setIgnoreRecommendHeight(true);
         mSubPanel1 = mPanelRoot.findViewById(R.id.sub_panel_1);
         smlConversation.setOnRefreshListener(new OnRefreshListener() {
@@ -247,21 +251,26 @@ public class ShopServiceConversationActivity extends BaseActivity<GoodsDetailCon
 
             }
         });
+        Log.i(TAG, "initView: " + SharePreferenceUtil.getUser("telphone", "String"));
         JMessageClient.login(String.valueOf(SharePreferenceUtil.getUser("telphone", "String")), "xuyijie", new BasicCallback() {
             @Override
             public void gotResult(int i, String s) {
                 if (i == 0) {
                     mhideDialog();
-                    Log.i(TAG, "gotResult: " + i + s);
+                    Log.i(TAG, "gotResult: gotResult" + i + s);
+//                    if (getIntent().getStringExtra("appkey")==null) {
+//                        singleConversation1 = Conversation.createSingleConversation(getIntent().getStringExtra("username"));
+//                    } else {
+                    singleConversation1 = Conversation.createSingleConversation(getIntent().getStringExtra("username"),"3a23b8ad0545565bb6d71ecc");
+//                    }
 
-                    singleConversation1 = JMessageClient.getSingleConversation(getIntent().getStringExtra("username"));
-                    Log.i(TAG, "gotResult: " + singleConversation1);
+                    Log.i(TAG, "gotResult: 31233111" + singleConversation1);
                     if (singleConversation1 != null) {
                         count = singleConversation1.getAllMessage().size();
-                        Log.i(TAG, "gotResult: " + count);
+                        Log.i(TAG, "gotResult: 313113" + count);
                         List<Message> messagesFromOldest1 = singleConversation1.getMessagesFromOldest(count - 12, 12);
                         for (Message msg : messagesFromOldest1) {
-                            Log.i(TAG, "onEvent111: " + msg);
+                            Log.i(TAG, "onEvent111:312313 " + msg);
                             boolean username = msg.getFromUser().getUserName().equals(String.valueOf(SharePreferenceUtil.getUser("username", "String")));
                             if (username) {
                                 shopServiceConversationAdapter.addData(ConversationEntity.client(msg));
@@ -277,25 +286,34 @@ public class ShopServiceConversationActivity extends BaseActivity<GoodsDetailCon
                                     if (NoFastClickUtils.isFastClick()) {
                                         ToastUtils.show("不要发送太快哦！");
                                     } else {
-                                        final Message message = singleConversation1.createSendMessage(new TextContent(etInput.getText().toString()));
-                                        JMessageClient.sendMessage(message);
-                                        Log.i(TAG, "onClick: ");
-                                        message.setOnSendCompleteCallback(new BasicCallback() {
-                                            @Override
-                                            public void gotResult(int responseCode, String responseDesc) {
-                                                Log.i(TAG, "gotResult: " + responseDesc + responseCode);
-                                                if (responseCode == 0) {
-                                                    shopServiceConversationAdapter.addData(ConversationEntity.client(message));
-                                                    //消息发送成功
-                                                    msgRecycleView.scrollToPosition(shopServiceConversationAdapter.getItemCount() - 1);
-                                                    Log.i(TAG, "gotResult: 发送成功");
-                                                } else {
-                                                    Log.i(TAG, "gotResult: 消息发送失败");
-                                                    //消息发送失败
-                                                }
-                                                etInput.setText("");
+                                        if (singleConversation1 != null) {
+//                                            if (getIntent().getStringExtra("appkey").isEmpty()) {
+//                                                message = singleConversation1.createSendMessage(new TextContent(etInput.getText().toString()));
+//                                            } else {
+                                                message = singleConversation1.createSendMessage(new TextContent(etInput.getText().toString()), "3a23b8ad0545565bb6d71ecc");
+//                                            }
+                                            if (message != null) {
+                                                JMessageClient.sendMessage(message);
+                                                Log.i(TAG, "onClick: ");
+                                                message.setOnSendCompleteCallback(new BasicCallback() {
+                                                    @Override
+                                                    public void gotResult(int responseCode, String responseDesc) {
+                                                        Log.i(TAG, "gotResult: " + responseDesc + responseCode);
+                                                        if (responseCode == 0) {
+                                                            shopServiceConversationAdapter.addData(ConversationEntity.client(message));
+                                                            //消息发送成功
+                                                            msgRecycleView.scrollToPosition(shopServiceConversationAdapter.getItemCount() - 1);
+                                                            Log.i(TAG, "gotResult: 发送成功");
+                                                            etInput.setText("");
+                                                        } else {
+                                                            Log.i(TAG, "gotResult: 消息发送失败");
+                                                            //消息发送失败
+                                                        }
+
+                                                    }
+                                                });
                                             }
-                                        });
+                                        }
 
                                     }
 
@@ -303,32 +321,34 @@ public class ShopServiceConversationActivity extends BaseActivity<GoodsDetailCon
                             }
                         });
                     }
-                    final Conversation singleConversation = Conversation.createSingleConversation(getIntent().getStringExtra("username"));
                     tvSend.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             if (NoFastClickUtils.isFastClick()) {
                                 ToastUtils.show("不要发送太快哦！");
                             } else {
-                                final Message message = singleConversation1.createSendMessage(new TextContent(etInput.getText().toString()));
-                                JMessageClient.sendMessage(message);
-                                Log.i(TAG, "onClick: ");
-                                message.setOnSendCompleteCallback(new BasicCallback() {
-                                    @Override
-                                    public void gotResult(int responseCode, String responseDesc) {
-                                        Log.i(TAG, "gotResult: " + responseDesc + responseCode);
-                                        if (responseCode == 0) {
-                                            shopServiceConversationAdapter.addData(ConversationEntity.client(message));
-                                            //消息发送成功
-                                            msgRecycleView.scrollToPosition(shopServiceConversationAdapter.getItemCount() - 1);
-                                            Log.i(TAG, "gotResult: 发送成功");
-                                        } else {
-                                            Log.i(TAG, "gotResult: 消息发送失败");
-                                            //消息发送失败
+                                if (singleConversation1 != null) {
+                                    final Message message = singleConversation1.createSendMessage(new TextContent(etInput.getText().toString()), "3a23b8ad0545565bb6d71ecc");
+                                    JMessageClient.sendMessage(message);
+                                    Log.i(TAG, "onClick: ");
+                                    message.setOnSendCompleteCallback(new BasicCallback() {
+                                        @Override
+                                        public void gotResult(int responseCode, String responseDesc) {
+                                            Log.i(TAG, "gotResult: " + responseDesc + responseCode);
+                                            if (responseCode == 0) {
+                                                shopServiceConversationAdapter.addData(ConversationEntity.client(message));
+                                                //消息发送成功
+                                                msgRecycleView.scrollToPosition(shopServiceConversationAdapter.getItemCount() - 1);
+                                                Log.i(TAG, "gotResult: 发送成功");
+                                            } else {
+                                                Log.i(TAG, "gotResult: 消息发送失败");
+                                                //消息发送失败
+                                            }
+                                            etInput.setText("");
                                         }
-                                        etInput.setText("");
-                                    }
-                                });
+                                    });
+
+                                }
 
                             }
                         }

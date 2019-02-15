@@ -29,6 +29,7 @@ public class PermissionRequestActivity extends AppCompatActivity {
         rxPermissions.requestEachCombined(Manifest.permission.READ_EXTERNAL_STORAGE,
                 Manifest.permission.READ_EXTERNAL_STORAGE,
                 Manifest.permission.CAMERA,
+                Manifest.permission.ACCESS_FINE_LOCATION,
                 Manifest.permission.CALL_PHONE,
                 Manifest.permission.READ_PHONE_STATE)
                 .subscribe(new Observer<Permission>() {

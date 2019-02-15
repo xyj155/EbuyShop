@@ -502,21 +502,11 @@
                     </LinearLayout>
                 </android.support.v4.widget.NestedScrollView>
 
-                <LinearLayout
+                <com.example.commonlib.view.WebViewMod
+                    android:id="@+id/webView"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/dp_85" />
-
-                    <com.example.commonlib.view.WebViewMod
-                        android:id="@+id/webView"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:padding="@dimen/dp_0" />
-                </LinearLayout>
+                    android:layout_height="match_parent"
+                    android:padding="@dimen/dp_0" />
 
             </com.example.commonlib.view.SlideDetailsLayout>
         </RelativeLayout>

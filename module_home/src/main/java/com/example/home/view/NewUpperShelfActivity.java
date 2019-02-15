@@ -172,7 +172,7 @@ public class NewUpperShelfActivity extends BaseActivity<NewUpperShelfContract.Vi
     @Override
     public void loadDateList(NewestShelfGson timeBeans) {
 
-        for (int i = 0; i < timeBeans.getTime().size(); i++) {
+        for (int i = timeBeans.getTime().size()-1; i >0 ; i--) {
             titleList.add(timeBeans.getTime().get(i));
             Log.i(TAG, "loadDateList: "+timeBeans.getTime().get(i).getDate());
             NewestFragment newestFragment = new NewestFragment();

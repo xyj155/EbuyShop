@@ -134,7 +134,7 @@ public class GoodsPaymentActivity extends BaseActivity<OrderDetailContract.View,
     public void loadOrderDetail(OrderDetailGson orderDetailGson) {
         Log.i(TAG, "loadOrderDetail: " + orderDetailGson.getGoods().size());
         orderDetailGoodsAdapter.replaceData(orderDetailGson.getGoods());
-
+        addressId= String.valueOf(orderDetailGson.getUserAddress().getId());
         if (orderDetailGson.getUserAddress() == null) {
             rlEmptyAddress.setVisibility(View.VISIBLE);
             flAddress.setVisibility(View.GONE);
@@ -217,7 +217,7 @@ public class GoodsPaymentActivity extends BaseActivity<OrderDetailContract.View,
         } else if (id == R.id.tv_pay_type) {
             ARouter.getInstance().build(RouterUtil.USERCOUPON).withDouble("money", money).navigation(GoodsPaymentActivity.this, 0x11);
         } else if (id == R.id.tv_pay) {
-            if (tvAddress.getText().toString().isEmpty()) {
+            if (addressId==null) {
                 ToastUtils.show("你还没有选择地址哦！");
             } else {
                 boolean b = money > 188;
@@ -285,6 +285,7 @@ public class GoodsPaymentActivity extends BaseActivity<OrderDetailContract.View,
 
     @Override
     public void submitStatus(boolean success) {
+
         if (success) {
             ToastUtils.show("支付成功！");
         } else {

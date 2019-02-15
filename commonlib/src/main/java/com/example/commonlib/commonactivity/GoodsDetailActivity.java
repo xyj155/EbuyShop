@@ -2,7 +2,9 @@ package com.example.commonlib.commonactivity;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -16,6 +18,8 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.CheckBox;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -113,7 +117,6 @@ public class GoodsDetailActivity extends BaseActivity<GoodsDetailContract.View, 
     TextView tvTitle;
     @BindView(R2.id.ll_title)
     FrameLayout llTitle;
-    @BindView(R2.id.webView)
     WebViewMod webView;
     @BindView(R2.id.tv_service)
     TextView tvService;
@@ -230,6 +233,7 @@ public class GoodsDetailActivity extends BaseActivity<GoodsDetailContract.View, 
     @Override
     public void initView() {
         ButterKnife.bind(this);
+        webView = findViewById(R.id.webView);
         ViewTreeObserver viewTreeObserver = bannerGoods.getViewTreeObserver();
         viewTreeObserver.addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
             @Override
@@ -281,22 +285,26 @@ public class GoodsDetailActivity extends BaseActivity<GoodsDetailContract.View, 
             DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             Date d1 = null;
             try {
-                d1 = df.parse(getIntent().getStringExtra("endTime"));
+                String endTime = getIntent().getStringExtra("endTime");
+                if (endTime != null) {
+                    d1 = df.parse(endTime);
 
-                Date d2 = new Date(System.currentTimeMillis());
+                    Date d2 = new Date(System.currentTimeMillis());
 //                Date d2 = df.parse(getIntent().getStringExtra("time"));
-                Log.i(TAG, "initView:endTime " + getIntent().getStringExtra("endTime"));
-                Log.i(TAG, "initView:time " + df.format(d2));
-                long diff = d1.getTime() - d2.getTime();//这样得到的差值是微秒级别
-                long days = diff / (1000 * 60 * 60 * 24);
-                long hours = (diff - days * (1000 * 60 * 60 * 24)) / (1000 * 60 * 60);
-                long minutes = (diff - days * (1000 * 60 * 60 * 24) - hours * (1000 * 60 * 60)) / (1000 * 60);
-                long second = (diff % (1000 * 60)) / 1000;
-                mDay = days;
-                mHour = hours;
-                mMin = minutes;
-                mSecond = second;
-                startRun();
+                    Log.i(TAG, "initView:endTime " + getIntent().getStringExtra("endTime"));
+                    Log.i(TAG, "initView:time " + df.format(d2));
+                    long diff = d1.getTime() - d2.getTime();//这样得到的差值是微秒级别
+                    long days = diff / (1000 * 60 * 60 * 24);
+                    long hours = (diff - days * (1000 * 60 * 60 * 24)) / (1000 * 60 * 60);
+                    long minutes = (diff - days * (1000 * 60 * 60 * 24) - hours * (1000 * 60 * 60)) / (1000 * 60);
+                    long second = (diff % (1000 * 60)) / 1000;
+                    mDay = days;
+                    mHour = hours;
+                    mMin = minutes;
+                    mSecond = second;
+                    startRun();
+                }
+
             } catch (ParseException e) {
                 e.printStackTrace();
             }
@@ -380,7 +388,8 @@ public class GoodsDetailActivity extends BaseActivity<GoodsDetailContract.View, 
         }
     }
 
-//    private String imToken;
+    private String imToken;
+    private String shopName;
 
     @Override
     public void loadGoodsDetail(final GoodsDetailGson goodsGson) {
@@ -389,7 +398,11 @@ public class GoodsDetailActivity extends BaseActivity<GoodsDetailContract.View, 
         } else {
             cbCollection.setChecked(false);
         }
-//        imToken = goodsGson.getImId();
+        if (goodsGson.getToken() != null) {
+            imToken = goodsGson.getToken();
+            shopName = goodsGson.getShopName();
+        }
+
         tvCount.setText("销量：" + goodsGson.getOrderNum());
         tvCommentCount.setText("( " + goodsGson.getComment() + " )");
         tvBannerSize.setText("1/" + goodsGson.getGoodsPicUrl().size());
@@ -466,20 +479,46 @@ public class GoodsDetailActivity extends BaseActivity<GoodsDetailContract.View, 
 
     private void initWebView() {
         Log.i(TAG, "loadGoodsDetail: " + RetrofitUtils.BASE_URL + "/StuShop/public/index.php/index/index/goodsDetail?id=" + getIntent().getStringExtra("goodsId"));
-        webView.loadUrl(RetrofitUtils.BASE_URL + "/StuShop/public/index.php/index/index/goodsDetail?id=" + getIntent().getStringExtra("goodsId"));
-        webView.setFocusable(false);
+
+
         WebSettings webSettings = webView.getSettings();
+
+        webSettings.setAppCacheEnabled(true);
+        webSettings.setDatabaseEnabled(true);
+        webSettings.setDomStorageEnabled(true);//开启DOM缓存，关闭的话H5自身的一些操作是无效的
+        webSettings.setCacheMode(WebSettings.LOAD_DEFAULT);
         webSettings.setLoadWithOverviewMode(true);
         webSettings.setJavaScriptEnabled(true);//启用js
-        webSettings.setBlockNetworkImage(false);//解决图片不显示
         webSettings.setLoadsImagesAutomatically(true);
         webSettings.setRenderPriority(WebSettings.RenderPriority.HIGH);
         webSettings.setUseWideViewPort(true);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+            webView.getSettings().setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
+        webView.getSettings().setBlockNetworkImage(false);//解决图片不显示
         webSettings.setBuiltInZoomControls(false);
         webView.setHorizontalScrollBarEnabled(false);//禁止水平滚动
         webView.setVerticalScrollBarEnabled(true);//允许垂直滚动
         // 设置WebView属性，能够执行JavaScript脚本
         webView.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
+        webView.loadUrl(RetrofitUtils.BASE_URL + "/StuShop/public/index.php/index/index/goodsDetail?id=" + getIntent().getStringExtra("goodsId"));
+        webView.setFocusable(false);
+        webView.setWebViewClient(new WebViewClient() {
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                super.onPageFinished(view, url);
+                Log.i(TAG, "onPageFinished: " + url);
+                if (view.getContentHeight() == 0) {
+                    view.loadUrl(url);
+                }
+
+            }
+
+            @Override
+            public void onPageStarted(WebView view, String url, Bitmap favicon) {
+                super.onPageStarted(view, url, favicon);
+                Log.i(TAG, "onPageStarted: " + url);
+            }
+        });
     }
 
     @Override
@@ -532,7 +571,7 @@ public class GoodsDetailActivity extends BaseActivity<GoodsDetailContract.View, 
 
     private GoodsDetailPresenter submitOrderPresenter = new GoodsDetailPresenter(this);
 
-    @OnClick({R2.id.tv_service,R2.id.tv_shopcar, R2.id.tv_add, R2.id.tv_buy, R2.id.iv_close, R2.id.ll_comment})
+    @OnClick({R2.id.tv_service, R2.id.tv_shopcar, R2.id.tv_add, R2.id.tv_buy, R2.id.iv_close, R2.id.ll_comment})
     public void onViewClicked(View view) {
         int id = view.getId();
         if (id == R.id.tv_add) {
@@ -561,9 +600,12 @@ public class GoodsDetailActivity extends BaseActivity<GoodsDetailContract.View, 
         } else if (id == R.id.tv_shopcar) {
 
         } else if (id == R.id.tv_service) {
-//            Intent intent = new Intent(GoodsDetailActivity.this, ShopServiceConversationActivity.class);
-//            intent.putExtra("shopToken", imToken);
-//            startActivity(intent);
+            if (!imToken.isEmpty()) {
+                Intent intent = new Intent(GoodsDetailActivity.this, ShopServiceConversationActivity.class);
+                intent.putExtra("username", imToken);
+                intent.putExtra("shopName", shopName);
+                startActivity(intent);
+            }
         }
     }
 

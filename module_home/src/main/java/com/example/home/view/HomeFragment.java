@@ -26,7 +26,12 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.amap.api.location.AMapLocation;
+import com.amap.api.location.AMapLocationClient;
+import com.amap.api.location.AMapLocationClientOption;
+import com.amap.api.location.AMapLocationListener;
 import com.bumptech.glide.Glide;
+import com.example.commonlib.MyApp;
 import com.example.commonlib.annotation.UserType;
 import com.example.commonlib.base.BaseFragment;
 import com.example.commonlib.commonactivity.BrowserActivity;
@@ -37,6 +42,7 @@ import com.example.commonlib.gson.HotPurseActivityGson;
 import com.example.commonlib.gson.MarQueenGson;
 import com.example.commonlib.gson.TimeGoodsGson;
 import com.example.commonlib.loader.BannerViewHolder;
+import com.example.commonlib.util.GlideUtil;
 import com.example.commonlib.util.RouterUtil;
 import com.example.commonlib.util.SharePreferenceUtil;
 import com.example.commonlib.view.ObservableScrollView;
@@ -94,6 +100,8 @@ public class HomeFragment extends BaseFragment<HomePagePresenter> implements Hom
     TextView tvTime;
     @BindView(R2.id.tvSearch)
     TextView tvSearch;
+    @BindView(R2.id.iv_location)
+    ImageView ivLocation;
     private MZBannerView<BannerGson> banner;
     private PurseGoodsAdapter purseGoodsAdapter;
     private RecyclerView ryPurse, ryTimerPurse, ryHot;
@@ -102,7 +110,7 @@ public class HomeFragment extends BaseFragment<HomePagePresenter> implements Hom
     private int mHeight;
     private LinearLayout llTitle;
     @BindView(R2.id.ivKind)
-    ImageView ivKind;
+    TextView tvLocation;
     @BindView(R2.id.ll_flash_time)
     LinearLayout llFlashTime;
     private ImageView ivShopCar, ivBanner;
@@ -110,10 +118,44 @@ public class HomeFragment extends BaseFragment<HomePagePresenter> implements Hom
     private HomeGoodsTimerPurseAdapter homeGoodsTimerPurseAdapter;
     private HomeHotGoodsActivityAdapter homeHotGoodsItemAdapter;
     private List<BannerGson> bannerGsons = new ArrayList<>();
+    //声明AMapLocationClient类对象
+    public AMapLocationClient mLocationClient = null;
+    //声明AMapLocationClientOption对象
+    public AMapLocationClientOption mLocationOption = null;
+//初始化AMapLocationClientOption对象
+
+    //声明定位回调监听器
+    public AMapLocationListener mLocationListener = new AMapLocationListener() {
+        @Override
+        public void onLocationChanged(AMapLocation amapLocation) {
+            if (amapLocation != null) {
+                if (amapLocation.getErrorCode() == 0) {
+                    tvLocation.setText(amapLocation.getCity());
+//可在其中解析amapLocation获取相应内容。
+                    Log.i(TAG, "onLocationChanged: " + amapLocation.getCity());//城市信息);
+                } else {
+                    tvLocation.setText("定位失败");
+                    //定位失败时，可通过ErrCode（错误码）信息来确定失败的原因，errInfo是错误信息，详见错误码表。
+                    Log.e("AmapError", "location Error, ErrCode:"
+                            + amapLocation.getErrorCode() + ", errInfo:"
+                            + amapLocation.getErrorInfo());
+                }
+            }
+        }
+    };
 
     @Override
     public void initData() {
-
+//初始化定位
+        mLocationClient = new AMapLocationClient(MyApp.getInstance());
+//设置定位回调监听
+        mLocationClient.setLocationListener(mLocationListener);
+        mLocationOption = new AMapLocationClientOption();
+        mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);
+        mLocationOption.setOnceLocation(true);
+        mLocationOption.setNeedAddress(true);
+        mLocationClient.setLocationOption(mLocationOption);
+        mLocationClient.startLocation();
     }
 
 
@@ -136,7 +178,7 @@ public class HomeFragment extends BaseFragment<HomePagePresenter> implements Hom
         ryPurse = view.findViewById(R.id.ryPurse);
         slHome = view.findViewById(R.id.slHome);
         llTitle = view.findViewById(R.id.llTitle);
-        ivKind = view.findViewById(R.id.ivKind);
+        tvLocation = view.findViewById(R.id.ivKind);
         ivShopCar = view.findViewById(R.id.ivShopCar);
         marqueeView = view.findViewById(R.id.marqueeView);
         homeHotGoodsItemAdapter = new HomeHotGoodsActivityAdapter(null, getContext());
@@ -163,27 +205,28 @@ public class HomeFragment extends BaseFragment<HomePagePresenter> implements Hom
                     public void onObservableScrollViewListener(int l, int t, int oldl, int oldt) {
                         Log.i(TAG, "onObservableScrollViewListener: " + t);
                         if (t <= 0) {
-                            //顶部图处于最顶部，标题栏透明
                             llTitle.setBackgroundColor(Color.argb(0, 255, 255, 255));
-                            Glide.with(getContext()).asBitmap().load(R.drawable.icon_logo).into(ivKind);
-                            Glide.with(getContext()).asBitmap().load(R.mipmap.home_shopcar).into(ivShopCar);
+                            tvLocation.setTextColor(Color.argb(255, 255, 255, 255));
+                            GlideUtil.loadGeneralImage(R.mipmap.icon_home_location, ivLocation);
+                            GlideUtil.loadGeneralImage(R.mipmap.home_shopcar, ivShopCar);
                             tvSearch.setBackgroundResource(R.drawable.home_search_bg);
                             llTitle.setVisibility(View.VISIBLE);
-                        } else if (t > 0 && t < mHeight) {
+                        } else if (t < mHeight) {
                             //滑动过程中，渐变
                             llTitle.setVisibility(View.VISIBLE);
                             float scale = (float) t / mHeight;//算出滑动距离比例
                             float alpha = (255 * scale);//得到透明度
                             llTitle.setBackgroundColor(Color.argb((int) alpha, 255, 255, 255));
-                            Glide.with(getContext()).asBitmap().load(R.drawable.icon_logo).into(ivKind);
-                            Glide.with(getContext()).asBitmap().load(R.mipmap.home_shopcar_red).into(ivShopCar);
+                            tvLocation.setTextColor(Color.argb((int) alpha, 0, 0, 0));
+                            GlideUtil.loadGeneralImage(R.mipmap.icon_home_location_black, ivLocation);
+                            GlideUtil.loadGeneralImage(R.mipmap.home_shopcar_red, ivShopCar);
                         } else {
-                            //过顶部图区域，标题栏定色
                             llTitle.setVisibility(View.VISIBLE);
                             llTitle.setBackgroundColor(Color.argb(255, 255, 255, 255));
+                            tvLocation.setTextColor(Color.argb(255, 0, 0, 0));
                             tvSearch.setBackgroundResource(R.drawable.home_search_bg_dark);
-                            Glide.with(getContext()).asBitmap().load(R.drawable.icon_logo).into(ivKind);
-                            Glide.with(getContext()).asBitmap().load(R.mipmap.home_shopcar_red).into(ivShopCar);
+                            GlideUtil.loadGeneralImage(R.mipmap.icon_home_location_black, ivLocation);
+                            GlideUtil.loadGeneralImage(R.mipmap.home_shopcar_red, ivShopCar);
                         }
 
                     }
@@ -303,6 +346,8 @@ public class HomeFragment extends BaseFragment<HomePagePresenter> implements Hom
     public void onStop() {
         super.onStop();
         marqueeView.stopFlipping();
+        mLocationClient.stopLocation();//停止定位后，本地定位服务并不会被销毁
+        mLocationClient.onDestroy();//销毁定位客户端，同时销毁本地定位服务。
     }
 
     @Override
@@ -414,7 +459,7 @@ public class HomeFragment extends BaseFragment<HomePagePresenter> implements Hom
     private long mDay = 10;
     private long mHour = 10;
     private long mMin = 30;
-    private long mSecond = 00;
+    private long mSecond = 0;
     private boolean isRun = true;
 
     @Override
@@ -448,10 +493,8 @@ public class HomeFragment extends BaseFragment<HomePagePresenter> implements Hom
             super.handleMessage(msg);
             if (msg.what == 1) {
                 computeTime();
-                tvTime.setText(" " + (mHour < 10 ? "0" + mHour : mHour) + "   " + (mMin < 10 ? "0" + mMin : mMin) + "   " + mSecond);
-                if (mDay == 0 && mHour == 0 && mMin == 0 && mSecond == 0) {
-
-                }
+                if (tvTime != null)
+                    tvTime.setText(" " + (mHour < 10 ? "0" + mHour : mHour) + "   " + (mMin < 10 ? "0" + mMin : mMin) + "   " + mSecond);
             }
         }
     };

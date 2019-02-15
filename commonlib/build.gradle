@@ -138,6 +138,7 @@ dependencies {
     api rootProject.ext.dependencies["jmessage"]
     api rootProject.ext.dependencies["jpush"]
     api rootProject.ext.dependencies["jcore"]
+    api 'com.amap.api:location:3.3.0'
     api project(':pictureSelector')
     api project(':adlibrary')
 }

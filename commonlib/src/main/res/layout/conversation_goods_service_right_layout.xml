@@ -11,7 +11,7 @@
         android:layout_height="@dimen/dp_45"
         android:layout_margin="@dimen/dp_8"
         android:id="@+id/iv_avatar"
-        android:src="@mipmap/ic_user_avatar_bg" />
+        android:src="@mipmap/app_icon" />
 
     <com.ruochuan.bubblelayout.BubbleLayout
         android:id="@+id/tv_send"
