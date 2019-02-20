@@ -1,20 +1,15 @@
 package com.example.commonlib;
 
 import android.app.Application;
-import android.content.Context;
 import android.content.Intent;
 import android.support.multidex.MultiDexApplication;
 import android.util.DisplayMetrics;
 import android.util.Log;
-import android.widget.ImageView;
 
-import com.bumptech.glide.Glide;
 import com.example.commonlib.commonactivity.ShopServiceConversationActivity;
 import com.example.commonlib.util.ApplicationInitial;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.uuch.adlibrary.utils.DisplayUtil;
-import com.yuyh.library.imgsel.ISNav;
-import com.yuyh.library.imgsel.common.ImageLoader;
 
 import cn.jpush.im.android.api.JMessageClient;
 import cn.jpush.im.android.api.event.MessageEvent;
@@ -31,18 +26,13 @@ public class MyApp extends MultiDexApplication {
     public void onCreate() {
         super.onCreate();
         instance = this;
-        JMessageClient.registerEventReceiver(this);
-        JMessageClient.setDebugMode(true);
-        JMessageClient.init(MyApp.getInstance(), true);
-        ISNav.getInstance().init(new ImageLoader() {
-            @Override
-            public void displayImage(Context context, String path, ImageView imageView) {
-                Glide.with(context).load(path).into(imageView);
-            }
-        });
+
+
+
         ApplicationInitial applicationInitial = new ApplicationInitial();
         applicationInitial
                 .initArouter()
+                .initialGlide()
                 .initBuygly()
                 .initEpay()
                 .initGT()
@@ -55,6 +45,7 @@ public class MyApp extends MultiDexApplication {
 
         initDisplayOpinion();
         Fresco.initialize(this);
+        JMessageClient.registerEventReceiver(this);
     }
 
     private void initDisplayOpinion() {

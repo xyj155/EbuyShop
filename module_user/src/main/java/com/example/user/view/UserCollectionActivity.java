@@ -62,7 +62,7 @@ public class UserCollectionActivity extends BaseActivity<UserCollectionContract.
         });
         ryCollection.setAdapter(userCollectionAdapter);
         View inflate = View.inflate(UserCollectionActivity.this, R.layout.collection_empty_layout, null);
-        GlideUtil.loadGeneralImage(R.drawable.ic_empty_collection, (ImageView) inflate.findViewById(R.id.iv_empty));
+        GlideUtil.loadGeneralImage(R.drawable.live_pack_empty_ic, (ImageView) inflate.findViewById(R.id.iv_empty));
         userCollectionAdapter.setEmptyView(inflate);
 
     }

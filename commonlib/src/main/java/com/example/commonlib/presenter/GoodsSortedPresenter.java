@@ -20,11 +20,20 @@ public class GoodsSortedPresenter extends BasePresenter<GoodsSortedContract.View
     }
 
     private static final String TAG = "GoodsSortedPresenter";
+
     @Override
-    public void getGoodsListByKind(String kind,String type,String isasc) {
+    public void getGoodsListByKind(String kind, String type, String isacs, String date,
+                                   String minumMoney,
+                                   String maxiumMoney) {
+        Log.i(TAG, "getGoodsListByKind:kind "+kind);
+        Log.i(TAG, "getGoodsListByKind: type"+type);
+        Log.i(TAG, "getGoodsListByKind: isacs"+isacs);
+        Log.i(TAG, "getGoodsListByKind:date "+date);
+        Log.i(TAG, "getGoodsListByKind: minumMoney"+minumMoney);
+        Log.i(TAG, "getGoodsListByKind: maxiumMoney"+maxiumMoney);
         mMvpView.showDialog("加载中");
-        Log.i(TAG, "getGoodsListByKind: "+kind+type+isasc);
-        sortedModel.getGoodsListByKind(kind,type,isasc)
+        sortedModel.getGoodsListByKind(kind, type, isacs, date
+                , minumMoney, maxiumMoney)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<BaseGson<GoodsGson>>() {

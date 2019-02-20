@@ -1,7 +1,6 @@
 package com.example.commonlib.view;
 
 import android.app.Dialog;
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -21,6 +20,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.example.commonlib.R;
+import com.example.commonlib.commonactivity.GoodsDetailActivity;
 import com.example.commonlib.contract.GoodsStyleContract;
 import com.example.commonlib.gson.GoodsStyleGson;
 import com.example.commonlib.presenter.GoodsStylePresenter;
@@ -37,7 +37,7 @@ public class ShopChooseDialog extends Dialog implements GoodsStyleContract.View,
     TextView tvSubmit;
     RecyclerView ryStyleList;
     //在构造方法里提前加载了样式
-    private Context context;//上下文
+    private GoodsDetailActivity context;//上下文
     private String goodsId;
     public GoodsStylePresenter goodsStylePresenter = new GoodsStylePresenter(this);
     private GoodsStyleAdapter goodsStyleAdapter = new GoodsStyleAdapter(null);
@@ -47,7 +47,7 @@ public class ShopChooseDialog extends Dialog implements GoodsStyleContract.View,
     private ImageView ivMinum, tvAdd;
     private List<GoodsStyleGson> goodsGson;
 
-    public ShopChooseDialog(Context context, String goodsId, boolean isBuy, List<GoodsStyleGson> goodsGson) {
+    public ShopChooseDialog(GoodsDetailActivity context, String goodsId, boolean isBuy, List<GoodsStyleGson> goodsGson) {
         super(context, R.style.BottomDialogStyle);//加载dialog的样式
         this.context = context;
         this.goodsId = goodsId;
@@ -193,6 +193,15 @@ public class ShopChooseDialog extends Dialog implements GoodsStyleContract.View,
     @Override
     public void addGoodsInShopCar(boolean isSuccess) {
         if (isSuccess) {
+            TextView tvShopcar = context.tvShopcar;
+            if (tvShopcar!=null){
+                String text = tvShopcar.getText().toString();
+                int i = Integer.valueOf(text) + 1;
+                Log.i(TAG, "addGoodsInShopCar: "+i);
+                tvShopcar.setText(i+"");
+            }
+
+
             ToastUtils.show("添加成功");
         } else {
             ToastUtils.show("添加失败");

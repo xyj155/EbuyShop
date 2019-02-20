@@ -97,7 +97,14 @@ public interface Api {
     Observable<BaseGson<GoodsShareGson>> getGoodsShareList(@Query("type") String type, @Query("page") String page);
 
     @GET("/StuShop/public/index.php/index/Goods/getGoodsListByKind")
-    Observable<BaseGson<GoodsGson>> getGoodsListByKind(@Query("kind") String kind, @Query("type") String type, @Query("isasc") String isasc);
+    Observable<BaseGson<GoodsGson>> getGoodsListByKind(
+            @Query("kind") String kind,
+            @Query("type") String type,
+            @Query("isasc") String isasc,
+            @Query("date") String date,
+            @Query("minumMoney") String minumMoney,
+            @Query("maxiumMoney") String maxiumMoney
+            );
 
 
     @GET("/StuShop/public/index.php/index/Banner/getMarqueenList")

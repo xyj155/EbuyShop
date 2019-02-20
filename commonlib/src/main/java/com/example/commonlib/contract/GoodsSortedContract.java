@@ -10,7 +10,9 @@ import rx.Observable;
 
 public interface GoodsSortedContract {
     interface Model {
-        Observable<BaseGson<GoodsGson>> getGoodsListByKind(String kind,String type,String isacs);
+        Observable<BaseGson<GoodsGson>> getGoodsListByKind(String kind, String type, String isacs, String date,
+                                                           String minumMoney,
+                                                           String maxiumMoney);
     }
 
     interface View extends BaseView {
@@ -18,6 +20,8 @@ public interface GoodsSortedContract {
     }
 
     interface Presenter {
-        void getGoodsListByKind(String kind,String type,String isacs);
+        void getGoodsListByKind(String kind, String type, String isacs, String date,
+                                String minumMoney,
+                                String maxiumMoney);
     }
 }

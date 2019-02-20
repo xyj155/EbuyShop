@@ -126,7 +126,7 @@ public class GoodsDetailActivity extends BaseActivity<GoodsDetailContract.View, 
     @BindView(R2.id.cb_collection)
     CheckBox cbCollection;
     @BindView(R2.id.tv_shopcar)
-    TextView tvShopcar;
+    public TextView tvShopcar;
     @BindView(R2.id.tv_time)
     TextView tvTime;
     @BindView(R2.id.rl_timer)
@@ -312,6 +312,7 @@ public class GoodsDetailActivity extends BaseActivity<GoodsDetailContract.View, 
                 e.printStackTrace();
             }
         }
+
     }
 
     @Override
@@ -396,6 +397,7 @@ public class GoodsDetailActivity extends BaseActivity<GoodsDetailContract.View, 
 
     @Override
     public void loadGoodsDetail(final GoodsDetailGson goodsGson) {
+        tvShopcar.setText(goodsGson.getShopCount() + "");
         if (goodsGson.isCollection()) {
             cbCollection.setChecked(true);
         } else {
@@ -585,9 +587,6 @@ public class GoodsDetailActivity extends BaseActivity<GoodsDetailContract.View, 
             GoodsStylePresenter goodsStylePresenter = new GoodsStylePresenter(this);
             goodsStylePresenter.queryGoodsStyle(getIntent().getStringExtra("goodsId"));
             isBuy = true;
-
-
-
         } else if (id == R.id.iv_close) {
             finish();
         } else if (id == R.id.ll_current_goods) {
@@ -638,20 +637,6 @@ public class GoodsDetailActivity extends BaseActivity<GoodsDetailContract.View, 
                     submitOrderPresenter.insertUserOrder((String) SharePreferenceUtil.getUser("uid", "String"), gson.toJson(goodsIdList));
                 }
             });
-//            shopChooseDialogBuy.setOnShowGoodsListener(new ShopChooseDialog.OnShowGodosListener() {
-//                @Override
-//                public void onShow() {
-//                    Log.i(TAG, "onShow: ");
-//                    shopChooseDialogChoose.show();
-//
-//                }
-//
-//                @Override
-//                public void onNoGoods() {
-//                    Log.i(TAG, "onNoGoods: ");
-//                    ToastUtils.show("这件商品没有存货了哦！");
-//                }
-//            });
         }
 
     }

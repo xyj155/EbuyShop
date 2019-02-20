@@ -11,6 +11,7 @@ import android.transition.Explode;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
@@ -37,6 +38,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnCheckedChanged;
 import butterknife.OnClick;
 
 @Route(path = RouterUtil.GOODSSORTED)
@@ -115,7 +117,7 @@ public class GoodsListSortedActivity extends BaseActivity<GoodsSortedContract.Vi
         StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
         rySorted.setLayoutManager(staggeredGridLayoutManager);
         rySorted.setItemAnimator(new DefaultItemAnimator());
-        mPresenter.getGoodsListByKind(getIntent().getStringExtra("kind"), sortedType, isSetDesc);
+        mPresenter.getGoodsListByKind(getIntent().getStringExtra("kind"), sortedType, isSetDesc, "9999", "0", "999999");
         Log.i(TAG, "initView: " + getIntent().getStringExtra("kind"));
         goodsSortedAdapter = new GoodsSortedAdapter(GoodsListSortedActivity.this, null);
         View inflate = View.inflate(GoodsListSortedActivity.this, R.layout.common_empty, null);
@@ -127,7 +129,7 @@ public class GoodsListSortedActivity extends BaseActivity<GoodsSortedContract.Vi
             @Override
             public void onRefresh(RefreshLayout refreshLayout) {
                 Log.i(TAG, "onRefresh: sortedType=" + sortedType + "+++++++++isSetDesc=" + isSetDesc);
-                mPresenter.getGoodsListByKind(getIntent().getStringExtra("kind"), sortedType, isSetDesc);
+                mPresenter.getGoodsListByKind(getIntent().getStringExtra("kind"), sortedType, isSetDesc, "9999", "0", "999999");
             }
         });
     }
@@ -143,13 +145,14 @@ public class GoodsListSortedActivity extends BaseActivity<GoodsSortedContract.Vi
                 sortedType = "2";
                 Log.i(TAG, "onRadioCheck: ");
                 if (isSetHot) {
-                    isSetHot = false;
-                    mPresenter.getGoodsListByKind(getIntent().getStringExtra("kind"), sortedType, isSetDesc);
                     isSetDesc = "1";
+                    isSetHot = false;
+                    mPresenter.getGoodsListByKind(getIntent().getStringExtra("kind"), sortedType, isSetDesc, "9999", "0", "999999");
                 } else {
-                    isSetHot = true;
-                    mPresenter.getGoodsListByKind(getIntent().getStringExtra("kind"), sortedType, isSetDesc);
                     isSetDesc = "0";
+                    isSetHot = true;
+                    mPresenter.getGoodsListByKind(getIntent().getStringExtra("kind"), sortedType, isSetDesc, "9999", "0", "999999");
+
                 }
             }
         });
@@ -161,12 +164,14 @@ public class GoodsListSortedActivity extends BaseActivity<GoodsSortedContract.Vi
                 sortedType = "1";
                 if (isSetNews) {
                     isSetNews = false;
-                    mPresenter.getGoodsListByKind(getIntent().getStringExtra("kind"), sortedType, isSetDesc);
                     isSetDesc = "1";
+                    mPresenter.getGoodsListByKind(getIntent().getStringExtra("kind"), sortedType, isSetDesc, "9999", "0", "999999");
+
                 } else {
                     isSetNews = true;
-                    mPresenter.getGoodsListByKind(getIntent().getStringExtra("kind"), sortedType, isSetDesc);
                     isSetDesc = "0";
+                    mPresenter.getGoodsListByKind(getIntent().getStringExtra("kind"), sortedType, isSetDesc, "9999", "0", "999999");
+
                 }
             }
         });
@@ -176,14 +181,16 @@ public class GoodsListSortedActivity extends BaseActivity<GoodsSortedContract.Vi
                 sortedType = "3";
                 if (isSetPrice) {
                     isSetPrice = false;
-                    Glide.with(GoodsListSortedActivity.this).asBitmap().load(R.mipmap.mall_category_goods_price_ascend).into(ivPriceSorted);
-                    mPresenter.getGoodsListByKind(getIntent().getStringExtra("kind"), sortedType, isSetDesc);
                     isSetDesc = "0";
+                    Glide.with(GoodsListSortedActivity.this).asBitmap().load(R.mipmap.mall_category_goods_price_ascend).into(ivPriceSorted);
+                    mPresenter.getGoodsListByKind(getIntent().getStringExtra("kind"), sortedType, isSetDesc, "9999", "0", "999999");
+
                 } else {
                     isSetPrice = true;
-                    Glide.with(GoodsListSortedActivity.this).asBitmap().load(R.mipmap.mall_categroy_goods_price_descend).into(ivPriceSorted);
-                    mPresenter.getGoodsListByKind(getIntent().getStringExtra("kind"), sortedType, isSetDesc);
                     isSetDesc = "1";
+                    Glide.with(GoodsListSortedActivity.this).asBitmap().load(R.mipmap.mall_categroy_goods_price_descend).into(ivPriceSorted);
+                    mPresenter.getGoodsListByKind(getIntent().getStringExtra("kind"), sortedType, isSetDesc, "9999", "0", "999999");
+
                 }
             }
         });
@@ -228,15 +235,34 @@ public class GoodsListSortedActivity extends BaseActivity<GoodsSortedContract.Vi
                 activityMain.openDrawer(Gravity.RIGHT);
             }
         } else if (i == R.id.tv_reset) {
-
+            etMaxium.setText("");
+            etMinum.setText("");
+            rgDay.clearCheck();
+            mPresenter.getGoodsListByKind(getIntent().getStringExtra("kind"), sortedType, isSetDesc, "9999", "0", "999999");
+            if (activityMain != null) {
+                activityMain.closeDrawer(Gravity.RIGHT);
+            }
         } else if (i == R.id.tv_submit) {
-
+            if (activityMain != null) {
+                activityMain.closeDrawer(Gravity.RIGHT);
+            }
+            mPresenter.getGoodsListByKind(getIntent().getStringExtra("kind"), sortedType, isSetDesc, String.valueOf(dateTime), etMinum.getText().toString().isEmpty()?"0":etMinum.getText().toString(), etMaxium.getText().toString().isEmpty()?"999999":etMaxium.getText().toString());
         }
     }
 
-    @OnClick({})
-    public void onViewClicked() {
+    private int dateTime;
 
+    @OnCheckedChanged({R2.id.rb_seven_day, R2.id.rb_seven_fifth, R2.id.rb_seven_thirty})
+    public void onRadioCheck(CompoundButton view, boolean ischanged) {
+        int id = view.getId();
+        if (id == R.id.rb_seven_day) {
+            dateTime = 7;
+        } else if (id == R.id.rb_seven_fifth) {
+            dateTime = 15;
+        } else if (id == R.id.rb_seven_thirty) {
+            dateTime = 30;
+        }
 
     }
+
 }

@@ -9,7 +9,11 @@ import rx.Observable;
 
 public class GoodsSortedModel implements GoodsSortedContract.Model {
     @Override
-    public Observable<BaseGson<GoodsGson>> getGoodsListByKind(String kind,String type,String isacs) {
-        return RetrofitUtils.getInstance().create().getGoodsListByKind(kind,type,isacs);
+    public Observable<BaseGson<GoodsGson>> getGoodsListByKind(String kind, String type, String isacs, String date,
+                                                              String minumMoney,
+                                                              String maxiumMoney) {
+        return RetrofitUtils.getInstance().create().getGoodsListByKind(kind, type, isacs, date,
+                minumMoney,
+                maxiumMoney);
     }
 }

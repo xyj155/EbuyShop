@@ -66,6 +66,7 @@ public class SearchGoodsActivity extends BaseActivity<GoodsSearchContract.View, 
         ryGoods.setLayoutManager(new GridLayoutManager(SearchGoodsActivity.this,2));
         purseGoodsAdapter = new PurseGoodsAdapter(null, SearchGoodsActivity.this);
         ryGoods.setAdapter(purseGoodsAdapter);
+        purseGoodsAdapter.setEmptyView(View.inflate(SearchGoodsActivity.this,R.layout.empty_search_layout,null));
     }
 
     @Override

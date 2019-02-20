@@ -4,9 +4,11 @@ import android.content.Context;
 import android.os.Environment;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.bumptech.glide.Glide;
 import com.example.commonlib.MyApp;
 import com.example.commonlib.R;
 import com.example.commonlib.view.toast.ToastUtils;
@@ -18,6 +20,8 @@ import com.tencent.bugly.beta.Beta;
 import com.tencent.bugly.beta.UpgradeInfo;
 import com.tencent.bugly.beta.ui.UILifecycleListener;
 import com.tencent.smtt.sdk.QbSdk;
+import com.yuyh.library.imgsel.ISNav;
+import com.yuyh.library.imgsel.common.ImageLoader;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -40,6 +44,16 @@ public class ApplicationInitial {
         return this;
     }
 
+    public ApplicationInitial initialGlide() {
+        ISNav.getInstance().init(new ImageLoader() {
+            @Override
+            public void displayImage(Context context, String path, ImageView imageView) {
+                Glide.with(context).load(path).into(imageView);
+            }
+        });
+        return this;
+    }
+
     public ApplicationInitial initMob() {
 //        MobPush.addTags(java.lang.String[] tags);
         MobSDK.init(MyApp.getInstance(), "29cbff9d24b0b", "83fe8985b2647f0041f9cfb3487492d6");
@@ -47,6 +61,8 @@ public class ApplicationInitial {
     }
 
     public ApplicationInitial initJpush() {
+        JMessageClient.setDebugMode(true);
+        JMessageClient.init(MyApp.getInstance(), true);
         CustomPushNotificationBuilder builder = new
                 CustomPushNotificationBuilder(MyApp.getInstance(),
                 R.layout.customer_notitfication_layout,
@@ -128,6 +144,7 @@ public class ApplicationInitial {
     }
 
     private static final String TAG = "ApplicationInitial";
+
     public ApplicationInitial initIMClient() {
         JMessageClient.setDebugMode(true);
         JMessageClient.init(MyApp.getInstance(), true);
