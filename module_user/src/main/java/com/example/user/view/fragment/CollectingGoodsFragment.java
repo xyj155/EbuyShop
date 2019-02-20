@@ -7,12 +7,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.example.commonlib.base.BaseFragment;
 import com.example.commonlib.gson.UserOrderStatusGson;
 import com.example.commonlib.util.SharePreferenceUtil;
 import com.example.commonlib.view.MyDialog;
+import com.example.commonlib.view.toast.ToastUtils;
 import com.example.user.adapter.UserGoodsStatusAdapter;
 import com.example.user.contract.UpdateOrderStatusContract;
 import com.example.user.contract.UserFormStatusContract;
@@ -96,7 +96,7 @@ public class CollectingGoodsFragment extends BaseFragment<UserFormStatusPresente
                             myDialog1.dismiss();
                             Log.i(TAG, "onCenterItemClick: "+orderNum);
                             Log.i(TAG, "onCenterItemClick: "+(String) SharePreferenceUtil.getUser("uid", "String"));
-                            updateOrderStatusPresenter.updateOrderStatusByReceive("1", orderNum);
+                            updateOrderStatusPresenter.updateOrderStatusByReceive((String) SharePreferenceUtil.getUser("uid", "String"), orderNum);
                         }
                     }
                 });
@@ -147,7 +147,7 @@ public class CollectingGoodsFragment extends BaseFragment<UserFormStatusPresente
         if (success) {
             mPresenter.queryUserOrderByStatus((String) SharePreferenceUtil.getUser("uid", "String"), "3");
         }else {
-            Toast.makeText(getContext(), "确认收货失败！", Toast.LENGTH_SHORT).show();
+            ToastUtils.show("确认收货失败！");
         }
     }
 }

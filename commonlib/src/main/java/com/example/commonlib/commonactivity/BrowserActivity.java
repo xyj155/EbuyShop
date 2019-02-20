@@ -2,6 +2,7 @@ package com.example.commonlib.commonactivity;
 
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -9,6 +10,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.webkit.JavascriptInterface;
 import android.widget.ImageView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
@@ -19,6 +21,8 @@ import com.example.commonlib.base.BaseActivity;
 import com.example.commonlib.contract.HomeContract;
 import com.example.commonlib.presenter.LoginPresent;
 import com.example.commonlib.util.RouterUtil;
+import com.example.commonlib.view.MyDialog;
+import com.example.commonlib.view.toast.ToastUtils;
 import com.tencent.smtt.sdk.DownloadListener;
 import com.tencent.smtt.sdk.WebChromeClient;
 import com.tencent.smtt.sdk.WebView;
@@ -82,12 +86,16 @@ public class BrowserActivity extends BaseActivity<HomeContract.View, LoginPresen
                     intent.setData(Uri.parse(url));
                     startActivity(intent);
                     return true;
+                } else if (url.contains("/index/emptyPage")) {
+                    finish();
                 }
                 return false;
             }
         };
         mWebView.setWebViewClient(webViewClient);
         mWebView.setWebChromeClient(new WebChromeClient() {
+
+
             @Override
             public void onProgressChanged(WebView view, int newProgress) {
                 if (newProgress == 100) {
@@ -98,6 +106,7 @@ public class BrowserActivity extends BaseActivity<HomeContract.View, LoginPresen
                 super.onProgressChanged(view, newProgress);
             }
         });
+        mWebView.addJavascriptInterface(new WebInterface(BrowserActivity.this), "test");
         mWebView.setDownloadListener(new DownloadListener() {
             @Override
             public void onDownloadStart(String url, String userAgent, String contentDisposition, String mimeType, long contentLength) {
@@ -110,6 +119,7 @@ public class BrowserActivity extends BaseActivity<HomeContract.View, LoginPresen
         });
     }
 
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -118,9 +128,6 @@ public class BrowserActivity extends BaseActivity<HomeContract.View, LoginPresen
         mWebView.destroy();
         mWebView = null;
     }
-
-
-
 
 
     //判断app是否安装
@@ -173,5 +180,60 @@ public class BrowserActivity extends BaseActivity<HomeContract.View, LoginPresen
         if (id == R.id.iv_close) {
             finish();
         }
+    }
+
+    public class WebInterface {
+        private Context context;
+
+        public WebInterface(Context context) {
+            this.context = context;
+        }
+
+        @JavascriptInterface
+        public void startGoods(String goodsId) {
+            Log.i(TAG, "startGoods: " + goodsId);
+            Intent it = new Intent(BrowserActivity.this, GoodsDetailActivity.class);
+            it.putExtra("goodsId", goodsId);
+            startActivity(it);
+
+        }
+
+        @JavascriptInterface
+        public void resetPass(String msg, String code) {
+            if (code.equals("0")) {
+                ToastUtils.show(msg);
+                finish();
+            } else {
+                ToastUtils.show(msg);
+            }
+        }
+
+        @JavascriptInterface
+        public void confirmTel(String msg) {
+            ToastUtils.show(msg);
+        }
+
+        @JavascriptInterface
+        public void getService(final String phone) {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    showMsgDialog("拨打客服", "是否拨打人工客服", new OnItemClickListener() {
+                        @Override
+                        public void onConfirm(MyDialog dialog) {
+                            callPhone(phone);
+                        }
+                    });
+                }
+            });
+
+        }
+    }
+
+    public void callPhone(String phoneNum) {
+        Intent intent = new Intent(Intent.ACTION_DIAL);
+        Uri data = Uri.parse("tel:" + phoneNum);
+        intent.setData(data);
+        startActivity(intent);
     }
 }

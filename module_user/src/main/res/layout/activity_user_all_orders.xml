@@ -10,22 +10,26 @@
     <include layout="@layout/common_toolbar" />
 
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
-        android:layout_width="match_parent"
         android:id="@+id/sml_all_order"
+        android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <pl.droidsonroids.gif.GifImageView
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_100"
-            android:src="@drawable/loadingview"
             android:layout_marginTop="@dimen/dp_30"
-            app:layout_srlSpinnerStyle="Translate"
-            app:layout_srlBackgroundColor="@android:color/transparent"/>
+            android:src="@drawable/loadingview"
+            app:layout_srlBackgroundColor="@android:color/transparent"
+            app:layout_srlSpinnerStyle="Translate" />
 
 
         <android.support.v7.widget.RecyclerView
-            android:layout_width="match_parent"
             android:id="@+id/ry_all_order"
+            android:layout_width="match_parent"
             android:layout_height="match_parent" />
+
+        <com.scwang.smartrefresh.layout.footer.ClassicsFooter
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 </LinearLayout>

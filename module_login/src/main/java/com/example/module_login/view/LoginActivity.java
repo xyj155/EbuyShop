@@ -201,7 +201,7 @@ public class LoginActivity extends BaseActivity<UserContract.View, UserPresenter
             startActivityForResult(new Intent(LoginActivity.this, TelPhoneRegisterActivity.class), LOGIN_CODE);
         } else if (id == R.id.tv_forget) {
             Intent intent = new Intent(LoginActivity.this, BrowserActivity.class);
-            intent.putExtra("url", RetrofitUtils.BASE_URL + "/StuShop/public/index.php/index/index/forgetPassword");
+            intent.putExtra("url", RetrofitUtils.BASE_URL + "/StuShop/public/index.php/index/index/confirmTel");
             startActivity(intent);
         }
     }
@@ -219,6 +219,7 @@ public class LoginActivity extends BaseActivity<UserContract.View, UserPresenter
         map.put("uid", String.valueOf(userGson.getId()));
         map.put("userToken", String.valueOf(userGson.getUserToken()));
         map.put("islogin", true);
+        map.put("isOpenSound", true);
         map.put("member", userGson.getVipRank());
         map.put("imToken", userGson.getImToken());
         SharePreferenceUtil.saveUser(map);

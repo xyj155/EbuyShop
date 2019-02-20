@@ -2,13 +2,12 @@ package com.example.commonlib.base;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.ActivityInfo;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
-import android.transition.Explode;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -16,7 +15,10 @@ import android.widget.Toast;
 
 import com.example.commonlib.R;
 import com.example.commonlib.annotation.UserType;
+import com.example.commonlib.receiver.LoginOutBroadcastReceiver;
+import com.example.commonlib.util.ActivityCollector;
 import com.example.commonlib.util.StatusBarUtil;
+import com.example.commonlib.view.MyDialog;
 
 
 public abstract class BaseActivity<V extends BaseView, T extends BasePresenter<V>> extends FragmentActivity {
@@ -24,6 +26,7 @@ public abstract class BaseActivity<V extends BaseView, T extends BasePresenter<V
     protected final String TAG = this.getClass().getSimpleName();
     public T mPresenter;
     public Dialog progressDialog;
+    private MyDialog myDialog1;
 
     public void loginWraper(UserType type, Class context) {
         switch (type) {
@@ -35,12 +38,36 @@ public abstract class BaseActivity<V extends BaseView, T extends BasePresenter<V
                 break;
         }
     }
-//    @Override
+
+    //    @Override
 //    public void onBackPressed() {
 //        super.onBackPressed();
 //        ActivityCompat.finishAfterTransition(this);
 //    }
+    public void showMsgDialog(String title,String content,final OnItemClickListener onItemClickListener) {
 
+        myDialog1.setContent(content);
+        myDialog1.setTitle(title);
+        myDialog1.setOnCenterItemClickListener(new MyDialog.OnCenterItemClickListener() {
+            @Override
+            public void onCenterItemClick(MyDialog dialog, View view) {
+                int i = view.getId();
+                if (i == R.id.dialog_btn_close) {
+                    dialog.dismiss();
+                } else if (i == R.id.dialog_btn_cancel) {
+                    onItemClickListener.onConfirm(dialog);
+                    dialog.dismiss();
+                }
+            }
+        });
+        myDialog1.show();
+    }
+
+
+
+    public interface OnItemClickListener {
+        void onConfirm(MyDialog dialog);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,11 +77,10 @@ public abstract class BaseActivity<V extends BaseView, T extends BasePresenter<V
             StatusBarUtil.setStatusBarTranslucent(this);
         }
 
+        ActivityCollector.addActivity(this);
         mPresenter = getPresenter();
         //设置布局
         setContentView(intiLayout());
-        getWindow().setEnterTransition(new Explode().setDuration(400));
-        getWindow().setExitTransition(new Explode().setDuration(400));
         progressDialog = new Dialog(BaseActivity.this, R.style.progress_dialog);
         progressDialog.setContentView(R.layout.base_dialog);
         progressDialog.setCancelable(true);
@@ -65,7 +91,7 @@ public abstract class BaseActivity<V extends BaseView, T extends BasePresenter<V
         initView();
         //设置数据
         initData();
-
+        myDialog1 = new MyDialog(this, new int[]{R.id.dialog_btn_close, R.id.dialog_btn_cancel});
     }
 
 
@@ -74,11 +100,26 @@ public abstract class BaseActivity<V extends BaseView, T extends BasePresenter<V
     @Override
     protected void onResume() {
         super.onResume();
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction("com.xuyijie.ebuyshop.loginout");
+        locallReceiver = new LoginOutBroadcastReceiver();
+        registerReceiver(locallReceiver, intentFilter);
+
         if (mPresenter != null) {
             mPresenter.attachView((V) this);
         }
     }
+    @Override
+    protected void onPause() {
+        super.onPause();
 
+        // 取消注册广播接收器
+        unregisterReceiver(locallReceiver);
+    }
+
+
+
+    protected LoginOutBroadcastReceiver locallReceiver;
     public void createDialog(String msgStr) {
         progressDialog.show();
 
@@ -96,6 +137,7 @@ public abstract class BaseActivity<V extends BaseView, T extends BasePresenter<V
         if (mPresenter != null) {
             mPresenter.detachView();
         }
+        ActivityCollector.removeActivity(this);
         progressDialog = null;
 
     }

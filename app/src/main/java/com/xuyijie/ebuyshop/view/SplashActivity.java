@@ -9,10 +9,13 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.example.commonlib.base.BaseActivity;
+import com.example.commonlib.contract.UserMemberDateContract;
 import com.example.commonlib.gson.AdvertisementGson;
 import com.example.commonlib.gson.PopAdvertisementGson;
+import com.example.commonlib.presenter.UserMemberDatePresenter;
 import com.example.commonlib.util.GlideUtil;
 import com.example.commonlib.util.RouterUtil;
 import com.example.commonlib.util.SharePreferenceUtil;
@@ -20,13 +23,15 @@ import com.xuyijie.ebuyshop.R;
 import com.xuyijie.ebuyshop.contract.AdvertisementContract;
 import com.xuyijie.ebuyshop.presenter.AdvertisementPresenter;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-
-public class SplashActivity extends BaseActivity<AdvertisementContract.View, AdvertisementPresenter> implements AdvertisementContract.View {
+@Route(path = RouterUtil.Splash)
+public class SplashActivity extends BaseActivity<AdvertisementContract.View, AdvertisementPresenter> implements AdvertisementContract.View, UserMemberDateContract.View {
 
 
     @BindView(R.id.iv_ad)
@@ -34,7 +39,7 @@ public class SplashActivity extends BaseActivity<AdvertisementContract.View, Adv
     @BindView(R.id.tv_time)
     TextView tvTime;
     private MyCountDownTimer mc;
-
+private UserMemberDatePresenter userMemberDatePresenter=new UserMemberDatePresenter(this);
 
     @Override
     public boolean isSetStatusBarTranslucent() {
@@ -59,6 +64,9 @@ public class SplashActivity extends BaseActivity<AdvertisementContract.View, Adv
     @Override
     public void initView() {
         ButterKnife.bind(this);
+        if (!String.valueOf(SharePreferenceUtil.getUser("uid","String")).isEmpty()){
+            userMemberDatePresenter.judgementMember(String.valueOf(SharePreferenceUtil.getUser("uid","String")));
+        }
         GlideUtil.loadRoundCornerAvatarImage(R.mipmap.app_icon, (ImageView) findViewById(R.id.iv_logo), 30);
         mc = new MyCountDownTimer(4000, 1000);
         mc.start();
@@ -77,6 +85,7 @@ public class SplashActivity extends BaseActivity<AdvertisementContract.View, Adv
                 finish();
             }
         });
+
 
     }
 
@@ -136,6 +145,16 @@ public class SplashActivity extends BaseActivity<AdvertisementContract.View, Adv
     }
 
     private Handler handler = new Handler();
+
+    @Override
+    public void loadUserMember(int code) {
+        if (code!=200){
+            Map<String, Object> map = new HashMap<>();
+            map.put("islogin", true);
+            map.put("member", "0");
+            SharePreferenceUtil.saveUser(map);
+        }
+    }
 
     class MyCountDownTimer extends CountDownTimer {
         private long currrntTime;

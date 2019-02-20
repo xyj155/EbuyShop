@@ -23,8 +23,11 @@ import com.example.commonlib.base.BaseActivity;
 import com.example.commonlib.contract.OrderDetailContract;
 import com.example.commonlib.contract.UserSubmitOrderContract;
 import com.example.commonlib.gson.OrderDetailGson;
+import com.example.commonlib.http.RetrofitUtils;
+import com.example.commonlib.http.WebUrl;
 import com.example.commonlib.presenter.OrderDetailPresenter;
 import com.example.commonlib.presenter.UserSubmitOrderPresenter;
+import com.example.commonlib.util.MemberConfig;
 import com.example.commonlib.util.PaymentInterface;
 import com.example.commonlib.util.PaymentUtil;
 import com.example.commonlib.util.RouterUtil;
@@ -70,6 +73,8 @@ public class GoodsPaymentActivity extends BaseActivity<OrderDetailContract.View,
     TextView tvCancel;
     @BindView(R2.id.tv_pay)
     TextView tvPay;
+    @BindView(R2.id.tv_vip)
+    TextView tvVip;
     @BindView(R2.id.et_message)
     EditText etMessage;
 
@@ -130,11 +135,12 @@ public class GoodsPaymentActivity extends BaseActivity<OrderDetailContract.View,
     private List<String> goodsIdList = new ArrayList<>();
     private boolean isAddressFind = false;
 
+
     @Override
     public void loadOrderDetail(OrderDetailGson orderDetailGson) {
         Log.i(TAG, "loadOrderDetail: " + orderDetailGson.getGoods().size());
         orderDetailGoodsAdapter.replaceData(orderDetailGson.getGoods());
-        addressId= String.valueOf(orderDetailGson.getUserAddress().getId());
+        addressId = String.valueOf(orderDetailGson.getUserAddress().getId());
         if (orderDetailGson.getUserAddress() == null) {
             rlEmptyAddress.setVisibility(View.VISIBLE);
             flAddress.setVisibility(View.GONE);
@@ -158,10 +164,25 @@ public class GoodsPaymentActivity extends BaseActivity<OrderDetailContract.View,
             count += goodsBean.getGoodsCount();
             goodsIdList.add(String.valueOf(goodsBean.getGoodsId()));
         }
+        int user = Integer.valueOf(String.valueOf(SharePreferenceUtil.getUser("member", "String")));
+        if (user == 1) {
+            tvVip.setVisibility(View.VISIBLE);
+            money = money * MemberConfig.vipRank_1;
+            tvVip.setText("(会员1 99折)");
+        } else if (user == 2) {
+            tvVip.setVisibility(View.VISIBLE);
+            money = money * MemberConfig.vipRank_2;
+            tvVip.setText("(会员2 97折)");
+        } else if (user == 3) {
+            tvVip.setVisibility(View.VISIBLE);
+            tvVip.setText("(会员3 95折)");
+            money = money * MemberConfig.vipRank_3;
+        }
         tvCount.setText("共 " + count + " 件商品  小计：");
         BigDecimal bigDecimal = new BigDecimal(money);
         tvMoney.setText("￥" + bigDecimal.setScale(2, BigDecimal.ROUND_HALF_DOWN));
         Log.i(TAG, "loadOrderDetail: " + money);
+        totalMoney=money;
         if (money > 188) {
             tvPost.setText("配送方式       满 188 包邮");
         } else {
@@ -192,6 +213,7 @@ public class GoodsPaymentActivity extends BaseActivity<OrderDetailContract.View,
                     }
                 }).build();
 
+
     }
 
     private String expressName = "";
@@ -217,15 +239,17 @@ public class GoodsPaymentActivity extends BaseActivity<OrderDetailContract.View,
         } else if (id == R.id.tv_pay_type) {
             ARouter.getInstance().build(RouterUtil.USERCOUPON).withDouble("money", money).navigation(GoodsPaymentActivity.this, 0x11);
         } else if (id == R.id.tv_pay) {
-            if (addressId==null) {
+            if (addressId == null) {
                 ToastUtils.show("你还没有选择地址哦！");
             } else {
+                Log.i(TAG, "onViewClicked: xlmgsf ");
                 boolean b = money > 188;
                 if (b) {
-                    PaymentUtil.paymentByGoods("商学院自营商品", "商品", 1, new PaymentInterface() {
+                    Log.i(TAG, "onViewClicked:totalMoney "+(int) (totalMoney * 100));
+                    PaymentUtil.paymentByGoods("商学院自营商品", "订单号：" + getIntent().getStringExtra("orderNum"), (int) (totalMoney * 100), new PaymentInterface() {
                         @Override
                         public void paySuccess() {
-                            userSubmitOrderPresenter.submitOrderByUserId((String) SharePreferenceUtil.getUser("uid", "String"), addressId, new Gson().toJson(goodsIdList), couponId, orderNum, (String) SharePreferenceUtil.getUser("userToken", "String"), etMessage.getText().toString(), "36");
+                            userSubmitOrderPresenter.submitOrderByUserId((String) SharePreferenceUtil.getUser("uid", "String"), addressId, new Gson().toJson(goodsIdList), couponId == null ? "5" : couponId, orderNum, (String) SharePreferenceUtil.getUser("userToken", "String"), etMessage.getText().toString(), "36");
                         }
 
                         @Override
@@ -237,7 +261,7 @@ public class GoodsPaymentActivity extends BaseActivity<OrderDetailContract.View,
                     if (expressName.isEmpty()) {
                         ToastUtils.show("你还没有选择配送方式！");
                     } else {
-                        PaymentUtil.paymentByGoods("商学院自营商品", "商品", 1, new PaymentInterface() {
+                        PaymentUtil.paymentByGoods("商学院自营商品", "订单号：" + getIntent().getStringExtra("orderNum"), (int) (totalMoney * 100), new PaymentInterface() {
                             @Override
                             public void paySuccess() {
                                 userSubmitOrderPresenter.submitOrderByUserId((String) SharePreferenceUtil.getUser("uid", "String"), addressId, new Gson().toJson(goodsIdList), "5", orderNum, (String) SharePreferenceUtil.getUser("userToken", "String"), etMessage.getText().toString(), expressId);
@@ -277,19 +301,27 @@ public class GoodsPaymentActivity extends BaseActivity<OrderDetailContract.View,
                 couponId = data.getStringExtra("couponId");
                 tvPayType.setText("优惠方式        满 " + startIndex + " 元减 " + endIndex + " 元");
                 double couponMoney = money - Double.valueOf(endIndex);
+                totalMoney = money - Double.valueOf(endIndex);
                 BigDecimal bigDecimal = new BigDecimal(couponMoney);
                 tvMoney.setText("￥" + bigDecimal.setScale(2, BigDecimal.ROUND_HALF_DOWN));
+                Log.i(TAG, "onActivityResult: "+totalMoney);
             }
         }
     }
 
+    private double totalMoney = 0;
+
+
     @Override
     public void submitStatus(boolean success) {
-
         if (success) {
-            ToastUtils.show("支付成功！");
+            Intent intent = new Intent(GoodsPaymentActivity.this, BrowserActivity.class);
+            intent.putExtra("url", RetrofitUtils.BASE_URL + WebUrl.paySuccess);
+            startActivity(intent);
         } else {
-            ToastUtils.show("支付失败！");
+            Intent intent = new Intent(GoodsPaymentActivity.this, BrowserActivity.class);
+            intent.putExtra("url", RetrofitUtils.BASE_URL + WebUrl.submitFailed);
+            startActivity(intent);
         }
         finish();
     }

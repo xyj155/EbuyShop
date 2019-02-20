@@ -186,7 +186,7 @@
                                     android:layout_centerInParent="true"
                                     android:layout_marginLeft="3dp"
                                     android:layout_toRightOf="@+id/tv_tag"
-                                    android:text="599"
+                                    android:text=""
                                     android:textColor="#ec0f38"
                                     android:textSize="21sp"
                                     android:textStyle="bold" />
@@ -199,7 +199,7 @@
                                     android:layout_marginLeft="7dp"
                                     android:layout_toRightOf="@+id/tv_new_price"
                                     android:gravity="center_vertical"
-                                    android:text="￥799"
+                                    android:text=""
                                     android:textColor="#888888"
                                     android:textSize="13sp" />
 

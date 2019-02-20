@@ -29,6 +29,7 @@
         <TextView
             android:layout_width="@dimen/dp_180"
             android:layout_height="@dimen/dp_35"
+            android:id="@+id/tv_search"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/dp_8"

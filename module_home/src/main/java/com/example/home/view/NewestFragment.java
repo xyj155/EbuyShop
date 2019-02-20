@@ -63,7 +63,7 @@ public class NewestFragment extends BaseFragment<NewUpperShelfPresenter> impleme
         ryNewest.setAdapter(newestAdapter);
         View inflate = View.inflate(getContext(), R.layout.common_empty, null);
         ImageView viewById = inflate.findViewById(R.id.iv_empty);
-        GlideUtil.loadGeneralImage(R.drawable.ic_empty_new_shelf, viewById);
+        GlideUtil.loadGeneralImage(R.drawable.ic_empty_new_shelf_pic, viewById);
         newestAdapter.setEmptyView(inflate);
 
 

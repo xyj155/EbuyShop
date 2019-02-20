@@ -40,7 +40,7 @@
         android:layout_marginTop="@dimen/dp_10"
         android:background="@drawable/login_tv_1_bg"
         android:gravity="center"
-        android:text="注册"
+        android:text="下一步"
         android:textColor="#000"
         android:textSize="17sp" />
 </LinearLayout>

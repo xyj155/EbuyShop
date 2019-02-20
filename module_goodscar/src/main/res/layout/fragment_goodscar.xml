@@ -27,7 +27,7 @@
             android:padding="@dimen/dp_8"
             android:text="购物车"
             android:textColor="#000"
-            android:textSize="17sp"
+            android:textSize="21sp"
             android:textStyle="bold" />
 
     </LinearLayout>

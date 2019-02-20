@@ -42,6 +42,7 @@ public class UserFormStatusPresenter extends BasePresenter<UserFormStatusContrac
                     @Override
                     public void onError(String error) {
                         mMvpView.hideDialog();
+                        mMvpView.showError(error);
                     }
                 });
     }

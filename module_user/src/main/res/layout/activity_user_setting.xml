@@ -23,7 +23,7 @@
             android:gravity="center|left"
             android:paddingLeft="@dimen/dp_12"
             android:paddingRight="@dimen/dp_8"
-            android:text="消息推送"
+            android:text="消息震动"
             android:textColor="#000"
             android:textSize="16sp" />
 
@@ -143,15 +143,18 @@
         android:textColor="#000"
         android:textSize="16sp" />
 
-    <TextView
+    <Button
         android:id="@+id/tv_login"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/dp_20"
+        android:layout_marginLeft="@dimen/dp_40"
+        android:layout_marginRight="@dimen/dp_40"
+        android:layout_marginTop="@dimen/dp_23"
         android:background="@drawable/btn_login_out_bg"
         android:gravity="center"
-        android:padding="@dimen/dp_16"
+        android:padding="@dimen/dp_13"
+        android:textSize="18sp"
         android:text="退出当前账号"
-        android:textColor="#000" />
+        android:textColor="#fff" />
 
 </LinearLayout>

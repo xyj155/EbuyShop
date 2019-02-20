@@ -46,6 +46,11 @@ public class UserGoodsStatusAdapter extends BaseQuickAdapter<List<UserOrderStatu
         this.context = context;
     }
 
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
     public void setOnClickListener(UserGoodsStatusAdapter.onClickListener onClickListener) {
         this.onClickListener = onClickListener;
     }
@@ -54,8 +59,8 @@ public class UserGoodsStatusAdapter extends BaseQuickAdapter<List<UserOrderStatu
 
     @Override
     protected void convert(final BaseViewHolder helper, final List<UserOrderStatusGson> item) {
-        Log.i(TAG, "convert: "+item.toString());
-        if (item.size()>0&&item.get(0)!=null){
+        Log.i(TAG, "convert: " + item.toString());
+        if (item.size() > 0 && item.get(0) != null) {
             final List<String> goodsList = new ArrayList<>();
             helper.setText(R.id.tv_order_num, "订单编号：" + item.get(0).getOrderNum())
                     .setText(R.id.tv_status, item.get(0).getStatus().equals("1") ? "待付款" : item.get(0).getStatus().equals("2") ? "待发货" : item.get(0).getStatus().equals("3") ? "待收货" : item.get(0).getStatus().equals("4") ? "待评价" : item.get(0).getStatus().equals("5") ? "订单完成" : "");
@@ -82,12 +87,15 @@ public class UserGoodsStatusAdapter extends BaseQuickAdapter<List<UserOrderStatu
                     money = money - Double.valueOf(item.get(0).getCouponReduce());
                 }
                 money = money + Double.valueOf(item.get(0).getExpressPrice());
-                Log.i(TAG, "convert: "+item.get(0).getOrderNum());
+                Log.i(TAG, "convert: " + item.get(0).getOrderNum());
             } else if (status.equals("3")) {
+                Log.i(TAG, "convert: status"+status);
                 helper.setVisible(R.id.tv_receive, true)
                         .setVisible(R.id.tv_pay, false)
                         .setVisible(R.id.tv_deliver, true)
                         .setVisible(R.id.tv_cancel, false);
+                View view1 = helper.getView(R.id.rl_order);
+                view1.setVisibility(View.VISIBLE);
                 if (item.get(0).getCouponReduce() != null) {
                     money = money - Double.valueOf(item.get(0).getCouponReduce());
                 }

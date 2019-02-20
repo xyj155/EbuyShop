@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import com.example.commonlib.base.BaseFragment;
 import com.example.commonlib.gson.UserOrderStatusGson;
 import com.example.commonlib.util.SharePreferenceUtil;
+import com.example.commonlib.view.toast.ToastUtils;
 import com.example.user.adapter.UserGoodsStatusAdapter;
 import com.example.user.contract.UserFormStatusContract;
 import com.example.user.presenter.UserFormStatusPresenter;
@@ -36,12 +37,12 @@ public class SubstituteShipmentFragment extends BaseFragment<UserFormStatusPrese
 
     @Override
     public void initData() {
-       smlSend.setOnRefreshListener(new OnRefreshListener() {
-           @Override
-           public void onRefresh(RefreshLayout refreshLayout) {
-               mPresenter.queryUserOrderByStatus((String) SharePreferenceUtil.getUser("uid", "String"), "2");
-           }
-       });
+        smlSend.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(RefreshLayout refreshLayout) {
+                mPresenter.queryUserOrderByStatus((String) SharePreferenceUtil.getUser("uid", "String"), "2");
+            }
+        });
     }
 
     @Override
@@ -70,16 +71,17 @@ public class SubstituteShipmentFragment extends BaseFragment<UserFormStatusPrese
     }
 
     private static final String TAG = "SubstituteShipmentFragm";
+
     @Override
     public void loadUserOrderByStatus(List<List<UserOrderStatusGson>> userOrderStatusGsons) {
-        Log.i(TAG, "loadUserOrderByStatus: "+userOrderStatusGsons.size());
+        Log.i(TAG, "loadUserOrderByStatus: " + userOrderStatusGsons.size());
         userGoodsStatusAdapter.replaceData(userOrderStatusGsons);
         smlSend.finishRefresh();
     }
 
     @Override
     public void showError(String msg) {
-
+        ToastUtils.show("暂无物流信息！");
     }
 
     @Override

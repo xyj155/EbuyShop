@@ -2,6 +2,7 @@ package com.example.module_message.presenter;
 
 import com.example.commonlib.base.BaseGson;
 import com.example.commonlib.base.BasePresenter;
+import com.example.commonlib.gson.MessageExpressTraceGson;
 import com.example.commonlib.gson.SystemMessageGson;
 import com.example.commonlib.http.BaseObserver;
 import com.example.module_message.contract.MessageContract;
@@ -34,6 +35,33 @@ public class MessagePresenter extends BasePresenter<MessageContract.View> implem
                         mMvpView.hideDialog();
                         if (systemMessageGsonBaseGson.isStatus()) {
                             mMvpView.querySystemPushMessage(systemMessageGsonBaseGson.getData());
+                        }
+                    }
+
+                    @Override
+                    public void onError(String error) {
+                        mMvpView.hideDialog();
+                    }
+                });
+    }
+
+    @Override
+    public void queryUserGoodsTrace(String userId, String page) {
+        mMvpView.showDialog("");
+        messageModel.queryUserGoodsTrace(userId,page)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseObserver<BaseGson<MessageExpressTraceGson>>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onNext(BaseGson<MessageExpressTraceGson> systemMessageGsonBaseGson) {
+                        mMvpView.hideDialog();
+                        if (systemMessageGsonBaseGson.isStatus()) {
+                            mMvpView.queryUserGoodsTrace(systemMessageGsonBaseGson.getData());
                         }
                     }
 

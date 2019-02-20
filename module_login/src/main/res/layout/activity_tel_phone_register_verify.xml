@@ -55,7 +55,7 @@
         android:layout_marginTop="@dimen/dp_10"
         android:background="@drawable/login_tv_1_bg"
         android:gravity="center"
-        android:text="提交"
+        android:text="验证"
         android:textColor="#000"
         android:textSize="17sp" />
 </LinearLayout>

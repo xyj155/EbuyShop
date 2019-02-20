@@ -1,13 +1,17 @@
 package com.example.kind.view;
 
+import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.example.commonlib.base.BaseFragment;
 import com.example.commonlib.gson.KindItemGson;
 import com.example.commonlib.util.RouterUtil;
@@ -16,13 +20,21 @@ import com.example.kind.adapter.ItemListAdapter;
 import com.example.kind.contract.KindContract;
 import com.example.kind.presenter.KindPresenter;
 import com.xuyijie.kind.R;
+import com.xuyijie.kind.R2;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
+
 @Route(path = RouterUtil.Kind_Fragment_Main)
 public class KindFragment extends BaseFragment<KindPresenter> implements KindContract.View {
 
+    @BindView(R2.id.tv_search)
+    TextView tvSearch;
+    Unbinder unbinder;
     private ItemListAdapter itemListAdapter;
     private RecyclerView ryItem, ryItemList;
     private GoodsKindItemAdapter goodsKindItem;
@@ -48,6 +60,12 @@ public class KindFragment extends BaseFragment<KindPresenter> implements KindCon
         itemListAdapter = new ItemListAdapter(kindItemGsonList);
         goodsKindItem = new GoodsKindItemAdapter(goodsList, getActivity());
         mPresenter.getGoodsItemList(1);
+        tvSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ARouter.getInstance().build(RouterUtil.GOODSSEARCH).navigation();
+            }
+        });
     }
 
     @Override
@@ -91,13 +109,26 @@ public class KindFragment extends BaseFragment<KindPresenter> implements KindCon
 
     @Override
     public void showDialog(String msg) {
-//        createDialog(msg);
+
     }
 
 
     @Override
     public void hideDialog() {
-//        dialogCancel();
+
     }
 
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        // TODO: inflate a fragment view
+        View rootView = super.onCreateView(inflater, container, savedInstanceState);
+        unbinder = ButterKnife.bind(this, rootView);
+        return rootView;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
+    }
 }

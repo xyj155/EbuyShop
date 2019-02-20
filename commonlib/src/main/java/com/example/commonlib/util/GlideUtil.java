@@ -27,7 +27,7 @@ public class GlideUtil {
 
     public static void loadRoundCornerAvatarImage(Object url, ImageView imageView, int radius) {
         RoundedCorners roundedCorners = new RoundedCorners(radius);
-        RequestOptions options = RequestOptions.bitmapTransform(roundedCorners).override(300, 300).error(R.mipmap.app_icon);
+        RequestOptions options = RequestOptions.bitmapTransform(roundedCorners).override(300, 300).error(R.drawable.picture_error);
         Glide.with(MyApp.getInstance()).asBitmap().apply(options).load(url).into(imageView);
     }
 }

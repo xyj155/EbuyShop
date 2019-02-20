@@ -8,28 +8,72 @@
     tools:ignore="MissingDefaultResource">
 
     <RelativeLayout
+        android:id="@+id/rl_input"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_65"
         android:background="#fff">
 
         <EditText
-            android:layout_centerInParent="true"
+            android:id="@+id/et_input"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_45"
-            android:background="#fafafa"
-            android:textSize="14sp"
-            android:paddingLeft="@dimen/dp_7"
+            android:layout_centerInParent="true"
             android:layout_margin="@dimen/dp_7"
             android:layout_toLeftOf="@+id/tv_cancel"
+            android:background="#fafafa"
             android:drawableLeft="@mipmap/home_search"
-            android:hint="搜索你感兴趣的商品" />
+            android:hint="搜索你感兴趣的商品"
+            android:paddingLeft="@dimen/dp_7"
+            android:textSize="14sp" />
+
         <TextView
-            android:text="取消"
-            android:layout_margin="@dimen/dp_16"
+            android:id="@+id/tv_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/tv_cancel"/>
+            android:layout_margin="@dimen/dp_10"
+            android:gravity="center"
+            android:text="取消" />
     </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_remend"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_40"
+        android:layout_below="@+id/rl_input"
+        android:background="#fff"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="@dimen/dp_20"
+            android:layout_height="@dimen/dp_20"
+            android:layout_gravity="center"
+            android:layout_marginLeft="@dimen/dp_14"
+            android:paddingRight="@dimen/dp_6"
+            android:src="@mipmap/ic_mall_home_search" />
+
+        <TextView
+
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="搜索"
+            android:textColor="#000" />
+
+        <TextView
+            android:id="@+id/tv_reconmend"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center|left"
+            android:paddingLeft="@dimen/dp_5"
+            android:text="" />
+    </LinearLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/ry_goods"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/ll_remend" />
 </RelativeLayout>

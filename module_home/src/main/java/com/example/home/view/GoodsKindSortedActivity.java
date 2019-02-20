@@ -8,8 +8,10 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.example.commonlib.base.BaseActivity;
 import com.example.commonlib.gson.KindItemGson;
+import com.example.commonlib.util.RouterUtil;
 import com.example.home.adapter.GoodsKindItemAdapter;
 import com.example.home.adapter.ItemListAdapter;
 import com.example.home.contract.KindContract;
@@ -59,6 +61,12 @@ public class GoodsKindSortedActivity extends BaseActivity<KindContract.View, Kin
             @Override
             public void onClick(View v) {
                 finish();
+            }
+        });
+        findViewById(R.id.tv_search).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ARouter.getInstance().build(RouterUtil.GOODSSEARCH).navigation();
             }
         });
     }

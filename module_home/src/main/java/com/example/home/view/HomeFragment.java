@@ -30,7 +30,6 @@ import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
-import com.bumptech.glide.Glide;
 import com.example.commonlib.MyApp;
 import com.example.commonlib.annotation.UserType;
 import com.example.commonlib.base.BaseFragment;
@@ -38,9 +37,11 @@ import com.example.commonlib.commonactivity.BrowserActivity;
 import com.example.commonlib.commonactivity.GoodsDetailActivity;
 import com.example.commonlib.gson.BannerGson;
 import com.example.commonlib.gson.GoodsGson;
+import com.example.commonlib.gson.HomePurseAdvertisementGson;
 import com.example.commonlib.gson.HotPurseActivityGson;
 import com.example.commonlib.gson.MarQueenGson;
 import com.example.commonlib.gson.TimeGoodsGson;
+import com.example.commonlib.http.RetrofitUtils;
 import com.example.commonlib.loader.BannerViewHolder;
 import com.example.commonlib.util.GlideUtil;
 import com.example.commonlib.util.RouterUtil;
@@ -98,10 +99,14 @@ public class HomeFragment extends BaseFragment<HomePagePresenter> implements Hom
     Unbinder unbinder;
     @BindView(R2.id.tv_time)
     TextView tvTime;
+    @BindView(R2.id.tv_activity_name)
+    TextView tvActivityName;
     @BindView(R2.id.tvSearch)
     TextView tvSearch;
     @BindView(R2.id.iv_location)
     ImageView ivLocation;
+    @BindView(R2.id.ivBanner)
+    ImageView ivBanner;
     private MZBannerView<BannerGson> banner;
     private PurseGoodsAdapter purseGoodsAdapter;
     private RecyclerView ryPurse, ryTimerPurse, ryHot;
@@ -113,7 +118,7 @@ public class HomeFragment extends BaseFragment<HomePagePresenter> implements Hom
     TextView tvLocation;
     @BindView(R2.id.ll_flash_time)
     LinearLayout llFlashTime;
-    private ImageView ivShopCar, ivBanner;
+    private ImageView ivShopCar;
     private SmartRefreshLayout srHome;
     private HomeGoodsTimerPurseAdapter homeGoodsTimerPurseAdapter;
     private HomeHotGoodsActivityAdapter homeHotGoodsItemAdapter;
@@ -164,8 +169,7 @@ public class HomeFragment extends BaseFragment<HomePagePresenter> implements Hom
     public void initView(View view) {
         srHome = view.findViewById(R.id.srHome);
         ryHot = view.findViewById(R.id.ryHot);
-        ivBanner = view.findViewById(R.id.ivBanner);
-        Glide.with(getActivity()).asBitmap().load("https://img.zcool.cn/community/01f2f95a0c2334a801204a0eac24d2.png@1280w_1l_2o_100sh.png").into(ivBanner);
+
         ryHot.setLayoutManager(new GridLayoutManager(getContext(), 4));
 
         ryTimerPurse = view.findViewById(R.id.ry_timerPurse);
@@ -485,6 +489,22 @@ public class HomeFragment extends BaseFragment<HomePagePresenter> implements Hom
         }
     }
 
+    @Override
+    public void queryHomePurseGoodsAdvertisement(final HomePurseAdvertisementGson homePurseAdvertisement) {
+//        Glide.with(getActivity()).asBitmap().load("https://img.zcool.cn/community/01f2f95a0c2334a801204a0eac24d2.png@1280w_1l_2o_100sh.png").into(ivBanner);
+        GlideUtil.loadGeneralImage(homePurseAdvertisement.getGoodsPicture(), ivBanner);
+        ivBanner.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), BrowserActivity.class);
+                intent.putExtra("url", RetrofitUtils.BASE_URL + homePurseAdvertisement.getWebUrl());
+                startActivity(intent);
+            }
+        });
+        tvActivityName.setText(homePurseAdvertisement.getTitle());
+
+    }
+
     @SuppressLint("HandlerLeak")
     private Handler timeHandler = new Handler() {
 
@@ -560,7 +580,7 @@ public class HomeFragment extends BaseFragment<HomePagePresenter> implements Hom
         unbinder.unbind();
     }
 
-    @OnClick({R2.id.tv_member, R2.id.tvSearch, R2.id.iv_news, R2.id.ll_flash_time, R2.id.iv_school_vip, R2.id.iv_best, R2.id.iv_share, R2.id.ivKind})
+    @OnClick({R2.id.ivBanner, R2.id.tv_member, R2.id.tvSearch, R2.id.iv_news, R2.id.ll_flash_time, R2.id.iv_school_vip, R2.id.iv_best, R2.id.iv_share, R2.id.ivKind})
     public void onViewClicked(View view) {
         int id = view.getId();
         Log.i(TAG, "onViewClicked: ");
@@ -568,7 +588,7 @@ public class HomeFragment extends BaseFragment<HomePagePresenter> implements Hom
             Log.i(TAG, "onViewClicked: ");
             startActivity(new Intent(getContext(), NewUpperShelfActivity.class));
         } else if (id == R.id.iv_school_vip) {
-            startActivity(new Intent(getContext(), GoodsKindSortedActivity.class));
+            startActivity(new Intent(getContext(), SnacksActivity.class));
         } else if (id == R.id.iv_best) {
             startActivity(new Intent(getContext(), SecondHandTradingMarketActivity.class));
         } else if (id == R.id.iv_share) {
@@ -582,9 +602,9 @@ public class HomeFragment extends BaseFragment<HomePagePresenter> implements Hom
             ((Activity) mContext).overridePendingTransition(R.anim.bottom_to_top_anim_in,
                     R.anim.bottom_to_top_anim_out);
         } else if (id == R.id.tv_member) {
-            Object user = SharePreferenceUtil.getUser("member", "String");
+            String user = (String) SharePreferenceUtil.getUser("member", "String");
             Log.i(TAG, "onViewClicked: " + user);
-            if (user.toString().isEmpty()) {
+            if (user.equals("0")) {
                 startActivity(new Intent(getContext(), MembershipOpeningActivity.class));
             } else {
                 startActivity(new Intent(getContext(), MemberShipRightActivity.class));

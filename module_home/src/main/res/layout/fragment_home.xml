@@ -86,18 +86,18 @@
                             android:textColor="#000"
                             android:textSize="13sp" />
 
-
                         <TextView
-                            android:id="@+id/iv_best"
+                            android:id="@+id/iv_school_vip"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:drawableTop="@mipmap/l_chongzhi_xiyi"
+                            android:drawableTop="@mipmap/l_chongzhi_yongcan"
                             android:drawablePadding="@dimen/dp_6"
                             android:gravity="center"
-                            android:text="闲置商品"
+                            android:text="零食铺"
                             android:textColor="#000"
                             android:textSize="13sp" />
+
 
                         <TextView
                             android:id="@+id/iv_share"
@@ -111,15 +111,16 @@
                             android:textColor="#000"
                             android:textSize="13sp" />
 
+
                         <TextView
-                            android:id="@+id/iv_school_vip"
+                            android:id="@+id/iv_best"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:drawableTop="@mipmap/l_chongzhi_yongcan"
+                            android:drawableTop="@mipmap/l_chongzhi_xiyi"
                             android:drawablePadding="@dimen/dp_6"
                             android:gravity="center"
-                            android:text="全部商品"
+                            android:text="闲置商品"
                             android:textColor="#000"
                             android:textSize="13sp" />
                     </LinearLayout>
@@ -239,7 +240,7 @@
                         <ImageView
                             android:id="@+id/ivBanner"
                             android:layout_width="match_parent"
-                            android:layout_height="@dimen/dp_120"
+                            android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/dp_10"
                             android:scaleType="fitXY" />
 
@@ -250,6 +251,7 @@
                             android:padding="@dimen/dp_3"
                             android:text="为你推荐"
                             android:textColor="#fff"
+                            android:id="@+id/tv_activity_name"
                             android:textStyle="bold" />
                     </FrameLayout>
 
@@ -304,31 +306,31 @@
 
         <LinearLayout
             android:layout_width="wrap_content"
-            android:gravity="center"
-            android:paddingLeft="@dimen/dp_4"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/dp_4">
+
             <ImageView
-                android:layout_margin="@dimen/dp_6"
                 android:id="@+id/iv_location"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@mipmap/icon_home_location"/>
+                android:layout_width="@dimen/dp_28"
+                android:layout_height="@dimen/dp_28"
+                android:layout_margin="@dimen/dp_6"
+                android:src="@mipmap/icon_home_location" />
+
             <TextView
                 android:id="@+id/ivKind"
-                android:textStyle="bold"
-                android:textSize="15sp"
-                android:textColor="#fff"
-                android:ellipsize="end"
                 android:layout_width="@dimen/dp_58"
-                android:gravity="center|left"
                 android:layout_height="@dimen/dp_24"
                 android:drawablePadding="@dimen/dp_8"
+                android:ellipsize="end"
+                android:gravity="center|left"
                 android:src="@drawable/icon_logo"
-                android:text="株洲" />
+                android:text="株洲"
+                android:textColor="#fff"
+                android:textSize="15sp"
+                android:textStyle="bold" />
         </LinearLayout>
-
-
 
 
         <TextView

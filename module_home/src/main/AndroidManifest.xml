@@ -7,6 +7,11 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application>
+        <activity android:name="com.example.home.view.SnackOrderDetailActivity"></activity>
+        <activity android:name="com.example.home.view.SnackOrderListActivity" />
+        <activity android:name="com.example.commonlib.commonactivity.SnackPaymentActivity" />
+        <activity android:name="com.example.home.view.SnacksActivity" />
+        <activity android:name="com.example.home.view.SellTopActivity" />
         <activity android:name="com.example.home.view.GoodsOrderShareActivity" />
         <activity android:name="com.example.home.view.GoodsKindSortedActivity" />
         <activity android:name="com.example.home.view.TimeFlashSaleActivity" />
@@ -19,8 +24,9 @@
         <activity android:name="com.example.home.view.SecondGoodsDetailActivity" />
         <activity android:name="com.example.home.view.HomeActivityActivity" />
         <activity android:name="com.example.home.view.SearchGoodsActivity" />
-        <activity android:name="com.example.home.view.GoodsShareCommentDetailActivity"
-            android:windowSoftInputMode="adjustPan|stateHidden|stateAlwaysHidden"/>
+        <activity
+            android:name="com.example.home.view.GoodsShareCommentDetailActivity"
+            android:windowSoftInputMode="adjustPan|stateHidden|stateAlwaysHidden" />
         <activity android:name="com.example.home.view.MembershipOpeningActivity" />
         <activity android:name="com.example.home.view.MemberShipRightActivity" />
     </application>

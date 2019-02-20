@@ -19,7 +19,9 @@ import com.example.commonlib.base.BaseActivity;
 import com.example.commonlib.gson.SecondHandsGoodsGson;
 import com.example.commonlib.http.RetrofitUtils;
 import com.example.commonlib.util.GlideUtil;
+import com.example.commonlib.util.SharePreferenceUtil;
 import com.example.commonlib.view.HidingScrollListener;
+import com.example.commonlib.view.MyDialog;
 import com.example.home.contract.SecondHandTradingMarketContract;
 import com.example.home.presenter.SecondHandTradingMarketPresenter;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -117,7 +119,19 @@ public class SecondHandTradingMarketActivity extends BaseActivity<SecondHandTrad
 
     @OnClick(R2.id.fb_submit)
     public void onViewClicked() {
-        startActivity(new Intent(SecondHandTradingMarketActivity.this, AddSecondHandTradingActivity.class));
+        int  user = Integer.valueOf(String.valueOf(SharePreferenceUtil.getUser("member", "String")));
+        if (user>=3){
+            startActivity(new Intent(SecondHandTradingMarketActivity.this, AddSecondHandTradingActivity.class));
+        }else {
+            showMsgDialog("会员权限功能", "你的会员等级不够哦!是否充值", new OnItemClickListener() {
+                @Override
+                public void onConfirm(MyDialog dialog) {
+                    startActivity(MembershipOpeningActivity.class);
+                }
+            });
+//            ToastUtils.show("你的会员等级不够哦");
+        }
+
     }
 
     @Override

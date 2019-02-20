@@ -62,11 +62,10 @@ public class UserCouponActivity extends BaseActivity<UserCouponContract.View, Us
         couponAdapter.bindToRecyclerView(ryCoupon);
         View inflate = View.inflate(UserCouponActivity.this, R.layout.coupon_empty, null);
         TextView viewById = inflate.findViewById(R.id.tv_empty);
-//        GlideUtil.loadGeneralImage(R.drawable.iv_empty_coupon, (ImageView) viewById.findViewById(R.id.iv_empty));
         viewById.setText("你还没有优惠券哦！");
         couponAdapter.setEmptyView(inflate);
         ryCoupon.setAdapter(couponAdapter);
-        smlCoupon.autoRefresh();
+        mPresenter.queryUserCouponList((String) SharePreferenceUtil.getUser("uid", "String"));
         smlCoupon.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshLayout) {

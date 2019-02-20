@@ -18,4 +18,5 @@ public class RouterUtil {
     public static final String PAYMENT_PAGE = "/payment/index";
     public static final String USERSAVEADDRESS = "/save/index";
     public static final String USERCOUPON = "/coupon/index";
+    public static final String GOODSSEARCH = "/search/index";
 }

@@ -1,13 +1,17 @@
 package com.example.commonlib.commonactivity;
 
 import android.os.Build;
+import android.os.Bundle;
 import android.support.annotation.RequiresApi;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.transition.Explode;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -33,6 +37,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 @Route(path = RouterUtil.GOODSSORTED)
 public class GoodsListSortedActivity extends BaseActivity<GoodsSortedContract.View, GoodsSortedPresenter> implements GoodsSortedContract.View {
@@ -58,6 +63,24 @@ public class GoodsListSortedActivity extends BaseActivity<GoodsSortedContract.Vi
     RecyclerView rySorted;
     @BindView(R2.id.sl_sorted)
     SmartRefreshLayout slSorted;
+    @BindView(R2.id.tv_screen)
+    TextView tvScreen;
+    @BindView(R2.id.activity_main)
+    DrawerLayout activityMain;
+    @BindView(R2.id.rb_seven_fifth)
+    RadioButton rbSevenFifth;
+    @BindView(R2.id.rb_seven_thirty)
+    RadioButton rbSevenThirty;
+    @BindView(R2.id.rg_day)
+    RadioGroup rgDay;
+    @BindView(R2.id.et_minum)
+    EditText etMinum;
+    @BindView(R2.id.et_maxium)
+    EditText etMaxium;
+    @BindView(R2.id.tv_reset)
+    TextView tvReset;
+    @BindView(R2.id.tv_submit)
+    TextView tvSubmit;
     private GoodsSortedAdapter goodsSortedAdapter;
     private boolean isSetPrice = false;
     private boolean isSetNews = false;
@@ -97,13 +120,13 @@ public class GoodsListSortedActivity extends BaseActivity<GoodsSortedContract.Vi
         goodsSortedAdapter = new GoodsSortedAdapter(GoodsListSortedActivity.this, null);
         View inflate = View.inflate(GoodsListSortedActivity.this, R.layout.common_empty, null);
         ImageView viewById = inflate.findViewById(R.id.iv_empty);
-        GlideUtil.loadGeneralImage(R.drawable.ic_empty_goods,viewById);
+        GlideUtil.loadGeneralImage(R.drawable.ic_empty_goods, viewById);
         goodsSortedAdapter.setEmptyView(inflate);
         rySorted.setAdapter(goodsSortedAdapter);
         slSorted.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshLayout) {
-                Log.i(TAG, "onRefresh: sortedType="+sortedType+"+++++++++isSetDesc="+isSetDesc);
+                Log.i(TAG, "onRefresh: sortedType=" + sortedType + "+++++++++isSetDesc=" + isSetDesc);
                 mPresenter.getGoodsListByKind(getIntent().getStringExtra("kind"), sortedType, isSetDesc);
             }
         });
@@ -122,11 +145,11 @@ public class GoodsListSortedActivity extends BaseActivity<GoodsSortedContract.Vi
                 if (isSetHot) {
                     isSetHot = false;
                     mPresenter.getGoodsListByKind(getIntent().getStringExtra("kind"), sortedType, isSetDesc);
-                    isSetDesc ="1";
+                    isSetDesc = "1";
                 } else {
                     isSetHot = true;
                     mPresenter.getGoodsListByKind(getIntent().getStringExtra("kind"), sortedType, isSetDesc);
-                    isSetDesc ="0";
+                    isSetDesc = "0";
                 }
             }
         });
@@ -139,11 +162,11 @@ public class GoodsListSortedActivity extends BaseActivity<GoodsSortedContract.Vi
                 if (isSetNews) {
                     isSetNews = false;
                     mPresenter.getGoodsListByKind(getIntent().getStringExtra("kind"), sortedType, isSetDesc);
-                    isSetDesc ="1";
+                    isSetDesc = "1";
                 } else {
                     isSetNews = true;
                     mPresenter.getGoodsListByKind(getIntent().getStringExtra("kind"), sortedType, isSetDesc);
-                    isSetDesc ="0";
+                    isSetDesc = "0";
                 }
             }
         });
@@ -155,18 +178,16 @@ public class GoodsListSortedActivity extends BaseActivity<GoodsSortedContract.Vi
                     isSetPrice = false;
                     Glide.with(GoodsListSortedActivity.this).asBitmap().load(R.mipmap.mall_category_goods_price_ascend).into(ivPriceSorted);
                     mPresenter.getGoodsListByKind(getIntent().getStringExtra("kind"), sortedType, isSetDesc);
-                    isSetDesc ="0";
+                    isSetDesc = "0";
                 } else {
                     isSetPrice = true;
                     Glide.with(GoodsListSortedActivity.this).asBitmap().load(R.mipmap.mall_categroy_goods_price_descend).into(ivPriceSorted);
                     mPresenter.getGoodsListByKind(getIntent().getStringExtra("kind"), sortedType, isSetDesc);
-                    isSetDesc ="1";
+                    isSetDesc = "1";
                 }
             }
         });
     }
-
-
 
 
     @Override
@@ -190,5 +211,32 @@ public class GoodsListSortedActivity extends BaseActivity<GoodsSortedContract.Vi
     public void hideDialog() {
         mhideDialog();
         slSorted.finishRefresh();
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
+    }
+
+    @OnClick({R2.id.tv_screen, R2.id.tv_reset, R2.id.tv_submit})
+    public void onViewClicked(View view) {
+        int i = view.getId();
+        if (i == R.id.tv_screen) {
+            if (activityMain != null) {
+                activityMain.openDrawer(Gravity.RIGHT);
+            }
+        } else if (i == R.id.tv_reset) {
+
+        } else if (i == R.id.tv_submit) {
+
+        }
+    }
+
+    @OnClick({})
+    public void onViewClicked() {
+
+
     }
 }

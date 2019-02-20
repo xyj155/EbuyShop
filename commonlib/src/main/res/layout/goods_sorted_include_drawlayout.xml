@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dp_10"
+            android:text="地区"
+            android:textColor="#000"
+            android:visibility="gone"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dp_10"
+            android:text="上架时间"
+            android:textColor="#000"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:id="@+id/rg_day"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/dp_7"
+                android:layout_weight="1"
+                android:id="@+id/rb_seven_day"
+                android:background="@drawable/goods_sorted_selector"
+                android:button="@null"
+                android:gravity="center"
+                android:paddingTop="@dimen/dp_8"
+                android:paddingBottom="@dimen/dp_8"
+                android:text="7天内"
+                android:textColor="@color/color_goods_sorted_tv_themes" />
+
+            <RadioButton
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/dp_7"
+                android:layout_weight="1"
+                android:id="@+id/rb_seven_fifth"
+                android:background="@drawable/goods_sorted_selector"
+                android:button="@null"
+                android:gravity="center"
+                android:paddingTop="@dimen/dp_8"
+                android:paddingBottom="@dimen/dp_8"
+                android:text="15天内"
+                android:textColor="@color/color_goods_sorted_tv_themes" />
+
+            <RadioButton
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/dp_7"
+                android:id="@+id/rb_seven_thirty"
+                android:layout_weight="1"
+                android:background="@drawable/goods_sorted_selector"
+                android:button="@null"
+                android:gravity="center"
+                android:paddingTop="@dimen/dp_8"
+                android:paddingBottom="@dimen/dp_8"
+                android:text="30天内"
+                android:textColor="@color/color_goods_sorted_tv_themes" />
+        </RadioGroup>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dp_10"
+            android:text="价格区间（元）"
+            android:textColor="#000"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:layout_margin="@dimen/dp_10"
+            android:weightSum="3">
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:maxLines="1"
+                android:background="@drawable/goods_sorted_tv_other_money_input"
+                android:gravity="center"
+                android:id="@+id/et_minum"
+                android:hint="最低价"
+                android:inputType="number"
+                android:padding="@dimen/dp_7" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="—" />
+
+            <EditText
+                android:inputType="number"
+                android:id="@+id/et_maxium"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:maxLines="1"
+                android:background="@drawable/goods_sorted_tv_other_money_input"
+                android:gravity="center"
+                android:hint="最高价"
+                android:padding="@dimen/dp_7" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal"
+        android:weightSum="2">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dp_20"
+            android:layout_weight="1"
+            android:id="@+id/tv_reset"
+            android:background="@drawable/goods_sorted_tv_bg"
+            android:gravity="center"
+            android:paddingLeft="@dimen/dp_18"
+            android:paddingTop="@dimen/dp_12"
+            android:paddingRight="@dimen/dp_18"
+            android:paddingBottom="@dimen/dp_12"
+            android:text="重置"
+            android:textSize="15sp" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dp_20"
+            android:layout_weight="1"
+            android:id="@+id/tv_submit"
+            android:background="@drawable/goods_sorted_yellow_tv_bg"
+            android:gravity="center"
+            android:paddingLeft="@dimen/dp_18"
+            android:paddingTop="@dimen/dp_12"
+            android:paddingRight="@dimen/dp_18"
+            android:paddingBottom="@dimen/dp_12"
+            android:text="确定"
+            android:textColor="#000"
+            android:textSize="15sp" />
+    </LinearLayout>
+</RelativeLayout>

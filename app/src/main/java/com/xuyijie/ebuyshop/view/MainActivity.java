@@ -1,6 +1,7 @@
 package com.xuyijie.ebuyshop.view;
 
 
+import android.content.ComponentName;
 import android.content.Intent;
 import android.os.Build;
 import android.support.annotation.IdRes;
@@ -24,6 +25,7 @@ import com.example.commonlib.gson.AdvertisementGson;
 import com.example.commonlib.gson.PopAdvertisementGson;
 import com.example.commonlib.gson.UserGson;
 import com.example.commonlib.presenter.LoginPresent;
+import com.example.commonlib.util.JpushUtil;
 import com.example.commonlib.util.RouterUtil;
 import com.example.commonlib.util.SharePreferenceUtil;
 import com.example.commonlib.view.MyDialog;
@@ -250,7 +252,10 @@ public class MainActivity extends BaseActivity<HomeContract.View, LoginPresent> 
         // 指定最顶层状态栏小图标
         builder.layoutIconDrawable = R.mipmap.app_icon;
         // 指定下拉状态栏时显示的通知图标
+        boolean user = (boolean) SharePreferenceUtil.getUser("isOpenSound", "boolean");
+        JpushUtil.setSoundAndVibrate(user, true);
         JPushInterface.setPushNotificationBuilder(2, builder);
+
     }
 
 
@@ -298,28 +303,39 @@ public class MainActivity extends BaseActivity<HomeContract.View, LoginPresent> 
     }
 
     @Override
-    public void queryPopWindowAd(List<PopAdvertisementGson> popAdvertisementGsons) {
-        ArrayList<AdInfo> advList = new ArrayList<>();
-        for (int i = 0; i < popAdvertisementGsons.size(); i++) {
-            AdInfo adInfo = new AdInfo();
-            adInfo.setActivityImg(popAdvertisementGsons.get(i).getImgUrl());
-            adInfo.setUrl(popAdvertisementGsons.get(i).getWebUrl());
-            advList.add(adInfo);
-        }
-        final AdManager adManager = new AdManager(MainActivity.this, advList);
-        adManager.setOverScreen(true)
-                .setPageTransformer(new DepthPageTransformer());
-        adManager.setOnImageClickListener(new AdManager.OnImageClickListener() {
-            @Override
-            public void onImageClick(View view, AdInfo advInfo) {
-                if (advInfo.getUrl() != null) {
-                    Intent intent = new Intent(MainActivity.this, BrowserActivity.class);
-                    intent.putExtra("url", advInfo.getUrl());
-                    startActivity(intent);
-                    adManager.dismissAdDialog();
-                }
+    public void queryPopWindowAd(final List<PopAdvertisementGson> popAdvertisementGsons) {
+        Log.i(TAG, "queryPopWindowAd: " + popAdvertisementGsons.get(0).getIsShow());
+        if (popAdvertisementGsons.get(0).getIsShow().equals("1")) {
+            ArrayList<AdInfo> advList = new ArrayList<>();
+            for (int i = 0; i < popAdvertisementGsons.size(); i++) {
+                AdInfo adInfo = new AdInfo();
+                adInfo.setActivityImg(popAdvertisementGsons.get(i).getImgUrl());
+                adInfo.setUrl(popAdvertisementGsons.get(i).getWebUrl());
+                advList.add(adInfo);
             }
-        });
-        adManager.showAdDialog(AdConstant.ANIM_DOWN_TO_UP);
+            final AdManager adManager = new AdManager(MainActivity.this, advList);
+            adManager.setOverScreen(true)
+                    .setPageTransformer(new DepthPageTransformer());
+            adManager.setOnImageClickListener(new AdManager.OnImageClickListener() {
+                @Override
+                public void onImageClick(View view, AdInfo advInfo) {
+                    Log.i(TAG, "onImageClick: " + advInfo.getUrl());
+                    if (!advInfo.getUrl().isEmpty()) {
+                        Intent intent = new Intent(MainActivity.this, BrowserActivity.class);
+                        intent.putExtra("url", advInfo.getUrl());
+                        startActivity(intent);
+                        adManager.dismissAdDialog();
+                    } else {
+                        Intent intent = new Intent();
+                        intent.setComponent(new ComponentName(MainActivity.this, "com.example.commonlib.commonactivity.GoodsDetailActivity"));
+                        intent.putExtra("goodsId", String.valueOf(popAdvertisementGsons.get(0).getGoodsId()));
+                        startActivity(intent);
+                        adManager.dismissAdDialog();
+                    }
+                }
+            });
+            adManager.showAdDialog(AdConstant.ANIM_DOWN_TO_UP);
+        }
+
     }
 }

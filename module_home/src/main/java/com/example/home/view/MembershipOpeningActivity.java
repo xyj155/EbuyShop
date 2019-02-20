@@ -29,6 +29,8 @@ import com.example.home.presenter.MembershipOpeningPresenter;
 import com.xuyijie.home.R;
 import com.xuyijie.home.R2;
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -89,7 +91,7 @@ public class MembershipOpeningActivity extends BaseActivity<MembershipOpeningCon
     @Override
     public void initView() {
         ButterKnife.bind(this);
-        GlideUtil.loadGeneralImage( RetrofitUtils.BASE_URL +SharePreferenceUtil.getUser("avatar", "String"), ivAvatar);
+        GlideUtil.loadGeneralImage(RetrofitUtils.BASE_URL + SharePreferenceUtil.getUser("avatar", "String"), ivAvatar);
         String username = String.valueOf(SharePreferenceUtil.getUser("username", "String"));
         tvUsername.setText(username.replace(username.substring(3, 7), "****"));
         hideBottomButton();
@@ -170,7 +172,8 @@ public class MembershipOpeningActivity extends BaseActivity<MembershipOpeningCon
         } else if (i == R.id.iv_close) {
             finish();
         } else if (i == R.id.tv_submit) {
-            PaymentUtil.paymentByGoods("会员充值", "商学院会员充值", rank, new PaymentInterface() {
+//            PaymentUtil.paymentByGoods("会员充值", "商学院会员充值" + String.valueOf(SharePreferenceUtil.getUser("username", "String")), 1, new PaymentInterface() {
+            PaymentUtil.paymentByGoods("会员充值", "商学院会员充值" + String.valueOf(SharePreferenceUtil.getUser("username", "String")), memberList.get(rank - 1) * 100, new PaymentInterface() {
                 @Override
                 public void paySuccess() {
                     mPresenter.submitUserMemberShip(String.valueOf(SharePreferenceUtil.getUser("uid", "String")), String.valueOf(rank));
@@ -201,11 +204,20 @@ public class MembershipOpeningActivity extends BaseActivity<MembershipOpeningCon
 
     }
 
+    private List<Integer> memberList = new ArrayList<>();
+
     @Override
     public void queryMemberPrice(List<MemberGson> memberGsons) {
         tvMemberPrice1.setText("￥" + memberGsons.get(0).getVipPrice());
         tvMemberPrice2.setText("￥" + memberGsons.get(1).getVipPrice());
         tvMemberPrice3.setText("￥" + memberGsons.get(2).getVipPrice());
+        for (int i = 0; i < memberGsons.size(); i++) {
+            Log.i(TAG, "queryMemberPrice: "+memberGsons.get(i).getVipPrice());
+            BigDecimal b=new BigDecimal(memberGsons.get(i).getVipPrice());
+
+            int a = b.intValue();
+            memberList.add(a);
+        }
     }
 
     @Override

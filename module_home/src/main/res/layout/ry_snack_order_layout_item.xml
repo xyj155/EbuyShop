@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="@dimen/dp_15"
+    android:layout_marginTop="@dimen/dp_7.5"
+    android:layout_marginRight="@dimen/dp_15"
+    android:id="@+id/rl_goods"
+    android:layout_marginBottom="@dimen/dp_7.5"
+    android:background="@drawable/snack_order_item_bg">
+
+    <TextView
+        android:id="@+id/tv_order_num"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dp_8"
+        android:text="订单号：20152442525255"
+        android:textColor="#000"
+        android:layout_toLeftOf="@+id/tv_status"
+        android:textStyle="bold" />
+    <TextView
+        android:padding="@dimen/dp_8"
+        android:id="@+id/tv_status"
+        android:layout_alignParentRight="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#ff0000"
+        android:text=""/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_order_num"
+        android:layout_marginLeft="@dimen/dp_9"
+        android:layout_marginRight="@dimen/dp_9"
+        android:layout_marginBottom="@dimen/dp_13"
+        android:background="@drawable/ry_snack_order_time_bg">
+
+
+        <ImageView
+            android:id="@+id/iv_goods_pic"
+            android:layout_width="@dimen/dp_100"
+            android:layout_height="@dimen/dp_87"
+            android:scaleType="fitXY" />
+
+        <TextView
+            android:id="@+id/tv_goods_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/iv_goods_pic"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:padding="@dimen/dp_9"
+            android:text="商品测试商品测试商品测试商品测试商品测试商品测试商品测试商品测试商品测试商品测试商品测试"
+            android:textColor="#000"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/tv_goods_time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_goods_name"
+            android:layout_toRightOf="@+id/iv_goods_pic"
+            android:gravity="bottom"
+            android:paddingLeft="@dimen/dp_9"
+            android:paddingBottom="@dimen/dp_10"
+            android:text="订单编号：242252525"
+            android:textSize="14sp" />
+        <TextView
+            android:layout_gravity="right"
+            android:layout_width="@dimen/dp_18"
+            android:layout_height="@dimen/dp_18"
+            android:text="1"
+            android:gravity="center"
+            android:layout_alignParentRight="true"
+            android:id="@+id/tv_count"
+            android:textColor="#fff"
+            android:background="@drawable/bg_shopcar_bg_red_30dp"/>
+
+    </RelativeLayout>
+
+</RelativeLayout>

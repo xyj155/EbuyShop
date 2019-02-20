@@ -4,7 +4,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     app:cardElevation="@dimen/dp_0"
-    android:layout_margin="7dp"
+    android:layout_marginLeft="@dimen/dp_2.5"
     android:background="#fff"
     android:id="@+id/ll_goods"
     app:cardCornerRadius="@dimen/dp_5"

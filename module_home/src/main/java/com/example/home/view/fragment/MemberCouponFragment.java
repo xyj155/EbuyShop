@@ -128,15 +128,19 @@ public class MemberCouponFragment extends BaseFragment<MemberShipRightPresenter>
         protected void convert(BaseViewHolder helper, CouponGson item) {
             helper.setText(R.id.tv_money, item.getCouponReduce())
                     .setText(R.id.tv_coupon_msg, item.getCouponName())
-                    .setText(R.id.tv_msg, "满 " + item.getCouponTotal() + " 元减 " + item.getCouponReduce() + "元")
                     .setOnClickListener(R.id.ll_coupon, new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             startActivity(new Intent(getContext(), GoodsKindSortedActivity.class));
                         }
                     });
+            if (Integer.valueOf(item.getCouponTotal()) == 0) {
+                helper.setText(R.id.tv_msg,  item.getCouponReduce() + "元代金券");
+            } else {
+                helper.setText(R.id.tv_msg, "满 " + item.getCouponTotal() + " 元减 " + item.getCouponReduce() + "元");
+            }
             if (item.getStartTime().equals("0000-00-00 00:00:00")) {
-                helper.setText(R.id.tv_time, "有效日期：无限期");
+                helper.setText(R.id.tv_time, "有效日期：会员结束自动到期");
             } else {
                 helper.setText(R.id.tv_time, "有效日期：" + item.getStartTime() + " -- " + item.getEndTime());
             }

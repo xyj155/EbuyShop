@@ -13,16 +13,23 @@ import com.example.commonlib.gson.GoodsDetailGson;
 import com.example.commonlib.gson.GoodsGson;
 import com.example.commonlib.gson.GoodsShareGson;
 import com.example.commonlib.gson.GoodsStyleGson;
+import com.example.commonlib.gson.HomePurseAdvertisementGson;
 import com.example.commonlib.gson.HotPurseActivityGson;
 import com.example.commonlib.gson.KindItemGson;
 import com.example.commonlib.gson.MarQueenGson;
 import com.example.commonlib.gson.MemberGson;
+import com.example.commonlib.gson.MessageExpressTraceGson;
 import com.example.commonlib.gson.NewestShelfGson;
 import com.example.commonlib.gson.OrderDetailGson;
 import com.example.commonlib.gson.PopAdvertisementGson;
 import com.example.commonlib.gson.SecondHandsGoodsGson;
 import com.example.commonlib.gson.SecondKindGson;
 import com.example.commonlib.gson.ShopCarGson;
+import com.example.commonlib.gson.SnackGson;
+import com.example.commonlib.gson.SnackKindGson;
+import com.example.commonlib.gson.SnackOrderDetailGson;
+import com.example.commonlib.gson.SnackOrderGson;
+import com.example.commonlib.gson.SnackShopCarGson;
 import com.example.commonlib.gson.SubmitOrderGson;
 import com.example.commonlib.gson.SubmitOrderItemGson;
 import com.example.commonlib.gson.SystemMessageGson;
@@ -136,6 +143,9 @@ public interface Api {
     @GET("/StuShop/public/index.php/index/User/queryUserOrderByStatus")
     Observable<BaseGson<List<UserOrderStatusGson>>> queryUserOrderByStatus(@Query("userId") String userId, @Query("status") String status);
 
+    @GET("/StuShop/public/index.php/index/User/queryUserAllOrder")
+    Observable<BaseGson<List<UserOrderStatusGson>>> queryUserAllOrder(@Query("userId") String userId, @Query("page") String page);
+
     @FormUrlEncoded
     @POST("/StuShop/public/index.php/index/Goods/submitUserOrder")
     Observable<BaseGson<SubmitOrderItemGson>> submitUserOrder(@Field("userId") String userId, @Field("goodsId") String goodsId);
@@ -229,11 +239,57 @@ public interface Api {
     @GET("/StuShop/public/index.php/index/Banner/queryPopWindowAd")
     Observable<BaseGson<PopAdvertisementGson>> queryPopWindowAd();
 
+    @GET("/StuShop/public/index.php/index/Foods/queryAllSnackKind")
+    Observable<BaseGson<SnackKindGson>> queryAllSnackKind();
+
+    @GET("/StuShop/public/index.php/index/Foods/queryUserAllSnack")
+    Observable<BaseGson<SnackShopCarGson>> queryUserAllSnack(@Query("userId") String userId);
+
+    @GET("/StuShop/public/index.php/index/Foods/querySnackByKindId")
+    Observable<BaseGson<SnackGson>> querySnackByKindId(@Query("kindId") String kindId, @Query("userId") String userId);
+
     @FormUrlEncoded
     @POST("/StuShop/public/index.php/index/Dryinglist/submitGoodsComment")
-    Observable<BaseGson<EmptyGson>> submitGoodsComment(@Field("userId")String userId,@Field("content")String content,@Field("postId")String postId);
+    Observable<BaseGson<EmptyGson>> submitGoodsComment(@Field("userId") String userId, @Field("content") String content, @Field("postId") String postId);
 
     @FormUrlEncoded
     @POST("/StuShop/public/index.php/index/User/submitUserMemberShip")
     Observable<BaseGson<EmptyGson>> submitUserMemberShip(@Field("userId") String userId, @Field("memberRank") String memberRank);
+
+    @FormUrlEncoded
+    @POST("/StuShop/public/index.php/index/Foods/submitSnackFoodsOrder")
+    Observable<BaseGson<EmptyGson>> submitSnackFoodsOrder(@Field("userId") String userId, @Field("token") String token);
+
+    @FormUrlEncoded
+    @POST("/StuShop/public/index.php/index/Foods/addSnackByUserId")
+    Observable<BaseGson<EmptyGson>> addSnackByUserId(@Field("userId") String userId, @Field("goodsId") String goodsId, @Field("tasteId") String tasteId, @Field("isDelete") String isDelete);
+
+
+    @GET("/StuShop/public/index.php/index/Foods/querySnackFoodsOrder")
+    Observable<BaseGson<SnackOrderDetailGson>> querySnackFoodsOrder(@Query("userId") String userId, @Query("orderNum") String orderNum);
+
+    @GET("/StuShop/public/index.php/index/Foods/queryUserSnackOrderListByUserId")
+    Observable<BaseGson<SnackOrderGson>> queryUserSnackOrderListByUserId(@Query("userId") String userId, @Query("page") String page, @Query("limit") String limit);
+
+    @FormUrlEncoded
+    @POST("/StuShop/public/index.php/index/Foods/submitUserSnackOrderByUserId")
+    Observable<BaseGson<EmptyGson>> submitUserSnackOrderByUserId(@Field("userId") String userId, @Field("orderNum") String orderNum, @Field("token") String token, @Field("message") String message, @Field("addressId") String addressId);
+
+    @GET("/StuShop/public/index.php/index/Foods/querySnackOrderDetail")
+    Observable<BaseGson<SnackOrderDetailGson>> querySnackOrderDetail(@Query("userId") String userId, @Query("orderNum") String orderNum);
+
+
+    @GET("/StuShop/public/index.php/index/Banner/queryHomePurseGoodsAdvertisement")
+    Observable<BaseGson<HomePurseAdvertisementGson>> queryHomePurseGoodsAdvertisement();
+
+
+    @GET("/StuShop/public/index.php/index/User/judgementMember")
+    Observable<BaseGson<EmptyGson>> judgementMember(@Query("userId")String userId);
+
+
+    @GET("/StuShop/public/index.php/index/Goods/querySearchByLikeWord")
+    Observable<BaseGson<GoodsGson>> querySearchByLikeWord(@Query("input")String input);
+
+    @GET("/StuShop/public/index.php/index/User/queryUserGoodsTrace")
+    Observable<BaseGson<MessageExpressTraceGson>> queryUserGoodsTrace(@Query("userId")String userId,@Query("page")String page);
 }

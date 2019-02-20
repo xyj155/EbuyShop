@@ -26,12 +26,13 @@
             android:padding="@dimen/dp_8"
             android:text="分类"
             android:textColor="#000"
-            android:textSize="17sp"
+            android:textSize="21sp"
             android:textStyle="bold" />
 
         <TextView
             android:layout_width="@dimen/dp_180"
             android:layout_height="@dimen/dp_35"
+            android:id="@+id/tv_search"
             android:layout_alignParentRight="true"
             android:layout_alignParentBottom="true"
             android:layout_marginRight="@dimen/dp_8"

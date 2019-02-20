@@ -20,8 +20,11 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.commonlib.base.BaseFragment;
 import com.example.commonlib.commonactivity.BrowserActivity;
+import com.example.commonlib.contract.UserMemberDateContract;
 import com.example.commonlib.gson.UserPaymentGson;
 import com.example.commonlib.http.RetrofitUtils;
+import com.example.commonlib.presenter.UserMemberDatePresenter;
+import com.example.commonlib.util.GlideUtil;
 import com.example.commonlib.util.RouterUtil;
 import com.example.commonlib.util.SharePreferenceUtil;
 import com.example.commonlib.view.MyDialog;
@@ -32,13 +35,16 @@ import com.example.user.presenter.UserPaymentPresenter;
 import com.xuyijie.user.R;
 import com.xuyijie.user.R2;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 
 @Route(path = RouterUtil.Me_Fragment_Main)
-public class UserFragment extends BaseFragment<UserPaymentPresenter> implements UserPaymentContract.View {
+public class UserFragment extends BaseFragment<UserPaymentPresenter> implements UserPaymentContract.View, UserMemberDateContract.View {
     @BindView(R2.id.tv_waitpay)
     TextView tvWaitpay;
     @BindView(R2.id.iv_setting)
@@ -76,12 +82,13 @@ public class UserFragment extends BaseFragment<UserPaymentPresenter> implements 
     RelativeLayout rlToolbar;
     private WaveView waveView;
     private ImageView ivHead;
-    @BindView(R2.id.tv_my_vip)
+    @BindView(R2.id.iv_vip)
+    ImageView iv_vip;
     TextView tvCoupon;
     Unbinder unbinder;
     private int mHeight;
     private MyDialog myDialog1;
-
+    private UserMemberDatePresenter userMemberDatePresenter=new UserMemberDatePresenter( this);
     @Override
     public void initData() {
 
@@ -131,12 +138,26 @@ public class UserFragment extends BaseFragment<UserPaymentPresenter> implements 
                 });
             }
         });
+        String  user = String.valueOf(SharePreferenceUtil.getUser("member", "String"));
+        if (user.equals("1")){
+            GlideUtil.loadGeneralImage(R.mipmap.vip_rank1,iv_vip);
+            iv_vip.setVisibility(View.VISIBLE);
+        }else if (user.equals("2")){
+            GlideUtil.loadGeneralImage(R.mipmap.vip_rank2,iv_vip);
+            iv_vip.setVisibility(View.VISIBLE);
+        }else if (user.equals("3")){
+            iv_vip.setVisibility(View.VISIBLE);
+            GlideUtil.loadGeneralImage(R.mipmap.vip_rank3,iv_vip);
+        }else {
+            iv_vip.setVisibility(View.GONE);
+        }
 
     }
 
     @Override
     public void onResume() {
         super.onResume();
+        userMemberDatePresenter.judgementMember((String) SharePreferenceUtil.getUser("uid", "String"));
         mPresenter.queryUserOrderCount((String) SharePreferenceUtil.getUser("uid", "String"));
     }
 
@@ -273,5 +294,17 @@ public class UserFragment extends BaseFragment<UserPaymentPresenter> implements 
     @Override
     public void hideDialog() {
         dialogCancel();
+    }
+
+    @Override
+    public void loadUserMember(int code) {
+        Log.i(TAG, "loadUserMember: "+code);
+        if (code!=200){
+            Map<String, Object> map = new HashMap<>();
+            map.put("islogin", true);
+            map.put("member", "0");
+            SharePreferenceUtil.saveUser(map);
+            iv_vip.setVisibility(View.GONE);
+        }
     }
 }

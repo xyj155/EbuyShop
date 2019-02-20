@@ -9,6 +9,8 @@ public class BaseGson<T> {
     private boolean status;
     private T singleData;
 
+
+
     public T getSingleData() {
         return singleData;
     }

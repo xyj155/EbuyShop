@@ -2,6 +2,7 @@ package com.example.home.entity;
 
 import com.example.commonlib.gson.BannerGson;
 import com.example.commonlib.gson.GoodsGson;
+import com.example.commonlib.gson.HomePurseAdvertisementGson;
 import com.example.commonlib.gson.HotPurseActivityGson;
 import com.example.commonlib.gson.MarQueenGson;
 import com.example.commonlib.gson.TimeGoodsGson;
@@ -15,6 +16,15 @@ public class HomeDataEntity {
     private List<BannerGson> bannerGsons;
     private List<MarQueenGson> marQueenGsonList;
     private TimeGoodsGson.TimeBean timeBean;
+    private HomePurseAdvertisementGson homePurseAdvertisementGson;
+
+    public HomePurseAdvertisementGson getHomePurseAdvertisementGson() {
+        return homePurseAdvertisementGson;
+    }
+
+    public void setHomePurseAdvertisementGson(HomePurseAdvertisementGson homePurseAdvertisementGson) {
+        this.homePurseAdvertisementGson = homePurseAdvertisementGson;
+    }
 
     public TimeGoodsGson.TimeBean getTimeBean() {
         return timeBean;
@@ -32,8 +42,9 @@ public class HomeDataEntity {
         this.marQueenGsonList = marQueenGsonList;
     }
 
-    public HomeDataEntity(List<GoodsGson> timePurseGoodsList, List<GoodsGson> purseGoodsList, List<HotPurseActivityGson> hotPurseActivityGsons, List<BannerGson> bannerGsons, List<MarQueenGson> marQueenGsonList) {
+    public HomeDataEntity(List<GoodsGson> timePurseGoodsList, List<GoodsGson> purseGoodsList, List<HotPurseActivityGson> hotPurseActivityGsons, List<BannerGson> bannerGsons, List<MarQueenGson> marQueenGsonList, HomePurseAdvertisementGson homePurseAdvertisementGson) {
         this.timePurseGoodsList = timePurseGoodsList;
+        this.homePurseAdvertisementGson = homePurseAdvertisementGson;
         this.purseGoodsList = purseGoodsList;
         this.hotPurseActivityGsons = hotPurseActivityGsons;
         this.bannerGsons = bannerGsons;

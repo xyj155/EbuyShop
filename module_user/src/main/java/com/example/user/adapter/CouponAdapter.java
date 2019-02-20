@@ -29,12 +29,16 @@ public class CouponAdapter extends BaseQuickAdapter<CouponGson, BaseViewHolder> 
     @Override
     protected void convert(BaseViewHolder helper, final CouponGson item) {
         if (item.getStartTime().equals("0000-00-00 00:00:00")) {
-            helper.setText(R.id.tv_date, "有效日期：无限期" );
+            helper.setText(R.id.tv_date, "有效日期：会员结束自动到期" );
         } else {
             helper.setText(R.id.tv_date, "有效日期：" + item.getStartTime() + " -- " + item.getEndTime());
         }
+        if (Integer.valueOf(item.getCouponTotal()) == 0) {
+            helper.setText(R.id.tv_comment,  item.getCouponReduce() + "元代金券");
+        } else {
+            helper.setText(R.id.tv_comment, "满 " + item.getCouponTotal() + " 元减 " + item.getCouponReduce() + "元");
+        }
         helper.setText(R.id.tv_name, item.getCouponName())
-                .setText(R.id.tv_comment, "满减优惠券：满 " + item.getCouponTotal() + " 减 " + item.getCouponReduce())
                 .setText(R.id.tv_price, "￥" + item.getCouponReduce())
 
                 .setOnClickListener(R.id.ll_coupon, new View.OnClickListener() {

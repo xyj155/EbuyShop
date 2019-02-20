@@ -36,6 +36,7 @@ import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.Simple
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.List;
 import java.util.TimeZone;
 
@@ -140,7 +141,7 @@ public class NewUpperShelfActivity extends BaseActivity<NewUpperShelfContract.Vi
                     public void onClick(View v) {
                         vpNewest.setCurrentItem(index);
 //                        mFragmentContainerHelper.handlePageSelected(index);
-                        Log.i(TAG, "onClick: "+index);
+                        Log.i(TAG, "onClick: " + index);
                     }
                 });
                 return simplePagerTitleView;
@@ -168,19 +169,22 @@ public class NewUpperShelfActivity extends BaseActivity<NewUpperShelfContract.Vi
     private List<Fragment> fragmentList = new ArrayList<>();
 
 
-
     @Override
     public void loadDateList(NewestShelfGson timeBeans) {
 
-        for (int i = timeBeans.getTime().size()-1; i >0 ; i--) {
+        for (int i = timeBeans.getTime().size() - 1; i > 0; i--) {
             titleList.add(timeBeans.getTime().get(i));
-            Log.i(TAG, "loadDateList: "+timeBeans.getTime().get(i).getDate());
+        }
+        Collections.reverse(titleList);
+        for (int j=0;j<titleList.size();j++){
+            Log.i(TAG, "loadDateList: " + timeBeans.getTime().get(j).getDate());
             NewestFragment newestFragment = new NewestFragment();
             Bundle bundle = new Bundle();
-            bundle.putString(NewestFragment.EXTRA_TEXT, timeBeans.getTime().get(i).getDate());
+            bundle.putString(NewestFragment.EXTRA_TEXT, timeBeans.getTime().get(j).getDate());
             newestFragment.setArguments(bundle);
             fragmentList.add(newestFragment);
         }
+
         userGoodsStatusFragmentAdapter = new UserGoodsStatusFragmentAdapter(getSupportFragmentManager(), fragmentList, titleList);
         vpNewest.setAdapter(userGoodsStatusFragmentAdapter);
         initMagicIndicator2();

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#fff"
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:layout_width="@dimen/dp_50"
+            android:layout_height="match_parent"
+            android:layout_toLeftOf="@+id/orderState_title">
+
+            <View
+                android:layout_width="@dimen/dp_1.5"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true"
+                android:background="#f1f1f1" />
+
+            <ImageView
+                android:id="@+id/ic_normal"
+                android:layout_width="@dimen/dp_17"
+                android:layout_height="@dimen/dp_17"
+                android:layout_centerInParent="true"
+                android:src="@mipmap/ic_express_staus_normal" />
+
+            <ImageView
+                android:id="@+id/ic_current"
+                android:visibility="gone"
+                android:layout_width="@dimen/dp_23"
+                android:layout_height="@dimen/dp_23"
+                android:layout_centerInParent="true"
+                android:src="@mipmap/ic_express_status_current" />
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingTop="@dimen/dp_16"
+            android:paddingRight="@dimen/dp_16"
+            android:paddingBottom="@dimen/dp_16">
+            <!--Title-->
+            <TextView
+                android:id="@+id/orderState_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="上海市发放 安抚我安抚发安抚我安抚我安抚发安抚我安抚我安抚发安抚我 发达ad"
+                android:textColor="#000"
+                android:textSize="@dimen/dp_14" />
+
+            <!--内容提示-->
+            <TextView
+                android:id="@+id/orderState_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/orderState_title"
+                android:layout_marginTop="@dimen/dp_8"
+                android:textColor="#aaaaaa"
+                android:textSize="@dimen/dp_12" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_1"
+        android:layout_alignParentBottom="true"
+        android:background="#fafafa" />
+</LinearLayout>

@@ -26,28 +26,42 @@
                     android:layout_height="25dp"
                     android:layout_gravity="bottom" />
 
-                <com.example.commonlib.view.CircleImageView
-                    android:id="@+id/ivHead"
-                    android:layout_width="@dimen/dp_100"
-                    android:layout_height="@dimen/dp_100"
-                    android:layout_gravity="bottom|center"
-                    android:src="@mipmap/ic_user_avatar_bg"
-                    app:civ_border_color="#fff"
-                    app:civ_border_width="@dimen/dp_1" />
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|center">
+
+                    <com.example.commonlib.view.CircleImageView
+                        android:id="@+id/ivHead"
+                        android:layout_width="@dimen/dp_100"
+                        android:layout_height="@dimen/dp_100"
+                        android:src="@mipmap/ic_user_avatar_bg"
+                        app:civ_border_color="#fff"
+                        app:civ_border_width="@dimen/dp_1" />
+
+                    <ImageView
+                        android:id="@+id/iv_vip"
+                        android:visibility="gone"
+                        android:layout_width="@dimen/dp_20"
+                        android:layout_height="@dimen/dp_20"
+                        android:src="@mipmap/vip_rank1" />
+                </FrameLayout>
 
 
             </FrameLayout>
+
             <TextView
+                android:id="@+id/tv_username"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
                 android:gravity="center"
-                android:id="@+id/tv_username"
-                android:textColor="#000"
                 android:padding="@dimen/dp_5"
-                android:textSize="18sp"
                 android:text=""
+                android:textColor="#000"
+                android:textSize="18sp"
                 android:textStyle="bold" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

@@ -2,6 +2,7 @@ package com.example.user.view;
 
 import android.content.Intent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -12,12 +13,17 @@ import com.example.commonlib.commonactivity.BrowserActivity;
 import com.example.commonlib.commonactivity.UserReceivingAddressActivity;
 import com.example.commonlib.http.RetrofitUtils;
 import com.example.commonlib.util.DataCleanManager;
+import com.example.commonlib.util.SharePreferenceUtil;
 import com.example.commonlib.view.MyDialog;
+import com.example.commonlib.view.SwitchButton;
 import com.example.user.contract.UserPaymentContract;
 import com.example.user.presenter.UserPaymentPresenter;
 import com.tencent.bugly.beta.Beta;
 import com.xuyijie.user.R;
 import com.xuyijie.user.R2;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -47,7 +53,9 @@ public class UserSettingActivity extends BaseActivity<UserPaymentContract.View, 
     @BindView(R2.id.tv_about)
     TextView tvAbout;
     @BindView(R2.id.tv_login)
-    TextView tvLogin;
+    Button tvLogin;
+    @BindView(R2.id.sw_default)
+    SwitchButton swDefault;
 
     @Override
     public boolean isSetStatusBarTranslucent() {
@@ -77,7 +85,20 @@ public class UserSettingActivity extends BaseActivity<UserPaymentContract.View, 
 
     @Override
     public void initData() {
-
+        boolean user = (boolean) SharePreferenceUtil.getUser("isOpenSound", "boolean");
+        swDefault.setChecked(user);
+        swDefault.setOnCheckedChangeListener(new SwitchButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(SwitchButton view, boolean isChecked) {
+                Map<String, Object> map = new HashMap<>();
+                if (isChecked) {
+                    map.put("isOpenSound", true);
+                } else {
+                    map.put("isOpenSound", false);
+                }
+                SharePreferenceUtil.saveUser(map);
+            }
+        });
 
     }
 
@@ -114,6 +135,14 @@ public class UserSettingActivity extends BaseActivity<UserPaymentContract.View, 
             intent.putExtra("url", RetrofitUtils.BASE_URL + "/StuShop/public/index.php/index/Index/about");
             startActivity(intent);
         } else if (id == R.id.tv_login) {
+            showMsgDialog("退出登录", "是否退出登录？退出后将清除所有信息", new OnItemClickListener() {
+                @Override
+                public void onConfirm(MyDialog dialog) {
+                    Intent intent = new Intent("com.xuyijie.ebuyshop.loginout");
+                    sendBroadcast(intent);
+                }
+            });
+
         }
     }
 }

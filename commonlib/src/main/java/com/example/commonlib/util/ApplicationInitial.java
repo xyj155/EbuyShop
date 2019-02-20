@@ -36,7 +36,7 @@ public class ApplicationInitial {
 
     public ApplicationInitial initEpay() {
         EPay.getInstance(MyApp.getInstance()).init("wAwS4BHkB", "1b0ccf51458c4053ae2931772fbbfb97",
-                "7169149861036033", "baidu");
+                "7778897507581955", "baidu");
         return this;
     }
 

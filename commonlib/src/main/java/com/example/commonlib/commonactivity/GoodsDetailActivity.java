@@ -37,11 +37,14 @@ import com.example.commonlib.R;
 import com.example.commonlib.R2;
 import com.example.commonlib.base.BaseActivity;
 import com.example.commonlib.contract.GoodsDetailContract;
+import com.example.commonlib.contract.GoodsStyleContract;
 import com.example.commonlib.gson.GoodsDetailGson;
+import com.example.commonlib.gson.GoodsStyleGson;
 import com.example.commonlib.gson.SubmitOrderGson;
 import com.example.commonlib.http.RetrofitUtils;
 import com.example.commonlib.loader.GoodsBannerViewHolder;
 import com.example.commonlib.presenter.GoodsDetailPresenter;
+import com.example.commonlib.presenter.GoodsStylePresenter;
 import com.example.commonlib.util.RouterUtil;
 import com.example.commonlib.util.SharePreferenceUtil;
 import com.example.commonlib.view.ShopChooseDialog;
@@ -66,7 +69,7 @@ import butterknife.OnClick;
 import cn.sharesdk.onekeyshare.OnekeyShare;
 
 @Route(path = RouterUtil.GOODSDETAIL)
-public class GoodsDetailActivity extends BaseActivity<GoodsDetailContract.View, GoodsDetailPresenter> implements GoodsDetailContract.View, SlideDetailsLayout.OnSlideDetailsListener {
+public class GoodsDetailActivity extends BaseActivity<GoodsDetailContract.View, GoodsDetailPresenter> implements GoodsDetailContract.View, SlideDetailsLayout.OnSlideDetailsListener, GoodsStyleContract.View {
     @BindView(R2.id.banner_goods)
     MZBannerView bannerGoods;
     @BindView(R2.id.tv_banner_size)
@@ -462,8 +465,6 @@ public class GoodsDetailActivity extends BaseActivity<GoodsDetailContract.View, 
                 oks.show(GoodsDetailActivity.this);
             }
         });
-        shopChooseDialogBuy = new ShopChooseDialog(this, getIntent().getStringExtra("goodsId"), false);
-        shopChooseDialogChoose = new ShopChooseDialog(this, getIntent().getStringExtra("goodsId"), true);
         tvCommentpicCount.setText("( " + goodsGson.getGoodsCommentPic().size() + " )");
         cbCollection.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -570,25 +571,23 @@ public class GoodsDetailActivity extends BaseActivity<GoodsDetailContract.View, 
     }
 
     private GoodsDetailPresenter submitOrderPresenter = new GoodsDetailPresenter(this);
+    private boolean isBuy = false;
 
     @OnClick({R2.id.tv_service, R2.id.tv_shopcar, R2.id.tv_add, R2.id.tv_buy, R2.id.iv_close, R2.id.ll_comment})
     public void onViewClicked(View view) {
         int id = view.getId();
         if (id == R.id.tv_add) {
-            shopChooseDialogBuy.show();
+            GoodsStylePresenter goodsStylePresenter = new GoodsStylePresenter(this);
+            goodsStylePresenter.queryGoodsStyle(getIntent().getStringExtra("goodsId"));
+            isBuy = false;
+
         } else if (id == R.id.tv_buy) {
-            shopChooseDialogChoose.show();
-            shopChooseDialogChoose.setOnSubmitOrderListener(new ShopChooseDialog.onSubmitOrderListener() {
-                @Override
-                public void onSubmitListener(String goodsId, String count) {
-                    goodsIdList.clear();
-                    Gson gson = new Gson();
-                    for (int i = 0; i < Integer.valueOf(count); i++) {
-                        goodsIdList.add(goodsId);
-                    }
-                    submitOrderPresenter.insertUserOrder((String) SharePreferenceUtil.getUser("uid", "String"), gson.toJson(goodsIdList));
-                }
-            });
+            GoodsStylePresenter goodsStylePresenter = new GoodsStylePresenter(this);
+            goodsStylePresenter.queryGoodsStyle(getIntent().getStringExtra("goodsId"));
+            isBuy = true;
+
+
+
         } else if (id == R.id.iv_close) {
             finish();
         } else if (id == R.id.ll_current_goods) {
@@ -609,6 +608,58 @@ public class GoodsDetailActivity extends BaseActivity<GoodsDetailContract.View, 
         }
     }
 
+    @Override
+    public void loadGoodsStyle(List<GoodsStyleGson> goodsGson) {
+        if (isBuy) {
+            shopChooseDialogChoose = new ShopChooseDialog(GoodsDetailActivity.this, getIntent().getStringExtra("goodsId"), true, goodsGson);
+            shopChooseDialogChoose.show();
+            shopChooseDialogChoose.setOnSubmitOrderListener(new ShopChooseDialog.onSubmitOrderListener() {
+                @Override
+                public void onSubmitListener(String goodsId, String count) {
+                    goodsIdList.clear();
+                    Gson gson = new Gson();
+                    for (int i = 0; i < Integer.valueOf(count); i++) {
+                        goodsIdList.add(goodsId);
+                    }
+                    submitOrderPresenter.insertUserOrder((String) SharePreferenceUtil.getUser("uid", "String"), gson.toJson(goodsIdList));
+                }
+            });
+        } else {
+            shopChooseDialogBuy = new ShopChooseDialog(GoodsDetailActivity.this, getIntent().getStringExtra("goodsId"), false, goodsGson);
+            shopChooseDialogBuy.show();
+            shopChooseDialogChoose.setOnSubmitOrderListener(new ShopChooseDialog.onSubmitOrderListener() {
+                @Override
+                public void onSubmitListener(String goodsId, String count) {
+                    goodsIdList.clear();
+                    Gson gson = new Gson();
+                    for (int i = 0; i < Integer.valueOf(count); i++) {
+                        goodsIdList.add(goodsId);
+                    }
+                    submitOrderPresenter.insertUserOrder((String) SharePreferenceUtil.getUser("uid", "String"), gson.toJson(goodsIdList));
+                }
+            });
+//            shopChooseDialogBuy.setOnShowGoodsListener(new ShopChooseDialog.OnShowGodosListener() {
+//                @Override
+//                public void onShow() {
+//                    Log.i(TAG, "onShow: ");
+//                    shopChooseDialogChoose.show();
+//
+//                }
+//
+//                @Override
+//                public void onNoGoods() {
+//                    Log.i(TAG, "onNoGoods: ");
+//                    ToastUtils.show("这件商品没有存货了哦！");
+//                }
+//            });
+        }
+
+    }
+
+    @Override
+    public void addGoodsInShopCar(boolean isSuccess) {
+
+    }
 
     private List<String> goodsIdList = new ArrayList<>();
 

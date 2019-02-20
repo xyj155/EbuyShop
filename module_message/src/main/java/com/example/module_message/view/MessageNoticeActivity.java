@@ -4,8 +4,10 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
 
 import com.example.commonlib.base.BaseActivity;
+import com.example.commonlib.gson.MessageExpressTraceGson;
 import com.example.commonlib.gson.SystemMessageGson;
 import com.example.module_message.R;
 import com.example.module_message.R2;
@@ -55,7 +57,7 @@ public class MessageNoticeActivity extends BaseActivity<MessageContract.View, Me
     @Override
     public void initView() {
         ButterKnife.bind(this);
-        initToolBar().setToolBarTitle("消息通知");
+        initToolBar().setToolBarTitle("通知消息");
 
         ryNews.setLayoutManager(new LinearLayoutManager(MessageNoticeActivity.this));
 
@@ -92,6 +94,7 @@ public class MessageNoticeActivity extends BaseActivity<MessageContract.View, Me
             Log.i(TAG, "querySystemPushMessage: 33333");
             systemMessageGsonArrayList.addAll(systemMessageGsonList);
             systemPushAdapter = new SystemPushAdapter(null,MessageNoticeActivity.this);
+            systemPushAdapter.setEmptyView(View.inflate(MessageNoticeActivity.this,R.layout.common_empty_message,null));
             systemPushAdapter.addData(systemMessageGsonArrayList);
             ryNews.setAdapter(systemPushAdapter);
         } else {
@@ -101,6 +104,11 @@ public class MessageNoticeActivity extends BaseActivity<MessageContract.View, Me
             systemPushAdapter.replaceData(systemMessageGsonArrayList);
             Log.i(TAG, "queryMoreSystemPushMessage: 22222");
         }
+    }
+
+    @Override
+    public void queryUserGoodsTrace(List<MessageExpressTraceGson> messageExpressTraceGsonList) {
+
     }
 
 
