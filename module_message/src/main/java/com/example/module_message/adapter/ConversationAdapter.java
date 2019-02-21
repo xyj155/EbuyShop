@@ -17,6 +17,7 @@ import java.util.List;
 
 import cn.jpush.im.android.api.callback.GetAvatarBitmapCallback;
 import cn.jpush.im.android.api.content.TextContent;
+import cn.jpush.im.android.api.enums.ContentType;
 import cn.jpush.im.android.api.model.Conversation;
 import cn.jpush.im.android.api.model.UserInfo;
 
@@ -29,9 +30,20 @@ public class ConversationAdapter extends BaseQuickAdapter<Conversation, BaseView
     protected void convert(final BaseViewHolder helper, final Conversation item) {
         if (item.getLatestMessage() != null) {
             final UserInfo targetInfo = (UserInfo) item.getTargetInfo();
-            TextContent content = (TextContent) item.getLatestMessage().getContent();
+            ContentType contentType = item.getLatestMessage().getContentType();
+            switch (contentType) {
+                case image:
+                    helper.setText(R.id.tv_recent_msg, "图片");
+                    break;
+                case text:
+                    TextContent content = (TextContent) item.getLatestMessage().getContent();
+                    helper.setText(R.id.tv_recent_msg, content.getText());
+                    break;
+
+            }
+
             helper.setText(R.id.iv_username, item.getTitle())
-                    .setText(R.id.tv_recent_msg, content.getText())
+
                     .setOnClickListener(R.id.ll_contact, new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {

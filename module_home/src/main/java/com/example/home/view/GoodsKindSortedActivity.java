@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.example.commonlib.base.BaseActivity;
 import com.example.commonlib.gson.KindItemGson;
@@ -20,7 +21,7 @@ import com.xuyijie.home.R;
 
 import java.util.ArrayList;
 import java.util.List;
-
+@Route(path = RouterUtil.KIIND)
 public class GoodsKindSortedActivity extends BaseActivity<KindContract.View, KindPresenter> implements KindContract.View {
 
     private ItemListAdapter itemListAdapter;

@@ -2,7 +2,10 @@ package com.example.commonlib.commonactivity;
 
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
+import android.graphics.Color;
 import android.os.Build;
+import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -13,9 +16,11 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.example.commonlib.R;
 import com.example.commonlib.R2;
 import com.example.commonlib.adapter.ShopServiceConversationAdapter;
@@ -33,12 +38,18 @@ import com.example.commonlib.view.toast.ToastUtils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
+import com.yuyh.library.imgsel.ISNav;
+import com.yuyh.library.imgsel.config.ISCameraConfig;
+import com.yuyh.library.imgsel.config.ISListConfig;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import cn.jpush.im.android.api.JMessageClient;
 import cn.jpush.im.android.api.content.TextContent;
 import cn.jpush.im.android.api.event.ChatRoomMessageEvent;
@@ -60,7 +71,15 @@ public class ShopServiceConversationActivity extends BaseActivity<GoodsDetailCon
 
     @BindView(R2.id.msg_recycle_view)
     RecyclerView msgRecycleView;
-    private ShopServiceConversationAdapter shopServiceConversationAdapter = new ShopServiceConversationAdapter(null);
+    @BindView(R2.id.ll_takePhoto)
+    LinearLayout llTakePhoto;
+    @BindView(R2.id.ll_picture)
+    LinearLayout llPicture;
+    @BindView(R2.id.ll_video)
+    LinearLayout llVideo;
+    @BindView(R2.id.ll_goods)
+    LinearLayout llGoods;
+    private ShopServiceConversationAdapter shopServiceConversationAdapter ;
     private View mSubPanel1;
     @BindView(R2.id.voice_text_switch_iv)
     ImageView mPlusIv1;
@@ -152,6 +171,7 @@ public class ShopServiceConversationActivity extends BaseActivity<GoodsDetailCon
     public void initView() {
         createDialog("");
         ButterKnife.bind(this);
+        shopServiceConversationAdapter = new ShopServiceConversationAdapter(null,ShopServiceConversationActivity.this);
         initToolBar().setToolBarTitle(getIntent().getStringExtra("shopName"));
         mPanelRoot.setIgnoreRecommendHeight(true);
         mSubPanel1 = mPanelRoot.findViewById(R.id.sub_panel_1);
@@ -261,7 +281,7 @@ public class ShopServiceConversationActivity extends BaseActivity<GoodsDetailCon
 //                    if (getIntent().getStringExtra("appkey")==null) {
 //                        singleConversation1 = Conversation.createSingleConversation(getIntent().getStringExtra("username"));
 //                    } else {
-                    singleConversation1 = Conversation.createSingleConversation(getIntent().getStringExtra("username"),"3a23b8ad0545565bb6d71ecc");
+                    singleConversation1 = Conversation.createSingleConversation(getIntent().getStringExtra("username"), "3a23b8ad0545565bb6d71ecc");
 //                    }
 
                     Log.i(TAG, "gotResult: 31233111" + singleConversation1);
@@ -290,7 +310,7 @@ public class ShopServiceConversationActivity extends BaseActivity<GoodsDetailCon
 //                                            if (getIntent().getStringExtra("appkey").isEmpty()) {
 //                                                message = singleConversation1.createSendMessage(new TextContent(etInput.getText().toString()));
 //                                            } else {
-                                                message = singleConversation1.createSendMessage(new TextContent(etInput.getText().toString()), "3a23b8ad0545565bb6d71ecc");
+                                            message = singleConversation1.createSendMessage(new TextContent(etInput.getText().toString()), "3a23b8ad0545565bb6d71ecc");
 //                                            }
                                             if (message != null) {
                                                 JMessageClient.sendMessage(message);
@@ -370,4 +390,79 @@ public class ShopServiceConversationActivity extends BaseActivity<GoodsDetailCon
     }
 
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
+    }
+
+    private static final int REQUEST_LIST_CODE = 0x1;
+    private static final int REQUEST_CAMERA_CODE = 0x2;
+
+    @OnClick({R2.id.ll_takePhoto, R2.id.ll_picture, R2.id.ll_video, R2.id.ll_goods})
+    public void onViewClicked(View view) {
+        int i = view.getId();
+        if (i == R.id.ll_takePhoto) {
+            ISCameraConfig config = new ISCameraConfig.Builder()
+                    .cropSize(0, 0, 120, 120)
+                    .build();
+            ISNav.getInstance().toCameraActivity(this, config, REQUEST_CAMERA_CODE);
+        } else if (i == R.id.ll_picture) {
+            ISListConfig config = new ISListConfig.Builder()
+                    .multiSelect(false)
+                    .rememberSelected(false)
+                    .btnBgColor(Color.GRAY)
+                    .btnTextColor(Color.BLUE)
+                    .statusBarColor(Color.parseColor("#ffffff"))
+                    .backResId(R.mipmap.ic_back)
+                    .title("发送图片")
+                    .titleColor(Color.BLACK)
+                    .titleBgColor(Color.parseColor("#ffffff"))
+                    .cropSize(1, 1, 200, 200)
+                    .needCrop(true)
+                    .needCamera(true)
+                    .maxNum(1)
+                    .build();
+            ISNav.getInstance().toListActivity(this, config, REQUEST_LIST_CODE);
+        } else if (i == R.id.ll_video) {
+            ARouter.getInstance().build(RouterUtil.ALLORDER).navigation();
+        } else if (i == R.id.ll_goods) {
+            ARouter.getInstance().build(RouterUtil.KIIND).navigation();
+        }
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == REQUEST_LIST_CODE && resultCode == RESULT_OK && data != null) {
+//            pathList.add(data.getStringArrayListExtra("result").get(0));
+//            GlideUtil.loadRoundCornerImage(pathList.get(0), ivAvatar);
+            try {
+                Message singleImageMessage = JMessageClient.createSingleImageMessage(getIntent().getStringExtra("username"), "3a23b8ad0545565bb6d71ecc", new File(data.getStringArrayListExtra("result").get(0)));
+                boolean username = singleImageMessage.getFromUser().getUserName().equals(String.valueOf(SharePreferenceUtil.getUser("username", "String")));
+                if (username) {
+                    shopServiceConversationAdapter.addData(ConversationEntity.client(singleImageMessage));
+                } else {
+                    shopServiceConversationAdapter.addData(ConversationEntity.service(singleImageMessage));
+                }
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+            Log.i(TAG, "onActivityResult: REQUEST_LIST_CODE"+data.getStringArrayListExtra("result").get(0));
+        }else if (requestCode == REQUEST_CAMERA_CODE && resultCode == RESULT_OK && data != null) {
+            Log.i(TAG, "onActivityResult: REQUEST_CAMERA_CODE"+data.getStringExtra("result"));
+            try {
+                Message singleImageMessage = JMessageClient.createSingleImageMessage(getIntent().getStringExtra("username"), "3a23b8ad0545565bb6d71ecc", new File(data.getStringExtra("result")));
+                boolean username = singleImageMessage.getFromUser().getUserName().equals(String.valueOf(SharePreferenceUtil.getUser("username", "String")));
+                if (username) {
+                    shopServiceConversationAdapter.addData(ConversationEntity.client(singleImageMessage));
+                } else {
+                    shopServiceConversationAdapter.addData(ConversationEntity.service(singleImageMessage));
+                }
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 }

@@ -6,8 +6,10 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import com.alibaba.android.arouter.facade.annotation.Route;
 import com.example.commonlib.base.BaseActivity;
 import com.example.commonlib.gson.UserOrderStatusGson;
+import com.example.commonlib.util.RouterUtil;
 import com.example.commonlib.util.SharePreferenceUtil;
 import com.example.commonlib.view.MyDialog;
 import com.example.user.adapter.UserGoodsStatusAdapter;
@@ -27,7 +29,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
+@Route(path = RouterUtil.ALLORDER)
 public class UserAllOrdersActivity extends BaseActivity<UserAllOrderContract.View, UserAllOrderPresenter> implements UpdateOrderStatusContract.View, UserAllOrderContract.View {
 
 

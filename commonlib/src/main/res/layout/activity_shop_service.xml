@@ -85,24 +85,26 @@
 
     <com.example.commonlib.view.panel.widget.KPSwitchPanelLinearLayout
         android:id="@+id/panel_root"
-        android:visibility="gone"
-        style="@style/Panel">
+        style="@style/Panel"
+        android:visibility="gone">
 
         <LinearLayout
             android:id="@+id/sub_panel_1"
-            android:background="#fff"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="#fff"
             android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginRight="@dimen/dp_12"
                 android:layout_marginLeft="@dimen/dp_12"
+                android:layout_marginRight="@dimen/dp_12"
+                android:orientation="horizontal"
                 android:weightSum="4">
+
                 <LinearLayout
+                    android:id="@+id/ll_takePhoto"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -115,8 +117,9 @@
                         android:padding="@dimen/dp_17"
                         android:src="@mipmap/ic_chat_camera" />
                 </LinearLayout>
-                <LinearLayout
 
+                <LinearLayout
+                    android:id="@+id/ll_picture"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -131,8 +134,8 @@
                 </LinearLayout>
 
 
-
                 <LinearLayout
+                    android:id="@+id/ll_video"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -147,6 +150,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/ll_goods"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -160,31 +164,35 @@
                         android:src="@mipmap/ic_chat_goods" />
                 </LinearLayout>
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:weightSum="4"
-                android:layout_marginRight="@dimen/dp_12"
                 android:layout_marginLeft="@dimen/dp_12"
-                android:orientation="horizontal">
+                android:layout_marginRight="@dimen/dp_12"
+                android:orientation="horizontal"
+                android:weightSum="4">
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="拍照"
+                    android:layout_weight="1"
                     android:gravity="center"
-                    android:layout_weight="1"/>
+                    android:text="拍照" />
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="照片"
+                    android:layout_weight="1"
                     android:gravity="center"
-                    android:layout_weight="1"/>
+                    android:text="照片" />
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="视频"
+                    android:layout_weight="1"
                     android:gravity="center"
-                    android:layout_weight="1"/>
+                    android:text="订单" />
 
                 <TextView
                     android:layout_width="match_parent"

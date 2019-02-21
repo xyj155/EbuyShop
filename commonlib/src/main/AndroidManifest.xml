@@ -18,6 +18,7 @@
         <activity android:name=".commonactivity.AddressOfNewReceiptActivity" />
         <activity android:name=".commonactivity.PaymentStatusActivity" />
         <activity android:name=".commonactivity.GoodsCommentActivity" />
+        <activity android:name=".view.previewphoto.PhotoPreviewActivity" />
     </application>
 
 </manifest>

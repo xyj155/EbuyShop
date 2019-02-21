@@ -140,6 +140,7 @@ dependencies {
     api rootProject.ext.dependencies["jcore"]
     api 'se.emilsjolander:stickylistheaders:2.7.0'
     api 'com.flipboard:bottomsheet-core:1.5.1'
+    api 'com.commit451:PhotoView:1.2.4'
     api 'com.amap.api:location:3.3.0'
     api project(':pictureSelector')
     api project(':adlibrary')

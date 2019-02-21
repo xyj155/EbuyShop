@@ -50,6 +50,7 @@ import com.example.commonlib.util.SharePreferenceUtil;
 import com.example.commonlib.view.ShopChooseDialog;
 import com.example.commonlib.view.SlideDetailsLayout;
 import com.example.commonlib.view.WebViewMod;
+import com.example.commonlib.view.previewphoto.PhotoPreviewActivity;
 import com.google.gson.Gson;
 import com.zhouwei.mzbanner.MZBannerView;
 import com.zhouwei.mzbanner.holder.MZHolderCreator;
@@ -413,22 +414,23 @@ public class GoodsDetailActivity extends BaseActivity<GoodsDetailContract.View, 
         tvBannerSize.setText("1/" + goodsGson.getGoodsPicUrl().size());
         Log.i(TAG, "loadGoodsDetail: " + goodsGson.getGoodsPicUrl().size());
         tvDescribe.setText("商品描述：" + goodsGson.getGoodsDescribe());
-        List<String> goodsPicUrl = goodsGson.getGoodsPicUrl();
+        final List<String> goodsPicUrl = goodsGson.getGoodsPicUrl();
         bannerGoods.setPages(goodsPicUrl, new MZHolderCreator() {
             @Override
             public MZViewHolder createViewHolder() {
                 return new GoodsBannerViewHolder();
             }
         });
-        bannerGoods.setDuration(200);
-        bannerGoods.setIndicatorVisible(true);
         bannerGoods.setBannerPageClickListener(new MZBannerView.BannerPageClickListener() {
             @Override
             public void onPageClick(View view, int i) {
-                Log.i(TAG, "onPageClick: " + i);
-
+                Intent intent = new Intent(GoodsDetailActivity.this, PhotoPreviewActivity.class);
+                intent.putExtra(PhotoPreviewActivity.EXTRA_PHOTOS,(ArrayList)goodsPicUrl);
+                startActivity(intent);
             }
         });
+        bannerGoods.setDuration(200);
+        bannerGoods.setIndicatorVisible(true);
         bannerGoods.addPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {

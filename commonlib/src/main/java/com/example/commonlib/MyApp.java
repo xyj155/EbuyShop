@@ -8,7 +8,6 @@ import android.util.Log;
 
 import com.example.commonlib.commonactivity.ShopServiceConversationActivity;
 import com.example.commonlib.util.ApplicationInitial;
-import com.facebook.drawee.backends.pipeline.Fresco;
 import com.uuch.adlibrary.utils.DisplayUtil;
 
 import cn.jpush.im.android.api.JMessageClient;
@@ -26,9 +25,6 @@ public class MyApp extends MultiDexApplication {
     public void onCreate() {
         super.onCreate();
         instance = this;
-
-
-
         ApplicationInitial applicationInitial = new ApplicationInitial();
         applicationInitial
                 .initArouter()
@@ -39,12 +35,10 @@ public class MyApp extends MultiDexApplication {
                 .initIMClient()
                 .initJpush()
                 .initMob()
-                .initPermission()
+                .initPicaso()
                 .initToast()
                 .initX5();
-
         initDisplayOpinion();
-        Fresco.initialize(this);
         JMessageClient.registerEventReceiver(this);
     }
 

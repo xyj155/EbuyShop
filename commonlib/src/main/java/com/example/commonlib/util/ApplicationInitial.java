@@ -12,6 +12,7 @@ import com.bumptech.glide.Glide;
 import com.example.commonlib.MyApp;
 import com.example.commonlib.R;
 import com.example.commonlib.view.toast.ToastUtils;
+import com.facebook.drawee.backends.pipeline.Fresco;
 import com.getui.gis.sdk.GInsightManager;
 import com.mob.MobSDK;
 import com.payelves.sdk.EPay;
@@ -188,8 +189,8 @@ public class ApplicationInitial {
         return this;
     }
 
-    public ApplicationInitial initPermission() {
-
+    public ApplicationInitial initPicaso() {
+        Fresco.initialize(MyApp.getInstance());
         return this;
     }
 

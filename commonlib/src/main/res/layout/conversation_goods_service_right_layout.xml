@@ -34,6 +34,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/dp_16" />
+        <ImageView
+            android:visibility="gone"
+            android:layout_width="@dimen/dp_100"
+            android:layout_height="@dimen/dp_100"
+            android:id="@+id/iv_picture"/>
     </com.ruochuan.bubblelayout.BubbleLayout>
 
 

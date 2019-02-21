@@ -30,6 +30,7 @@ import com.example.commonlib.util.RouterUtil;
 import com.example.commonlib.util.SharePreferenceUtil;
 import com.example.commonlib.view.MyDialog;
 import com.example.home.view.HomeFragment;
+import com.example.kind.view.KindFragment;
 import com.uuch.adlibrary.AdConstant;
 import com.uuch.adlibrary.AdManager;
 import com.uuch.adlibrary.bean.AdInfo;
@@ -173,7 +174,7 @@ public class MainActivity extends BaseActivity<HomeContract.View, LoginPresent> 
                         break;
                     case R.id.rb_resource:
                         if (kindFragment == null) {
-                            kindFragment = (Fragment) ARouter.getInstance().build(RouterUtil.Kind_Fragment_Main).navigation();
+                            kindFragment = new KindFragment();
                             transaction.add(R.id.flContainer, kindFragment);
                         } else {
                             transaction.show(kindFragment);
