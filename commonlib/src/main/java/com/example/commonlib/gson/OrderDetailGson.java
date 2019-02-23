@@ -171,6 +171,15 @@ public class OrderDetailGson {
          * goodsPicUrl : https://gd3.alicdn.com/imgextra/i3/126330677/TB2EoREX._C11Bjy1zeXXXtGpXa_!!126330677.jpg
          */
         private String orderNum;
+private String isDiscount;
+
+        public String getIsDiscount() {
+            return isDiscount;
+        }
+
+        public void setIsDiscount(String isDiscount) {
+            this.isDiscount = isDiscount;
+        }
 
         public String getOrderNum() {
             return orderNum;

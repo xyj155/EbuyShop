@@ -67,7 +67,8 @@ public class MessageNoticeActivity extends BaseActivity<MessageContract.View, Me
             public void onRefresh(RefreshLayout refreshLayout) {
                 page = 1;
                 systemMessageGsonArrayList.clear();
-                systemPushAdapter.notifyDataSetChanged();
+                if (systemPushAdapter != null)
+                    systemPushAdapter.notifyDataSetChanged();
                 mPresenter.querySystemPushMessage("1");
                 isFirst = true;
             }
@@ -93,8 +94,8 @@ public class MessageNoticeActivity extends BaseActivity<MessageContract.View, Me
         if (isFirst) {
             Log.i(TAG, "querySystemPushMessage: 33333");
             systemMessageGsonArrayList.addAll(systemMessageGsonList);
-            systemPushAdapter = new SystemPushAdapter(null,MessageNoticeActivity.this);
-            systemPushAdapter.setEmptyView(View.inflate(MessageNoticeActivity.this,R.layout.common_empty_message,null));
+            systemPushAdapter = new SystemPushAdapter(null, MessageNoticeActivity.this);
+            systemPushAdapter.setEmptyView(View.inflate(MessageNoticeActivity.this, R.layout.common_empty_message, null));
             systemPushAdapter.addData(systemMessageGsonArrayList);
             ryNews.setAdapter(systemPushAdapter);
         } else {

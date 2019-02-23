@@ -25,7 +25,7 @@ public class PurseGoodsAdapter extends BaseQuickAdapter<GoodsGson, BaseViewHolde
 
     @Override
     protected void convert(BaseViewHolder helper, final GoodsGson item) {
-        helper.setText(R.id.tvPrice, item.getGoodsPrice())
+        helper.setText(R.id.tvPrice,"￥"+ item.getGoodsPrice())
                 .setText(R.id.tvGoodsName, item.getGoodsName())
                 .setText(R.id.tvTotal, item.getGoodsLocation())
                 .setOnClickListener(R.id.ll_goods, new View.OnClickListener() {

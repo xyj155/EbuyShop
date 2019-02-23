@@ -230,6 +230,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dp_90"
+                    android:id="@+id/ll_member_goods"
                     android:layout_marginLeft="@dimen/dp_8"
                     android:layout_marginTop="@dimen/dp_4"
                     android:layout_marginRight="@dimen/dp_8"
@@ -253,7 +254,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/dp_15"
                         android:layout_marginTop="@dimen/dp_6.5"
-                        android:text="购物双倍积分，享半价包邮"
+                        android:text="购物享折扣，还有优惠券等你拿，快戳！"
                         android:textColor="#fff" />
                 </LinearLayout>
 

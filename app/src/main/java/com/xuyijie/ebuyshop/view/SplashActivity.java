@@ -1,5 +1,7 @@
 package com.xuyijie.ebuyshop.view;
 
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.util.Log;
@@ -16,6 +18,7 @@ import com.example.commonlib.contract.UserMemberDateContract;
 import com.example.commonlib.gson.AdvertisementGson;
 import com.example.commonlib.gson.PopAdvertisementGson;
 import com.example.commonlib.presenter.UserMemberDatePresenter;
+import com.example.commonlib.service.OnePixelReceiver;
 import com.example.commonlib.util.GlideUtil;
 import com.example.commonlib.util.RouterUtil;
 import com.example.commonlib.util.SharePreferenceUtil;
@@ -39,7 +42,7 @@ public class SplashActivity extends BaseActivity<AdvertisementContract.View, Adv
     @BindView(R.id.tv_time)
     TextView tvTime;
     private MyCountDownTimer mc;
-private UserMemberDatePresenter userMemberDatePresenter=new UserMemberDatePresenter(this);
+    private UserMemberDatePresenter userMemberDatePresenter = new UserMemberDatePresenter(this);
 
     @Override
     public boolean isSetStatusBarTranslucent() {
@@ -64,8 +67,8 @@ private UserMemberDatePresenter userMemberDatePresenter=new UserMemberDatePresen
     @Override
     public void initView() {
         ButterKnife.bind(this);
-        if (!String.valueOf(SharePreferenceUtil.getUser("uid","String")).isEmpty()){
-            userMemberDatePresenter.judgementMember(String.valueOf(SharePreferenceUtil.getUser("uid","String")));
+        if (!String.valueOf(SharePreferenceUtil.getUser("uid", "String")).isEmpty()) {
+            userMemberDatePresenter.judgementMember(String.valueOf(SharePreferenceUtil.getUser("uid", "String")));
         }
         GlideUtil.loadRoundCornerAvatarImage(R.mipmap.app_icon, (ImageView) findViewById(R.id.iv_logo), 30);
         mc = new MyCountDownTimer(4000, 1000);
@@ -92,7 +95,11 @@ private UserMemberDatePresenter userMemberDatePresenter=new UserMemberDatePresen
 
     @Override
     public void initData() {
-
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(Intent.ACTION_SCREEN_ON);
+        filter.addAction(Intent.ACTION_SCREEN_OFF);
+        filter.addAction(Intent.ACTION_USER_PRESENT);
+        registerReceiver(new OnePixelReceiver(),filter);
     }
 
     private static final String TAG = "SplashActivity";
@@ -148,7 +155,7 @@ private UserMemberDatePresenter userMemberDatePresenter=new UserMemberDatePresen
 
     @Override
     public void loadUserMember(int code) {
-        if (code!=200){
+        if (code != 200) {
             Map<String, Object> map = new HashMap<>();
             map.put("islogin", true);
             map.put("member", "0");
@@ -201,4 +208,5 @@ private UserMemberDatePresenter userMemberDatePresenter=new UserMemberDatePresen
         }
 
     }
+
 }

@@ -15,12 +15,12 @@ import rx.Observable;
 public class HomePageModel implements HomePageContract.Model {
     @Override
     public Observable<BaseGson<GoodsGson>> getTimerGoodsList(String type) {
-        return RetrofitUtils.getInstance().create().queryPurseGoods(type);
+        return RetrofitUtils.getInstance().create().queryPurseGoods(type,"1");
     }
 
     @Override
-    public Observable<BaseGson<GoodsGson>> getPurseGoodsList(String type) {
-        return RetrofitUtils.getInstance().create().queryPurseGoods(type);
+    public Observable<BaseGson<GoodsGson>> getPurseGoodsList(String type,String page) {
+        return RetrofitUtils.getInstance().create().queryPurseGoods(type,page);
     }
 
     @Override

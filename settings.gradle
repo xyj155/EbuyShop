@@ -1,1 +1,1 @@
-include ':app', ':module_home', ':module_kind', ':module_user', ':commonlib', ':module_goodscar', ':module_login', ':module_message', ':pictureSelector', ':adlibrary'
+include ':app', ':module_home', ':module_kind', ':module_user', ':commonlib', ':module_goodscar', ':module_login', ':module_message', ':pictureSelector', ':adlibrary', ':library', ':sekeleton'

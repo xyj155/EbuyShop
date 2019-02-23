@@ -18,7 +18,7 @@ import com.example.home.model.HomePageModel;
 import rx.Observable;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Func6;
+import rx.functions.Func5;
 import rx.schedulers.Schedulers;
 
 public class HomePagePresenter extends BasePresenter<HomePageContract.View> implements HomePageContract.Presenter {
@@ -34,10 +34,10 @@ public class HomePagePresenter extends BasePresenter<HomePageContract.View> impl
 
     @Override
     public void setPurseGoodsList(final String type, String type2) {
-        Observable.zip(homePageModel.getPurseGoodsList(type), homePageModel.getTimerGoodsList(type2), homePageModel.getHomeActivity(), homePageModel.getHomeBanner(), homePageModel.getMarqueenList(), homePageModel.queryHomePurseGoodsAdvertisement(), new Func6<BaseGson<GoodsGson>, BaseGson<GoodsGson>, BaseGson<HotPurseActivityGson>, BaseGson<BannerGson>, BaseGson<MarQueenGson>, BaseGson<HomePurseAdvertisementGson>, HomeDataEntity>() {
+        Observable.zip( homePageModel.getTimerGoodsList(type2), homePageModel.getHomeActivity(), homePageModel.getHomeBanner(), homePageModel.getMarqueenList(), homePageModel.queryHomePurseGoodsAdvertisement(), new Func5<BaseGson<GoodsGson>, BaseGson<HotPurseActivityGson>, BaseGson<BannerGson>, BaseGson<MarQueenGson>, BaseGson<HomePurseAdvertisementGson>, HomeDataEntity>() {
             @Override
-            public HomeDataEntity call(BaseGson<GoodsGson> goodsGsonBaseGson, BaseGson<GoodsGson> goodsGsonBaseGson2, BaseGson<HotPurseActivityGson> hotPurseActivityGsonBaseGson, BaseGson<BannerGson> bannerGsonBaseGson, BaseGson<MarQueenGson> marQueenGsonBaseGson,BaseGson<HomePurseAdvertisementGson> homePurseAdvertisementGsonBaseGson) {
-                return new HomeDataEntity(goodsGsonBaseGson.getData(), goodsGsonBaseGson2.getData(), hotPurseActivityGsonBaseGson.getData(), bannerGsonBaseGson.getData(), marQueenGsonBaseGson.getData(),homePurseAdvertisementGsonBaseGson.getSingleData());
+            public HomeDataEntity call(BaseGson<GoodsGson> goodsGsonBaseGson, BaseGson<HotPurseActivityGson> hotPurseActivityGsonBaseGson, BaseGson<BannerGson> bannerGsonBaseGson, BaseGson<MarQueenGson> marQueenGsonBaseGson, BaseGson<HomePurseAdvertisementGson> homePurseAdvertisementGsonBaseGson) {
+                return new HomeDataEntity(goodsGsonBaseGson.getData(), hotPurseActivityGsonBaseGson.getData(), bannerGsonBaseGson.getData(), marQueenGsonBaseGson.getData(), homePurseAdvertisementGsonBaseGson.getSingleData());
             }
         }).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -56,7 +56,7 @@ public class HomePagePresenter extends BasePresenter<HomePageContract.View> impl
                     @Override
                     public void onNext(HomeDataEntity homeDataEntity) {
                         mMvpView.hideDialog();
-                        mMvpView.loadPurseGoodsList(homeDataEntity.getPurseGoodsList());
+//                        mMvpView.loadPurseGoodsList(homeDataEntity.getPurseGoodsList());
                         mMvpView.loadTimeGoodsList(homeDataEntity.getTimePurseGoodsList());
                         mMvpView.loadHomeActivity(homeDataEntity.getHotPurseActivityGsons());
                         mMvpView.loadHomeBanner(homeDataEntity.getBannerGsons());
@@ -70,6 +70,7 @@ public class HomePagePresenter extends BasePresenter<HomePageContract.View> impl
 
     @Override
     public void queryTimeSell() {
+        Log.i(TAG, "queryTimeSell: ");
         homePageModel.queryTimeSell()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -81,7 +82,31 @@ public class HomePagePresenter extends BasePresenter<HomePageContract.View> impl
 
                     @Override
                     public void onNext(BaseGson<TimeGoodsGson.TimeBean> timeBeanBaseGson) {
+                        Log.i(TAG, "onNext: " + timeBeanBaseGson);
                         mMvpView.loadTimer(timeBeanBaseGson.getSingleData());
+                    }
+
+                    @Override
+                    public void onError(String error) {
+
+                    }
+                });
+    }
+
+    @Override
+    public void queryPurseGoods(String page) {
+        homePageModel.getPurseGoodsList("1", page)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseObserver<BaseGson<GoodsGson>>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onNext(BaseGson<GoodsGson> goodsGsonBaseGson) {
+                        mMvpView.loadPurseGoodsList(goodsGsonBaseGson.getData());
                     }
 
                     @Override

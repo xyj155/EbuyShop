@@ -22,6 +22,11 @@ public class OrderDetailGoodsAdapter extends BaseQuickAdapter<OrderDetailGson.Go
                 .setText(R.id.tv_goods_name, item.getGoodsCommonName())
                 .setText(R.id.tv_goods_style, item.getGoodsName())
                 .setText(R.id.mv_price, "￥ " + item.getGoodsPrice());
+        if (item.getIsDiscount().equals("1")){
+            helper.setVisible(R.id.tv_isdiscount,false);
+        }else {
+            helper.setVisible(R.id.tv_isdiscount,true);
+        }
         GlideUtil.loadRoundCornerAvatarImage(item.getGoodsPicUrl(), (ImageView) helper.getView(R.id.iv_goods_pic), 8);
     }
 }

@@ -77,7 +77,7 @@ public interface Api {
 
 
     @GET("/StuShop/public/index.php/index/Goods/queryPurseGoods")
-    Observable<BaseGson<GoodsGson>> queryPurseGoods(@Query("isPurse") String isPurse);
+    Observable<BaseGson<GoodsGson>> queryPurseGoods(@Query("isPurse") String isPurse,@Query("page")String page);
 
 
     @GET("/StuShop/public/index.php/index/Goods/getHomeActivity")

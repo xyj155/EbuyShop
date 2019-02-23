@@ -3,8 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#fafafa"
-
+    android:background="#fff"
     android:orientation="vertical">
 
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
@@ -35,11 +34,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dp_210"
                     android:scaleType="fitXY"
-                    android:src="@drawable/mall_home_head_bg"
                     app:arcHeight="17dp" />
 
                 <LinearLayout
-                    android:id="@+id/rootview"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical">
@@ -48,13 +45,51 @@
                         android:id="@+id/banner"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/dp_148"
+                        android:background="#f1f1f1"
+                        android:layout_marginRight="@dimen/dp_20"
+                        android:layout_marginLeft="@dimen/dp_20"
                         android:layout_marginTop="@dimen/dp_75"
-                        android:layout_marginBottom="@dimen/dp_15"
+                        android:layout_marginBottom="@dimen/dp_6"
                         app:canLoop="true"
                         app:indicatorAlign="center"
                         app:indicatorPaddingLeft="10dp"
                         app:open_mz_mode="true" />
-
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:weightSum="5">
+    <ImageView
+        android:layout_margin="@dimen/dp_6"
+        android:layout_width="90dp"
+        android:layout_weight="1"
+        android:layout_height="@dimen/dp_60"
+        android:background="@color/light_transparent"/>
+    <ImageView
+        android:layout_margin="@dimen/dp_6"
+        android:layout_width="90dp"
+        android:layout_weight="1"
+        android:layout_height="@dimen/dp_60"
+        android:background="@color/light_transparent"/>
+    <ImageView
+        android:layout_margin="@dimen/dp_6"
+        android:layout_width="90dp"
+        android:layout_weight="1"
+        android:layout_height="@dimen/dp_60"
+        android:background="@color/light_transparent"/>
+    <ImageView
+        android:layout_margin="@dimen/dp_6"
+        android:layout_width="90dp"
+        android:layout_weight="1"
+        android:layout_height="@dimen/dp_60"
+        android:background="@color/light_transparent"/>
+    <ImageView
+        android:layout_margin="@dimen/dp_6"
+        android:layout_width="90dp"
+        android:layout_weight="1"
+        android:layout_height="@dimen/dp_60" 
+        android:background="@color/light_transparent"/>
+</LinearLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -65,64 +100,60 @@
                         android:weightSum="5">
 
                         <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
                             android:id="@+id/iv_news"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:drawableTop="@mipmap/l_chongzhi_gouwu"
+                            android:background="@color/light_transparent"
                             android:drawablePadding="@dimen/dp_6"
                             android:gravity="center"
-                            android:text="新上架"
                             android:textColor="#000"
                             android:textSize="13sp" />
 
                         <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:background="@color/light_transparent"
                             android:id="@+id/tv_member"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:drawableTop="@mipmap/l_chongzhi_xizao"
                             android:drawablePadding="@dimen/dp_6"
                             android:gravity="center"
-                            android:text="会员尊享"
                             android:textColor="#000"
                             android:textSize="13sp" />
 
                         <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
                             android:id="@+id/iv_school_vip"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:drawableTop="@mipmap/l_chongzhi_yongcan"
+                            android:background="@color/light_transparent"
                             android:drawablePadding="@dimen/dp_6"
                             android:gravity="center"
-                            android:text="零食铺"
                             android:textColor="#000"
                             android:textSize="13sp" />
 
 
                         <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
                             android:id="@+id/iv_share"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:drawableTop="@mipmap/l_chongzhi_chuifeng"
+                            android:background="@color/light_transparent"
                             android:drawablePadding="@dimen/dp_6"
                             android:gravity="center"
-                            android:text="购物晒单"
                             android:textColor="#000"
                             android:textSize="13sp" />
 
 
+
                         <TextView
-                            android:id="@+id/iv_best"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:drawableTop="@mipmap/l_chongzhi_xiyi"
+                            android:id="@+id/iv_best"
+                            android:background="@color/light_transparent"
                             android:drawablePadding="@dimen/dp_6"
                             android:gravity="center"
-                            android:text="闲置商品"
                             android:textColor="#000"
                             android:textSize="13sp" />
                     </LinearLayout>
@@ -140,22 +171,24 @@
                         android:orientation="horizontal">
 
                         <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_width="@dimen/dp_50"
+                            android:background="#f1f1f1"
+                            android:layout_height="@dimen/dp_20"
                             android:layout_marginStart="@dimen/dp_6.5"
                             android:layout_marginEnd="@dimen/dp_6.5"
                             android:padding="@dimen/dp_4"
-                            android:src="@mipmap/mall_home_notice" />
+                           />
 
                         <View
                             android:layout_width="@dimen/dp_2"
                             android:layout_height="@dimen/dp_20"
-                            android:background="#ffd600" />
+                            android:background="#f1f1f1" />
 
                         <com.gongwen.marqueen.MarqueeView
                             android:id="@+id/marqueeView"
+                            android:background="#f1f1f1"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="@dimen/dp_30"
                             android:flipInterval="8000"
                             android:inAnimation="@anim/in_top"
                             android:outAnimation="@anim/out_bottom"
@@ -170,32 +203,34 @@
                         android:layout_marginLeft="@dimen/dp_7"
                         android:layout_marginRight="@dimen/dp_7"
                         android:layout_marginBottom="@dimen/dp_7"
-                        android:background="@drawable/abc_home_timersell_bg"
+
                         android:orientation="vertical">
 
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="@dimen/dp_30"
+                            android:background="#f1f1f1"
                             android:orientation="horizontal">
 
                             <TextView
-                                android:layout_width="wrap_content"
+                                android:layout_width="@dimen/dp_50"
                                 android:layout_height="wrap_content"
                                 android:padding="@dimen/dp_9"
-                                android:text="限时抢购"
+                                android:text="    "
                                 android:textColor="#000"
+                                android:background="#f1f1f1"
                                 android:textSize="16sp"
                                 android:textStyle="bold" />
 
                             <TextView
                                 android:id="@+id/tv_time"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                                android:layout_width="@dimen/dp_60"
+                                android:layout_height="@dimen/dp_30"
                                 android:layout_gravity="center"
-                                android:background="@mipmap/mall_flash_sale_time"
                                 android:text=""
+                                android:background="#f1f1f1"
                                 android:textColor="#fff"
-                                android:textSize="@dimen/dp_15" />
+                                android:textSize="@dimen/dp_6" />
 
                             <TextView
                                 android:layout_width="match_parent"
@@ -204,7 +239,7 @@
                                 android:drawablePadding="@dimen/dp_10"
                                 android:gravity="center|right"
                                 android:paddingRight="@dimen/dp_7"
-                                android:text="更多" />
+                                android:background="#f1f1f1"/>
                         </LinearLayout>
 
                         <android.support.v7.widget.RecyclerView
@@ -215,13 +250,13 @@
                     </LinearLayout>
 
                     <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp_30"
                         android:layout_marginTop="@dimen/dp_4"
                         android:layout_marginBottom="@dimen/dp_4"
                         android:paddingLeft="@dimen/dp_20"
                         android:paddingRight="@dimen/dp_10"
-                        android:text="热卖推广"
+                        android:background="#f1f1f1"
                         android:textColor="#000"
                         android:textStyle="bold" />
 
@@ -248,11 +283,11 @@
 
                         <TextView
                             android:id="@+id/tv_activity_name"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:background="@drawable/bg_guess_status_n"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/dp_30"
+                            android:background="#f1f1f1"
                             android:padding="@dimen/dp_3"
-                            android:text="为你推荐"
+                            android:text=""
                             android:textColor="#fff"
                             android:textStyle="bold" />
                     </FrameLayout>
@@ -294,9 +329,6 @@
 
         </com.example.commonlib.view.ObservableScrollView>
 
-        <com.scwang.smartrefresh.layout.footer.ClassicsFooter
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
     <LinearLayout

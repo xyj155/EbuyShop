@@ -37,6 +37,16 @@ public class GoodsGson {
     }
 
     private int id;
+    private String isDiscount;
+
+    public String getIsDiscount() {
+        return isDiscount;
+    }
+
+    public void setIsDiscount(String isDiscount) {
+        this.isDiscount = isDiscount;
+    }
+
     private String goodsName;
     private String goodsLocation;
     private String goodsTags;

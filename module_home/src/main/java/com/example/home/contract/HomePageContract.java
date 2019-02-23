@@ -17,7 +17,7 @@ public interface HomePageContract {
     interface Model {
         Observable<BaseGson<GoodsGson>> getTimerGoodsList(String type);
 
-        Observable<BaseGson<GoodsGson>> getPurseGoodsList(String type);
+        Observable<BaseGson<GoodsGson>> getPurseGoodsList(String type,String page);
 
         Observable<BaseGson<HotPurseActivityGson>> getHomeActivity();
 
@@ -47,6 +47,7 @@ public interface HomePageContract {
     interface Presenter {
         void setPurseGoodsList(String type1, String type2);
         void  queryTimeSell();
+        void  queryPurseGoods(String page);
 
     }
 }

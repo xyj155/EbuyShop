@@ -54,13 +54,12 @@ android {
         minSdkVersion rootProject.ext.android.minSdkVersion
         targetSdkVersion rootProject.ext.android.targetSdkVersion
         versionCode rootProject.ext.android.versionCode
-        multiDexEnabled true
         versionName rootProject.ext.android.versionName
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
         vectorDrawables.useSupportLibrary = true
 
-//        multiDexEnabled true //设置multiDex模式
+        multiDexEnabled true //设置multiDex模式
 
         //为了解决部分第三方库重复打包了META-INF的问题
         lintOptions {
@@ -138,10 +137,10 @@ dependencies {
     api rootProject.ext.dependencies["jmessage"]
     api rootProject.ext.dependencies["jpush"]
     api rootProject.ext.dependencies["jcore"]
-    api 'se.emilsjolander:stickylistheaders:2.7.0'
     api 'com.flipboard:bottomsheet-core:1.5.1'
     api 'com.commit451:PhotoView:1.2.4'
     api 'com.amap.api:location:3.3.0'
     api project(':pictureSelector')
     api project(':adlibrary')
+    api project(':sekeleton')
 }

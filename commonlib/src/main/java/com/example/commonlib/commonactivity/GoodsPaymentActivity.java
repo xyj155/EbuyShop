@@ -159,30 +159,41 @@ public class GoodsPaymentActivity extends BaseActivity<OrderDetailContract.View,
             spannableString.setSpan(new ForegroundColorSpan(Color.parseColor("#FF0000")), 12, s.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
             tvPayType.setText(spannableString);
         }
+        int user = Integer.valueOf(String.valueOf(SharePreferenceUtil.getUser("member", "String")));
         for (OrderDetailGson.GoodsBean goodsBean : orderDetailGson.getGoods()) {
-            money += Double.valueOf(goodsBean.getGoodsPrice()) * goodsBean.getGoodsCount();
+            if (goodsBean.getIsDiscount().equals("1")) {
+                if (user == 1) {
+                    money += Double.valueOf(goodsBean.getGoodsPrice()) * goodsBean.getGoodsCount() * MemberConfig.vipRank_1;
+                } else if (user == 2) {
+                    money += Double.valueOf(goodsBean.getGoodsPrice()) * goodsBean.getGoodsCount() * MemberConfig.vipRank_2;
+                } else if (user == 3) {
+                    money += Double.valueOf(goodsBean.getGoodsPrice()) * goodsBean.getGoodsCount() * MemberConfig.vipRank_3;
+                } else {
+                    money += Double.valueOf(goodsBean.getGoodsPrice()) * goodsBean.getGoodsCount();
+                }
+            } else {
+                money += Double.valueOf(goodsBean.getGoodsPrice()) * goodsBean.getGoodsCount();
+            }
+
             count += goodsBean.getGoodsCount();
             goodsIdList.add(String.valueOf(goodsBean.getGoodsId()));
         }
-        int user = Integer.valueOf(String.valueOf(SharePreferenceUtil.getUser("member", "String")));
+
         if (user == 1) {
             tvVip.setVisibility(View.VISIBLE);
-            money = money * MemberConfig.vipRank_1;
             tvVip.setText("(会员1 99折)");
         } else if (user == 2) {
             tvVip.setVisibility(View.VISIBLE);
-            money = money * MemberConfig.vipRank_2;
             tvVip.setText("(会员2 97折)");
         } else if (user == 3) {
             tvVip.setVisibility(View.VISIBLE);
             tvVip.setText("(会员3 95折)");
-            money = money * MemberConfig.vipRank_3;
         }
         tvCount.setText("共 " + count + " 件商品  小计：");
         BigDecimal bigDecimal = new BigDecimal(money);
         tvMoney.setText("￥" + bigDecimal.setScale(2, BigDecimal.ROUND_HALF_DOWN));
         Log.i(TAG, "loadOrderDetail: " + money);
-        totalMoney=money;
+        totalMoney = money;
         if (money > 188) {
             tvPost.setText("配送方式       满 188 包邮");
         } else {
@@ -245,7 +256,7 @@ public class GoodsPaymentActivity extends BaseActivity<OrderDetailContract.View,
                 Log.i(TAG, "onViewClicked: xlmgsf ");
                 boolean b = money > 188;
                 if (b) {
-                    Log.i(TAG, "onViewClicked:totalMoney "+(int) (totalMoney * 100));
+                    Log.i(TAG, "onViewClicked:totalMoney " + (int) (totalMoney * 100));
                     PaymentUtil.paymentByGoods("商学院自营商品", "订单号：" + getIntent().getStringExtra("orderNum"), (int) (totalMoney * 100), new PaymentInterface() {
                         @Override
                         public void paySuccess() {
@@ -304,7 +315,7 @@ public class GoodsPaymentActivity extends BaseActivity<OrderDetailContract.View,
                 totalMoney = money - Double.valueOf(endIndex);
                 BigDecimal bigDecimal = new BigDecimal(couponMoney);
                 tvMoney.setText("￥" + bigDecimal.setScale(2, BigDecimal.ROUND_HALF_DOWN));
-                Log.i(TAG, "onActivityResult: "+totalMoney);
+                Log.i(TAG, "onActivityResult: " + totalMoney);
             }
         }
     }

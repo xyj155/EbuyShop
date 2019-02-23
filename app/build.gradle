@@ -3,6 +3,9 @@ apply plugin: 'com.mob.sdk'
 
 
 android {
+
+    aaptOptions.cruncherEnabled = false
+    aaptOptions.useNewCruncher = false
     compileSdkVersion rootProject.ext.android.compileSdkVersion
     defaultConfig {
         minSdkVersion rootProject.ext.android.minSdkVersion
@@ -68,22 +71,20 @@ android {
     lintOptions {
         checkReleaseBuilds false
         abortOnError false
+
+    }
+    dexOptions{
+        jumboMode true
     }
 
     productFlavors {
-        baidu {
+        ShangXueYuanClient {
             manifestPlaceholders = [
                     JPUSH_PKGNAME     : "com.xuyijie.ebuyshop",
                     JPUSH_CHANNEL     : "baidu",
                     JPUSH_APPKEY      : "b115a26e2d2b360f3655db24",
                     GT_INSTALL_CHANNEL: "yinyongbao"
             ]
-        }
-        yinyongbao {
-            manifestPlaceholders = [JPUSH_PKGNAME     : "com.xuyijie.ebuyshop",
-                                    JPUSH_CHANNEL     : "yinyongbao",
-                                    JPUSH_APPKEY      : "b115a26e2d2b360f3655db24",
-                                    GT_INSTALL_CHANNEL: "yinyongbao"]
         }
     }
 }

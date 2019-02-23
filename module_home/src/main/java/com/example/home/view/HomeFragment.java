@@ -30,6 +30,8 @@ import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
+import com.ethanhua.skeleton.Skeleton;
+import com.ethanhua.skeleton.SkeletonScreen;
 import com.example.commonlib.MyApp;
 import com.example.commonlib.annotation.UserType;
 import com.example.commonlib.base.BaseFragment;
@@ -61,7 +63,9 @@ import com.scwang.smartrefresh.layout.api.RefreshFooter;
 import com.scwang.smartrefresh.layout.api.RefreshHeader;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.constant.RefreshState;
+import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnMultiPurposeListener;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.xuyijie.home.R;
 import com.xuyijie.home.R2;
 import com.zhouwei.mzbanner.MZBannerView;
@@ -97,7 +101,6 @@ public class HomeFragment extends BaseFragment<HomePagePresenter> implements Hom
     @BindView(R2.id.iv_share)
     TextView ivShare;
     Unbinder unbinder;
-    @BindView(R2.id.tv_time)
     TextView tvTime;
     @BindView(R2.id.tv_activity_name)
     TextView tvActivityName;
@@ -105,8 +108,9 @@ public class HomeFragment extends BaseFragment<HomePagePresenter> implements Hom
     TextView tvSearch;
     @BindView(R2.id.iv_location)
     ImageView ivLocation;
-    @BindView(R2.id.ivBanner)
     ImageView ivBanner;
+
+    LinearLayout rootview;
     private MZBannerView<BannerGson> banner;
     private PurseGoodsAdapter purseGoodsAdapter;
     private RecyclerView ryPurse, ryTimerPurse, ryHot;
@@ -166,12 +170,13 @@ public class HomeFragment extends BaseFragment<HomePagePresenter> implements Hom
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
-    public void initView(View view) {
+    public void initView(final View view) {
         srHome = view.findViewById(R.id.srHome);
         ryHot = view.findViewById(R.id.ryHot);
-
+        ivBanner = view.findViewById(R.id.ivBanner);
+        tvTime = view.findViewById(R.id.tv_time);
         ryHot.setLayoutManager(new GridLayoutManager(getContext(), 4));
-
+        rootview = view.findViewById(R.id.rootview);
         ryTimerPurse = view.findViewById(R.id.ry_timerPurse);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
@@ -193,8 +198,7 @@ public class HomeFragment extends BaseFragment<HomePagePresenter> implements Hom
         ryPurse.setItemAnimator(new DefaultItemAnimator());
         ryPurse.setNestedScrollingEnabled(false);
         ryPurse.setFocusable(false);
-        purseGoodsAdapter = new PurseGoodsAdapter(null, getContext());
-        ryPurse.setAdapter(purseGoodsAdapter);
+
         homeGoodsTimerPurseAdapter = new HomeGoodsTimerPurseAdapter(null, getContext());
         ryTimerPurse.setAdapter(homeGoodsTimerPurseAdapter);
         ViewTreeObserver viewTreeObserver = banner.getViewTreeObserver();
@@ -237,19 +241,45 @@ public class HomeFragment extends BaseFragment<HomePagePresenter> implements Hom
                 });
             }
         });
+        ryPurse.setHasFixedSize(false );
         srHome.autoRefresh();
+        srHome.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(RefreshLayout refreshLayout) {
+                Log.i(TAG, "onRefresh: 13123");
+                initSkeletonView(view);
+                isFirst = true;
+                page = 1;
+                systemMessageGsonArrayList.clear();
+                mPresenter.setPurseGoodsList("1", "0");
+                mPresenter.queryPurseGoods(String.valueOf(page));
 
+                Log.i(TAG, "onRefresh: " + page);
+            }
+        });
+        srHome.setOnLoadMoreListener(new OnLoadMoreListener() {
+            @Override
+            public void onLoadMore(RefreshLayout refreshLayout) {
+                Log.i(TAG, "onLoadMore: 888");
+                page++;
+                mPresenter.queryPurseGoods(String.valueOf(page));
+                Log.i(TAG, "onLoadMore: " + page);
+                isFirst = false;
+            }
+        });
         srHome.setOnMultiPurposeListener(new OnMultiPurposeListener() {
             @Override
             public void onHeaderPulling(RefreshHeader header, float percent, int offset, int headerHeight, int extendHeight) {
                 Log.i(TAG, "onHeaderPulling: " + headerHeight + "----------" + extendHeight + "---------" + percent);
                 llTitle.setVisibility(View.GONE);
+
             }
 
             @Override
             public void onHeaderReleased(RefreshHeader header, int headerHeight, int extendHeight) {
                 llTitle.setVisibility(View.VISIBLE);
-                mPresenter.setPurseGoodsList("1", "0");
+
+                skeletonScreen.hide();
             }
 
             @Override
@@ -265,6 +295,7 @@ public class HomeFragment extends BaseFragment<HomePagePresenter> implements Hom
             @Override
             public void onHeaderFinish(RefreshHeader header, boolean success) {
                 llTitle.setVisibility(View.VISIBLE);
+
             }
 
             @Override
@@ -304,6 +335,9 @@ public class HomeFragment extends BaseFragment<HomePagePresenter> implements Hom
 
             @Override
             public void onStateChanged(RefreshLayout refreshLayout, RefreshState oldState, RefreshState newState) {
+                if (newState.finishing) {
+                    skeletonScreen.hide();
+                }
 
             }
         });
@@ -322,6 +356,20 @@ public class HomeFragment extends BaseFragment<HomePagePresenter> implements Hom
             }
         });
         mPresenter.queryTimeSell();
+        initSkeletonView(view);
+    }
+
+    private int page = 1;
+    private SkeletonScreen skeletonScreen;
+    private boolean isFirst = true;
+
+    private void initSkeletonView(View view) {
+        skeletonScreen = Skeleton.bind(rootview)
+                .load(R.layout.layout_img_skeleton)
+                .duration(1000)
+                .angle(0)
+                .color(R.color.shemberl)
+                .show();
     }
 
     @Override
@@ -372,6 +420,7 @@ public class HomeFragment extends BaseFragment<HomePagePresenter> implements Hom
 
     @Override
     public void showDialog(String msg) {
+
         createDialog(msg);
     }
 
@@ -380,19 +429,45 @@ public class HomeFragment extends BaseFragment<HomePagePresenter> implements Hom
     public void hideDialog() {
         dialogCancel();
         Log.i(TAG, "hideDialog: ");
+        skeletonScreen.hide();
     }
 
 
     @Override
+
     public void loadTimeGoodsList(List<GoodsGson> userGson) {
-        purseGoodsAdapter.replaceData(userGson);
+        homeGoodsTimerPurseAdapter.replaceData(userGson);
+//        homeGoodsTimerPurseAdapter.replaceData(userGson);
         Log.i(TAG, "loadTimeGoodsList: " + userGson.size());
     }
+
+    private List<GoodsGson> systemMessageGsonArrayList = new ArrayList<>();
 
     @Override
     public void loadPurseGoodsList(List<GoodsGson> userGson) {
-        homeGoodsTimerPurseAdapter.replaceData(userGson);
+
+        if (isFirst) {
+            Log.i(TAG, "querySystemPushMessage: 33333");
+            systemMessageGsonArrayList.addAll(userGson);
+            purseGoodsAdapter = new PurseGoodsAdapter(systemMessageGsonArrayList, getContext());
+//            purseGoodsAdapter.addData(systemMessageGsonArrayList);
+            ryPurse.setAdapter(purseGoodsAdapter);
+
+        } else {
+            systemMessageGsonArrayList.addAll(userGson);
+            if (purseGoodsAdapter != null){
+//                purseGoodsAdapter.replaceData(systemMessageGsonArrayList);
+                purseGoodsAdapter.notifyItemInserted(purseGoodsAdapter.getItemCount());
+            }
+
+
+            Log.i(TAG, "queryMoreSystemPushMessage: 22222");
+        }
         Log.i(TAG, "loadTimeGoodsList: " + userGson.size());
+        if (srHome != null) {
+            srHome.finishRefresh();
+            srHome.finishLoadMore();
+        }
     }
 
     @Override
@@ -513,6 +588,7 @@ public class HomeFragment extends BaseFragment<HomePagePresenter> implements Hom
             super.handleMessage(msg);
             if (msg.what == 1) {
                 computeTime();
+                Log.i(TAG, "handleMessage: " + " " + (mHour < 10 ? "0" + mHour : mHour) + "   " + (mMin < 10 ? "0" + mMin : mMin) + "   " + mSecond);
                 if (tvTime != null)
                     tvTime.setText(" " + (mHour < 10 ? "0" + mHour : mHour) + "   " + (mMin < 10 ? "0" + mMin : mMin) + "   " + mSecond);
             }

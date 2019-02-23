@@ -3,7 +3,7 @@ package com.example.commonlib.util;
 public class RouterUtil {
 
     public static final String Splash ="/page/index";
-    public static final String KIIND ="/kind/index";
+    public static final String KIIND ="/sorted/index";
     public static final String ALLORDER ="/user/allorder";
     public static final String HomePage ="/page/home";
     public static final String Home_Fragment_Main = "/home/index";

@@ -42,10 +42,9 @@ public class HomeDataEntity {
         this.marQueenGsonList = marQueenGsonList;
     }
 
-    public HomeDataEntity(List<GoodsGson> timePurseGoodsList, List<GoodsGson> purseGoodsList, List<HotPurseActivityGson> hotPurseActivityGsons, List<BannerGson> bannerGsons, List<MarQueenGson> marQueenGsonList, HomePurseAdvertisementGson homePurseAdvertisementGson) {
+    public HomeDataEntity(List<GoodsGson> timePurseGoodsList,List<HotPurseActivityGson> hotPurseActivityGsons, List<BannerGson> bannerGsons, List<MarQueenGson> marQueenGsonList, HomePurseAdvertisementGson homePurseAdvertisementGson) {
         this.timePurseGoodsList = timePurseGoodsList;
         this.homePurseAdvertisementGson = homePurseAdvertisementGson;
-        this.purseGoodsList = purseGoodsList;
         this.hotPurseActivityGsons = hotPurseActivityGsons;
         this.bannerGsons = bannerGsons;
         this.marQueenGsonList = marQueenGsonList;
