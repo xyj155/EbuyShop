@@ -18,7 +18,10 @@ import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.Key;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
+import com.example.commonlib.MyApp;
 import com.example.commonlib.base.BaseFragment;
 import com.example.commonlib.commonactivity.BrowserActivity;
 import com.example.commonlib.contract.UserMemberDateContract;
@@ -31,11 +34,17 @@ import com.example.commonlib.util.SharePreferenceUtil;
 import com.example.commonlib.view.MyDialog;
 import com.example.commonlib.view.ObservableScrollView;
 import com.example.commonlib.view.WaveView;
+import com.example.commonlib.view.toast.ToastUtils;
+import com.example.user.contract.UserInformationContract;
 import com.example.user.contract.UserPaymentContract;
+import com.example.user.presenter.UserInformationPresenter;
 import com.example.user.presenter.UserPaymentPresenter;
 import com.xuyijie.user.R;
 import com.xuyijie.user.R2;
+import com.yuyh.library.imgsel.ISNav;
+import com.yuyh.library.imgsel.config.ISListConfig;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -43,9 +52,14 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+
+import static android.app.Activity.RESULT_OK;
 
 @Route(path = RouterUtil.Me_Fragment_Main)
-public class UserFragment extends BaseFragment<UserPaymentPresenter> implements UserPaymentContract.View, UserMemberDateContract.View {
+public class UserFragment extends BaseFragment<UserPaymentPresenter> implements UserPaymentContract.View, UserMemberDateContract.View, UserInformationContract.View {
     @BindView(R2.id.tv_waitpay)
     TextView tvWaitpay;
     @BindView(R2.id.iv_setting)
@@ -91,7 +105,9 @@ public class UserFragment extends BaseFragment<UserPaymentPresenter> implements 
     Unbinder unbinder;
     private int mHeight;
     private MyDialog myDialog1;
-    private UserMemberDatePresenter userMemberDatePresenter=new UserMemberDatePresenter( this);
+    private UserMemberDatePresenter userMemberDatePresenter = new UserMemberDatePresenter(this);
+    private UserInformationPresenter userInformationPresenter = new UserInformationPresenter(this);
+
     @Override
     public void initData() {
 
@@ -114,8 +130,9 @@ public class UserFragment extends BaseFragment<UserPaymentPresenter> implements 
             }
         });
         Log.i(TAG, "initView: " + SharePreferenceUtil.getUser("avatar", "String"));
-        Glide.with(getContext()).asBitmap().apply(new RequestOptions().error(R.mipmap.ic_user_avatar_bg)).load(RetrofitUtils.BASE_URL + SharePreferenceUtil.getUser("avatar", "String")).into(ivHead);
-        Log.i(TAG, "initView: queryUserOrderCount" + String.valueOf(SharePreferenceUtil.getUser("uid", "1")));
+        Log.i(TAG, "initView: "+SharePreferenceUtil.getUser("avatar", "String"));
+        GlideUtil.loadGeneralImage(SharePreferenceUtil.getUser("avatar", "String"),ivHead);
+//        Glide.with(getContext()).asBitmap().apply(new RequestOptions().error(R.mipmap.ic_user_avatar_bg)).load(SharePreferenceUtil.getUser("avatar", "String")).into(ivHead);
         ViewTreeObserver viewTreeObserver = rlToolbar.getViewTreeObserver();
         viewTreeObserver.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
@@ -141,17 +158,17 @@ public class UserFragment extends BaseFragment<UserPaymentPresenter> implements 
                 });
             }
         });
-        String  user = String.valueOf(SharePreferenceUtil.getUser("member", "String"));
-        if (user.equals("1")){
-            GlideUtil.loadGeneralImage(R.mipmap.vip_rank1,iv_vip);
+        String user = String.valueOf(SharePreferenceUtil.getUser("member", "String"));
+        if (user.equals("1")) {
+            GlideUtil.loadGeneralImage(R.mipmap.vip_rank1, iv_vip);
             iv_vip.setVisibility(View.VISIBLE);
-        }else if (user.equals("2")){
-            GlideUtil.loadGeneralImage(R.mipmap.vip_rank2,iv_vip);
+        } else if (user.equals("2")) {
+            GlideUtil.loadGeneralImage(R.mipmap.vip_rank2, iv_vip);
             iv_vip.setVisibility(View.VISIBLE);
-        }else if (user.equals("3")){
+        } else if (user.equals("3")) {
             iv_vip.setVisibility(View.VISIBLE);
-            GlideUtil.loadGeneralImage(R.mipmap.vip_rank3,iv_vip);
-        }else {
+            GlideUtil.loadGeneralImage(R.mipmap.vip_rank3, iv_vip);
+        } else {
             iv_vip.setVisibility(View.GONE);
         }
 
@@ -183,7 +200,7 @@ public class UserFragment extends BaseFragment<UserPaymentPresenter> implements 
     }
 
 
-    @OnClick({R2.id.ll_member_goods,R2.id.tv_my_service, R2.id.iv_setting, R2.id.tv_my_recruit, R2.id.tv_my_collection, R2.id.tv_my_response, R2.id.rl_orders, R2.id.tv_my_vip, R2.id.tv_waitpay, R2.id.tv_waitsend, R2.id.tv_wait_receiver, R2.id.tv_wait_evaluate})
+    @OnClick({R2.id.ivHead, R2.id.ll_member_goods, R2.id.tv_my_service, R2.id.iv_setting, R2.id.tv_my_recruit, R2.id.tv_my_collection, R2.id.tv_my_response, R2.id.rl_orders, R2.id.tv_my_vip, R2.id.tv_waitpay, R2.id.tv_waitsend, R2.id.tv_wait_receiver, R2.id.tv_wait_evaluate})
     public void onViewClicked(View view) {
         int id = view.getId();
         if (id == R.id.tv_my_vip) {
@@ -198,6 +215,23 @@ public class UserFragment extends BaseFragment<UserPaymentPresenter> implements 
             Intent intent = new Intent(getContext(), UserFormStatusActivity.class);
             intent.putExtra("index", 2);
             startActivity(intent);
+        } else if (id == R.id.ivHead) {
+            ISListConfig config = new ISListConfig.Builder()
+                    .multiSelect(false)
+                    .rememberSelected(false)
+                    .btnBgColor(Color.GRAY)
+                    .btnTextColor(Color.BLUE)
+                    .statusBarColor(Color.parseColor("#ffffff"))
+                    .backResId(R.mipmap.ic_back)
+                    .title("头像选择")
+                    .titleColor(Color.BLACK)
+                    .titleBgColor(Color.parseColor("#ffffff"))
+                    .cropSize(1, 1, 200, 200)
+                    .needCrop(true)
+                    .needCamera(true)
+                    .maxNum(1)
+                    .build();
+            ISNav.getInstance().toListActivity(this, config, 20);
         } else if (id == R.id.tv_wait_receiver) {
             Intent intent = new Intent(getContext(), UserFormStatusActivity.class);
             intent.putExtra("index", 3);
@@ -206,11 +240,11 @@ public class UserFragment extends BaseFragment<UserPaymentPresenter> implements 
             Intent intent = new Intent(getContext(), UserFormStatusActivity.class);
             intent.putExtra("index", 4);
             startActivity(intent);
-        } else if(id==R.id.ll_member_goods){
+        } else if (id == R.id.ll_member_goods) {
             Intent intent = new Intent(getContext(), BrowserActivity.class);
-            intent.putExtra("url",RetrofitUtils.BASE_URL+"/StuShop/public/index.php/index/Index/memberGoods");
+            intent.putExtra("url", RetrofitUtils.BASE_URL + "/StuShop/public/index.php/index/Index/memberGoods");
             startActivity(intent);
-        }else if (id == R.id.rl_orders) {
+        } else if (id == R.id.rl_orders) {
             startActivity(new Intent(getContext(), UserAllOrdersActivity.class));
         } else if (id == R.id.tv_my_response) {
             startActivity(new Intent(getContext(), UserFeedBackActivity.class));
@@ -242,6 +276,20 @@ public class UserFragment extends BaseFragment<UserPaymentPresenter> implements 
             myDialog1.show();
         }
 
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == 20 && resultCode == RESULT_OK && data != null) {
+            Log.i(TAG, "onActivityResult: "+data.getStringArrayListExtra("result").get(0));
+            File file = new File(data.getStringArrayListExtra("result").get(0));
+            RequestBody fileRQ = RequestBody.create(MediaType.parse("image/*"), file);
+            MultipartBody.Part avatar = MultipartBody.Part.createFormData("avatar", file.getName(), fileRQ);
+            userInformationPresenter.updateUserAvatar(String.valueOf(SharePreferenceUtil.getUser("uid", "String")),
+                    avatar, String.valueOf(SharePreferenceUtil.getUser("username", "String")));
+        }
     }
 
     public void callPhone(String phoneNum) {
@@ -305,13 +353,29 @@ public class UserFragment extends BaseFragment<UserPaymentPresenter> implements 
 
     @Override
     public void loadUserMember(int code) {
-        Log.i(TAG, "loadUserMember: "+code);
-        if (code!=200){
+        Log.i(TAG, "loadUserMember: " + code);
+        if (code != 200) {
             Map<String, Object> map = new HashMap<>();
             map.put("islogin", true);
             map.put("member", "0");
             SharePreferenceUtil.saveUser(map);
             iv_vip.setVisibility(View.GONE);
+        }
+    }
+
+    @Override
+    public void updateUserAvatar(boolean success, String vatar) {
+        if (success) {
+            RequestOptions requestOptions=new RequestOptions();
+            requestOptions.skipMemoryCache(true)
+                    .diskCacheStrategy(DiskCacheStrategy.NONE);
+            Glide.with(MyApp.getInstance()).asBitmap().apply(requestOptions).load(vatar).into(ivHead);
+            Map<String,Object> map=new HashMap<>();
+            map.put("avatar",vatar);
+            Log.i(TAG, "updateUserAvatar: "+vatar);
+            SharePreferenceUtil.saveUser(map);
+        }else {
+            ToastUtils.show("头像更换失败");
         }
     }
 }

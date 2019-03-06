@@ -23,6 +23,7 @@ public class UserGson {
      * sex : 312
      */
 
+
     private int id;
     private String username;
     private String vipRank;

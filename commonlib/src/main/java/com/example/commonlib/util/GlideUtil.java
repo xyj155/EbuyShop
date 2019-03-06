@@ -11,6 +11,7 @@ import com.example.commonlib.R;
 
 public class GlideUtil {
     public static void loadGeneralImage(Object url, ImageView imageView) {
+
         Glide.with(MyApp.getInstance()).asBitmap().load(url).into(imageView);
     }
 

@@ -91,7 +91,7 @@ public class MembershipOpeningActivity extends BaseActivity<MembershipOpeningCon
     @Override
     public void initView() {
         ButterKnife.bind(this);
-        GlideUtil.loadGeneralImage(RetrofitUtils.BASE_URL + SharePreferenceUtil.getUser("avatar", "String"), ivAvatar);
+        GlideUtil.loadGeneralImage(SharePreferenceUtil.getUser("avatar", "String"), ivAvatar);
         String username = String.valueOf(SharePreferenceUtil.getUser("username", "String"));
         tvUsername.setText(username.replace(username.substring(3, 7), "****"));
         hideBottomButton();

@@ -267,6 +267,24 @@ public class AddSecondHandTradingActivity extends BaseActivity<SecondHandTrading
                 Log.e("SideIndexBar", s + " position:" + position);
             }
         });
+        etPostFree.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (!s.toString().isEmpty()) {
+                    rbFreeShipping.setChecked(false);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
         viewById.setAdapter(schoolAdapter);
         rgPostMethod.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override

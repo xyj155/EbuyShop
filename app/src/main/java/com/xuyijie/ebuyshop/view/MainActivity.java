@@ -3,6 +3,7 @@ package com.xuyijie.ebuyshop.view;
 
 import android.content.ComponentName;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
 import android.support.annotation.IdRes;
 import android.support.annotation.RequiresApi;
@@ -25,12 +26,16 @@ import com.example.commonlib.gson.AdvertisementGson;
 import com.example.commonlib.gson.PopAdvertisementGson;
 import com.example.commonlib.gson.UserGson;
 import com.example.commonlib.presenter.LoginPresent;
+import com.example.commonlib.util.InRongIMConnect;
 import com.example.commonlib.util.JpushUtil;
+import com.example.commonlib.util.RongUtil;
 import com.example.commonlib.util.RouterUtil;
 import com.example.commonlib.util.SharePreferenceUtil;
 import com.example.commonlib.view.MyDialog;
 import com.example.home.view.HomeFragment;
 import com.example.kind.view.KindFragment;
+import com.example.module_login.view.LoginActivity;
+import com.example.module_message.view.MessageFragment;
 import com.uuch.adlibrary.AdConstant;
 import com.uuch.adlibrary.AdManager;
 import com.uuch.adlibrary.bean.AdInfo;
@@ -42,11 +47,18 @@ import com.xuyijie.ebuyshop.presenter.AdvertisementPresenter;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Set;
 
 import cn.jpush.android.api.CustomPushNotificationBuilder;
 import cn.jpush.android.api.JPushInterface;
 import cn.jpush.android.api.TagAliasCallback;
+import io.rong.imkit.RongIM;
+import io.rong.imkit.utils.SystemUtils;
+import io.rong.imlib.RongIMClient;
+import io.rong.imlib.model.Conversation;
+
+import static io.rong.imkit.utils.SystemUtils.getCurProcessName;
 
 
 @Route(path = RouterUtil.HomePage)
@@ -157,7 +169,17 @@ public class MainActivity extends BaseActivity<HomeContract.View, LoginPresent> 
         advertisementPresenter.queryPopWindowAd();
         bottomBar = findViewById(R.id.bottomBar);
         supportFragmentManager = getSupportFragmentManager();
+        RongUtil.connect((String) SharePreferenceUtil.getUser("imToken", "String"), new InRongIMConnect() {
+            @Override
+            public void onConnectSuccess() {
 
+            }
+
+            @Override
+            public void onConnectFailed() {
+
+            }
+        });
         bottomBar.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
@@ -182,7 +204,7 @@ public class MainActivity extends BaseActivity<HomeContract.View, LoginPresent> 
                         break;
                     case R.id.rb_message:
                         if (messageFragment == null) {
-                            messageFragment = (Fragment) ARouter.getInstance().build(RouterUtil.MESSAGE_Fragment_Main).navigation();
+                            messageFragment = new MessageFragment();
                             transaction.add(R.id.flContainer, messageFragment);
                         } else {
                             transaction.show(messageFragment);
@@ -210,9 +232,41 @@ public class MainActivity extends BaseActivity<HomeContract.View, LoginPresent> 
         });
         showFirstPosition();
 
-
     }
-
+//    private void connect(String token) {
+//
+//            RongIM.connect(token, new RongIMClient.ConnectCallback() {
+//
+//                /**
+//                 * Token 错误。可以从下面两点检查 1.  Token 是否过期，如果过期您需要向 App Server 重新请求一个新的 Token
+//                 *                  2.  token 对应的 appKey 和工程里设置的 appKey 是否一致
+//                 */
+//                @Override
+//                public void onTokenIncorrect() {
+//                    Log.i(TAG, "onTokenIncorrect: ");
+//                }
+//
+//                /**
+//                 * 连接融云成功
+//                 * @param userid 当前 token 对应的用户 id
+//                 */
+//                @Override
+//                public void onSuccess(String userid) {
+//                    Log.d("LoginActivity", "--onSuccess" + userid);
+////                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
+////                    finish();
+//                }
+//
+//                /**
+//                 * 连接融云失败
+//                 * @param errorCode 错误码，可到官网 查看错误码对应的注释
+//                 */
+//                @Override
+//                public void onError(RongIMClient.ErrorCode errorCode) {
+//                    Log.i(TAG, "onError: ");
+//                }
+//            });
+//    }
 
     private void showFirstPosition() {
         supportFragmentManager = getSupportFragmentManager();

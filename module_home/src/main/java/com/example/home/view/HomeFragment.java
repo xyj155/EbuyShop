@@ -247,13 +247,12 @@ public class HomeFragment extends BaseFragment<HomePagePresenter> implements Hom
             @Override
             public void onRefresh(RefreshLayout refreshLayout) {
                 Log.i(TAG, "onRefresh: 13123");
-                initSkeletonView(view);
                 isFirst = true;
                 page = 1;
                 systemMessageGsonArrayList.clear();
                 mPresenter.setPurseGoodsList("1", "0");
                 mPresenter.queryPurseGoods(String.valueOf(page));
-
+                initSkeletonView(view);
                 Log.i(TAG, "onRefresh: " + page);
             }
         });
@@ -279,7 +278,6 @@ public class HomeFragment extends BaseFragment<HomePagePresenter> implements Hom
             public void onHeaderReleased(RefreshHeader header, int headerHeight, int extendHeight) {
                 llTitle.setVisibility(View.VISIBLE);
 
-                skeletonScreen.hide();
             }
 
             @Override
@@ -295,7 +293,7 @@ public class HomeFragment extends BaseFragment<HomePagePresenter> implements Hom
             @Override
             public void onHeaderFinish(RefreshHeader header, boolean success) {
                 llTitle.setVisibility(View.VISIBLE);
-
+                skeletonScreen.hide();
             }
 
             @Override
@@ -335,9 +333,7 @@ public class HomeFragment extends BaseFragment<HomePagePresenter> implements Hom
 
             @Override
             public void onStateChanged(RefreshLayout refreshLayout, RefreshState oldState, RefreshState newState) {
-                if (newState.finishing) {
-                    skeletonScreen.hide();
-                }
+
 
             }
         });
@@ -356,7 +352,6 @@ public class HomeFragment extends BaseFragment<HomePagePresenter> implements Hom
             }
         });
         mPresenter.queryTimeSell();
-        initSkeletonView(view);
     }
 
     private int page = 1;
@@ -429,7 +424,7 @@ public class HomeFragment extends BaseFragment<HomePagePresenter> implements Hom
     public void hideDialog() {
         dialogCancel();
         Log.i(TAG, "hideDialog: ");
-        skeletonScreen.hide();
+
     }
 
 
@@ -439,6 +434,7 @@ public class HomeFragment extends BaseFragment<HomePagePresenter> implements Hom
         homeGoodsTimerPurseAdapter.replaceData(userGson);
 //        homeGoodsTimerPurseAdapter.replaceData(userGson);
         Log.i(TAG, "loadTimeGoodsList: " + userGson.size());
+
     }
 
     private List<GoodsGson> systemMessageGsonArrayList = new ArrayList<>();

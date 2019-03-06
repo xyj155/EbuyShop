@@ -105,7 +105,7 @@ public class GoodsPaymentActivity extends BaseActivity<OrderDetailContract.View,
 
         ryGoods.setAdapter(orderDetailGoodsAdapter);
         ryGoods.setNestedScrollingEnabled(false);
-        expressChooseDialog = new ExpressChooseDialog(this);
+//        expressChooseDialog = new CommonDialog(this);
     }
 
 
@@ -189,30 +189,29 @@ public class GoodsPaymentActivity extends BaseActivity<OrderDetailContract.View,
             tvVip.setVisibility(View.VISIBLE);
             tvVip.setText("(会员3 95折)");
         }
+
+        if (money > 188) {
+            tvPost.setText("配送方式       满 188 包邮");
+        } else {
+            money = money + 12;
+            tvPost.setText("配送方式       12 元邮费（快递公司随机）");
+        }
         tvCount.setText("共 " + count + " 件商品  小计：");
         BigDecimal bigDecimal = new BigDecimal(money);
         tvMoney.setText("￥" + bigDecimal.setScale(2, BigDecimal.ROUND_HALF_DOWN));
         Log.i(TAG, "loadOrderDetail: " + money);
         totalMoney = money;
-        if (money > 188) {
-            tvPost.setText("配送方式       满 188 包邮");
-        } else {
-            tvPost.setText("配送方式       请选择配送方式");
-        }
         orderNum = orderDetailGson.getGoods().get(0).getOrderNum();
-        expressChooseDialog.setOnItemClickListener(new ExpressChooseDialog.onItemClickListener() {
-            @Override
-            public void onClickListener(String price, String expressName1, String expressI) {
-                if (price != null) {
-                    expressName = expressName1;
-                    tvPost.setText("配送方式       " + expressName1 + "     ￥" + price);
-                    BigDecimal bigDecimal = new BigDecimal(Double.valueOf(price) + money);
-                    tvMoney.setText("￥" + bigDecimal.setScale(2, BigDecimal.ROUND_HALF_DOWN));
-                    expressId = expressI;
-                }
-                expressChooseDialog.dismiss();
-            }
-        });
+        expressChooseDialog = builder.cancelTouchout(false)
+                .view(R.layout.common_dialog_layout)
+                .setMsg("快递费用 ")
+                .setContent("用户未购满188，包含12元邮费")
+                .addViewOnclick(R.id.tv_submit, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        expressChooseDialog.dismiss();
+                    }
+                }).build();
         expressFreeDialog = builder.cancelTouchout(false)
                 .view(R.layout.common_dialog_layout)
                 .setMsg("满 188 包邮")
@@ -227,12 +226,11 @@ public class GoodsPaymentActivity extends BaseActivity<OrderDetailContract.View,
 
     }
 
-    private String expressName = "";
 
     CommonDialog.Builder builder = new CommonDialog.Builder(this);
     private int count = 0;
     private double money = 0.00;
-    private String expressId;
+
 
     @OnClick({R2.id.rl_empty_address, R2.id.fl_address, R2.id.tv_post, R2.id.tv_pay_type, R2.id.tv_cancel, R2.id.tv_pay})
     public void onViewClicked(View view) {
@@ -254,6 +252,7 @@ public class GoodsPaymentActivity extends BaseActivity<OrderDetailContract.View,
                 ToastUtils.show("你还没有选择地址哦！");
             } else {
                 Log.i(TAG, "onViewClicked: xlmgsf ");
+                Log.i(TAG, "onViewClicked: " + totalMoney);
                 boolean b = money > 188;
                 if (b) {
                     Log.i(TAG, "onViewClicked:totalMoney " + (int) (totalMoney * 100));
@@ -269,21 +268,21 @@ public class GoodsPaymentActivity extends BaseActivity<OrderDetailContract.View,
                         }
                     });
                 } else {
-                    if (expressName.isEmpty()) {
-                        ToastUtils.show("你还没有选择配送方式！");
-                    } else {
-                        PaymentUtil.paymentByGoods("商学院自营商品", "订单号：" + getIntent().getStringExtra("orderNum"), (int) (totalMoney * 100), new PaymentInterface() {
-                            @Override
-                            public void paySuccess() {
-                                userSubmitOrderPresenter.submitOrderByUserId((String) SharePreferenceUtil.getUser("uid", "String"), addressId, new Gson().toJson(goodsIdList), "5", orderNum, (String) SharePreferenceUtil.getUser("userToken", "String"), etMessage.getText().toString(), expressId);
-                            }
+//                    if (expressName.isEmpty()) {
+//                        ToastUtils.show("你还没有选择配送方式！");
+//                    } else {
+                    PaymentUtil.paymentByGoods("商学院自营商品", "订单号：" + getIntent().getStringExtra("orderNum"), (int) ((totalMoney + 12) * 100), new PaymentInterface() {
+                        @Override
+                        public void paySuccess() {
+                            userSubmitOrderPresenter.submitOrderByUserId((String) SharePreferenceUtil.getUser("uid", "String"), addressId, new Gson().toJson(goodsIdList), "5", orderNum, (String) SharePreferenceUtil.getUser("userToken", "String"), etMessage.getText().toString(), "33");
+                        }
 
-                            @Override
-                            public void payFailed() {
-                                ToastUtils.show("支付失败！");
-                            }
-                        });
-                    }
+                        @Override
+                        public void payFailed() {
+                            ToastUtils.show("支付失败！");
+                        }
+                    });
+//                    }
                 }
             }
         } else if (id == R.id.tv_cancel) {
@@ -292,7 +291,7 @@ public class GoodsPaymentActivity extends BaseActivity<OrderDetailContract.View,
     }
 
     private UserSubmitOrderPresenter userSubmitOrderPresenter = new UserSubmitOrderPresenter(this);
-    private ExpressChooseDialog expressChooseDialog;
+    private CommonDialog expressChooseDialog;
     private String addressId, couponId;
 
     @Override
@@ -307,18 +306,19 @@ public class GoodsPaymentActivity extends BaseActivity<OrderDetailContract.View,
                 tvUserTel.setText("联系方式：" + data.getStringExtra("tel"));
                 tvAddress.setText("收货地址：" + data.getStringExtra("local") + data.getStringExtra("detail"));
             } else if (requestCode == 0x11) {
+                totalMoney = money;
                 String endIndex = data.getStringExtra("endIndex");
                 String startIndex = data.getStringExtra("startIndex");
                 couponId = data.getStringExtra("couponId");
                 tvPayType.setText("优惠方式        满 " + startIndex + " 元减 " + endIndex + " 元");
-                double couponMoney = money - Double.valueOf(endIndex);
                 totalMoney = money - Double.valueOf(endIndex);
-                BigDecimal bigDecimal = new BigDecimal(couponMoney);
+                BigDecimal bigDecimal = new BigDecimal(totalMoney);
                 tvMoney.setText("￥" + bigDecimal.setScale(2, BigDecimal.ROUND_HALF_DOWN));
                 Log.i(TAG, "onActivityResult: " + totalMoney);
             }
         }
     }
+
 
     private double totalMoney = 0;
 

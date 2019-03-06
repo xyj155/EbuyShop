@@ -299,4 +299,18 @@ public interface Api {
 
     @GET("/StuShop/public/index.php/index/User/queryUserGoodsTrace")
     Observable<BaseGson<MessageExpressTraceGson>> queryUserGoodsTrace(@Query("userId")String userId,@Query("page")String page);
+
+    @FormUrlEncoded
+    @POST("/StuShop/public/index.php/index/User/updateUserAddress")
+    Observable<BaseGson<EmptyGson>> updateUserAddress(@Field("username") String username,
+                                                      @Field("tel") String tel,
+                                                      @Field("location") String location,
+                                                      @Field("detail") String detail,
+                                                      @Field("id") String id);
+    @Multipart
+    @POST("/StuShop/public/index.php/index/User/updateUserAvatar")
+    Observable<BaseGson<EmptyGson>> updateUserAvatar(
+            @PartMap() Map<String, RequestBody> partMap,
+            @Part MultipartBody.Part avatar);
+
 }

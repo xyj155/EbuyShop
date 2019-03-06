@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.example.commonlib.base.BaseActivity;
+import com.example.commonlib.commonactivity.BrowserActivity;
 import com.example.commonlib.contract.UserMemberDateContract;
 import com.example.commonlib.gson.AdvertisementGson;
 import com.example.commonlib.gson.PopAdvertisementGson;
@@ -99,7 +100,7 @@ public class SplashActivity extends BaseActivity<AdvertisementContract.View, Adv
         filter.addAction(Intent.ACTION_SCREEN_ON);
         filter.addAction(Intent.ACTION_SCREEN_OFF);
         filter.addAction(Intent.ACTION_USER_PRESENT);
-        registerReceiver(new OnePixelReceiver(),filter);
+        registerReceiver(new OnePixelReceiver(), filter);
     }
 
     private static final String TAG = "SplashActivity";
@@ -119,9 +120,19 @@ public class SplashActivity extends BaseActivity<AdvertisementContract.View, Adv
     };
 
     @Override
-    public void loadAdvertisement(AdvertisementGson advertisementGson) {
+    public void loadAdvertisement(final AdvertisementGson advertisementGson) {
         if (advertisementGson.getIsShow().equals("1")) {
             GlideUtil.loadGeneralImage(advertisementGson.getBannerUrl(), ivAd);
+            ivAd.setVisibility(View.VISIBLE);
+            ivAd.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(SplashActivity.this, BrowserActivity.class);
+                    intent.putExtra("url", advertisementGson.getWebUrl());
+                    startActivityForResult(intent, 88);
+                    handler.removeCallbacks(runnable);
+                }
+            });
         }
         handler.postDelayed(runnable, 4000);
     }
@@ -209,4 +220,13 @@ public class SplashActivity extends BaseActivity<AdvertisementContract.View, Adv
 
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Log.i(TAG, "onActivityResult: "+requestCode+"sdsadsad"+resultCode);
+        if (resultCode == 0) {
+            startActivity(new Intent(SplashActivity.this,MainActivity.class));
+            finish();
+        }
+    }
 }

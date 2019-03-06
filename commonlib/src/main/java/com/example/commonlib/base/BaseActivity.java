@@ -44,25 +44,26 @@ public abstract class BaseActivity<V extends BaseView, T extends BasePresenter<V
 //        super.onBackPressed();
 //        ActivityCompat.finishAfterTransition(this);
 //    }
-    public void showMsgDialog(String title,String content,final OnItemClickListener onItemClickListener) {
-
-        myDialog1.setContent(content);
-        myDialog1.setTitle(title);
-        myDialog1.setOnCenterItemClickListener(new MyDialog.OnCenterItemClickListener() {
-            @Override
-            public void onCenterItemClick(MyDialog dialog, View view) {
-                int i = view.getId();
-                if (i == R.id.dialog_btn_close) {
-                    dialog.dismiss();
-                } else if (i == R.id.dialog_btn_cancel) {
-                    onItemClickListener.onConfirm(dialog);
-                    dialog.dismiss();
+    public void showMsgDialog(String title, String content, final OnItemClickListener onItemClickListener) {
+        if (myDialog1 != null) {
+            myDialog1.setContent(content);
+            myDialog1.setTitle(title);
+            myDialog1.setOnCenterItemClickListener(new MyDialog.OnCenterItemClickListener() {
+                @Override
+                public void onCenterItemClick(MyDialog dialog, View view) {
+                    int i = view.getId();
+                    if (i == R.id.dialog_btn_close) {
+                        dialog.dismiss();
+                    } else if (i == R.id.dialog_btn_cancel) {
+                        onItemClickListener.onConfirm(dialog);
+                        dialog.dismiss();
+                    }
                 }
-            }
-        });
-        myDialog1.show();
-    }
+            });
+            myDialog1.show();
+        }
 
+    }
 
 
     public interface OnItemClickListener {
@@ -109,6 +110,7 @@ public abstract class BaseActivity<V extends BaseView, T extends BasePresenter<V
             mPresenter.attachView((V) this);
         }
     }
+
     @Override
     protected void onPause() {
         super.onPause();
@@ -118,10 +120,13 @@ public abstract class BaseActivity<V extends BaseView, T extends BasePresenter<V
     }
 
 
-
     protected LoginOutBroadcastReceiver locallReceiver;
+
     public void createDialog(String msgStr) {
-        progressDialog.show();
+        if (progressDialog!=null){
+            progressDialog.show();
+        }
+
 
     }
 

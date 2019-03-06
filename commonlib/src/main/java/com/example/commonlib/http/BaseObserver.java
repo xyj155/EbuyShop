@@ -29,7 +29,9 @@ public abstract class BaseObserver<T> implements Observer<T> {
             onError("网络连接超时,请重试");
         } else if (e instanceof IOException) {
             onError(e.getMessage());
-        } else {
+        } else if (e instanceof NullPointerException){
+            onError("空指针");
+        }else {
             onError("未知的错误," + e.getMessage());
         }
     }

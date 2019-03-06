@@ -68,6 +68,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.sharesdk.onekeyshare.OnekeyShare;
+import io.rong.imkit.RongIM;
+import io.rong.imlib.model.Conversation;
 
 @Route(path = RouterUtil.GOODSDETAIL)
 public class GoodsDetailActivity extends BaseActivity<GoodsDetailContract.View, GoodsDetailPresenter> implements GoodsDetailContract.View, SlideDetailsLayout.OnSlideDetailsListener, GoodsStyleContract.View {
@@ -394,6 +396,7 @@ public class GoodsDetailActivity extends BaseActivity<GoodsDetailContract.View, 
     }
 
     private String imToken;
+    private String shopId;
     private String shopName;
 
     @Override
@@ -406,6 +409,9 @@ public class GoodsDetailActivity extends BaseActivity<GoodsDetailContract.View, 
         }
         if (goodsGson.getToken() != null) {
             imToken = goodsGson.getToken();
+            shopId = goodsGson.getShopId();
+            Log.i(TAG, "loadGoodsDetail: "+goodsGson.getImToken());
+            Log.i(TAG, "loadGoodsDetail: "+goodsGson.getToken());
             shopName = goodsGson.getShopName();
         }
 
@@ -419,14 +425,6 @@ public class GoodsDetailActivity extends BaseActivity<GoodsDetailContract.View, 
             @Override
             public MZViewHolder createViewHolder() {
                 return new GoodsBannerViewHolder();
-            }
-        });
-        bannerGoods.setBannerPageClickListener(new MZBannerView.BannerPageClickListener() {
-            @Override
-            public void onPageClick(View view, int i) {
-                Intent intent = new Intent(GoodsDetailActivity.this, PhotoPreviewActivity.class);
-                intent.putExtra(PhotoPreviewActivity.EXTRA_PHOTOS,(ArrayList)goodsPicUrl);
-                startActivity(intent);
             }
         });
         bannerGoods.setDuration(200);
@@ -445,6 +443,15 @@ public class GoodsDetailActivity extends BaseActivity<GoodsDetailContract.View, 
             @Override
             public void onPageScrollStateChanged(int state) {
 
+            }
+        });
+        bannerGoods.setBannerPageClickListener(new MZBannerView.BannerPageClickListener() {
+            @Override
+            public void onPageClick(View view, int i) {
+                Log.i(TAG, "onPageClick: "+i+view);
+                Intent intent = new Intent(GoodsDetailActivity.this, PhotoPreviewActivity.class);
+                intent.putExtra(PhotoPreviewActivity.EXTRA_PHOTOS,(ArrayList)goodsPicUrl);
+                startActivity(intent);
             }
         });
         bannerGoods.start();
@@ -600,12 +607,14 @@ public class GoodsDetailActivity extends BaseActivity<GoodsDetailContract.View, 
         } else if (id == R.id.tv_shopcar) {
 
         } else if (id == R.id.tv_service) {
-            if (!imToken.isEmpty()) {
-                Intent intent = new Intent(GoodsDetailActivity.this, ShopServiceConversationActivity.class);
-                intent.putExtra("username", imToken);
-                intent.putExtra("shopName", shopName);
-                startActivity(intent);
+            if (imToken!=null){
+                if (!imToken.isEmpty()) {
+                    Log.i(TAG, "onViewClicked: "+imToken);
+                    Log.i(TAG, "onViewClicked: "+shopName);
+                    RongIM.getInstance().startConversation(GoodsDetailActivity.this, Conversation.ConversationType.PRIVATE,shopName,shopName);
+                }
             }
+
         }
     }
 

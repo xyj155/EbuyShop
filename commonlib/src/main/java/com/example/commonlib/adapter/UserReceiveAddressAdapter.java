@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.example.commonlib.R;
+import com.example.commonlib.commonactivity.AddressEditorActivity;
 import com.example.commonlib.commonactivity.GoodsPaymentActivity;
 import com.example.commonlib.gson.UserReceiveAddressGson;
 
@@ -35,15 +36,24 @@ public class UserReceiveAddressAdapter extends BaseQuickAdapter<UserReceiveAddre
                     @Override
                     public void onClick(View v) {
                         Intent intent = new Intent(context, GoodsPaymentActivity.class);
-                        intent.putExtra("username",item.getSaveName());
-                        intent.putExtra("tel",item.getSaveTel());
-                        intent.putExtra("adId",String .valueOf(item.getId()));
-                        intent.putExtra("local",item.getSaveLocal());
-                        intent.putExtra("detail",item.getSaveAddressDetail());
+                        intent.putExtra("username", item.getSaveName());
+                        intent.putExtra("tel", item.getSaveTel());
+                        intent.putExtra("adId", String.valueOf(item.getId()));
+                        intent.putExtra("local", item.getSaveLocal());
+                        intent.putExtra("detail", item.getSaveAddressDetail());
                         context.setResult(0x1, intent);
                         context.finish();
                     }
                 });
+        helper.setOnClickListener(R.id.iv_edit, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(context, AddressEditorActivity.class);
+                intent.putExtra("addressId", String.valueOf(item.getId()));
+                context.startActivity(intent);
+            }
+        });
         if (item.getIsDefault().equals("1")) {
             SpannableString spannableString = new SpannableString("[默认]" + item.getSaveLocal() + item.getSaveAddressDetail());
             spannableString.setSpan(new ForegroundColorSpan(Color.parseColor("#FF0000")), 0, 4, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);

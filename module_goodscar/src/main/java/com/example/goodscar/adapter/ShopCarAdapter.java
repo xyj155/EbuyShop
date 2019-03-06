@@ -12,6 +12,7 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.example.commonlib.gson.ShopCarGson;
 import com.example.commonlib.util.GlideUtil;
 import com.example.commonlib.util.SharePreferenceUtil;
+import com.example.commonlib.view.toast.ToastUtils;
 import com.example.goodscar.contract.GoodsOperationContract;
 import com.example.goodscar.presenter.GoodsOperationPresenter;
 import com.example.goodscar.presenter.ShopCarPresenter;
@@ -80,7 +81,7 @@ public class ShopCarAdapter extends BaseQuickAdapter<ShopCarGson, BaseViewHolder
                 .setOnClickListener(R.id.iv_minum, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        goodsOperationPresenter.addGoodsInShopCarById("1", "1",String.valueOf(item.getId()), "0");
+                        goodsOperationPresenter.addGoodsInShopCarById(String.valueOf(SharePreferenceUtil.getUser("uid","String")), "1",String.valueOf(item.getId()), "0");
                         ShopCarPresenter shopCarPresenter = goodsCarFragment.initPresenter();
                         shopCarPresenter.queryUserShopCarByUid("1", false);
 
@@ -97,7 +98,7 @@ public class ShopCarAdapter extends BaseQuickAdapter<ShopCarGson, BaseViewHolder
                 .setOnClickListener(R.id.iv_add, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        goodsOperationPresenter.addGoodsInShopCarById("1","1", String.valueOf(item.getId()), "1");
+                        goodsOperationPresenter.addGoodsInShopCarById(String.valueOf(SharePreferenceUtil.getUser("uid","String")),"1", String.valueOf(item.getId()), "1");
                         ShopCarPresenter shopCarPresenter = goodsCarFragment.initPresenter();
                         shopCarPresenter.queryUserShopCarByUid((String) SharePreferenceUtil.getUser("uid","String"), false);
                         new android.os.Handler().postDelayed(new Runnable() {
@@ -116,11 +117,7 @@ public class ShopCarAdapter extends BaseQuickAdapter<ShopCarGson, BaseViewHolder
 
     @Override
     public void addGoodsInShopCar(boolean isSuccess) {
-        if (isSuccess ) {
-            Toast.makeText(context, "添加成功", Toast.LENGTH_SHORT).show();
-        }else{
-            Toast.makeText(context, "添加失败", Toast.LENGTH_SHORT).show();
-        }
+
     }
 
     @Override

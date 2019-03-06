@@ -12,6 +12,7 @@ import com.bumptech.glide.Glide;
 import com.example.commonlib.MyApp;
 import com.example.commonlib.R;
 import com.example.commonlib.view.toast.ToastUtils;
+
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.getui.gis.sdk.GInsightManager;
 import com.mob.MobSDK;
@@ -29,7 +30,12 @@ import java.text.SimpleDateFormat;
 
 import cn.jpush.android.api.CustomPushNotificationBuilder;
 import cn.jpush.android.api.JPushInterface;
-import cn.jpush.im.android.api.JMessageClient;
+
+import io.rong.imkit.RongIM;
+import io.rong.imlib.NativeClient;
+import io.rong.imlib.RongIMClient;
+import io.rong.imlib.model.Message;
+
 
 public class ApplicationInitial {
     public ApplicationInitial initArouter() {
@@ -62,8 +68,7 @@ public class ApplicationInitial {
     }
 
     public ApplicationInitial initJpush() {
-        JMessageClient.setDebugMode(true);
-        JMessageClient.init(MyApp.getInstance(), true);
+
         CustomPushNotificationBuilder builder = new
                 CustomPushNotificationBuilder(MyApp.getInstance(),
                 R.layout.customer_notitfication_layout,
@@ -147,8 +152,7 @@ public class ApplicationInitial {
     private static final String TAG = "ApplicationInitial";
 
     public ApplicationInitial initIMClient() {
-        JMessageClient.setDebugMode(true);
-        JMessageClient.init(MyApp.getInstance(), true);
+
         //注册全局事件监听类
 //        JMessageClient.registerEventReceiver(this);
 
@@ -191,6 +195,13 @@ public class ApplicationInitial {
 
     public ApplicationInitial initPicaso() {
         Fresco.initialize(MyApp.getInstance());
+        return this;
+
+    }
+
+    public ApplicationInitial initRongIm() {
+        RongIM.init(MyApp.getInstance(),"ik1qhw09ip9kp");
+//        RongIM.getInstance().registerConversationTemplate(new );
         return this;
     }
 

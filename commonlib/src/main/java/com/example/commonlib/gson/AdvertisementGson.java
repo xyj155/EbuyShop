@@ -5,6 +5,8 @@ public class AdvertisementGson {
     private String bannerUrl;
     private String isShow;
 
+
+
     public String getIsShow() {
         return isShow;
     }

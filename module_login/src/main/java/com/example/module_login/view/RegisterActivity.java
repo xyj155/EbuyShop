@@ -56,10 +56,7 @@ import java.util.Map;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import cn.jpush.im.android.api.JMessageClient;
-import cn.jpush.im.android.api.model.UserInfo;
-import cn.jpush.im.android.api.options.RegisterOptionalUserInfo;
-import cn.jpush.im.api.BasicCallback;
+
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -339,8 +336,7 @@ public class RegisterActivity extends BaseActivity<UserRegisterContract.View, Us
         map.put("username", emptyGson.getUsername());
         map.put("password", emptyGson.getPassword());
         map.put("uid", String.valueOf(emptyGson.getId()));
-        String s = RetrofitUtils.BASE_URL + emptyGson.getAvatar();
-        map.put("avatar", s.replace("\\", "/"));
+        map.put("avatar", emptyGson.getAvatar());
         map.put("sex", emptyGson.getSex());
         map.put("age", emptyGson.getAge());
         map.put("level", emptyGson.getUserLevel());
@@ -348,50 +344,12 @@ public class RegisterActivity extends BaseActivity<UserRegisterContract.View, Us
         map.put("imToken", emptyGson.getImToken());
         map.put("islogin", true);
         SharePreferenceUtil.saveUser(map);
-
-
+        ToastUtils.show("注册成功！");
         ARouter.getInstance().build(RouterUtil.HomePage).navigation();
-        RegisterOptionalUserInfo registerOptionalUserInfo = new RegisterOptionalUserInfo();
-        registerOptionalUserInfo.setNickname(tvUsername.getText().toString());
-        registerOptionalUserInfo.setAddress(tvCollage.getText().toString());
-        registerOptionalUserInfo.setGender(rbBoy.isChecked() ? UserInfo.Gender.male : UserInfo.Gender.female);
-        JMessageClient.register(String.valueOf(SharePreferenceUtil.getUser("telphone", "String")), "xuyijie", registerOptionalUserInfo, new BasicCallback() {
-            @Override
-            public void gotResult(int i, String s) {
-                if (i == 0) {
-                    JMessageClient.login(String.valueOf(SharePreferenceUtil.getUser("telphone", "String")), "xuyijie", new BasicCallback() {
-                        @Override
-                        public void gotResult(int i, String s) {
-                            Log.i(TAG, "gotResult:23131313 "+i+s);
-                            Log.i(TAG, "gotResult:pathList "+pathList.get(0));
-                            if (i == 0) {
-                                JMessageClient.updateUserAvatar(new File(pathList.get(0)), new BasicCallback() {
-                                    @Override
-                                    public void gotResult(int i, String s) {
-                                        Log.i(TAG, "gotResult: 323131313"+i+s);
-                                        if (i == 0) {
-                                            ToastUtils.show("注册成功！");
-                                            TelPhoneRegisterVerifyActivity.telPhoneRegisterVerifyActivity.finish();
-                                            TelPhoneRegisterActivity.telPhoneRegisterActivity.finish();
-                                            LoginActivity.loginActivity.finish();
-                                            finish();
-                                        } else {
-                                            ToastUtils.show("注册失败");
-                                        }
-                                    }
-                                });
-                                mhideDialog();
-                            } else {
-                                ToastUtils.show("注册失败");
-                                mhideDialog();
-                            }
-                        }
-                    });
-                } else {
-                    ToastUtils.show("注册失败");
-                }
-            }
-        });
+        TelPhoneRegisterVerifyActivity.telPhoneRegisterVerifyActivity.finish();
+        TelPhoneRegisterActivity.telPhoneRegisterActivity.finish();
+        LoginActivity.loginActivity.finish();
+        finish();
 
     }
 

@@ -119,10 +119,11 @@ public class SecondHandTradingMarketActivity extends BaseActivity<SecondHandTrad
 
     @OnClick(R2.id.fb_submit)
     public void onViewClicked() {
-        int  user = Integer.valueOf(String.valueOf(SharePreferenceUtil.getUser("member", "String")));
-        if (user>=3){
+        int user = Integer.valueOf(String.valueOf(SharePreferenceUtil.getUser("member", "String")));
+        Log.i(TAG, "onViewClicked: " + user);
+        if (user >= 3) {
             startActivity(new Intent(SecondHandTradingMarketActivity.this, AddSecondHandTradingActivity.class));
-        }else {
+        } else {
             showMsgDialog("会员权限功能", "你的会员等级不够哦!是否充值", new OnItemClickListener() {
                 @Override
                 public void onConfirm(MyDialog dialog) {
@@ -196,14 +197,14 @@ public class SecondHandTradingMarketActivity extends BaseActivity<SecondHandTrad
             helper.setText(R.id.tv_title, item.getGoodsName())
                     .setText(R.id.tv_price, item.getGoodsPrice())
                     .setText(R.id.tv_content, item.getGoodsReason());
-            if (item.getGoodsPostMoney().equals("")) {
+            if (!item.getGoodsPostMoney().equals("0.00")) {
                 helper.setVisible(R.id.tv_post_free, false);
             } else {
                 helper.setVisible(R.id.tv_post_free, true);
             }
 
             Log.i(TAG, "convert: " + RetrofitUtils.BASE_URL + item.getGoodsPic().get(0));
-            GlideUtil.loadRoundCornerAvatarImage(RetrofitUtils.BASE_URL + item.getGoodsPic().get(0), (ImageView) helper.getView(R.id.iv_goods_pic), 9);
+            GlideUtil.loadRoundCornerAvatarImage(item.getGoodsPic().get(0), (ImageView) helper.getView(R.id.iv_goods_pic), 9);
         }
     }
 }

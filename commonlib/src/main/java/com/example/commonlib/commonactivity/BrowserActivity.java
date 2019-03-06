@@ -6,14 +6,18 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.webkit.JavascriptInterface;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.example.commonlib.MyApp;
 import com.example.commonlib.R;
 import com.example.commonlib.R2;
@@ -56,13 +60,16 @@ public class BrowserActivity extends BaseActivity<HomeContract.View, LoginPresen
         return R.layout.activity_browser;
     }
 
+    private TextView tvTitle;
+
     @SuppressLint("SetJavaScriptEnabled")
     @Override
     public void initView() {
         ButterKnife.bind(this);
         mWebView = findViewById(R.id.forum_context);
         mWebView.loadUrl(getIntent().getStringExtra("url"));
-
+        ivClose = findViewById(R.id.iv_close);
+        tvTitle = findViewById(R.id.tv_title);
         mWebView.getSettings().setJavaScriptEnabled(true);// 支持js
 
         WebViewClient webViewClient = new WebViewClient() {
@@ -72,7 +79,19 @@ public class BrowserActivity extends BaseActivity<HomeContract.View, LoginPresen
                 super.onPageFinished(view, url);
                 String title = mWebView.getTitle();
                 if (!TextUtils.isEmpty(title)) {
-                    initToolBar().setToolBarTitle(title);
+                    tvTitle.setText(title);
+                    ivClose.setOnClickListener(new View.OnClickListener() {
+                        @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+                        @Override
+                        public void onClick(View v) {
+                            overridePendingTransition(R.anim.anim_popup_zoom_enter, R.anim.anim_popup_zoom_exit);
+                            int code = getIntent().getIntExtra("code", 0);
+                            if (code==88){
+                                ARouter.getInstance().build(RouterUtil.Splash).navigation(BrowserActivity.this,88);
+                            }
+                            finish();
+                        }
+                    });
                     Log.i(TAG, "initView: " + title);
                 }
             }
@@ -130,11 +149,6 @@ public class BrowserActivity extends BaseActivity<HomeContract.View, LoginPresen
     }
 
 
-    //判断app是否安装
-    private boolean isInstall(Intent intent) {
-        return MyApp.getInstance().getPackageManager().queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY).size() > 0;
-    }
-
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if ((keyCode == KeyEvent.KEYCODE_BACK) && mWebView.canGoBack()) {
@@ -142,29 +156,6 @@ public class BrowserActivity extends BaseActivity<HomeContract.View, LoginPresen
             return true;
         }
         return super.onKeyDown(keyCode, event);
-    }
-
-    //打开app
-    private boolean openApp(String url) {
-        if (TextUtils.isEmpty(url)) return false;
-        try {
-            if (!url.startsWith("http") || !url.startsWith("https") || !url.startsWith("ftp")) {
-                Uri uri = Uri.parse(url);
-                String host = uri.getHost();
-                String scheme = uri.getScheme();
-                //host 和 scheme 都不能为null
-                if (!TextUtils.isEmpty(host) && !TextUtils.isEmpty(scheme)) {
-                    Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-                    if (isInstall(intent)) {
-                        startActivity(intent);
-                        return true;
-                    }
-                }
-            }
-        } catch (Exception e) {
-            return false;
-        }
-        return false;
     }
 
 

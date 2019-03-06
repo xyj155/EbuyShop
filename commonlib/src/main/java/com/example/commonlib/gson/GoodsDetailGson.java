@@ -30,6 +30,16 @@ public class GoodsDetailGson {
      * goodsCommentPic : ["https://img.alicdn.com/bao/uploaded/i2/O1CN01TkB9yy1LzxUEyWa48_!!0-rate.jpg_400x400.jpg","https://img.alicdn.com/bao/uploaded/i3/TB2KDGUXMHqK1RjSZFPXXcwapXa_!!0-rate.jpg_400x400.jpg","https://img.alicdn.com/bao/uploaded/i2/TB2nL1UXSzqK1RjSZPxXXc4tVXa_!!0-rate.jpg_400x400.jpg","https://img.alicdn.com/bao/uploaded/i2/TB2PB9VXMHqK1RjSZFkXXX.WFXa_!!0-rate.jpg_400x400.jpg"]
      */
     private String shopName;
+    private String shopId;
+
+    public String getShopId() {
+        return shopId;
+    }
+
+    public void setShopId(String shopId) {
+        this.shopId = shopId;
+    }
+
     private String shopCount;
 
     public String getShopCount() {

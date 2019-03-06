@@ -23,25 +23,29 @@ MobSDK {
             }
             ShortMessage {}
             Wechat {
-                appId "wx4868b35061f87885"
-                appSecret "64020361b8ec4c99936c0e3999a9f249"
+                appId "wx4c5b0aa633a65f76"
+                appSecret "16535d0beb5588dda2c5c6af42a8baac"
                 userName "gh_afb25ac019c9"
                 path "pages/index/index.html?id=1"
                 withShareTicket true
+                bypassApproval false
                 miniprogramType 2
             }
             QQ {
                 appId "100371282"
+                bypassApproval false
                 appKey "aed9b0303e3ed1e27bae87c33761161d"
             }
             Douyin {}
             WechatMoments {
-                appId "wx4868b35061f87885"
-                appSecret "64020361b8ec4c99936c0e3999a9f249"
+                appId "wx4c5b0aa633a65f76"
+                appSecret "16535d0beb5588dda2c5c6af42a8baac"
+                bypassApproval false
             }
             WechatFavorite {
-                appId "wx4868b35061f87885"
-                appSecret "64020361b8ec4c99936c0e3999a9f249"
+                appId "wx4c5b0aa633a65f76"
+                bypassApproval false
+                appSecret "16535d0beb5588dda2c5c6af42a8baac"
             }
         }
     }
@@ -134,13 +138,15 @@ dependencies {
     api rootProject.ext.dependencies["android-gif-drawable"]
     api rootProject.ext.dependencies["crashreport_upgrade"]
     api rootProject.ext.dependencies["nativecrashreport"]
-    api rootProject.ext.dependencies["jmessage"]
     api rootProject.ext.dependencies["jpush"]
     api rootProject.ext.dependencies["jcore"]
     api 'com.flipboard:bottomsheet-core:1.5.1'
     api 'com.commit451:PhotoView:1.2.4'
-    api 'com.amap.api:location:3.3.0'
+    api 'com.facebook.fresco:fresco:0.12.0'
+    api 'com.amap.api:location:4.3.0'
     api project(':pictureSelector')
     api project(':adlibrary')
     api project(':sekeleton')
+    api project(':IMKit')
+    api project(':RCSticker')
 }

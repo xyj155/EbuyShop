@@ -6,13 +6,11 @@ import android.support.multidex.MultiDexApplication;
 import android.util.DisplayMetrics;
 import android.util.Log;
 
-import com.example.commonlib.commonactivity.ShopServiceConversationActivity;
 import com.example.commonlib.util.ApplicationInitial;
 import com.uuch.adlibrary.utils.DisplayUtil;
 
-import cn.jpush.im.android.api.JMessageClient;
-import cn.jpush.im.android.api.event.MessageEvent;
-import cn.jpush.im.android.api.event.NotificationClickEvent;
+
+
 
 
 public class MyApp extends MultiDexApplication {
@@ -35,11 +33,12 @@ public class MyApp extends MultiDexApplication {
                 .initIMClient()
                 .initJpush()
                 .initMob()
+                .initRongIm()
                 .initPicaso()
                 .initToast()
                 .initX5();
         initDisplayOpinion();
-        JMessageClient.registerEventReceiver(this);
+
     }
 
     private void initDisplayOpinion() {
@@ -52,16 +51,7 @@ public class MyApp extends MultiDexApplication {
         DisplayUtil.screenHightDip = DisplayUtil.px2dip(getApplicationContext(), dm.heightPixels);
     }
 
-    public void onEventMainThread(MessageEvent event) {
-        //do your own business
-        Log.i(TAG, "onEventMainThread: ");
-    }
 
-    public void onEvent(NotificationClickEvent event) {
-        Intent notificationIntent = new Intent(MyApp.getInstance(), ShopServiceConversationActivity.class);
-        notificationIntent.putExtra("username", event.getMessage().getFromUser().getUserName());
-        startActivity(notificationIntent);//自定义跳转到指定页面
-    }
 
     private static final String TAG = "MyApp";
 

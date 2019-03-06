@@ -2,10 +2,12 @@ package com.example.module_message.view;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -16,15 +18,17 @@ import android.view.ViewTreeObserver;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.example.commonlib.adapter.ConversationListAdapterEx;
 import com.example.commonlib.base.BaseFragment;
 import com.example.commonlib.presenter.EmptyPresenter;
+import com.example.commonlib.util.InRongIMConnect;
+import com.example.commonlib.util.RongUtil;
 import com.example.commonlib.util.RouterUtil;
 import com.example.commonlib.util.SharePreferenceUtil;
 import com.example.commonlib.view.ObservableScrollView;
 import com.example.commonlib.view.toast.ToastUtils;
 import com.example.module_message.R;
 import com.example.module_message.R2;
-import com.example.module_message.adapter.ConversationAdapter;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshHeader;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -36,10 +40,12 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
-import cn.jpush.im.android.api.JMessageClient;
-import cn.jpush.im.android.api.event.MessageEvent;
-import cn.jpush.im.android.api.model.Conversation;
-import cn.jpush.im.api.BasicCallback;
+
+import io.rong.imkit.RongContext;
+import io.rong.imkit.RongIM;
+import io.rong.imkit.fragment.ConversationListFragment;
+import io.rong.imlib.model.UserInfo;
+import io.rong.push.RongPushClient;
 
 @Route(path = RouterUtil.MESSAGE_Fragment_Main)
 public class MessageFragment extends BaseFragment<EmptyPresenter> {
@@ -58,28 +64,12 @@ public class MessageFragment extends BaseFragment<EmptyPresenter> {
     @BindView(R2.id.tv_other)
     TextView tvOther;
     private RecyclerView ryRecent;
-    private ConversationAdapter conversationAdapter;
+
 
     @Override
     public void onResume() {
         super.onResume();
-        JMessageClient.login(String.valueOf(SharePreferenceUtil.getUser("username", "String")), "xuyijie", new BasicCallback() {
-            @Override
-            public void gotResult(int i, String s) {
-                Log.i(TAG, "gotResult: " + s);
-                if (i == 0) {
-                    List<Conversation> conversationList = JMessageClient.getConversationList();
-                    if (conversationList.size()!=0||conversationList!=null){
-                        Log.i(TAG, "gotResult: " + conversationList.size());
-                        conversationAdapter.replaceData(conversationList);
-                    }
-                } else {
-                    ToastUtils.show("消息列表获取失败，错误代码：" + i);
-                    Log.i(TAG, "gotResult: 消息列表获取失败，错误代码");
-                    smlContact.finishRefresh();
-                }
-            }
-        });
+
     }
 
     @Override
@@ -90,23 +80,37 @@ public class MessageFragment extends BaseFragment<EmptyPresenter> {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        JMessageClient.unRegisterEventReceiver(this);
+
     }
 
-    public void onEventMainThread(MessageEvent event) {
-        //do your own business
-        Log.i(TAG, "onEventMainThread: ");
-        List<Conversation> conversationList = JMessageClient.getConversationList();
-        if (conversationList != null) {
-            Log.i(TAG, "gotResult:conversationList " + conversationList.size());
-            if (conversationAdapter != null) {
-                conversationAdapter.replaceData(conversationList);
-                conversationAdapter.notifyDataSetChanged();
+
+
+
+    private void initRongFragment() {
+        RongUtil.connect((String) SharePreferenceUtil.getUser("imToken", "String"), new InRongIMConnect() {
+            @Override
+            public void onConnectSuccess() {
+                ConversationListFragment listFragment = (ConversationListFragment) ConversationListFragment.instantiate(getContext(), ConversationListFragment.class.getName());
+                Uri uri = Uri.parse("rong://" + getActivity().getApplicationInfo().packageName).buildUpon()
+                        .appendPath("conversationlist")
+                        .appendQueryParameter(RongPushClient.ConversationType.PRIVATE.getName(), "false")
+                        .appendQueryParameter(RongPushClient.ConversationType.GROUP.getName(), "false")
+                        .appendQueryParameter(RongPushClient.ConversationType.DISCUSSION.getName(), "false")
+                        .appendQueryParameter(RongPushClient.ConversationType.PUBLIC_SERVICE.getName(), "false")
+                        .appendQueryParameter(RongPushClient.ConversationType.SYSTEM.getName(), "false")
+                        .build();
+                listFragment.setUri(uri);
+                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                //将融云的Fragment界面加入到我们的页面。
+                transaction.add(R.id.conversationlist, listFragment);
+                transaction.commitAllowingStateLoss();
             }
 
-        }
+            @Override
+            public void onConnectFailed() {
 
-
+            }
+        });
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
@@ -115,48 +119,12 @@ public class MessageFragment extends BaseFragment<EmptyPresenter> {
         unbinder = ButterKnife.bind(this, view);
         ryRecent = view.findViewById(R.id.ry_recent);
         ryRecent.setLayoutManager(new LinearLayoutManager(getContext()));
-        conversationAdapter = new ConversationAdapter(null);
-        ryRecent.setAdapter(conversationAdapter);
-        conversationAdapter.bindToRecyclerView(ryRecent);
-        View inflate = View.inflate(getContext(), R.layout.common_empty_message, null);
-        conversationAdapter.setEmptyView(inflate);
-        JMessageClient.registerEventReceiver(this);
-        JMessageClient.login(String.valueOf(SharePreferenceUtil.getUser("username", "String")), "xuyijie", new BasicCallback() {
-            @Override
-            public void gotResult(int i, String s) {
-                Log.i(TAG, "gotResult: " + s);
-                if (i == 0) {
-                    List<Conversation> conversationList = JMessageClient.getConversationList();
-                    Log.i(TAG, "gotResult: " + conversationList.size());
-                    conversationAdapter.replaceData(conversationList);
-                    smlContact.finishRefresh();
-                } else {
-                    ToastUtils.show("消息列表获取失败，错误代码：" + i);
-                    Log.i(TAG, "gotResult: 消息列表获取失败，错误代码");
-                    smlContact.finishRefresh();
-                }
-            }
-        });
+
         smlContact.setOnMultiPurposeListener(new SimpleMultiPurposeListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                 refreshLayout.finishRefresh(2000);
-                JMessageClient.login(String.valueOf(SharePreferenceUtil.getUser("username", "String")), "xuyijie", new BasicCallback() {
-                    @Override
-                    public void gotResult(int i, String s) {
-                        Log.i(TAG, "gotResult: " + s);
-                        if (i == 0) {
-                            List<Conversation> conversationList = JMessageClient.getConversationList();
-                            Log.i(TAG, "gotResult: " + conversationList.size());
-                            conversationAdapter.replaceData(conversationList);
-                            smlContact.finishRefresh();
-                        } else {
-                            ToastUtils.show("消息列表获取失败，错误代码：" + i);
-                            Log.i(TAG, "gotResult: 消息列表获取失败，错误代码");
-                            smlContact.finishRefresh();
-                        }
-                    }
-                });
+
             }
 
             @Override
@@ -202,6 +170,7 @@ public class MessageFragment extends BaseFragment<EmptyPresenter> {
                 });
             }
         });
+        initRongFragment();
     }
 
     private int mHeight;
