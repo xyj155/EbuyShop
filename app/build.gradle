@@ -60,9 +60,8 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-project.txt'
-            signingConfig signingConfigs.release
+            minifyEnabled false   //开启混淆
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro' //默认的混淆文件以及我们指定的混淆文件
         }
         debug {
             signingConfig signingConfigs.debug
@@ -87,7 +86,9 @@ android {
                     JPUSH_CHANNEL     : "baidu",
                     JPUSH_APPKEY      : "b115a26e2d2b360f3655db24",
                     RONG_CLOUD_APP_KEY      : "RONG_CLOUD_APP_KEY",
-                    GT_INSTALL_CHANNEL: "yinyongbao"
+                    GT_INSTALL_CHANNEL: "yinyongbao",
+                    MTA_APPKEY:"AJ4XQ54J3VZG",
+                    MTA_CHANNEL:"yyb"
             ]
         }
     }

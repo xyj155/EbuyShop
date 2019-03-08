@@ -87,7 +87,7 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled false   //开启混淆
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
@@ -149,4 +149,7 @@ dependencies {
     api project(':sekeleton')
     api project(':IMKit')
     api project(':RCSticker')
+    api 'com.qq.mta:mta:3.4.7-Release'
+    api 'com.tencent.mid:mid:4.06-Release'
+    api 'com.qq.visual:visual:3.4.0.1-beta'
 }

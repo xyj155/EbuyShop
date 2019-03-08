@@ -36,7 +36,7 @@ public class SnackGson {
     }
 
     private String foodName;
-    private String foodsPrice;
+    private double foodsPrice;
     private String foodsSize;
     private int goodsCount;
 
@@ -69,11 +69,11 @@ public class SnackGson {
         this.foodName = foodName;
     }
 
-    public String getFoodsPrice() {
+    public double getFoodsPrice() {
         return foodsPrice;
     }
 
-    public void setFoodsPrice(String foodsPrice) {
+    public void setFoodsPrice(double foodsPrice) {
         this.foodsPrice = foodsPrice;
     }
 

@@ -90,6 +90,7 @@ public class MessageFragment extends BaseFragment<EmptyPresenter> {
         RongUtil.connect((String) SharePreferenceUtil.getUser("imToken", "String"), new InRongIMConnect() {
             @Override
             public void onConnectSuccess() {
+                RongIM.getInstance().setMessageAttachedUserInfo(true);
                 ConversationListFragment listFragment = (ConversationListFragment) ConversationListFragment.instantiate(getContext(), ConversationListFragment.class.getName());
                 Uri uri = Uri.parse("rong://" + getActivity().getApplicationInfo().packageName).buildUpon()
                         .appendPath("conversationlist")

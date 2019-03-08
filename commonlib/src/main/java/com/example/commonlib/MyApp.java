@@ -10,9 +10,6 @@ import com.example.commonlib.util.ApplicationInitial;
 import com.uuch.adlibrary.utils.DisplayUtil;
 
 
-
-
-
 public class MyApp extends MultiDexApplication {
 
 
@@ -34,6 +31,7 @@ public class MyApp extends MultiDexApplication {
                 .initJpush()
                 .initMob()
                 .initRongIm()
+                .initBaiduCount()
                 .initPicaso()
                 .initToast()
                 .initX5();
@@ -50,7 +48,6 @@ public class MyApp extends MultiDexApplication {
         DisplayUtil.screenWidthDip = DisplayUtil.px2dip(getApplicationContext(), dm.widthPixels);
         DisplayUtil.screenHightDip = DisplayUtil.px2dip(getApplicationContext(), dm.heightPixels);
     }
-
 
 
     private static final String TAG = "MyApp";

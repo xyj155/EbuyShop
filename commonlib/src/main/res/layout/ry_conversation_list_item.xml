@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:orientation="horizontal"
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+<com.example.commonlib.view.CircleImageView
+    android:layout_width="@dimen/dp_70"
+    android:id="@+id/iv_avatar"
+    android:layout_margin="@dimen/dp_8"
+    android:layout_height="@dimen/dp_70" />
+    <LinearLayout
+        android:orientation="vertical"
+        android:weightSum="2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:layout_height="match_parent">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="用户"
+                android:gravity="center|left"
+                android:textColor="#000"
+                android:id="@+id/tv_username"
+                android:padding="@dimen/dp_8"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="时间"
+                android:gravity="center"
+                android:id="@+id/tv_time"
+                android:layout_alignParentRight="true"
+                android:textSize="12sp"
+                android:padding="@dimen/dp_8"/>
+        </RelativeLayout>
+
+        <TextView
+            android:gravity="center|left"
+            android:layout_below="@+id/tv_username"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="@dimen/dp_5"
+            android:id="@+id/tv_content"
+            android:text="消息"/>
+    </LinearLayout>
+</LinearLayout>

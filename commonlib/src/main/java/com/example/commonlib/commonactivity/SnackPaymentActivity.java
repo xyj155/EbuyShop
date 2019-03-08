@@ -170,18 +170,19 @@ public class SnackPaymentActivity extends BaseActivity<SnackOrderContract.View, 
             money = money * MemberConfig.vipRank_3;
         }
         if (money >= 108) {
-            tvPost.setText("配送方式       满 99 包邮");
+            tvPost.setText("配送方式       满 108 包邮");
             BigDecimal bigDecimal = new BigDecimal(money);
             tvMoney.setText("￥" + bigDecimal.setScale(2, BigDecimal.ROUND_HALF_DOWN));
             tvMoneySubmit.setText("￥" + bigDecimal.setScale(2, BigDecimal.ROUND_HALF_DOWN));
             tvPostFree.setText("(包邮)");
         } else {
             tvPost.setText("配送方式       随机快递（快递15元）");
-            money = money + 15;
-            tvPostFree.setText("(内含15邮费)");
             BigDecimal bigDecimal = new BigDecimal(money);
             tvMoney.setText("￥" + bigDecimal.setScale(2, BigDecimal.ROUND_HALF_DOWN));
-            tvMoneySubmit.setText("￥" + bigDecimal.setScale(2, BigDecimal.ROUND_HALF_DOWN));
+            money = money + 15;
+            tvPostFree.setText("(内含15邮费)");
+            BigDecimal bigDecimal1 = new BigDecimal(money);
+            tvMoneySubmit.setText("￥" + bigDecimal1.setScale(2, BigDecimal.ROUND_HALF_DOWN));
         }
 
     }
@@ -262,6 +263,7 @@ public class SnackPaymentActivity extends BaseActivity<SnackOrderContract.View, 
         protected void convert(BaseViewHolder helper, SnackOrderDetailGson.SnackListBean item) {
             helper.setText(R.id.tv_goods_name, item.getFoodName())
                     .setText(R.id.tv_count, "x " + String.valueOf(item.getCount()))
+                    .setText(R.id.tv_taste,  String.valueOf(item.getFoodsTaste()))
                     .setText(R.id.tv_money_total, "￥" + String.valueOf(item.getCount() * Double.valueOf(item.getFoodsPrice())));
             GlideUtil.loadRoundCornerAvatarImage(item.getFoodPicture(), (ImageView) helper.getView(R.id.iv_goods_pic), 10);
         }

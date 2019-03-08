@@ -45,6 +45,7 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.xuyijie.home.R;
 import com.xuyijie.home.R2;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 import butterknife.BindView;
@@ -198,14 +199,14 @@ public class SnacksActivity extends BaseActivity<SnackGoodsContract.View, SnackG
     @Override
     public void queryUserSnackShopCarAllSnack(List<SnackShopCarGson> list) {
         int shopCount = 0;
-        double shopCarMoney = 0;
+        double shopCarMoney = 0.00;
         if (list.size() > 0) {
             for (SnackShopCarGson snackShopCarGson : list) {
                 shopCount += snackShopCarGson.getCount();
                 shopCarMoney += Double.valueOf(snackShopCarGson.getFoodsPrice()) * snackShopCarGson.getCount();
             }
             tvShopcarCount.setText(String.valueOf(shopCount));
-            tvMoney.setText("￥" + String.valueOf(shopCarMoney));
+            tvMoney.setText("￥" +  String.format("%.2f", shopCarMoney));
             tvShopcarCount.setVisibility(View.VISIBLE);
             tvSubmit.setBackgroundResource(R.drawable.bg_btn_shopcar);
             tvSubmit.setTextColor(0xffffffff);
@@ -455,8 +456,9 @@ public class SnacksActivity extends BaseActivity<SnackGoodsContract.View, SnackG
 
         @Override
         protected void convert(final BaseViewHolder helper, final SnackShopCarGson item) {
+            Double aDouble = Double.valueOf(item.getFoodsPrice());
             helper.setText(R.id.tv_name, item.getFoodName())
-                    .setText(R.id.tv_price, Double.valueOf(item.getFoodsPrice()) * item.getCount() + "")
+                    .setText(R.id.tv_price, String.format("%.2f", aDouble))
                     .setText(R.id.tv_count, String.valueOf(item.getCount()))
                     .setText(R.id.tv_tasty_name, item.getFoodsTaste())
                     .setOnClickListener(R.id.iv_add, new View.OnClickListener() {

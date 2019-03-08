@@ -4,6 +4,7 @@ import com.example.commonlib.base.BaseGson;
 import com.example.commonlib.base.BaseView;
 import com.example.commonlib.gson.BannerGson;
 import com.example.commonlib.gson.GoodsGson;
+import com.example.commonlib.gson.HomeIconGson;
 import com.example.commonlib.gson.HomePurseAdvertisementGson;
 import com.example.commonlib.gson.HotPurseActivityGson;
 import com.example.commonlib.gson.MarQueenGson;
@@ -26,6 +27,7 @@ public interface HomePageContract {
         Observable<BaseGson<MarQueenGson>> getMarqueenList();
         Observable<BaseGson<TimeGoodsGson.TimeBean>> queryTimeSell();
         Observable<BaseGson<HomePurseAdvertisementGson>> queryHomePurseGoodsAdvertisement();
+        Observable<BaseGson<HomeIconGson>> queryHomePageIcon();
     }
 
     interface View extends BaseView {
@@ -40,6 +42,8 @@ public interface HomePageContract {
         void loadMarqueenList(List<MarQueenGson> list);
 
         void loadTimer(TimeGoodsGson.TimeBean timeBean);
+        void loadHomePageIcon(List<HomeIconGson> timeBean);
+
 
         void  queryHomePurseGoodsAdvertisement(HomePurseAdvertisementGson homePurseAdvertisement);
     }

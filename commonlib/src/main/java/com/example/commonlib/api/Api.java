@@ -13,6 +13,7 @@ import com.example.commonlib.gson.GoodsDetailGson;
 import com.example.commonlib.gson.GoodsGson;
 import com.example.commonlib.gson.GoodsShareGson;
 import com.example.commonlib.gson.GoodsStyleGson;
+import com.example.commonlib.gson.HomeIconGson;
 import com.example.commonlib.gson.HomePurseAdvertisementGson;
 import com.example.commonlib.gson.HotPurseActivityGson;
 import com.example.commonlib.gson.KindItemGson;
@@ -82,6 +83,9 @@ public interface Api {
 
     @GET("/StuShop/public/index.php/index/Goods/getHomeActivity")
     Observable<BaseGson<HotPurseActivityGson>> getHomeActivity();
+
+    @GET("/StuShop/public/index.php/index/Home/queryHomePageIcon")
+    Observable<BaseGson<HomeIconGson>> queryHomePageIcon();
 
     @GET("/StuShop/public/index.php/index/Goods/queryTimeSell")
     Observable<BaseGson<TimeGoodsGson.TimeBean>> queryTimeSell();

@@ -89,7 +89,7 @@ public class UserGoodsStatusAdapter extends BaseQuickAdapter<List<UserOrderStatu
                 money = money + Double.valueOf(item.get(0).getExpressPrice());
                 Log.i(TAG, "convert: " + item.get(0).getOrderNum());
             } else if (status.equals("3")) {
-                Log.i(TAG, "convert: status"+status);
+                Log.i(TAG, "convert: status" + status);
                 helper.setVisible(R.id.tv_receive, true)
                         .setVisible(R.id.tv_pay, false)
                         .setVisible(R.id.tv_deliver, true)
@@ -133,7 +133,8 @@ public class UserGoodsStatusAdapter extends BaseQuickAdapter<List<UserOrderStatu
                     .setOnClickListener(R.id.tv_cancel, new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            onClickListener.onClickListener(item.get(0).getOrderNum());
+                            if (item.get(0).getOrderNum() != null)
+                                onClickListener.onClickListener(item.get(0).getOrderNum());
                         }
                     })
                     .setOnClickListener(R.id.tv_pay, new View.OnClickListener() {

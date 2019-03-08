@@ -18,6 +18,15 @@ public class SnackOrderGson {
     private String createTime;
     private String orderNum;
     private int count;
+    private String foodsTaste;
+
+    public String getFoodsTaste() {
+        return foodsTaste;
+    }
+
+    public void setFoodsTaste(String foodsTaste) {
+        this.foodsTaste = foodsTaste;
+    }
 
     public int getCount() {
         return count;

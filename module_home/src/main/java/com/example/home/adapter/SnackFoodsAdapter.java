@@ -27,6 +27,7 @@ import com.example.commonlib.view.toast.ToastUtils;
 import com.example.home.view.SnacksActivity;
 import com.xuyijie.home.R;
 
+import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.List;
 
@@ -58,7 +59,7 @@ public class SnackFoodsAdapter extends BaseQuickAdapter<SnackGson, BaseViewHolde
             tvMinus.setVisibility(View.VISIBLE);
         }
         Log.i(TAG, "bindData: " + item.getFoodsPrice());
-        helper.setText(R.id.tv_price, item.getFoodsPrice());//商品价格
+        helper.setText(R.id.tv_price, String.format("%.2f",item.getFoodsPrice()));//商品价格
         helper.setText(R.id.tv_tags, " 规格： " + item.getFoodsSize());
         tvCount.setText(String.valueOf(item.getGoodsCount() + ""));//商品数量
         helper.setOnClickListener(R.id.iv_add, new View.OnClickListener() {
@@ -109,7 +110,7 @@ public class SnackFoodsAdapter extends BaseQuickAdapter<SnackGson, BaseViewHolde
         tvChooseTasty.setText("已选：" + snackGson.getTasty().get(0).getFoodsTaste());
         TextView tvPrice = (TextView) view.findViewById(R.id.tv_price);
         TextView tvSubmit = (TextView) view.findViewById(R.id.tv_submit);
-        tvPrice.setText(snackGson.getFoodsPrice());
+        tvPrice.setText(snackGson.getFoodsPrice()+"");
         RecyclerView ryTasty = (RecyclerView) view.findViewById(R.id.ry_tasty);
         TastyAdapterSingleChooseAdapter bottomSheetAdapter = new TastyAdapterSingleChooseAdapter(snackGson.getTasty());
         ryTasty.setHasFixedSize(true);

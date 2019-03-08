@@ -21,7 +21,7 @@ import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.bumptech.glide.Glide;
-import com.example.commonlib.GoodsSortedAdapter;
+import com.example.commonlib.adapter.GoodsSortedAdapter;
 import com.example.commonlib.R;
 import com.example.commonlib.R2;
 import com.example.commonlib.base.BaseActivity;

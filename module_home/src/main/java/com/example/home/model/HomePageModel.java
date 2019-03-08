@@ -3,6 +3,7 @@ package com.example.home.model;
 import com.example.commonlib.base.BaseGson;
 import com.example.commonlib.gson.BannerGson;
 import com.example.commonlib.gson.GoodsGson;
+import com.example.commonlib.gson.HomeIconGson;
 import com.example.commonlib.gson.HomePurseAdvertisementGson;
 import com.example.commonlib.gson.HotPurseActivityGson;
 import com.example.commonlib.gson.MarQueenGson;
@@ -46,5 +47,10 @@ public class HomePageModel implements HomePageContract.Model {
     @Override
     public Observable<BaseGson<HomePurseAdvertisementGson>> queryHomePurseGoodsAdvertisement() {
         return RetrofitUtils.getInstance().create().queryHomePurseGoodsAdvertisement();
+    }
+
+    @Override
+    public Observable<BaseGson<HomeIconGson>> queryHomePageIcon() {
+        return RetrofitUtils.getInstance().create().queryHomePageIcon();
     }
 }

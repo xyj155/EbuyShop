@@ -121,14 +121,13 @@ public class SnackOrderDetailActivity extends BaseActivity<SnackOrderDetailContr
         }
         tvCount.setText("共 " + count + " 件商品  小计：");
         if (money >= 99) {
-            tvPost.setText("配送方式       满 99 包邮");
-            BigDecimal bigDecimal = new BigDecimal(money);
-            tvMoney.setText("￥" + bigDecimal.setScale(2, BigDecimal.ROUND_HALF_DOWN));
+            tvPost.setText("配送方式       满 108 包邮");
+            tvMoney.setText("￥" +String.format("%.2f", money));
         } else {
             tvPost.setText("配送方式       随机快递（快递费：15元）");
             money = money + 15;
-            BigDecimal bigDecimal = new BigDecimal(money);
-            tvMoney.setText("￥" + bigDecimal.setScale(2, BigDecimal.ROUND_HALF_DOWN));
+
+            tvMoney.setText("￥" + String.format("%.2f", money));
         }
         Log.i(TAG, "loadSnackGoodsDetail: " + (snackOrderDetailGson.getExpress().size()==0));
         Log.i(TAG, "loadSnackGoodsDetail: " + (snackOrderDetailGson.getExpress()==null));

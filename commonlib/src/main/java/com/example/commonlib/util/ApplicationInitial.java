@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.launcher.ARouter;
+
 import com.bumptech.glide.Glide;
 import com.example.commonlib.MyApp;
 import com.example.commonlib.R;
@@ -22,6 +23,8 @@ import com.tencent.bugly.beta.Beta;
 import com.tencent.bugly.beta.UpgradeInfo;
 import com.tencent.bugly.beta.ui.UILifecycleListener;
 import com.tencent.smtt.sdk.QbSdk;
+import com.tencent.stat.StatConfig;
+import com.tencent.stat.StatService;
 import com.yuyh.library.imgsel.ISNav;
 import com.yuyh.library.imgsel.common.ImageLoader;
 
@@ -32,9 +35,6 @@ import cn.jpush.android.api.CustomPushNotificationBuilder;
 import cn.jpush.android.api.JPushInterface;
 
 import io.rong.imkit.RongIM;
-import io.rong.imlib.NativeClient;
-import io.rong.imlib.RongIMClient;
-import io.rong.imlib.model.Message;
 
 
 public class ApplicationInitial {
@@ -58,6 +58,13 @@ public class ApplicationInitial {
                 Glide.with(context).load(path).into(imageView);
             }
         });
+        return this;
+    }
+
+    public ApplicationInitial initBaiduCount() {
+        StatConfig.setDebugEnable(true);
+        // 基础统计API
+        StatService.registerActivityLifecycleCallbacks(MyApp.getInstance());
         return this;
     }
 
@@ -93,7 +100,6 @@ public class ApplicationInitial {
         Beta.smallIconId = R.mipmap.app_icon;
         Beta.initDelay = 20 * 1000;
         Beta.upgradeDialogLayoutId = R.layout.upgrade_dialog;
-        Beta.smallIconId = R.mipmap.app_icon;
         Beta.strUpgradeDialogCancelBtn = MyApp.getInstance().getString(R.string.text_remind_late);
         Beta.strNetworkTipsConfirmBtn = MyApp.getInstance().getString(R.string.update_now);
         Beta.strUpgradeDialogUpgradeBtn = MyApp.getInstance().getString(R.string.update_now);
@@ -200,8 +206,7 @@ public class ApplicationInitial {
     }
 
     public ApplicationInitial initRongIm() {
-        RongIM.init(MyApp.getInstance(),"ik1qhw09ip9kp");
-//        RongIM.getInstance().registerConversationTemplate(new );
+        RongIM.init(MyApp.getInstance(), "0vnjpoad033gz");
         return this;
     }
 

@@ -6,6 +6,7 @@ import com.example.commonlib.base.BaseGson;
 import com.example.commonlib.base.BasePresenter;
 import com.example.commonlib.gson.BannerGson;
 import com.example.commonlib.gson.GoodsGson;
+import com.example.commonlib.gson.HomeIconGson;
 import com.example.commonlib.gson.HomePurseAdvertisementGson;
 import com.example.commonlib.gson.HotPurseActivityGson;
 import com.example.commonlib.gson.MarQueenGson;
@@ -15,10 +16,13 @@ import com.example.home.contract.HomePageContract;
 import com.example.home.entity.HomeDataEntity;
 import com.example.home.model.HomePageModel;
 
+import java.util.ArrayList;
+
 import rx.Observable;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Func5;
+import rx.functions.Func6;
 import rx.schedulers.Schedulers;
 
 public class HomePagePresenter extends BasePresenter<HomePageContract.View> implements HomePageContract.Presenter {
@@ -34,10 +38,10 @@ public class HomePagePresenter extends BasePresenter<HomePageContract.View> impl
 
     @Override
     public void setPurseGoodsList(final String type, String type2) {
-        Observable.zip( homePageModel.getTimerGoodsList(type2), homePageModel.getHomeActivity(), homePageModel.getHomeBanner(), homePageModel.getMarqueenList(), homePageModel.queryHomePurseGoodsAdvertisement(), new Func5<BaseGson<GoodsGson>, BaseGson<HotPurseActivityGson>, BaseGson<BannerGson>, BaseGson<MarQueenGson>, BaseGson<HomePurseAdvertisementGson>, HomeDataEntity>() {
+        Observable.zip( homePageModel.getTimerGoodsList(type2), homePageModel.getHomeActivity(), homePageModel.getHomeBanner(), homePageModel.getMarqueenList(), homePageModel.queryHomePurseGoodsAdvertisement(),homePageModel.queryHomePageIcon(), new Func6<BaseGson<GoodsGson>, BaseGson<HotPurseActivityGson>, BaseGson<BannerGson>, BaseGson<MarQueenGson>, BaseGson<HomePurseAdvertisementGson>,BaseGson<HomeIconGson>, HomeDataEntity>() {
             @Override
-            public HomeDataEntity call(BaseGson<GoodsGson> goodsGsonBaseGson, BaseGson<HotPurseActivityGson> hotPurseActivityGsonBaseGson, BaseGson<BannerGson> bannerGsonBaseGson, BaseGson<MarQueenGson> marQueenGsonBaseGson, BaseGson<HomePurseAdvertisementGson> homePurseAdvertisementGsonBaseGson) {
-                return new HomeDataEntity(goodsGsonBaseGson.getData(), hotPurseActivityGsonBaseGson.getData(), bannerGsonBaseGson.getData(), marQueenGsonBaseGson.getData(), homePurseAdvertisementGsonBaseGson.getSingleData());
+            public HomeDataEntity call(BaseGson<GoodsGson> goodsGsonBaseGson, BaseGson<HotPurseActivityGson> hotPurseActivityGsonBaseGson, BaseGson<BannerGson> bannerGsonBaseGson, BaseGson<MarQueenGson> marQueenGsonBaseGson, BaseGson<HomePurseAdvertisementGson> homePurseAdvertisementGsonBaseGson,BaseGson<HomeIconGson> homeIconGsonBaseGson) {
+                return new HomeDataEntity(goodsGsonBaseGson.getData(), hotPurseActivityGsonBaseGson.getData(), bannerGsonBaseGson.getData(), marQueenGsonBaseGson.getData(), homePurseAdvertisementGsonBaseGson.getSingleData(),homeIconGsonBaseGson.getData());
             }
         }).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -62,6 +66,8 @@ public class HomePagePresenter extends BasePresenter<HomePageContract.View> impl
                         mMvpView.loadHomeBanner(homeDataEntity.getBannerGsons());
                         mMvpView.loadMarqueenList(homeDataEntity.getMarQueenGsonList());
                         mMvpView.queryHomePurseGoodsAdvertisement(homeDataEntity.getHomePurseAdvertisementGson());
+                        ArrayList<HomeIconGson> homeIconGsons = new ArrayList<>();
+                        mMvpView.loadHomePageIcon(homeDataEntity.getHomeIconGsons().size()>0? homeDataEntity.getHomeIconGsons() :homeIconGsons);
                     }
                 });
 

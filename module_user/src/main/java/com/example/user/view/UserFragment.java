@@ -39,6 +39,9 @@ import com.example.user.contract.UserInformationContract;
 import com.example.user.contract.UserPaymentContract;
 import com.example.user.presenter.UserInformationPresenter;
 import com.example.user.presenter.UserPaymentPresenter;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.xuyijie.user.R;
 import com.xuyijie.user.R2;
 import com.yuyh.library.imgsel.ISNav;
@@ -97,6 +100,8 @@ public class UserFragment extends BaseFragment<UserPaymentPresenter> implements 
     RelativeLayout rlToolbar;
     @BindView(R2.id.ll_member_goods)
     LinearLayout llMemberGoods;
+    @BindView(R2.id.sml_user)
+    SmartRefreshLayout sml_user;
     private WaveView waveView;
     private ImageView ivHead;
     @BindView(R2.id.iv_vip)
@@ -110,7 +115,12 @@ public class UserFragment extends BaseFragment<UserPaymentPresenter> implements 
 
     @Override
     public void initData() {
-
+        sml_user.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(RefreshLayout refreshLayout) {
+                mPresenter.queryUserOrderCount((String) SharePreferenceUtil.getUser("uid", "String"));
+            }
+        });
     }
 
 
@@ -130,8 +140,12 @@ public class UserFragment extends BaseFragment<UserPaymentPresenter> implements 
             }
         });
         Log.i(TAG, "initView: " + SharePreferenceUtil.getUser("avatar", "String"));
-        Log.i(TAG, "initView: "+SharePreferenceUtil.getUser("avatar", "String"));
-        GlideUtil.loadGeneralImage(SharePreferenceUtil.getUser("avatar", "String"),ivHead);
+        Log.i(TAG, "initView: " + SharePreferenceUtil.getUser("avatar", "String"));
+//        GlideUtil.loadGeneralImage(SharePreferenceUtil.getUser("avatar", "String"),ivHead);
+        RequestOptions requestOptions = new RequestOptions();
+        requestOptions.skipMemoryCache(true)
+                .diskCacheStrategy(DiskCacheStrategy.NONE);
+        Glide.with(MyApp.getInstance()).asBitmap().apply(requestOptions).load(SharePreferenceUtil.getUser("avatar", "String")).into(ivHead);
 //        Glide.with(getContext()).asBitmap().apply(new RequestOptions().error(R.mipmap.ic_user_avatar_bg)).load(SharePreferenceUtil.getUser("avatar", "String")).into(ivHead);
         ViewTreeObserver viewTreeObserver = rlToolbar.getViewTreeObserver();
         viewTreeObserver.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -283,7 +297,7 @@ public class UserFragment extends BaseFragment<UserPaymentPresenter> implements 
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == 20 && resultCode == RESULT_OK && data != null) {
-            Log.i(TAG, "onActivityResult: "+data.getStringArrayListExtra("result").get(0));
+            Log.i(TAG, "onActivityResult: " + data.getStringArrayListExtra("result").get(0));
             File file = new File(data.getStringArrayListExtra("result").get(0));
             RequestBody fileRQ = RequestBody.create(MediaType.parse("image/*"), file);
             MultipartBody.Part avatar = MultipartBody.Part.createFormData("avatar", file.getName(), fileRQ);
@@ -310,6 +324,9 @@ public class UserFragment extends BaseFragment<UserPaymentPresenter> implements 
     @Override
     public void setUserOrderCount(UserPaymentGson userOrderCount) {
         Log.i(TAG, "setUserOrderCount: " + userOrderCount.toString());
+        if (sml_user != null) {
+            sml_user.finishRefresh();
+        }
         if (userOrderCount.getCollectionGoods() > 0) {
             tvSubstituteCollection.setText(userOrderCount.getCollectionGoods() + "");
             tvSubstituteCollection.setVisibility(View.VISIBLE);
@@ -348,6 +365,9 @@ public class UserFragment extends BaseFragment<UserPaymentPresenter> implements 
 
     @Override
     public void hideDialog() {
+        if (sml_user != null) {
+            sml_user.finishRefresh();
+        }
         dialogCancel();
     }
 
@@ -366,15 +386,15 @@ public class UserFragment extends BaseFragment<UserPaymentPresenter> implements 
     @Override
     public void updateUserAvatar(boolean success, String vatar) {
         if (success) {
-            RequestOptions requestOptions=new RequestOptions();
+            RequestOptions requestOptions = new RequestOptions();
             requestOptions.skipMemoryCache(true)
                     .diskCacheStrategy(DiskCacheStrategy.NONE);
             Glide.with(MyApp.getInstance()).asBitmap().apply(requestOptions).load(vatar).into(ivHead);
-            Map<String,Object> map=new HashMap<>();
-            map.put("avatar",vatar);
-            Log.i(TAG, "updateUserAvatar: "+vatar);
+            Map<String, Object> map = new HashMap<>();
+            map.put("avatar", vatar);
+            Log.i(TAG, "updateUserAvatar: " + vatar);
             SharePreferenceUtil.saveUser(map);
-        }else {
+        } else {
             ToastUtils.show("头像更换失败");
         }
     }

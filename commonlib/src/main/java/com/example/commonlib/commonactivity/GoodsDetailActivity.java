@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -70,6 +71,7 @@ import butterknife.OnClick;
 import cn.sharesdk.onekeyshare.OnekeyShare;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.model.Conversation;
+import io.rong.imlib.model.UserInfo;
 
 @Route(path = RouterUtil.GOODSDETAIL)
 public class GoodsDetailActivity extends BaseActivity<GoodsDetailContract.View, GoodsDetailPresenter> implements GoodsDetailContract.View, SlideDetailsLayout.OnSlideDetailsListener, GoodsStyleContract.View {
@@ -398,9 +400,12 @@ public class GoodsDetailActivity extends BaseActivity<GoodsDetailContract.View, 
     private String imToken;
     private String shopId;
     private String shopName;
+    private String shopIcon;
 
     @Override
     public void loadGoodsDetail(final GoodsDetailGson goodsGson) {
+        Log.i(TAG, "loadGoodsDetail: "+goodsGson);
+        shopIcon = goodsGson.getShopIcon();
         tvShopcar.setText(goodsGson.getShopCount() + "");
         if (goodsGson.isCollection()) {
             cbCollection.setChecked(true);
@@ -410,8 +415,8 @@ public class GoodsDetailActivity extends BaseActivity<GoodsDetailContract.View, 
         if (goodsGson.getToken() != null) {
             imToken = goodsGson.getToken();
             shopId = goodsGson.getShopId();
-            Log.i(TAG, "loadGoodsDetail: "+goodsGson.getImToken());
-            Log.i(TAG, "loadGoodsDetail: "+goodsGson.getToken());
+            Log.i(TAG, "loadGoodsDetail: " + goodsGson.getImToken());
+            Log.i(TAG, "loadGoodsDetail: " + goodsGson.getToken());
             shopName = goodsGson.getShopName();
         }
 
@@ -448,9 +453,9 @@ public class GoodsDetailActivity extends BaseActivity<GoodsDetailContract.View, 
         bannerGoods.setBannerPageClickListener(new MZBannerView.BannerPageClickListener() {
             @Override
             public void onPageClick(View view, int i) {
-                Log.i(TAG, "onPageClick: "+i+view);
+                Log.i(TAG, "onPageClick: " + i + view);
                 Intent intent = new Intent(GoodsDetailActivity.this, PhotoPreviewActivity.class);
-                intent.putExtra(PhotoPreviewActivity.EXTRA_PHOTOS,(ArrayList)goodsPicUrl);
+                intent.putExtra(PhotoPreviewActivity.EXTRA_PHOTOS, (ArrayList) goodsPicUrl);
                 startActivity(intent);
             }
         });
@@ -607,11 +612,24 @@ public class GoodsDetailActivity extends BaseActivity<GoodsDetailContract.View, 
         } else if (id == R.id.tv_shopcar) {
 
         } else if (id == R.id.tv_service) {
-            if (imToken!=null){
+            if (imToken != null) {
                 if (!imToken.isEmpty()) {
-                    Log.i(TAG, "onViewClicked: "+imToken);
-                    Log.i(TAG, "onViewClicked: "+shopName);
+                    Log.i(TAG, "onViewClicked: " + imToken);
+                    Log.i(TAG, "onViewClicked: " + shopName);
+                    RongIM.setUserInfoProvider(new RongIM.UserInfoProvider() {
+                        @Override
+                        public UserInfo getUserInfo(String s) {
+//                            return new UserInfo(shopId, shopName, Uri.parse(shopIcon));
+                            if (s.equals(SharePreferenceUtil.getUser("username","String"))){
+                                return new UserInfo(String.valueOf(SharePreferenceUtil.getUser("username","String")), (String) SharePreferenceUtil.getUser("username","String"), Uri.parse(String.valueOf(SharePreferenceUtil.getUser("avatar","String"))));
+                            }else {
+                                return new UserInfo(shopId, shopName, Uri.parse(shopIcon));
+                            }
+                        }
+                    }, true);
                     RongIM.getInstance().startConversation(GoodsDetailActivity.this, Conversation.ConversationType.PRIVATE,shopName,shopName);
+//                    RongIM.getInstance().setMessageAttachedUserInfo(true);
+
                 }
             }
 

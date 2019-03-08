@@ -13,18 +13,36 @@
         android:id="@+id/iv_goods_pic"
         android:layout_marginRight="@dimen/dp_10"
         android:layout_height="@dimen/dp_50" />
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:textColor="#000"
-        android:id="@+id/tv_goods_name"
-        android:layout_toRightOf="@+id/iv_goods_pic"
         android:layout_height="match_parent"
-        android:gravity="center|left"
-        android:padding="@dimen/dp_10"
-        android:maxLines="1"
-        android:ellipsize="end"
+        android:orientation="vertical"
+        android:layout_toRightOf="@+id/iv_goods_pic"
+        android:paddingBottom="@dimen/dp_5"
+        android:paddingTop="@dimen/dp_5"
         android:layout_toLeftOf="@+id/tv_count"
-        android:text="怡宝"/>
+        android:weightSum="3">
+        <TextView
+            android:layout_width="match_parent"
+            android:textColor="#000"
+            android:layout_weight="1"
+            android:id="@+id/tv_goods_name"
+            android:layout_height="match_parent"
+            android:gravity="center|left"
+            android:padding="@dimen/dp_10"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:text="怡宝"/>
+        <TextView
+            android:paddingLeft="@dimen/dp_10"
+            android:textSize="12sp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:id="@+id/tv_taste"
+            android:text="口味"/>
+    </LinearLayout>
+
     <TextView
         android:layout_width="@dimen/dp_30"
         android:layout_height="match_parent"

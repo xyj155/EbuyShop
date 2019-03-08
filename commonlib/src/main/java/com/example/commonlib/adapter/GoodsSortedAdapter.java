@@ -1,4 +1,4 @@
-package com.example.commonlib;
+package com.example.commonlib.adapter;
 
 import android.content.Context;
 import android.content.Intent;
@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
+import com.example.commonlib.R;
 import com.example.commonlib.commonactivity.GoodsDetailActivity;
 import com.example.commonlib.gson.GoodsGson;
 import com.example.commonlib.view.MoneyView;

@@ -39,6 +39,7 @@ import com.example.commonlib.commonactivity.BrowserActivity;
 import com.example.commonlib.commonactivity.GoodsDetailActivity;
 import com.example.commonlib.gson.BannerGson;
 import com.example.commonlib.gson.GoodsGson;
+import com.example.commonlib.gson.HomeIconGson;
 import com.example.commonlib.gson.HomePurseAdvertisementGson;
 import com.example.commonlib.gson.HotPurseActivityGson;
 import com.example.commonlib.gson.MarQueenGson;
@@ -91,15 +92,16 @@ public class HomeFragment extends BaseFragment<HomePagePresenter> implements Hom
 
 
     @BindView(R2.id.iv_news)
-    TextView ivNews;
+    ImageView ivNews;
     @BindView(R2.id.tv_member)
-    TextView tvMember;
+    ImageView tvMember;
     @BindView(R2.id.iv_school_vip)
-    TextView ivSchoolVip;
+    ImageView ivSchoolVip;
     @BindView(R2.id.iv_best)
-    TextView ivBest;
+    ImageView ivBest;
     @BindView(R2.id.iv_share)
-    TextView ivShare;
+    ImageView ivShare;
+
     Unbinder unbinder;
     TextView tvTime;
     @BindView(R2.id.tv_activity_name)
@@ -241,7 +243,7 @@ public class HomeFragment extends BaseFragment<HomePagePresenter> implements Hom
                 });
             }
         });
-        ryPurse.setHasFixedSize(false );
+        ryPurse.setHasFixedSize(false);
         srHome.autoRefresh();
         srHome.setOnRefreshListener(new OnRefreshListener() {
             @Override
@@ -451,7 +453,7 @@ public class HomeFragment extends BaseFragment<HomePagePresenter> implements Hom
 
         } else {
             systemMessageGsonArrayList.addAll(userGson);
-            if (purseGoodsAdapter != null){
+            if (purseGoodsAdapter != null) {
 //                purseGoodsAdapter.replaceData(systemMessageGsonArrayList);
                 purseGoodsAdapter.notifyItemInserted(purseGoodsAdapter.getItemCount());
             }
@@ -559,6 +561,20 @@ public class HomeFragment extends BaseFragment<HomePagePresenter> implements Hom
             e.printStackTrace();
         }
     }
+
+    @Override
+    public void loadHomePageIcon(List<HomeIconGson> timeBean) {
+        Log.i(TAG, "loadHomePageIcon: "+timeBean.get(0).getIconUrl());
+        boolean b = !timeBean.isEmpty();
+        if (timeBean.size() > 0||b) {
+            GlideUtil.loadGeneralImage(timeBean.get(0).getIconUrl(), ivNews);
+            GlideUtil.loadGeneralImage(timeBean.get(1).getIconUrl(), tvMember);
+            GlideUtil.loadGeneralImage(timeBean.get(2).getIconUrl(), ivSchoolVip);
+            GlideUtil.loadGeneralImage(timeBean.get(3).getIconUrl(), ivShare);
+            GlideUtil.loadGeneralImage(timeBean.get(4).getIconUrl(), ivBest);
+        }
+    }
+
 
     @Override
     public void queryHomePurseGoodsAdvertisement(final HomePurseAdvertisementGson homePurseAdvertisement) {
