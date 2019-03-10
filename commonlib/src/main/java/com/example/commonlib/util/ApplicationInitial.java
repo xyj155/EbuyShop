@@ -3,6 +3,7 @@ package com.example.commonlib.util;
 import android.content.Context;
 import android.os.Environment;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -98,7 +99,6 @@ public class ApplicationInitial {
         Beta.autoCheckUpgrade = true;
         Beta.largeIconId = R.mipmap.app_icon;
         Beta.smallIconId = R.mipmap.app_icon;
-        Beta.initDelay = 20 * 1000;
         Beta.upgradeDialogLayoutId = R.layout.upgrade_dialog;
         Beta.strUpgradeDialogCancelBtn = MyApp.getInstance().getString(R.string.text_remind_late);
         Beta.strNetworkTipsConfirmBtn = MyApp.getInstance().getString(R.string.update_now);
@@ -107,7 +107,7 @@ public class ApplicationInitial {
         Beta.upgradeDialogLifecycleListener = new UILifecycleListener<UpgradeInfo>() {
             @Override
             public void onCreate(Context context, View view, UpgradeInfo upgradeInfo) {
-
+                Log.i(TAG, "onCreate: "+upgradeInfo);
 
             }
 

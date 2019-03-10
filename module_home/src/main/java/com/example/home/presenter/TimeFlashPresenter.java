@@ -1,5 +1,7 @@
 package com.example.home.presenter;
 
+import android.util.Log;
+
 import com.example.commonlib.base.BaseGson;
 import com.example.commonlib.base.BasePresenter;
 import com.example.commonlib.gson.TimeGoodsGson;
@@ -18,8 +20,10 @@ public class TimeFlashPresenter extends BasePresenter<TimeFlashContract.View> im
         super(mMvpView);
     }
 
+    private static final String TAG = "TimeFlashPresenter";
     @Override
     public void queryGoodsTime(String timeId) {
+        Log.i(TAG, "queryGoodsTime: "+timeId);
         mMvpView.showDialog("");
         timeFlashModel.queryGoodsTime(timeId)
                 .subscribeOn(Schedulers.io())
