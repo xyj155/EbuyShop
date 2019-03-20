@@ -112,6 +112,7 @@ dependencies {
     //    if (!isNeedUserModule.toBoolean()) {
     implementation project(':module_user')
     implementation project(':module_login')
+    implementation project(':module_vr')
     //    }
     api 'com.jakewharton:butterknife:8.8.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'

@@ -81,7 +81,17 @@ public class GoodsDetailGson {
     private String shopId;
 
     public String getShopId() {
+
         return shopId;
+    }
+    private String shopTel;
+
+    public String getShopTel() {
+        return shopTel;
+    }
+
+    public void setShopTel(String shopTel) {
+        this.shopTel = shopTel;
     }
 
     public void setShopId(String shopId) {

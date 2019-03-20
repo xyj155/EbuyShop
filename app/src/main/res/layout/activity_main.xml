@@ -1,86 +1,105 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
     android:id="@+id/rl_container"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <FrameLayout
         android:id="@+id/flContainer"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@+id/bottomBar"/>
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true" />
 
-    <RadioGroup
-        android:id="@+id/bottomBar"
-        android:elevation="@dimen/dp_8"
+    <FrameLayout
+        android:id="@+id/index_fl_bottom_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:background="#ffffff"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:weightSum="5">
+        android:background="#fff">
 
-        <RadioButton
-            android:id="@+id/rb_home"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:button="@null"
-            android:checked="true"
-            android:drawablePadding="@dimen/dp_5"
-            android:drawableTop="@drawable/bottom_home_main"
-            android:gravity="center"
-            android:text="主页" />
-
-        <RadioButton
-            android:id="@+id/rb_resource"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:button="@null"
-            android:drawableTop="@drawable/bottom_home_message"
-
-            android:gravity="center"
-            android:padding="@dimen/dp_5"
-            android:text="分类" />
-
-
-        <RadioButton
-            android:id="@+id/rb_message"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:drawableTop="@drawable/bottom_home_sort"
-            android:layout_weight="1"
-            android:button="@null"
-            android:gravity="center"
-            android:padding="@dimen/dp_5"
-            android:text="消息" />
-
-        <RadioButton
-            android:id="@+id/rb_chat"
+        <RadioGroup
+            android:id="@+id/bottomBar"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:button="@null"
-            android:drawableTop="@drawable/bottom_home_shopcar"
             android:gravity="center"
-            android:padding="@dimen/dp_5"
-            android:text="购物车" />
+            android:orientation="horizontal">
 
-        <RadioButton
-            android:id="@+id/rb_user"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:button="@null"
-            android:drawableTop="@drawable/bottom_home_user"
-            android:gravity="center"
-            android:padding="@dimen/dp_5"
-            android:text="个人" />
-    </RadioGroup>
+            <RadioButton
+                android:id="@+id/rb_home"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_gravity="center_vertical"
+                android:layout_marginTop="6dp"
+                android:layout_marginBottom="4dp"
+                android:button="@null"
+                android:checked="true"
+                android:drawableTop="@drawable/bottom_home_main"
+                android:drawablePadding="@dimen/dp_5"
+                android:gravity="center"
+                android:text="主页" />
 
+            <RadioButton
+                android:id="@+id/rb_resource"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:button="@null"
+                android:drawableTop="@drawable/bottom_home_message"
+
+                android:gravity="center"
+                android:padding="@dimen/dp_5"
+                android:text="分类" />
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+
+            </FrameLayout>
+            <RadioButton
+                android:id="@+id/rb_message"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:button="@null"
+                android:drawableTop="@drawable/bottom_home_sort"
+                android:gravity="center"
+                android:padding="@dimen/dp_5"
+                android:text="消息"
+                android:visibility="gone" />
+
+            <RadioButton
+                android:id="@+id/rb_chat"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:button="@null"
+                android:drawableTop="@drawable/bottom_home_shopcar"
+                android:gravity="center"
+                android:padding="@dimen/dp_5"
+                android:text="购物车" />
+
+            <RadioButton
+                android:id="@+id/rb_user"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:button="@null"
+                android:drawableTop="@drawable/bottom_home_user"
+                android:gravity="center"
+                android:padding="@dimen/dp_5"
+                android:text="个人" />
+        </RadioGroup>
+    </FrameLayout>
+
+    <ImageView
+        android:id="@+id/index_bottom_bar_scan"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerInParent="true"
+        android:layout_marginBottom="0dp"
+        android:src="@mipmap/index_bottom_bar_scan" />
 </RelativeLayout>

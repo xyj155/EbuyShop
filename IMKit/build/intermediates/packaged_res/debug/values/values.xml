@@ -588,32 +588,6 @@
     <color name="rc_voice_color_left">#4385bf</color>
     <color name="rc_voice_color_right">#a2a2a2</color>
     <color name="rc_web_progress_bar">#9fcdfd</color>
-    <declare-styleable name="AsyncImageView">
-
-        <attr format="dimension" name="RCMinShortSideSize"/>
-        <attr format="dimension" name="RCCornerRadius"/>
-        <attr format="boolean" name="RCMask"/>
-
-        <attr name="RCShape">
-            <flag name="square" value="0"/>
-            <flag name="circle" value="1"/>
-        </attr>
-
-        <attr format="reference" name="RCDefDrawable"/>
-
-    </declare-styleable>
-    <declare-styleable name="AutoLinkTextView">
-        <attr format="dimension" name="RCMaxWidth"/>
-    </declare-styleable>
-    <declare-styleable name="RongExtension">
-        <attr name="RCStyle">
-            <enum name="SCE" value="0x123"/>
-            <enum name="SC" value="0x120"/>
-            <enum name="EC" value="0x320"/>
-            <enum name="CE" value="0x023"/>
-            <enum name="C" value="0x020"/>
-        </attr>
-    </declare-styleable>
     <dimen name="rc_conversation_item_data_size">14sp</dimen>
     <dimen name="rc_conversation_item_name_size">16sp</dimen>
     <dimen name="rc_conversation_item_time_size">13sp</dimen>
@@ -1224,4 +1198,30 @@
         <item name="android:layout_width">0.5dp</item>
         <item name="android:background">@android:color/darker_gray</item>
     </style>
+    <declare-styleable name="AsyncImageView">
+
+        <attr format="dimension" name="RCMinShortSideSize"/>
+        <attr format="dimension" name="RCCornerRadius"/>
+        <attr format="boolean" name="RCMask"/>
+
+        <attr name="RCShape">
+            <flag name="square" value="0"/>
+            <flag name="circle" value="1"/>
+        </attr>
+
+        <attr format="reference" name="RCDefDrawable"/>
+
+    </declare-styleable>
+    <declare-styleable name="AutoLinkTextView">
+        <attr format="dimension" name="RCMaxWidth"/>
+    </declare-styleable>
+    <declare-styleable name="RongExtension">
+        <attr name="RCStyle">
+            <enum name="SCE" value="0x123"/>
+            <enum name="SC" value="0x120"/>
+            <enum name="EC" value="0x320"/>
+            <enum name="CE" value="0x023"/>
+            <enum name="C" value="0x020"/>
+        </attr>
+    </declare-styleable>
 </resources>

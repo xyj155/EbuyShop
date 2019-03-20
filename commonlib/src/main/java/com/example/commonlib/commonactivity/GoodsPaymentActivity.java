@@ -140,7 +140,13 @@ public class GoodsPaymentActivity extends BaseActivity<OrderDetailContract.View,
     public void loadOrderDetail(OrderDetailGson orderDetailGson) {
         Log.i(TAG, "loadOrderDetail: " + orderDetailGson.getGoods().size());
         orderDetailGoodsAdapter.replaceData(orderDetailGson.getGoods());
-        addressId = String.valueOf(orderDetailGson.getUserAddress().getId());
+        if (orderDetailGson.getUserAddress()==null){
+            ToastUtils.show("请填写地址");
+            startActivityForResult(new Intent(GoodsPaymentActivity.this, UserReceivingAddressActivity.class), 0x1);
+        }else {
+            addressId = String.valueOf(orderDetailGson.getUserAddress().getId());
+        }
+
         if (orderDetailGson.getUserAddress() == null) {
             rlEmptyAddress.setVisibility(View.VISIBLE);
             flAddress.setVisibility(View.GONE);
@@ -241,9 +247,13 @@ public class GoodsPaymentActivity extends BaseActivity<OrderDetailContract.View,
             startActivityForResult(new Intent(GoodsPaymentActivity.this, UserReceivingAddressActivity.class), 0x1);
         } else if (id == R.id.tv_post) {
             if (money > 188) {
-                expressFreeDialog.show();
+                if (expressFreeDialog!=null){
+                    expressFreeDialog.show();
+                }
             } else {
-                expressChooseDialog.show();
+                if (expressChooseDialog!=null){
+                    expressChooseDialog.show();
+                }
             }
         } else if (id == R.id.tv_pay_type) {
             ARouter.getInstance().build(RouterUtil.USERCOUPON).withDouble("money", money).navigation(GoodsPaymentActivity.this, 0x11);
@@ -257,6 +267,7 @@ public class GoodsPaymentActivity extends BaseActivity<OrderDetailContract.View,
                 if (b) {
                     Log.i(TAG, "onViewClicked:totalMoney " + (int) (totalMoney * 100));
                     PaymentUtil.paymentByGoods("商学院自营商品", "订单号：" + getIntent().getStringExtra("orderNum"), (int) (totalMoney * 100), new PaymentInterface() {
+//                    PaymentUtil.paymentByGoods("商学院自营商品", "订单号：" + getIntent().getStringExtra("orderNum"), 1, new PaymentInterface() {
                         @Override
                         public void paySuccess() {
                             userSubmitOrderPresenter.submitOrderByUserId((String) SharePreferenceUtil.getUser("uid", "String"), addressId, new Gson().toJson(goodsIdList), couponId == null ? "5" : couponId, orderNum, (String) SharePreferenceUtil.getUser("userToken", "String"), etMessage.getText().toString(), "36");
@@ -272,6 +283,7 @@ public class GoodsPaymentActivity extends BaseActivity<OrderDetailContract.View,
 //                        ToastUtils.show("你还没有选择配送方式！");
 //                    } else {
                     PaymentUtil.paymentByGoods("商学院自营商品", "订单号：" + getIntent().getStringExtra("orderNum"), (int) ((totalMoney + 12) * 100), new PaymentInterface() {
+//                    PaymentUtil.paymentByGoods("商学院自营商品", "订单号：" + getIntent().getStringExtra("orderNum"), 1, new PaymentInterface() {
                         @Override
                         public void paySuccess() {
                             userSubmitOrderPresenter.submitOrderByUserId((String) SharePreferenceUtil.getUser("uid", "String"), addressId, new Gson().toJson(goodsIdList), "5", orderNum, (String) SharePreferenceUtil.getUser("userToken", "String"), etMessage.getText().toString(), "33");

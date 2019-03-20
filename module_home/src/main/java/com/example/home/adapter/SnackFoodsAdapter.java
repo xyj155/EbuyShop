@@ -65,7 +65,7 @@ public class SnackFoodsAdapter extends BaseQuickAdapter<SnackGson, BaseViewHolde
         helper.setOnClickListener(R.id.iv_add, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showSheetDialog(helper.getView(R.id.iv_add),helper.getPosition(), item,tvMinus,tvCount);
+                showSheetDialog(helper.getView(R.id.iv_add),helper.getPosition(), item,tvMinus,tvCount,item.getNeedCount());
             }
         });
         tvMinus.setOnClickListener(new View.OnClickListener() {
@@ -74,12 +74,14 @@ public class SnackFoodsAdapter extends BaseQuickAdapter<SnackGson, BaseViewHolde
                 if (item.getTasty().get(0).getFoodsTaste().equals("默认")) {
                     SnacksActivity activity = mContext;
                     int count = item.getGoodsCount();
-                    mContext.snackFoodsShopCarPresenter.addSnackByUserId(String.valueOf(SharePreferenceUtil.getUser("uid", "String")), String.valueOf(item.getId()), "", "1");
+                    for (int i = 0; i < item.getNeedCount(); i++) {
+                        mContext.snackFoodsShopCarPresenter.addSnackByUserId(String.valueOf(SharePreferenceUtil.getUser("uid", "String")), String.valueOf(item.getId()), "", "1");
+                    }
                     if (count < 2) {
                         tvMinus.setAnimation(getHiddenAnimation());
                         tvCount.setVisibility(View.GONE);
                     }
-                    activity.update(helper.getPosition(), String.valueOf(item.getId()), String.valueOf(item.getTasty().get(0).getStyleId()), true, false);
+                    activity.update(helper.getPosition(), String.valueOf(item.getId()), String.valueOf(item.getTasty().get(0).getStyleId()), true, false,item.getNeedCount());
                     count--;
                     tvCount.setText(String.valueOf(count));
                 } else {
@@ -97,7 +99,7 @@ public class SnackFoodsAdapter extends BaseQuickAdapter<SnackGson, BaseViewHolde
     }
 
 
-    private void showSheetDialog(final View ivAdd, final int position, final SnackGson snackGson, final ImageView tvMinus, final TextView tvCount) {
+    private void showSheetDialog(final View ivAdd, final int position, final SnackGson snackGson, final ImageView tvMinus, final TextView tvCount, final int needCount) {
         final int[] mtastyId = {snackGson.getTasty().get(0).getStyleId()};
         View view = View.inflate(mContext, R.layout.dialog_goods_tasty_layout, null);
         ImageView ivGoodsPci = (ImageView) view.findViewById(R.id.iv_goods_pic);
@@ -134,7 +136,7 @@ public class SnackFoodsAdapter extends BaseQuickAdapter<SnackGson, BaseViewHolde
         tvSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mContext.update(position, String.valueOf(snackGson.getId()), String.valueOf(mtastyId[0]), false, false);
+                mContext.update(position, String.valueOf(snackGson.getId()), String.valueOf(mtastyId[0]), false, false,needCount);
                 int count = snackGson.getGoodsCount();
                 if (count < 1) {
                     tvMinus.setAnimation(getShowAnimation());

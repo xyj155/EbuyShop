@@ -48,9 +48,9 @@ ADDED from G:\EbuyShop\IMLib\AndroidManifest.xml:9:5-79
 application
 ADDED from G:\EbuyShop\IMLib\AndroidManifest.xml:11:5-60:19
 meta-data#RONG_CLOUD_APP_KEY
-ADDED from G:\EbuyShop\IMLib\AndroidManifest.xml:14:9-16:53
+ADDED from G:\EbuyShop\IMLib\AndroidManifest.xml:14:9-16:45
 	android:value
-		ADDED from G:\EbuyShop\IMLib\AndroidManifest.xml:16:13-50
+		ADDED from G:\EbuyShop\IMLib\AndroidManifest.xml:16:13-42
 	android:name
 		ADDED from G:\EbuyShop\IMLib\AndroidManifest.xml:15:13-46
 service#io.rong.imlib.ipc.RongService

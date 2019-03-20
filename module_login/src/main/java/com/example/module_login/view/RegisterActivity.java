@@ -232,30 +232,45 @@ public class RegisterActivity extends BaseActivity<UserRegisterContract.View, Us
         } else if (id == R.id.tv_login) {
             if (tvPassword.getText().toString().isEmpty()) {
                 ToastUtils.show("请输入密码");
-            } else if (tvPassword.getText().toString().length() < 6) {
+            } else if (tvPassword.getText().toString().length() < 10) {
                 ToastUtils.show("密码不可少于六位");
             } else {
-                int size = pathList.size();
-                if (rbBoy.isChecked() || rbGirl.isChecked()) {
-                    if (size > 0) {
-                        String s = pathList.get(0);
-                        if (!s.isEmpty()) {
-                            File file = new File(s);
-                            RequestBody fileRQ = RequestBody.create(MediaType.parse("image/*"), file);
-                            MultipartBody.Part avatar = MultipartBody.Part.createFormData("avatar", file.getName(), fileRQ);
-                            mPresenter.userRegister(tvUsername.getText().toString(), Md5Util.encode(tvPassword.getText().toString()), String.valueOf(SharePreferenceUtil.getUser("telphone", "String")), tvAge.getText().toString(), rbBoy.isChecked() ? "男" : "女", tvCollage.getText().toString(), avatar);
+
+                    int size = pathList.size();
+                    if (rbBoy.isChecked() || rbGirl.isChecked()) {
+                        if (size > 0) {
+                            if (!isFastClick()){
+                                String s = pathList.get(0);
+                                if (!s.isEmpty()) {
+                                    File file = new File(s);
+                                    RequestBody fileRQ = RequestBody.create(MediaType.parse("image/*"), file);
+                                    MultipartBody.Part avatar = MultipartBody.Part.createFormData("avatar", file.getName(), fileRQ);
+                                    mPresenter.userRegister(tvUsername.getText().toString(), Md5Util.encode(tvPassword.getText().toString()), String.valueOf(SharePreferenceUtil.getUser("telphone", "String")), tvAge.getText().toString(), rbBoy.isChecked() ? "男" : "女", tvCollage.getText().toString(), avatar);
+                                }
+                            }
+                        } else {
+                            ToastUtils.show("你还没有选择头像");
                         }
                     } else {
-                        ToastUtils.show("你还没有选择头像");
-
+                        ToastUtils.show("请选择你的性别");
                     }
-                } else {
-                    ToastUtils.show("请选择你的性别");
-                }
+
             }
         }
 
 
+    }
+    private static final int MIN_DELAY_TIME= 1000;  // 两次点击间隔不能少于1000ms
+    private static long lastClickTime;
+
+    public static boolean isFastClick() {
+        boolean flag = true;
+        long currentClickTime = System.currentTimeMillis();
+        if ((currentClickTime - lastClickTime) >= MIN_DELAY_TIME) {
+            flag = false;
+        }
+        lastClickTime = currentClickTime;
+        return flag;
     }
 
     public static String getJson(String fileName, Context context) {
@@ -338,6 +353,7 @@ public class RegisterActivity extends BaseActivity<UserRegisterContract.View, Us
         map.put("uid", String.valueOf(emptyGson.getId()));
         map.put("avatar", emptyGson.getAvatar());
         map.put("sex", emptyGson.getSex());
+        map.put("userToken", String.valueOf(emptyGson.getUserToken()));
         map.put("age", emptyGson.getAge());
         map.put("level", emptyGson.getUserLevel());
         map.put("trueName", emptyGson.getTrueName());

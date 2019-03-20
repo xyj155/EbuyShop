@@ -68,9 +68,9 @@
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/dp_45"
                             android:layout_weight="1"
-                            android:src="@mipmap/l_chongzhi_gouwu"
                             android:drawablePadding="@dimen/dp_6"
                             android:gravity="center"
+                            android:src="@mipmap/l_chongzhi_gouwu"
                             android:text="新上架"
                             android:textColor="#000"
                             android:textSize="13sp" />
@@ -80,9 +80,9 @@
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/dp_45"
                             android:layout_weight="1"
-                            android:src="@mipmap/l_chongzhi_xizao"
                             android:drawablePadding="@dimen/dp_6"
                             android:gravity="center"
+                            android:src="@mipmap/l_chongzhi_xizao"
                             android:text="会员尊享"
                             android:textColor="#000"
                             android:textSize="13sp" />
@@ -92,9 +92,9 @@
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/dp_45"
                             android:layout_weight="1"
-                            android:src="@mipmap/l_chongzhi_yongcan"
                             android:drawablePadding="@dimen/dp_6"
                             android:gravity="center"
+                            android:src="@mipmap/l_chongzhi_yongcan"
                             android:text="零食铺"
                             android:textColor="#000"
                             android:textSize="13sp" />
@@ -105,9 +105,9 @@
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/dp_45"
                             android:layout_weight="1"
-                            android:src="@mipmap/l_chongzhi_chuifeng"
                             android:drawablePadding="@dimen/dp_6"
                             android:gravity="center"
+                            android:src="@mipmap/l_chongzhi_chuifeng"
                             android:text="购物晒单"
                             android:textColor="#000"
                             android:textSize="13sp" />
@@ -118,12 +118,13 @@
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/dp_45"
                             android:layout_weight="1"
-                            android:src="@mipmap/l_chongzhi_xiyi"
                             android:drawablePadding="@dimen/dp_6"
                             android:gravity="center"
+                            android:src="@mipmap/l_chongzhi_xiyi"
                             android:textColor="#000"
                             android:textSize="13sp" />
                     </LinearLayout>
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -381,7 +382,8 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:orientation="horizontal"
-            android:paddingLeft="@dimen/dp_4">
+            android:paddingLeft="@dimen/dp_4"
+            android:visibility="gone">
 
             <ImageView
                 android:id="@+id/iv_location"
@@ -404,6 +406,12 @@
                 android:textStyle="bold" />
         </LinearLayout>
 
+        <ImageView
+            android:padding="@dimen/dp_5"
+            android:layout_width="@dimen/dp_40"
+            android:id="@+id/iv_scan"
+            android:src="@mipmap/ic_home_scan_white"
+            android:layout_height="@dimen/dp_40" />
 
         <TextView
             android:id="@+id/tvSearch"
@@ -420,7 +428,12 @@
             android:text="搜索你想要的商品"
             android:textSize="13.5sp" />
 
-
+        <ImageView
+            android:padding="@dimen/dp_8"
+            android:layout_width="@dimen/dp_40"
+            android:id="@+id/iv_message"
+            android:src="@mipmap/ic_home_message_white"
+            android:layout_height="@dimen/dp_40" />
         <ImageView
             android:id="@+id/ivShopCar"
             android:layout_width="match_parent"

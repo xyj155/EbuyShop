@@ -10,6 +10,8 @@ import android.widget.TextView;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 
+import com.baidu.ar.bean.DuMixARConfig;
+import com.baidu.ar.util.Res;
 import com.bumptech.glide.Glide;
 import com.example.commonlib.MyApp;
 import com.example.commonlib.R;
@@ -26,6 +28,7 @@ import com.tencent.bugly.beta.ui.UILifecycleListener;
 import com.tencent.smtt.sdk.QbSdk;
 import com.tencent.stat.StatConfig;
 import com.tencent.stat.StatService;
+
 import com.yuyh.library.imgsel.ISNav;
 import com.yuyh.library.imgsel.common.ImageLoader;
 
@@ -52,6 +55,11 @@ public class ApplicationInitial {
         return this;
     }
 
+    public ApplicationInitial initZxing() {
+//        ZXingLibrary.initDisplayOpinion(MyApp.getInstance());
+        return this;
+    }
+
     public ApplicationInitial initialGlide() {
         ISNav.getInstance().init(new ImageLoader() {
             @Override
@@ -66,6 +74,18 @@ public class ApplicationInitial {
         StatConfig.setDebugEnable(true);
         // 基础统计API
         StatService.registerActivityLifecycleCallbacks(MyApp.getInstance());
+        return this;
+    }
+
+    public ApplicationInitial initBaiduVR() {
+        // 设置获取资源的上下文Context
+        Res.addResource(MyApp.getInstance());
+// 设置App Id
+        DuMixARConfig.setAppId("15791457");
+// 设置API Key
+        DuMixARConfig.setAPIKey("trK2Q1ripnzKQseUCeWrigig");
+// 设置Secret Key
+        DuMixARConfig.setSecretKey("rTvvbzq6m8gh7ZydHP1fem3ALBg9gfAt");
         return this;
     }
 
@@ -107,7 +127,7 @@ public class ApplicationInitial {
         Beta.upgradeDialogLifecycleListener = new UILifecycleListener<UpgradeInfo>() {
             @Override
             public void onCreate(Context context, View view, UpgradeInfo upgradeInfo) {
-                Log.i(TAG, "onCreate: "+upgradeInfo);
+                Log.i(TAG, "onCreate: " + upgradeInfo);
 
             }
 
@@ -206,7 +226,7 @@ public class ApplicationInitial {
     }
 
     public ApplicationInitial initRongIm() {
-        RongIM.init(MyApp.getInstance(), "0vnjpoad033gz");
+        RongIM.init(MyApp.getInstance(), "kj7swf8ok3nq2");
         return this;
     }
 

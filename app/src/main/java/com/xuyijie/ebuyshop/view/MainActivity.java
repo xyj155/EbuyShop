@@ -14,6 +14,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.RadioGroup;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
@@ -62,12 +63,13 @@ import static io.rong.imkit.utils.SystemUtils.getCurProcessName;
 
 
 @Route(path = RouterUtil.HomePage)
-public class MainActivity extends BaseActivity<HomeContract.View, LoginPresent> implements HomeContract.View, AdvertisementContract.View {
+public class MainActivity extends BaseActivity<HomeContract.View, LoginPresent> implements HomeContract.View, AdvertisementContract.View, View.OnClickListener {
 
 
     private RadioGroup bottomBar;
 
     private MyDialog myDialog1;
+    private ImageView index_bottom_bar_scan;
     private FragmentManager supportFragmentManager;
     Fragment homeFragment;
     Fragment messageFragment;
@@ -166,6 +168,8 @@ public class MainActivity extends BaseActivity<HomeContract.View, LoginPresent> 
     @Override
     public void initView() {
         setTagAndAlias();
+        index_bottom_bar_scan = findViewById(R.id.index_bottom_bar_scan);
+        index_bottom_bar_scan.setOnClickListener(this);
         advertisementPresenter.queryPopWindowAd();
         bottomBar = findViewById(R.id.bottomBar);
         supportFragmentManager = getSupportFragmentManager();
@@ -392,5 +396,13 @@ public class MainActivity extends BaseActivity<HomeContract.View, LoginPresent> 
             adManager.showAdDialog(AdConstant.ANIM_DOWN_TO_UP);
         }
 
+    }
+
+    @Override
+    public void onClick(View v) {
+        int id = v.getId();
+        if (id == R.id.index_bottom_bar_scan) {
+            ARouter.getInstance().build(RouterUtil.ARMAP).navigation();
+        }
     }
 }

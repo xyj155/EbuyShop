@@ -39,6 +39,15 @@ public class SnackGson {
     private double foodsPrice;
     private String foodsSize;
     private int goodsCount;
+private int needCount;
+
+    public int getNeedCount() {
+        return needCount;
+    }
+
+    public void setNeedCount(int needCount) {
+        this.needCount = needCount;
+    }
 
     public int getGoodsCount() {
         return goodsCount;

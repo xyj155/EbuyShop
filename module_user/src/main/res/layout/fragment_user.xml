@@ -9,13 +9,13 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <pl.droidsonroids.gif.GifImageView
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_100"
-            android:layout_marginTop="@dimen/dp_30"
-            android:src="@drawable/loadingview"
-            app:layout_srlBackgroundColor="@android:color/transparent"
-            app:layout_srlSpinnerStyle="Translate" />
+        <!--<pl.droidsonroids.gif.GifImageView-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="@dimen/dp_100"-->
+            <!--android:layout_marginTop="@dimen/dp_30"-->
+            <!--android:src="@drawable/loadingview"-->
+            <!--app:layout_srlBackgroundColor="@android:color/transparent"-->
+            <!--app:layout_srlSpinnerStyle="Translate" />-->
 
         <com.example.commonlib.view.ObservableScrollView xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/sv_mine"
@@ -363,6 +363,19 @@
                         android:paddingLeft="@dimen/dp_6"
                         android:paddingRight="@dimen/dp_8"
                         android:text="招聘"
+                        android:textColor="#000" />
+                    <TextView
+                        android:id="@+id/tv_my_invite"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp_48"
+                        android:drawableLeft="@mipmap/ic_mine_invite"
+                        android:drawableRight="@mipmap/ic_category_arraw_right_n"
+                        android:drawablePadding="@dimen/dp_8"
+                        android:gravity="center|left"
+                        android:paddingLeft="@dimen/dp_6"
+                        android:paddingRight="@dimen/dp_8"
+                        android:visibility="gone"
+                        android:text="邀请赢红包"
                         android:textColor="#000" />
 
                     <View

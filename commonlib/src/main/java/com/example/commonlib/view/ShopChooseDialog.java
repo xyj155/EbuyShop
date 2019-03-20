@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -77,9 +78,13 @@ public class ShopChooseDialog extends Dialog implements GoodsStyleContract.View,
         lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
         getWindow().setAttributes(lp);
         setCanceledOnTouchOutside(false);
-//        goodsStylePresenter.queryGoodsStyle(((Activity) context).getIntent().getStringExtra("goodsId"));
         ryStyleList = findViewById(R.id.ry_style_list);
-        ryStyleList.setLayoutManager(new LinearLayoutManager(context));
+        StaggeredGridLayoutManager layoutManager =
+                new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+// 绑定布局管理器
+        layoutManager.setAutoMeasureEnabled(true);
+        ryStyleList.setLayoutManager(layoutManager);
+//        ryStyleList.setLayoutManager(new LinearLayoutManager(context));
         ryStyleList.setAdapter(goodsStyleAdapter);
         goodsStyleAdapter.setOnItemClickListener(new onItemClickListenerByGId() {
             @Override
@@ -194,11 +199,11 @@ public class ShopChooseDialog extends Dialog implements GoodsStyleContract.View,
     public void addGoodsInShopCar(boolean isSuccess) {
         if (isSuccess) {
             TextView tvShopcar = context.tvShopcar;
-            if (tvShopcar!=null){
+            if (tvShopcar != null) {
                 String text = tvShopcar.getText().toString();
                 int i = Integer.valueOf(text) + 1;
-                Log.i(TAG, "addGoodsInShopCar: "+i);
-                tvShopcar.setText(i+"");
+                Log.i(TAG, "addGoodsInShopCar: " + i);
+                tvShopcar.setText(i + "");
             }
 
 

@@ -3,7 +3,8 @@
     package="com.xuyijie.user">
 
     <application>
-        <activity android:name="com.example.commonlib.commonactivity.AddressEditorActivity"></activity>
+        <activity android:name="com.example.user.view.UserInvitedActivity"></activity>
+        <activity android:name="com.example.commonlib.commonactivity.AddressEditorActivity" />
         <activity android:name="com.example.user.view.UserCouponActivity" />
         <activity android:name="com.example.user.view.UserFormStatusActivity" />
         <activity android:name="com.example.user.view.SubmitGoodsCommentActivity" />

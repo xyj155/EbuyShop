@@ -146,10 +146,13 @@ dependencies {
     api 'com.amap.api:location:4.3.0'
     api project(':pictureSelector')
     api project(':adlibrary')
+    api project(':camera')
     api project(':sekeleton')
     api project(':IMKit')
     api project(':RCSticker')
     api 'com.qq.mta:mta:3.4.7-Release'
+    api project(':zxinglibrary')
     api 'com.tencent.mid:mid:4.06-Release'
     api 'com.qq.visual:visual:3.4.0.1-beta'
+    implementation files('libs/dumixar.jar')
 }

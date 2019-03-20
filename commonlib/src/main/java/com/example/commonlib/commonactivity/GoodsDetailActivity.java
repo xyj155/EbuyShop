@@ -414,7 +414,7 @@ public class GoodsDetailActivity extends BaseActivity<GoodsDetailContract.View, 
         }
         if (goodsGson.getToken() != null) {
             imToken = goodsGson.getToken();
-            shopId = goodsGson.getShopId();
+            shopId = goodsGson.getShopTel();
             Log.i(TAG, "loadGoodsDetail: " + goodsGson.getImToken());
             Log.i(TAG, "loadGoodsDetail: " + goodsGson.getToken());
             shopName = goodsGson.getShopName();
@@ -627,7 +627,7 @@ public class GoodsDetailActivity extends BaseActivity<GoodsDetailContract.View, 
                             }
                         }
                     }, true);
-                    RongIM.getInstance().startConversation(GoodsDetailActivity.this, Conversation.ConversationType.PRIVATE,shopName,shopName);
+                    RongIM.getInstance().startConversation(GoodsDetailActivity.this, Conversation.ConversationType.PRIVATE,shopId,shopName);
 //                    RongIM.getInstance().setMessageAttachedUserInfo(true);
 
                 }

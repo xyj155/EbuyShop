@@ -65,6 +65,8 @@ import static android.app.Activity.RESULT_OK;
 public class UserFragment extends BaseFragment<UserPaymentPresenter> implements UserPaymentContract.View, UserMemberDateContract.View, UserInformationContract.View {
     @BindView(R2.id.tv_waitpay)
     TextView tvWaitpay;
+    @BindView(R2.id.tv_my_invite)
+    TextView tv_my_invite;
     @BindView(R2.id.iv_setting)
     ImageView ivSetting;
     @BindView(R2.id.tv_my_response)
@@ -130,6 +132,7 @@ public class UserFragment extends BaseFragment<UserPaymentPresenter> implements 
         tvUsername.setText(String.valueOf(SharePreferenceUtil.getUser("username", "String")));
         waveView = view.findViewById(R.id.wave_view);
         ivHead = view.findViewById(R.id.ivHead);
+
         final FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(-2, -2);
         lp.gravity = Gravity.BOTTOM | Gravity.CENTER;
         waveView.setOnWaveAnimationListener(new WaveView.OnWaveAnimationListener() {
@@ -214,7 +217,7 @@ public class UserFragment extends BaseFragment<UserPaymentPresenter> implements 
     }
 
 
-    @OnClick({R2.id.ivHead, R2.id.ll_member_goods, R2.id.tv_my_service, R2.id.iv_setting, R2.id.tv_my_recruit, R2.id.tv_my_collection, R2.id.tv_my_response, R2.id.rl_orders, R2.id.tv_my_vip, R2.id.tv_waitpay, R2.id.tv_waitsend, R2.id.tv_wait_receiver, R2.id.tv_wait_evaluate})
+    @OnClick({R2.id.tv_my_invite, R2.id.ivHead, R2.id.ll_member_goods, R2.id.tv_my_service, R2.id.iv_setting, R2.id.tv_my_recruit, R2.id.tv_my_collection, R2.id.tv_my_response, R2.id.rl_orders, R2.id.tv_my_vip, R2.id.tv_waitpay, R2.id.tv_waitsend, R2.id.tv_wait_receiver, R2.id.tv_wait_evaluate})
     public void onViewClicked(View view) {
         int id = view.getId();
         if (id == R.id.tv_my_vip) {
@@ -288,6 +291,8 @@ public class UserFragment extends BaseFragment<UserPaymentPresenter> implements 
                 }
             });
             myDialog1.show();
+        } else if (id == R.id.tv_my_invite) {
+            startActivity(new Intent(getContext(), UserInvitedActivity.class));
         }
 
     }

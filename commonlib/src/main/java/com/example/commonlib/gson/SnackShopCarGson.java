@@ -16,6 +16,16 @@ public class SnackShopCarGson {
     private int userId;
     private String foodName;
     private String foodsPrice;
+    private int needCount;
+
+    public int getNeedCount() {
+        return needCount;
+    }
+
+    public void setNeedCount(int needCount) {
+        this.needCount = needCount;
+    }
+
     private String foodsSize;
     private String foodsTaste;
     private int foodsId;

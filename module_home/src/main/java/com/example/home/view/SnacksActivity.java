@@ -274,12 +274,14 @@ public class SnacksActivity extends BaseActivity<SnackGoodsContract.View, SnackG
     }
 
     //刷新布局 总价、购买数量等
-    public void update(int position, String goodsId, String tastyId, boolean isDelete, boolean isInShopCar) {
+    public void update(int position, String goodsId, String tastyId, boolean isDelete, boolean isInShopCar,int needCount) {
         Log.i(TAG, "update: " + tastyId);
         if (isDelete) {
 
         } else {
-            snackFoodsShopCarPresenter.addSnackByUserId((String) SharePreferenceUtil.getUser("uid", "String"), goodsId, tastyId, "0");
+            for (int i = 0; i < needCount; i++) {
+                snackFoodsShopCarPresenter.addSnackByUserId((String) SharePreferenceUtil.getUser("uid", "String"), goodsId, tastyId, "0");
+            }
         }
         if (isInShopCar) {
             mPresenter.queryUserShopCarAllSnack(String.valueOf(SharePreferenceUtil.getUser("uid", "String")));
@@ -464,7 +466,10 @@ public class SnacksActivity extends BaseActivity<SnackGoodsContract.View, SnackG
                     .setOnClickListener(R.id.iv_add, new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            snackFoodsShopCarPresenter.addSnackByUserId(String.valueOf(SharePreferenceUtil.getUser("uid", "String")), String.valueOf(item.getFoodsId()), String.valueOf(item.getTasteId()), "0");
+                            for (int i = 0; i < item.getNeedCount(); i++) {
+                                snackFoodsShopCarPresenter.addSnackByUserId(String.valueOf(SharePreferenceUtil.getUser("uid", "String")), String.valueOf(item.getFoodsId()), String.valueOf(item.getTasteId()), "0");
+                            }
+
                             notifyDataSetChanged();
 
                         }
@@ -472,8 +477,10 @@ public class SnacksActivity extends BaseActivity<SnackGoodsContract.View, SnackG
                     .setOnClickListener(R.id.iv_reduce, new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            snackFoodsShopCarPresenter.addSnackByUserId(String.valueOf(SharePreferenceUtil.getUser("uid", "String")), String.valueOf(item.getFoodsId()), String.valueOf(item.getTasteId()), "1");
-//                            update(helper.getPosition(), String.valueOf(item.getFoodsId()), String.valueOf(item.getTasteId()), true, true);
+                            for (int i = 0; i < item.getNeedCount(); i++) {
+                                snackFoodsShopCarPresenter.addSnackByUserId(String.valueOf(SharePreferenceUtil.getUser("uid", "String")), String.valueOf(item.getFoodsId()), String.valueOf(item.getTasteId()), "1");
+
+                            }
                             TextView view = (TextView) helper.getView(R.id.tv_count);
                             if (Integer.valueOf(view.getText().toString()) < 2) {
                                 remove(helper.getPosition());

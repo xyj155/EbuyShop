@@ -24,8 +24,10 @@ import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
@@ -67,8 +69,12 @@ import com.scwang.smartrefresh.layout.constant.RefreshState;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnMultiPurposeListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
+
 import com.xuyijie.home.R;
 import com.xuyijie.home.R2;
+import com.yzq.zxinglibrary.android.CaptureActivity;
+import com.yzq.zxinglibrary.bean.ZxingConfig;
+import com.yzq.zxinglibrary.common.Constant;
 import com.zhouwei.mzbanner.MZBannerView;
 import com.zhouwei.mzbanner.holder.MZHolderCreator;
 import com.zhouwei.mzbanner.holder.MZViewHolder;
@@ -84,13 +90,16 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import io.rong.imkit.MainActivity;
 
+import static android.app.Activity.RESULT_OK;
 import static com.chad.library.adapter.base.listener.SimpleClickListener.TAG;
 
 @Route(path = RouterUtil.Home_Fragment_Main)
 public class HomeFragment extends BaseFragment<HomePagePresenter> implements HomePageContract.View {
 
 
+    private static final int REQUEST_CODE = 0xff;
     @BindView(R2.id.iv_news)
     ImageView ivNews;
     @BindView(R2.id.tv_member)
@@ -113,6 +122,10 @@ public class HomeFragment extends BaseFragment<HomePagePresenter> implements Hom
     ImageView ivBanner;
 
     LinearLayout rootview;
+    @BindView(R2.id.iv_scan)
+    ImageView ivScan;
+    @BindView(R2.id.iv_message)
+    ImageView ivMessage;
     private MZBannerView<BannerGson> banner;
     private PurseGoodsAdapter purseGoodsAdapter;
     private RecyclerView ryPurse, ryTimerPurse, ryHot;
@@ -217,8 +230,8 @@ public class HomeFragment extends BaseFragment<HomePagePresenter> implements Hom
                         if (t <= 0) {
                             llTitle.setBackgroundColor(Color.argb(0, 255, 255, 255));
                             tvLocation.setTextColor(Color.argb(255, 255, 255, 255));
-                            GlideUtil.loadGeneralImage(R.mipmap.icon_home_location, ivLocation);
-                            GlideUtil.loadGeneralImage(R.mipmap.home_shopcar, ivShopCar);
+                            GlideUtil.loadGeneralImage(R.mipmap.ic_home_scan_white, ivScan);
+                            GlideUtil.loadGeneralImage(R.mipmap.ic_home_message_white, ivMessage);
                             tvSearch.setBackgroundResource(R.drawable.home_search_bg);
                             llTitle.setVisibility(View.VISIBLE);
                         } else if (t < mHeight) {
@@ -228,15 +241,15 @@ public class HomeFragment extends BaseFragment<HomePagePresenter> implements Hom
                             float alpha = (255 * scale);//得到透明度
                             llTitle.setBackgroundColor(Color.argb((int) alpha, 255, 255, 255));
                             tvLocation.setTextColor(Color.argb((int) alpha, 0, 0, 0));
-                            GlideUtil.loadGeneralImage(R.mipmap.icon_home_location_black, ivLocation);
-                            GlideUtil.loadGeneralImage(R.mipmap.home_shopcar_red, ivShopCar);
+                            GlideUtil.loadGeneralImage(R.mipmap.ic_home_scan_black, ivScan);
+                            GlideUtil.loadGeneralImage(R.mipmap.ic_home_message_black, ivMessage);
                         } else {
                             llTitle.setVisibility(View.VISIBLE);
                             llTitle.setBackgroundColor(Color.argb(255, 255, 255, 255));
                             tvLocation.setTextColor(Color.argb(255, 0, 0, 0));
                             tvSearch.setBackgroundResource(R.drawable.home_search_bg_dark);
-                            GlideUtil.loadGeneralImage(R.mipmap.icon_home_location_black, ivLocation);
-                            GlideUtil.loadGeneralImage(R.mipmap.home_shopcar_red, ivShopCar);
+                            GlideUtil.loadGeneralImage(R.mipmap.ic_home_scan_black, ivScan);
+                            GlideUtil.loadGeneralImage(R.mipmap.ic_home_message_black, ivMessage);
                         }
 
                     }
@@ -564,9 +577,9 @@ public class HomeFragment extends BaseFragment<HomePagePresenter> implements Hom
 
     @Override
     public void loadHomePageIcon(List<HomeIconGson> timeBean) {
-        Log.i(TAG, "loadHomePageIcon: "+timeBean.get(0).getIconUrl());
+        Log.i(TAG, "loadHomePageIcon: " + timeBean.get(0).getIconUrl());
         boolean b = !timeBean.isEmpty();
-        if (timeBean.size() > 0||b) {
+        if (timeBean.size() > 0 || b) {
             GlideUtil.loadGeneralImage(timeBean.get(0).getIconUrl(), ivNews);
             GlideUtil.loadGeneralImage(timeBean.get(1).getIconUrl(), tvMember);
             GlideUtil.loadGeneralImage(timeBean.get(2).getIconUrl(), ivSchoolVip);
@@ -668,7 +681,7 @@ public class HomeFragment extends BaseFragment<HomePagePresenter> implements Hom
         unbinder.unbind();
     }
 
-    @OnClick({R2.id.ivBanner, R2.id.tv_member, R2.id.tvSearch, R2.id.iv_news, R2.id.ll_flash_time, R2.id.iv_school_vip, R2.id.iv_best, R2.id.iv_share, R2.id.ivKind})
+    @OnClick({R2.id.iv_scan,R2.id.iv_message, R2.id.ivBanner, R2.id.tv_member, R2.id.tvSearch, R2.id.iv_news, R2.id.ll_flash_time, R2.id.iv_school_vip, R2.id.iv_best, R2.id.iv_share, R2.id.ivKind})
     public void onViewClicked(View view) {
         int id = view.getId();
         Log.i(TAG, "onViewClicked: ");
@@ -698,6 +711,49 @@ public class HomeFragment extends BaseFragment<HomePagePresenter> implements Hom
                 startActivity(new Intent(getContext(), MemberShipRightActivity.class));
             }
 
+        } else if (R.id.iv_message == id) {
+            ARouter.getInstance().build(RouterUtil.MESSAGE_Fragment_Main).navigation();
+        }else if (R.id.iv_scan==id){
+//            Intent intent = new Intent(getContext(), CaptureActivity.class);
+//            startActivityForResult(intent, REQUEST_CODE);
+            Intent intent = new Intent(getContext(), CaptureActivity.class);
+            ZxingConfig config = new ZxingConfig();
+            config.setPlayBeep(true);//是否播放扫描声音 默认为true
+            config.setShake(true);//是否震动  默认为true
+            config.setDecodeBarCode(true);//是否扫描条形码 默认为true
+            config.setReactColor(R.color.colorAccent);//设置扫描框四个角的颜色 默认为白色
+            config.setFrameLineColor(R.color.colorAccent);//设置扫描框边框颜色 默认无色
+            config.setScanLineColor(R.color.colorAccent);//设置扫描线的颜色 默认白色
+            config.setFullScreenScan(false);//是否全屏扫描  默认为true  设为false则只会在扫描框中扫描
+            intent.putExtra(Constant.INTENT_ZXING_CONFIG, config);
+            startActivityForResult(intent, REQUEST_CODE);
         }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        // 扫描二维码/条码回传
+        if (requestCode == REQUEST_CODE && resultCode == RESULT_OK) {
+            if (data != null) {
+                String content = data.getStringExtra(Constant.CODED_CONTENT);
+                Toast.makeText(getContext(), "解析结果:" + content, Toast.LENGTH_LONG).show();
+            }
+        }
+//        if (requestCode == REQUEST_CODE) {
+//            //处理扫描结果（在界面上显示）
+//            if (null != data) {
+//                Bundle bundle = data.getExtras();
+//                if (bundle == null) {
+//                    return;
+//                }
+//                if (bundle.getInt(CodeUtils.RESULT_TYPE) == CodeUtils.RESULT_SUCCESS) {
+//                    String result = bundle.getString(CodeUtils.RESULT_STRING);
+//                    Toast.makeText(getContext(), "解析结果:" + result, Toast.LENGTH_LONG).show();
+//                } else if (bundle.getInt(CodeUtils.RESULT_TYPE) == CodeUtils.RESULT_FAILED) {
+//                    Toast.makeText(getContext(), "解析二维码失败", Toast.LENGTH_LONG).show();
+//                }
+//            }
+//        }
     }
 }

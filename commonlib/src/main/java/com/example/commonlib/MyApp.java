@@ -32,8 +32,10 @@ public class MyApp extends MultiDexApplication {
                 .initMob()
                 .initRongIm()
                 .initBaiduCount()
+                .initBaiduVR()
                 .initPicaso()
                 .initToast()
+                .initZxing()
                 .initX5();
         initDisplayOpinion();
 
@@ -53,6 +55,9 @@ public class MyApp extends MultiDexApplication {
     private static final String TAG = "MyApp";
 
     public static Application getInstance() {
+        if (instance == null) {
+            return new Application();
+        }
         return instance;
     }
 }
