@@ -6,7 +6,6 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
     <application android:name=".MyApp">
-        <activity android:name="com.example.module_message.view.ConversationListActivity"></activity>
         <!-- 会话界面 -->
         <activity
             android:name=".commonactivity.BrowserActivity"
@@ -18,6 +17,7 @@
         <activity android:name=".commonactivity.GoodsCommentActivity" />
         <activity android:name=".view.previewphoto.PhotoPreviewActivity" />
         <activity android:name=".commonactivity.AddressEditorActivity" />
+
     </application>
 
 </manifest>

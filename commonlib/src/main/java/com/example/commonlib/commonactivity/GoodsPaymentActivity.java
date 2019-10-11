@@ -140,10 +140,10 @@ public class GoodsPaymentActivity extends BaseActivity<OrderDetailContract.View,
     public void loadOrderDetail(OrderDetailGson orderDetailGson) {
         Log.i(TAG, "loadOrderDetail: " + orderDetailGson.getGoods().size());
         orderDetailGoodsAdapter.replaceData(orderDetailGson.getGoods());
-        if (orderDetailGson.getUserAddress()==null){
+        if (orderDetailGson.getUserAddress() == null) {
             ToastUtils.show("请填写地址");
             startActivityForResult(new Intent(GoodsPaymentActivity.this, UserReceivingAddressActivity.class), 0x1);
-        }else {
+        } else {
             addressId = String.valueOf(orderDetailGson.getUserAddress().getId());
         }
 
@@ -247,11 +247,11 @@ public class GoodsPaymentActivity extends BaseActivity<OrderDetailContract.View,
             startActivityForResult(new Intent(GoodsPaymentActivity.this, UserReceivingAddressActivity.class), 0x1);
         } else if (id == R.id.tv_post) {
             if (money > 188) {
-                if (expressFreeDialog!=null){
+                if (expressFreeDialog != null) {
                     expressFreeDialog.show();
                 }
             } else {
-                if (expressChooseDialog!=null){
+                if (expressChooseDialog != null) {
                     expressChooseDialog.show();
                 }
             }
@@ -261,41 +261,42 @@ public class GoodsPaymentActivity extends BaseActivity<OrderDetailContract.View,
             if (addressId == null) {
                 ToastUtils.show("你还没有选择地址哦！");
             } else {
-                Log.i(TAG, "onViewClicked: xlmgsf ");
-                Log.i(TAG, "onViewClicked: " + totalMoney);
-                boolean b = money > 188;
-                if (b) {
-                    Log.i(TAG, "onViewClicked:totalMoney " + (int) (totalMoney * 100));
-                    PaymentUtil.paymentByGoods("商学院自营商品", "订单号：" + getIntent().getStringExtra("orderNum"), (int) (totalMoney * 100), new PaymentInterface() {
-//                    PaymentUtil.paymentByGoods("商学院自营商品", "订单号：" + getIntent().getStringExtra("orderNum"), 1, new PaymentInterface() {
-                        @Override
-                        public void paySuccess() {
-                            userSubmitOrderPresenter.submitOrderByUserId((String) SharePreferenceUtil.getUser("uid", "String"), addressId, new Gson().toJson(goodsIdList), couponId == null ? "5" : couponId, orderNum, (String) SharePreferenceUtil.getUser("userToken", "String"), etMessage.getText().toString(), "36");
-                        }
-
-                        @Override
-                        public void payFailed() {
-                            ToastUtils.show("支付失败！");
-                        }
-                    });
-                } else {
-//                    if (expressName.isEmpty()) {
-//                        ToastUtils.show("你还没有选择配送方式！");
-//                    } else {
-                    PaymentUtil.paymentByGoods("商学院自营商品", "订单号：" + getIntent().getStringExtra("orderNum"), (int) ((totalMoney + 12) * 100), new PaymentInterface() {
-//                    PaymentUtil.paymentByGoods("商学院自营商品", "订单号：" + getIntent().getStringExtra("orderNum"), 1, new PaymentInterface() {
-                        @Override
-                        public void paySuccess() {
-                            userSubmitOrderPresenter.submitOrderByUserId((String) SharePreferenceUtil.getUser("uid", "String"), addressId, new Gson().toJson(goodsIdList), "5", orderNum, (String) SharePreferenceUtil.getUser("userToken", "String"), etMessage.getText().toString(), "33");
-                        }
-
-                        @Override
-                        public void payFailed() {
-                            ToastUtils.show("支付失败！");
-                        }
-                    });
-//                    }
-                }
+//                Log.i(TAG, "onViewClicked: xlmgsf ");
+//                Log.i(TAG, "onViewClicked: " + totalMoney);
+//                boolean b = money > 188;
+//                if (b) {
+//                    Log.i(TAG, "onViewClicked:totalMoney " + (int) (totalMoney * 100));
+//                    PaymentUtil.paymentByGoods("商学院自营商品", "订单号：" + getIntent().getStringExtra("orderNum"), (int) (totalMoney * 100), new PaymentInterface() {
+////                    PaymentUtil.paymentByGoods("商学院自营商品", "订单号：" + getIntent().getStringExtra("orderNum"), 1, new PaymentInterface() {
+//                        @Override
+//                        public void paySuccess() {
+                ToastUtils.show("此APP支付仅供开发人员学习学习使用，不提供支付功能！谢谢合作");
+                userSubmitOrderPresenter.submitOrderByUserId((String) SharePreferenceUtil.getUser("uid", "String"), addressId, new Gson().toJson(goodsIdList), couponId == null ? "5" : couponId, orderNum, (String) SharePreferenceUtil.getUser("userToken", "String"), etMessage.getText().toString(), "36");
+//                        }
+//
+//                        @Override
+//                        public void payFailed() {
+//                            ToastUtils.show("支付失败！");
+//                        }
+//                    });
+//                } else {
+////                    if (expressName.isEmpty()) {
+////                        ToastUtils.show("你还没有选择配送方式！");
+////                    } else {
+//                    PaymentUtil.paymentByGoods("商学院自营商品", "订单号：" + getIntent().getStringExtra("orderNum"), (int) ((totalMoney + 12) * 100), new PaymentInterface() {
+////                    PaymentUtil.paymentByGoods("商学院自营商品", "订单号：" + getIntent().getStringExtra("orderNum"), 1, new PaymentInterface() {
+//                        @Override
+//                        public void paySuccess() {
+//                            userSubmitOrderPresenter.submitOrderByUserId((String) SharePreferenceUtil.getUser("uid", "String"), addressId, new Gson().toJson(goodsIdList), "5", orderNum, (String) SharePreferenceUtil.getUser("userToken", "String"), etMessage.getText().toString(), "33");
+//                        }
+//
+//                        @Override
+//                        public void payFailed() {
+//                            ToastUtils.show("支付失败！");
+//                        }
+//                    });
+////                    }
+//                }
             }
         } else if (id == R.id.tv_cancel) {
             finish();

@@ -3,15 +3,19 @@
   <component name="GradleSettings">
     <option name="linkedExternalProjectsSettings">
       <GradleProjectSettings>
-        <compositeConfiguration>
-          <compositeBuild compositeDefinitionSource="SCRIPT" />
-        </compositeConfiguration>
         <option name="distributionType" value="DEFAULT_WRAPPED" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/CallKit" />
+            <option value="$PROJECT_DIR$/CallLib" />
+            <option value="$PROJECT_DIR$/IMKit" />
+            <option value="$PROJECT_DIR$/IMLib" />
+            <option value="$PROJECT_DIR$/RCSticker" />
+            <option value="$PROJECT_DIR$/adlibrary" />
             <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/camera" />
             <option value="$PROJECT_DIR$/commonlib" />
             <option value="$PROJECT_DIR$/module_goodscar" />
             <option value="$PROJECT_DIR$/module_home" />
@@ -19,7 +23,10 @@
             <option value="$PROJECT_DIR$/module_login" />
             <option value="$PROJECT_DIR$/module_message" />
             <option value="$PROJECT_DIR$/module_user" />
+            <option value="$PROJECT_DIR$/module_vr" />
             <option value="$PROJECT_DIR$/pictureSelector" />
+            <option value="$PROJECT_DIR$/sekeleton" />
+            <option value="$PROJECT_DIR$/zxinglibrary" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

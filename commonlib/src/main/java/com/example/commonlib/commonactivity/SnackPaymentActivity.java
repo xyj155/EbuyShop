@@ -221,17 +221,18 @@ public class SnackPaymentActivity extends BaseActivity<SnackOrderContract.View, 
             if (addressId == null) {
                 ToastUtils.show("你还没有选择地址哦！");
             } else {
-                PaymentUtil.paymentByGoods("商学院自营商品", "订单编号：" + getIntent().getStringExtra("orderNum"), (int) (money*100), new PaymentInterface() {
-                    @Override
-                    public void paySuccess() {
+                ToastUtils.show("此APP仅供学习参考，嘻嘻，你提交订单成功");
+//                PaymentUtil.paymentByGoods("商学院自营商品", "订单编号：" + getIntent().getStringExtra("orderNum"), (int) (money*100), new PaymentInterface() {
+//                    @Override
+//                    public void paySuccess() {
                         mPresenter.submitUserSnackOrderByUserId(String.valueOf(SharePreferenceUtil.getUser("uid", "String")), getIntent().getStringExtra("orderNum"), String.valueOf(SharePreferenceUtil.getUser("userToken", "String")), etMessage.getText().toString(), addressId);
-                    }
-
-                    @Override
-                    public void payFailed() {
-                        ToastUtils.show("支付失败！");
-                    }
-                });
+//                    }
+//
+//                    @Override
+//                    public void payFailed() {
+//                        ToastUtils.show("支付失败！");
+//                    }
+//                });
             }
 
         }

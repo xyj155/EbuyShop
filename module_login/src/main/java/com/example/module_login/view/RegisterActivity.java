@@ -18,6 +18,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.bytedance.sdk.account.common.utils.Md5Utils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.example.commonlib.base.BaseActivity;
@@ -25,6 +26,7 @@ import com.example.commonlib.gson.SchoolGson;
 import com.example.commonlib.gson.UserGson;
 import com.example.commonlib.http.RetrofitUtils;
 import com.example.commonlib.util.GlideUtil;
+import com.example.commonlib.util.MD5Util;
 import com.example.commonlib.util.RouterUtil;
 import com.example.commonlib.util.SharePreferenceUtil;
 import com.example.commonlib.view.CircleImageView;
@@ -36,7 +38,7 @@ import com.example.module_login.R2;
 import com.example.module_login.contract.UserRegisterContract;
 import com.example.module_login.presenter.UserRegisterPresenter;
 import com.google.gson.Gson;
-import com.qq.e.comm.util.Md5Util;
+
 import com.yuyh.library.imgsel.ISNav;
 import com.yuyh.library.imgsel.config.ISListConfig;
 
@@ -232,8 +234,8 @@ public class RegisterActivity extends BaseActivity<UserRegisterContract.View, Us
         } else if (id == R.id.tv_login) {
             if (tvPassword.getText().toString().isEmpty()) {
                 ToastUtils.show("请输入密码");
-            } else if (tvPassword.getText().toString().length() < 10) {
-                ToastUtils.show("密码不可少于六位");
+            } else if (tvPassword.getText().toString().length() <= 10) {
+                ToastUtils.show("密码不可少于十位");
             } else {
 
                     int size = pathList.size();
@@ -245,7 +247,7 @@ public class RegisterActivity extends BaseActivity<UserRegisterContract.View, Us
                                     File file = new File(s);
                                     RequestBody fileRQ = RequestBody.create(MediaType.parse("image/*"), file);
                                     MultipartBody.Part avatar = MultipartBody.Part.createFormData("avatar", file.getName(), fileRQ);
-                                    mPresenter.userRegister(tvUsername.getText().toString(), Md5Util.encode(tvPassword.getText().toString()), String.valueOf(SharePreferenceUtil.getUser("telphone", "String")), tvAge.getText().toString(), rbBoy.isChecked() ? "男" : "女", tvCollage.getText().toString(), avatar);
+                                    mPresenter.userRegister(tvUsername.getText().toString(),MD5Util.md5Encrypt32Upper(tvPassword.getText().toString()), String.valueOf(SharePreferenceUtil.getUser("telphone", "String")), tvAge.getText().toString(), rbBoy.isChecked() ? "男" : "女", tvCollage.getText().toString(), avatar);
                                 }
                             }
                         } else {

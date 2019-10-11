@@ -76,6 +76,7 @@ public abstract class BaseActivity<V extends BaseView, T extends BasePresenter<V
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         if (isSetStatusBarTranslucent()) {
             StatusBarUtil.setStatusBarTranslucent(this);
+            StatusBarUtil.setStatusBarTextColor(this);
         }
 
         ActivityCollector.addActivity(this);
@@ -126,12 +127,10 @@ public abstract class BaseActivity<V extends BaseView, T extends BasePresenter<V
         if (progressDialog!=null){
             progressDialog.show();
         }
-
-
     }
 
     public void mhideDialog() {
-        if (progressDialog.isShowing() || progressDialog != null)
+        if ( progressDialog != null)
             progressDialog.cancel();
     }
 

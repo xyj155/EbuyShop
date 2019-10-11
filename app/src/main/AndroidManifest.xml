@@ -1,41 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.xuyijie.ebuyshop">
-
+    package="com.xuyijie.stushop">
     <!-- permission中com.wanjian.permission.demo替换成你的包名 -->
-
     <permission
-        android:name="com.xuyijie.ebuyshop.permission.JPUSH_MESSAGE"
+        android:name="com.xuyijie.stushop.permission.JPUSH_MESSAGE"
         android:protectionLevel="signature" />
-    <uses-permission android:name="android.permission.CAMERA"/>
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
-    <uses-permission android:name="android.permission.VIBRATE"/>
-    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
 
-    <uses-feature android:name="android.hardware.camera"/>
-    <uses-feature android:name="android.hardware.camera.autofocus"/>
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-feature android:name="android.hardware.camera.autofocus" />
+
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.VIBRATE" />
-    <uses-permission
-        android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"
-        tools:ignore="ProtectedPermissions" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission
-        android:name="android.permission.WRITE_SETTINGS"
-        tools:ignore="ProtectedPermissions" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-
-
-    <!-- Optional. Required for location feature -->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" /> <!-- Optional. Required for location feature -->
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
@@ -43,7 +33,6 @@
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
     <uses-permission android:name="android.permission.GET_TASKS" />
-
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
@@ -56,43 +45,34 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.READ_LOGS"
+    <uses-permission
+        android:name="android.permission.READ_LOGS"
         tools:ignore="ProtectedPermissions" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
+
     <uses-feature android:name="android.hardware.camera" />
-    <uses-feature android:name="android.hardware.camera.autofocus" />
-    <!--用于进行网络定位-->
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"></uses-permission>
-    <!--用于访问GPS定位-->
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"></uses-permission>
-    <!--用于获取运营商信息，用于支持提供运营商信息相关的接口-->
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"></uses-permission>
-    <!--用于访问wifi网络信息，wifi信息会用于进行网络定位-->
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"></uses-permission>
-    <!--用于获取wifi的获取权限，wifi信息会用来进行网络定位-->
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"></uses-permission>
-    <!--用于访问网络，网络定位需要上网-->
-    <uses-permission android:name="android.permission.INTERNET"></uses-permission>
-    <!--用于读取手机当前的状态-->
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"></uses-permission>
-    <!--用于写入缓存数据到扩展存储卡-->
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"></uses-permission>
-    <!--用于申请调用A-GPS模块-->
-    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS"></uses-permission>
-    <!--用于申请获取蓝牙信息进行室内定位-->
-    <uses-permission android:name="android.permission.BLUETOOTH"></uses-permission>
-    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"></uses-permission>
+    <uses-feature android:name="android.hardware.camera.autofocus" /> <!-- 用于进行网络定位 -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" /> <!-- 用于访问GPS定位 -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" /> <!-- 用于获取运营商信息，用于支持提供运营商信息相关的接口 -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /> <!-- 用于访问wifi网络信息，wifi信息会用于进行网络定位 -->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" /> <!-- 用于获取wifi的获取权限，wifi信息会用来进行网络定位 -->
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" /> <!-- 用于访问网络，网络定位需要上网 -->
+    <uses-permission android:name="android.permission.INTERNET" /> <!-- 用于读取手机当前的状态 -->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" /> <!-- 用于写入缓存数据到扩展存储卡 -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> <!-- 用于申请调用A-GPS模块 -->
+    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" /> <!-- 用于申请获取蓝牙信息进行室内定位 -->
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
 
     <permission
-        android:name="com.xuyijie.ebuyshop.permission.RECEIVE_MSG"
+        android:name="com.xuyijie.stushop.permission.RECEIVE_MSG"
         android:protectionLevel="signature" />
-
 
     <application
         android:name="com.example.commonlib.MyApp"
         android:allowBackup="false"
-        android:icon="@mipmap/app_icon"
+        android:icon="@mipmap/app"
         android:label="@string/app_name"
         android:persistent="true"
         android:supportsRtl="true"
@@ -101,26 +81,25 @@
         tools:ignore="GoogleAppIndexingWarning"
         tools:replace="android:allowBackup,label"
         tools:targetApi="m">
+        <activity android:name="com.xuyijie.stushop.view.WebViewActivity"></activity>
+
         <meta-data
             android:name="com.amap.api.v2.apikey"
             android:value="05e34e437dd246b9ae6ce00a1bb67cae" />
+
         <service android:name="com.amap.api.location.APSService" />
 
-        <activity android:name=".view.SplashActivity">
+        <activity android:name="com.xuyijie.stushop.view.SplashActivity"></activity>
+        <activity android:name="com.example.module_login.view.RegisterActivity"></activity>
 
-        </activity>
-        <activity android:name="com.example.module_login.view.RegisterActivity">
+        <!--<receiver-->
+            <!--android:name="com.example.commonlib.receiver.GInsightEventReceiver"-->
+            <!--android:exported="false">-->
+            <!--<intent-filter>-->
+                <!--<action android:name="com.getui.gis.action.DsM2BPaiLT89Vw5fRW34d" />-->
+            <!--</intent-filter>-->
+        <!--</receiver>-->
 
-        </activity>
-
-
-        <receiver
-            android:name="com.example.commonlib.receiver.GInsightEventReceiver"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="com.getui.gis.action.DsM2BPaiLT89Vw5fRW34d" />
-            </intent-filter>
-        </receiver>
         <activity
             android:name="com.example.commonlib.wxapi.WXEntryActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
@@ -128,9 +107,7 @@
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
 
-        <meta-data
-            android:name="com.netease.nim.appKey"
-            android:value="3c23a62b1c4ac728a2bc4f15f3ca2746" />
+
 
         <provider
             android:name="com.example.commonlib.util.BuglyFileProvider"
@@ -159,15 +136,14 @@
                 <action android:name="cn.jpush.android.intent.PushService" />
                 <action android:name="cn.jpush.android.intent.PUSH_TIME" />
             </intent-filter>
-        </service>
-
-        <!-- Required SDK核心功能-->
+        </service> <!-- Required SDK核心功能 -->
         <receiver
             android:name="cn.jpush.android.service.PushReceiver"
             android:enabled="true"
             android:exported="false">
             <intent-filter android:priority="1000">
                 <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED_PROXY" />
+
                 <category android:name="com.xuyijie.ebuyshop" />
             </intent-filter>
             <intent-filter>
@@ -181,19 +157,15 @@
 
                 <data android:scheme="package" />
             </intent-filter>
-        </receiver>
-
-        <!-- Required SDK核心功能-->
+        </receiver> <!-- Required SDK核心功能 -->
         <receiver
             android:name="cn.jpush.android.service.AlarmReceiver"
-            android:exported="false" />
-
-        <!-- Required since JCore 1.1.7. SDK 核心功能-->
+            android:exported="false" /> <!-- Required since JCore 1.1.7. SDK 核心功能 -->
         <provider
             android:name="cn.jpush.android.service.DataProvider"
-            android:authorities="com.xuyijie.ebuyshop.DataProvider"
-            android:exported="false" />
-
+            android:authorities="com.xuyijie.stushop.DataProvider"
+            android:exported="false"
+            tools:replace="android:authorities" />
 
         <service
             android:name="cn.jpush.android.service.DaemonService"
@@ -201,33 +173,30 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="cn.jpush.android.intent.DaemonService" />
+
                 <category android:name="com.xuyijie.ebuyshop" />
             </intent-filter>
         </service>
 
         <meta-data
             android:name="${JPUSH_CHANNEL}"
-            android:value="developer-default" />
-        <!-- Required. AppKey copied from Portal -->
+            android:value="developer-default" /> <!-- Required. AppKey copied from Portal -->
         <meta-data
             android:name="${JPUSH_APPKEY}"
-            android:value="b115a26e2d2b360f3655db24" />
-        <!--<meta-data-->
-        <!--android:name="${RONG_CLOUD_APP_KEY}"-->
-        <!--android:value="ik1qhw09ip9kp" />-->
-        <activity android:name=".view.PermissionRequestActivity">
+            android:value="509498d18e83fe04484948ca" /> <!-- <meta-data -->
+        <!-- android:name="${RONG_CLOUD_APP_KEY}" -->
+        <!-- android:value="ik1qhw09ip9kp" /> -->
+        <activity android:name="com.xuyijie.stushop.view.PermissionRequestActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <!--会话列表-->
+        </activity> <!-- 会话列表 -->
         <activity
-            android:name=".view.MainActivity"
+            android:name="com.xuyijie.stushop.view.MainActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustResize">
-
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -243,7 +212,6 @@
             android:name="com.example.commonlib.commonactivity.ConversationActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustResize">
-
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -258,22 +226,34 @@
 
         <receiver android:name="com.example.commonlib.mreceiver.BootReceiver">
             <intent-filter>
-                <!-- 系统启动完成后会调用-->
-                <action android:name="android.intent.action.BOOT_COMPLETED"></action>
+
+                <!-- 系统启动完成后会调用 -->
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
+
         <provider
             android:name="com.example.commonlib.util.RongImProvider"
-            android:authorities="com.xuyijie.ebuyshop.FileProvider"
+            android:authorities="com.xuyijie.stushop.FileProvider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/rc_file_path" />
+        </provider> <!-- <receiver android:name="com.example.commonlib.util.SealNotificationReceiver"> -->
+        <!--  -->
+        <!-- </receiver> -->
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="com.xuyijie.stushop.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <!--  元数据    -->
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
         </provider>
-        <!--<receiver android:name="com.example.commonlib.util.SealNotificationReceiver">-->
-    <!---->
-        <!--</receiver>-->
+
     </application>
 
 </manifest>

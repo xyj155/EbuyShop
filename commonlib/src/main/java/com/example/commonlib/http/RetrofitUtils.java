@@ -14,7 +14,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 
 public class RetrofitUtils {
-    public static final String BASE_URL = "http://120.79.5.238";
+    public static final String BASE_URL = "http://47.98.122.133";
     /**
      * 超时时间
      */

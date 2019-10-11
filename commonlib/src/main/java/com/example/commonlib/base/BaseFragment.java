@@ -60,7 +60,10 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment {
     }
 
     public void dialogCancel() {
-        progressDialog.dismiss();
+        if(progressDialog!=null){
+            progressDialog.dismiss();
+        }
+
     }
 
     /**

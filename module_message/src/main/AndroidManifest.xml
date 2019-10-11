@@ -6,6 +6,7 @@
         <activity android:name=".view.MessageExpressActivity" />
         <activity android:name=".view.MessageNoticeActivity" />
         <activity android:name=".view.MessageOtherActivity"></activity>
+        <activity android:name=".view.ConversationListActivity" />
     </application>
 
 </manifest>

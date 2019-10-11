@@ -45,7 +45,7 @@ public class HomePagePresenter extends BasePresenter<HomePageContract.View> impl
             }
         }).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<HomeDataEntity>() {
+                . subscribe(new Observer<HomeDataEntity>() {
                     @Override
                     public void onCompleted() {
 

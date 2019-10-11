@@ -4,8 +4,6 @@ apply plugin: 'com.mob.sdk'
 
 android {
 
-    aaptOptions.cruncherEnabled = false
-    aaptOptions.useNewCruncher = false
     compileSdkVersion rootProject.ext.android.compileSdkVersion
     defaultConfig {
         minSdkVersion rootProject.ext.android.minSdkVersion
@@ -34,13 +32,16 @@ android {
                 JPUSH_PKGNAME: applicationId,
                 JPUSH_APPKEY : "b115a26e2d2b360f3655db24", //JPush上注册的包名对应的appkey.
                 JPUSH_CHANNEL: "developer-default", //暂时填写默认值即可.
+                GT_INSTALL_CHANNEL: "baidu", //暂时填写默认值即可.
+                MTA_APPKEY: "b115a26e2d2b360f3655db24", //暂时填写默认值即可.
+                MTA_CHANNEL: "baidu", //暂时填写默认值即可.
+                qqappid: "1108087612"
         ]
         packagingOptions {
             exclude 'META-INF/LICENSE.txt'
             exclude 'META-INF/rxjava.properties'
             exclude 'META-INF/NOTICE.txt'
         }
-        manifestPlaceholders = [qqappid: "1108087612"]
         flavorDimensions "default"
     }
     signingConfigs {
@@ -61,7 +62,8 @@ android {
     buildTypes {
         release {
             minifyEnabled false   //开启混淆
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro' //默认的混淆文件以及我们指定的混淆文件
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            //默认的混淆文件以及我们指定的混淆文件
         }
         debug {
             signingConfig signingConfigs.debug
@@ -72,25 +74,14 @@ android {
         abortOnError false
 
     }
-    dexOptions{
+    dexOptions {
         jumboMode true
     }
     repositories {
-       jcenter()
+        jcenter()
     }
 
     productFlavors {
-        ShangXueYuanClient {
-            manifestPlaceholders = [
-                    JPUSH_PKGNAME     : "com.xuyijie.ebuyshop",
-                    JPUSH_CHANNEL     : "baidu",
-                    JPUSH_APPKEY      : "b115a26e2d2b360f3655db24",
-                    RONG_CLOUD_APP_KEY      : "RONG_CLOUD_APP_KEY",
-                    GT_INSTALL_CHANNEL: "yinyongbao",
-                    MTA_APPKEY:"AJ4XQ54J3VZG",
-                    MTA_CHANNEL:"yyb"
-            ]
-        }
     }
 }
 

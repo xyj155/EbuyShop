@@ -154,5 +154,4 @@ dependencies {
     api project(':zxinglibrary')
     api 'com.tencent.mid:mid:4.06-Release'
     api 'com.qq.visual:visual:3.4.0.1-beta'
-    implementation files('libs/dumixar.jar')
 }

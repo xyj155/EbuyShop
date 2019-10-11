@@ -28,13 +28,12 @@
             <RadioButton
                 android:id="@+id/rb_home"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:layout_gravity="center_vertical"
-                android:layout_marginTop="6dp"
-                android:layout_marginBottom="4dp"
                 android:button="@null"
                 android:checked="true"
+                android:padding="@dimen/dp_5"
                 android:drawableTop="@drawable/bottom_home_main"
                 android:drawablePadding="@dimen/dp_5"
                 android:gravity="center"
@@ -43,11 +42,10 @@
             <RadioButton
                 android:id="@+id/rb_resource"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:button="@null"
                 android:drawableTop="@drawable/bottom_home_message"
-
                 android:gravity="center"
                 android:padding="@dimen/dp_5"
                 android:text="分类" />
@@ -55,6 +53,7 @@
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:visibility="gone"
                 android:layout_weight="1">
 
             </FrameLayout>
@@ -67,8 +66,7 @@
                 android:drawableTop="@drawable/bottom_home_sort"
                 android:gravity="center"
                 android:padding="@dimen/dp_5"
-                android:text="消息"
-                android:visibility="gone" />
+                android:text="消息" />
 
             <RadioButton
                 android:id="@+id/rb_chat"
@@ -84,7 +82,7 @@
             <RadioButton
                 android:id="@+id/rb_user"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:button="@null"
                 android:drawableTop="@drawable/bottom_home_user"
@@ -100,6 +98,7 @@
         android:layout_height="80dp"
         android:layout_alignParentBottom="true"
         android:layout_centerInParent="true"
+        android:visibility="gone"
         android:layout_marginBottom="0dp"
         android:src="@mipmap/index_bottom_bar_scan" />
 </RelativeLayout>

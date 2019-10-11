@@ -4,8 +4,8 @@ package com.example.commonlib.commonactivity;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.text.TextUtils;
@@ -13,24 +13,33 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.webkit.JavascriptInterface;
+import android.webkit.MimeTypeMap;
+import android.webkit.WebChromeClient;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
-import com.example.commonlib.MyApp;
 import com.example.commonlib.R;
 import com.example.commonlib.R2;
 import com.example.commonlib.base.BaseActivity;
 import com.example.commonlib.contract.HomeContract;
 import com.example.commonlib.presenter.LoginPresent;
+
 import com.example.commonlib.util.RouterUtil;
+import com.example.commonlib.util.WebViewDownLoadListener;
 import com.example.commonlib.view.MyDialog;
 import com.example.commonlib.view.toast.ToastUtils;
-import com.tencent.smtt.sdk.DownloadListener;
-import com.tencent.smtt.sdk.WebChromeClient;
-import com.tencent.smtt.sdk.WebView;
-import com.tencent.smtt.sdk.WebViewClient;
+
+
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -46,7 +55,7 @@ public class BrowserActivity extends BaseActivity<HomeContract.View, LoginPresen
 
     @Override
     public boolean isSetStatusBarTranslucent() {
-        return false;
+        return true;
     }
 
     @Override
@@ -126,17 +135,103 @@ public class BrowserActivity extends BaseActivity<HomeContract.View, LoginPresen
             }
         });
         mWebView.addJavascriptInterface(new WebInterface(BrowserActivity.this), "test");
-        mWebView.setDownloadListener(new DownloadListener() {
-            @Override
-            public void onDownloadStart(String url, String userAgent, String contentDisposition, String mimeType, long contentLength) {
-                Uri uri = Uri.parse(url);
+        mWebView.setDownloadListener(new WebViewDownLoadListener(this));
 
-                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
 
-                startActivity(intent);
-            }
-        });
+//        mWebView.setDownloadListener(new DownloadListener() {
+//            @Override
+//            public void onDownloadStart(String url, String userAgent, String contentDisposition, String mimeType, long contentLength) {
+////                Uri uri = Uri.parse(url);
+////
+////                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+////
+////                startActivity(intent);
+//                String fileName = URLUtil.guessFileName(url, contentDisposition, mimeType);
+//                String destPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
+//                        .getAbsolutePath() + File.separator + fileName;
+//                new DownloadTask().execute(url, destPath);
+//
+//            }
+//        });
     }
+    private class DownloadTask extends AsyncTask<String, Void, Void> {
+        // 传递两个参数：URL 和 目标路径
+        private String url;
+        private String destPath;
+
+        @Override
+        protected void onPreExecute() {
+
+        }
+
+        @Override
+        protected Void doInBackground(String... params) {
+            url = params[0];
+            destPath = params[1];
+            OutputStream out = null;
+            HttpURLConnection urlConnection = null;
+            try {
+                URL url = new URL(params[0]);
+                urlConnection = (HttpURLConnection) url.openConnection();
+                urlConnection.setConnectTimeout(15000);
+                urlConnection.setReadTimeout(15000);
+                InputStream in = urlConnection.getInputStream();
+                out = new FileOutputStream(params[1]);
+                byte[] buffer = new byte[10 * 1024];
+                int len;
+                while ((len = in.read(buffer)) != -1) {
+                    out.write(buffer, 0, len);
+                }
+                in.close();
+            } catch (IOException e) {
+
+            } finally {
+                if (urlConnection != null) {
+                    urlConnection.disconnect();
+                }
+                if (out != null) {
+                    try {
+                        out.close();
+                    } catch (IOException e) {
+
+                    }
+                }
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+//            new HttpThread(url).start();
+//            Intent handlerIntent = new Intent(Intent.ACTION_VIEW);
+//            String mimeType = getMIMEType(url);
+//            Uri uri = Uri.fromFile(new File(destPath));
+//            handlerIntent.setDataAndType(uri, mimeType);
+//            startActivity(handlerIntent);
+//            Intent intent = new Intent(Intent.ACTION_VIEW);
+//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+//                intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+//                Uri contentUri = FileProvider.getUriForFile(BrowserActivity.this, "com.xuyijie.ebuyshop.fileprovider", new File(url));
+//                intent.setDataAndType(contentUri, "application/vnd.android.package-archive");
+//            } else {
+//                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//                intent.setDataAndType(Uri.parse("file://" + url),
+//                        "application/vnd.android.package-archive");
+//            }
+//            startActivity(intent);
+        }
+    }
+
+    private String getMIMEType(String url) {
+        String type = null;
+        String extension = MimeTypeMap.getFileExtensionFromUrl(url);
+
+        if (extension != null) {
+            type = MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension);
+        }
+        return type;
+    }
+
 
 
     @Override

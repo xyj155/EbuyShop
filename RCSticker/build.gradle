@@ -1,11 +1,11 @@
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion rootProject.ext.android.compileSdkVersion
 
     defaultConfig {
-        minSdkVersion 17
-        targetSdkVersion 28
+        minSdkVersion rootProject.ext.android.minSdkVersion
+        targetSdkVersion rootProject.ext.android.targetSdkVersion
         versionCode 2019022218
         versionName "2.9.11 Stable"
 

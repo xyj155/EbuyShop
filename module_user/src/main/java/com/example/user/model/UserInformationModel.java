@@ -15,7 +15,7 @@ import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import rx.Observable;
 
-import static com.tencent.smtt.sdk.TbsReaderView.TAG;
+
 
 public class UserInformationModel implements UserInformationContract.Model {
     @Override
@@ -23,7 +23,7 @@ public class UserInformationModel implements UserInformationContract.Model {
         Map<String, RequestBody> partMap = new HashMap<>();
         partMap.put("username", RxPartMapUtils.toRequestBodyOfText(username));
         partMap.put("userId", RxPartMapUtils.toRequestBodyOfText(userId));
-        Log.i(TAG, "updateUserAvatar: "+userId+username);
+
         return RetrofitUtils.getInstance().create().updateUserAvatar(partMap,avatar);
     }
 }

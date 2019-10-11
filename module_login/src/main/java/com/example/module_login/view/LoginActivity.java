@@ -20,6 +20,7 @@ import com.example.commonlib.gson.UserGson;
 import com.example.commonlib.http.RetrofitUtils;
 import com.example.commonlib.interfaces.UserLoginInterface;
 import com.example.commonlib.util.CustomVideoView;
+import com.example.commonlib.util.MD5Util;
 import com.example.commonlib.util.RouterUtil;
 import com.example.commonlib.util.SharePreferenceUtil;
 import com.example.commonlib.util.ThirdLoginUtil;
@@ -27,8 +28,7 @@ import com.example.module_login.R;
 import com.example.module_login.R2;
 import com.example.module_login.contract.UserContract;
 import com.example.module_login.presenter.UserPresenter;
-import com.qq.e.comm.util.Md5Util;
-import com.qq.e.comm.util.StringUtil;
+
 
 import java.util.HashMap;
 import java.util.Map;
@@ -163,8 +163,8 @@ public class LoginActivity extends BaseActivity<UserContract.View, UserPresenter
                 }
             });
         } else if (id == R.id.tv_login) {
-            if (!StringUtil.isEmpty(etUsername.getText().toString()) && !StringUtil.isEmpty(etPassword.getText().toString())) {
-                String encode = Md5Util.encode(etPassword.getText().toString());
+            if (!etUsername.getText().toString().isEmpty() && !etPassword.getText().toString().isEmpty()) {
+                String encode = MD5Util.md5Encrypt32Upper(etPassword.getText().toString());
                 Log.i(TAG, "onViewClicked: " + encode);
                 mPresenter.userLogin(etUsername.getText().toString(), encode);
             } else {

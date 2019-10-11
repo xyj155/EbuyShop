@@ -10,8 +10,7 @@ import android.widget.TextView;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 
-import com.baidu.ar.bean.DuMixARConfig;
-import com.baidu.ar.util.Res;
+
 import com.bumptech.glide.Glide;
 import com.example.commonlib.MyApp;
 import com.example.commonlib.R;
@@ -25,7 +24,7 @@ import com.tencent.bugly.Bugly;
 import com.tencent.bugly.beta.Beta;
 import com.tencent.bugly.beta.UpgradeInfo;
 import com.tencent.bugly.beta.ui.UILifecycleListener;
-import com.tencent.smtt.sdk.QbSdk;
+
 import com.tencent.stat.StatConfig;
 import com.tencent.stat.StatService;
 
@@ -79,13 +78,13 @@ public class ApplicationInitial {
 
     public ApplicationInitial initBaiduVR() {
         // 设置获取资源的上下文Context
-        Res.addResource(MyApp.getInstance());
-// 设置App Id
-        DuMixARConfig.setAppId("15791457");
-// 设置API Key
-        DuMixARConfig.setAPIKey("trK2Q1ripnzKQseUCeWrigig");
-// 设置Secret Key
-        DuMixARConfig.setSecretKey("rTvvbzq6m8gh7ZydHP1fem3ALBg9gfAt");
+//        Res.addResource(MyApp.getInstance());
+//// 设置App Id
+//        DuMixARConfig.setAppId("15791457");
+//// 设置API Key
+//        DuMixARConfig.setAPIKey("trK2Q1ripnzKQseUCeWrigig");
+//// 设置Secret Key
+//        DuMixARConfig.setSecretKey("rTvvbzq6m8gh7ZydHP1fem3ALBg9gfAt");
         return this;
     }
 
@@ -231,22 +230,22 @@ public class ApplicationInitial {
     }
 
     public ApplicationInitial initX5() {
-        //x5內核初始化回调
-        QbSdk.PreInitCallback cb = new QbSdk.PreInitCallback() {
-
-
-            @Override
-            public void onCoreInitFinished() {
-                // TODO Auto-generated method stub
-            }
-
-            @Override
-            public void onViewInitFinished() {
-
-            }
-        };
-        //x5内核初始化接口
-        QbSdk.preInit(MyApp.getInstance(), cb);
+//        //x5內核初始化回调
+//        QbSdk.PreInitCallback cb = new QbSdk.PreInitCallback() {
+//
+//
+//            @Override
+//            public void onCoreInitFinished() {
+//                // TODO Auto-generated method stub
+//            }
+//
+//            @Override
+//            public void onViewInitFinished() {
+//
+//            }
+//        };
+//        //x5内核初始化接口
+//        QbSdk.preInit(MyApp.getInstance(), cb);
         return this;
     }
 }

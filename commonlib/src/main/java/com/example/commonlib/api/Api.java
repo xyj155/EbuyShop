@@ -17,6 +17,7 @@ import com.example.commonlib.gson.HomeIconGson;
 import com.example.commonlib.gson.HomePurseAdvertisementGson;
 import com.example.commonlib.gson.HotPurseActivityGson;
 import com.example.commonlib.gson.KindItemGson;
+import com.example.commonlib.gson.Lottery;
 import com.example.commonlib.gson.MarQueenGson;
 import com.example.commonlib.gson.MemberGson;
 import com.example.commonlib.gson.MessageExpressTraceGson;
@@ -303,6 +304,9 @@ public interface Api {
 
     @GET("/StuShop/public/index.php/index/User/queryUserGoodsTrace")
     Observable<BaseGson<MessageExpressTraceGson>> queryUserGoodsTrace(@Query("userId")String userId,@Query("page")String page);
+
+    @GET("?appId=newjk201904077")
+    Observable<Lottery> queryLottery();
 
     @FormUrlEncoded
     @POST("/StuShop/public/index.php/index/User/updateUserAddress")

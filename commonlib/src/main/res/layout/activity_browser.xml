@@ -4,11 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:paddingTop="@dimen/dp_20"
     android:orientation="vertical"
+    android:background="@drawable/update"
     tools:context=".commonactivity.BrowserActivity">
 <include layout="@layout/common_toolbar"/>
-    <com.tencent.smtt.sdk.WebView
+    <WebView
         android:id="@+id/forum_context"
+
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 </LinearLayout>
